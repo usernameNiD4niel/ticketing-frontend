@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/utils/Header";
 import { ModeToggle } from "@/components/utils/ModeToggle";
-import { Metadata } from "next";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -13,12 +12,6 @@ import { FaHome } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import { MdAccountBox } from "react-icons/md";
-
-export const metadata: Metadata = {
-  title: "OPPA | Dashboard",
-  description:
-    "OPPA Dashboard, views all of the tickets for specific department",
-};
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();

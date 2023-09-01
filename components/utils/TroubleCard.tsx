@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import LeftSheet from "./LeftSheet";
 
 type TroubleCardProps = {
   title: string;
