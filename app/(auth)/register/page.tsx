@@ -50,7 +50,7 @@ const Register = () => {
         <div>
           <h1 className="text-4xl font-bold">Register to start</h1>
           <p className="font-light">
-            Let's fix your day to day struggle and make your life easier
+            Let&#39;s fix your day to day struggle and make your life easier
           </p>
         </div>
         <form className="flex flex-col gap-y-6">

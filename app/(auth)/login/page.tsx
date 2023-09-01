@@ -53,7 +53,7 @@ const Login = () => {
           </div>
           <Button>LOGIN</Button>
           <Label className="text-sm md:text-base font-normal w-full text-center">
-            Don't have an account yet?{" "}
+            Don&#39;t have an account yet?{" "}
             <Link href="/register" className="font-bold text-[#0B64B9]">
               Register
             </Link>
