@@ -36,7 +36,7 @@ export function DialogBox() {
               You forgot your password?
             </DialogTitle>
             <DialogDescription>
-              Don't worry we'll get your account in just a simple steps
+              Don&#39;t worry we&#39;ll get your account in just a simple steps
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4 w-full">
