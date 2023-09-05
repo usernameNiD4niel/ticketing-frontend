@@ -4,6 +4,7 @@ import axios from "axios";
 export const login = async ({ email, password }: LoginProps) => {
   const header = {
     "Content-Type": "application/json",
+    Authorization: "Bearer LG159w8YrCvueGpOebzuyhcYUgHGSeHRuYcJxxC2",
   };
 
   // const body = {
