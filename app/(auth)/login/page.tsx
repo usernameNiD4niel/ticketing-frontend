@@ -7,53 +7,47 @@ import Link from "next/link";
 import styles from "./styles.module.css";
 import { Button } from "@/components/ui/button";
 import { DialogBox } from "@/components/utils/DialogBox";
-import { login } from "@/utils/Authentication";
-import React, { useRef } from "react";
-
-// async function fetchCsrfToken({
-//   setCsrfToken,
-// }: {
-//   setCsrfToken: React.Dispatch<React.SetStateAction<string>>;
-// }) {
-//   try {
-//     // const response = await fetch('/api/csrf-token');
-//     const response = await fetch("http://localhost:8000/api/csrf-token");
-//     const data = await response.json();
-//     setCsrfToken(data.token);
-//   } catch (error) {
-//     console.error("Error fetching CSRF token:", error);
-//   }
-// }
+import React, { useEffect, useRef, useState } from "react";
+import { useAuth } from "@/hooks/auth";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { LoadingButton } from "@/components/utils/LoadingButton";
 
 const Login = () => {
-  // const [isLoading, setIsLoading] = useState(false);
+  const navigate = useRouter();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  // const [error, setError] = useState("");
-  // const router = useRouter();
 
-  const handleSubmitForm = async (event: React.FormEvent) => {
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const { login } = useAuth();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      navigate.push("/");
+    }
+    setIsLoading(false);
+  }, []);
+
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // setIsLoading(true);
+
+    setIsLoadingButton(true);
+
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
-    console.log(email);
-    console.log(password);
 
-    if (email && password) {
-      const response = await login({ email, password });
-      // console.log(response.error);
-      console.log(response);
-
-      // if (response.error) {
-      //   setError(response.error);
-      // } else {
-      //   setError("");
-      //   router.push("/", { scroll: false });
-      // }
-      // setIsLoading(false);
-    }
+    await login({ email, password, setError, setIsLoadingButton });
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className="w-full grid md:grid-cols-[50%_1fr] lg:grid-cols-[40%_1fr] xl:grid-cols-[30%_1fr] h-screen">
@@ -78,14 +72,16 @@ const Login = () => {
           <p className="font-light">Login to continue your progress with us</p>
         </div>
         <form className="flex flex-col gap-y-6" onSubmit={handleSubmitForm}>
+          {error && <p className="text-red-400 text-sm">{error}</p>}
           <Label htmlFor="email" className={styles.labels}>
             Email
             <Input
               placeholder="juantamad@devexsolutions.com"
-              type="text"
+              type="email"
               id="email"
               ref={emailRef}
               name="email"
+              autoFocus={true}
             />
           </Label>
           <Label htmlFor="password" className={styles.labels}>
@@ -101,16 +97,13 @@ const Login = () => {
           <div className="flex text-sm justify-end items-center">
             <DialogBox />
           </div>
-          <Button>LOGIN</Button>
+          {isLoadingButton ? <LoadingButton /> : <Button>LOGIN</Button>}
           <Label className="text-sm md:text-base font-normal w-full text-center">
             Don&#39;t have an account yet?{" "}
             <Link href="/register" className="font-bold text-[#0B64B9]">
               Register
             </Link>
           </Label>
-          {/* {error && (
-            <p className="text-red-500 text-sm font-semibold">{error}</p>
-          )} */}
         </form>
       </section>
       <section className="hidden md:flex bg-black overflow-hidden relative">

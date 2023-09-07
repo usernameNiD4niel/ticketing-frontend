@@ -1,9 +1,29 @@
+"use client";
 import { CardLaunch } from "@/components/launch/Card";
 import { Input } from "@/components/ui/input";
 import { ModeToggle } from "@/components/utils/ModeToggle";
 import { Departments } from "@/constants/objects";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const navigate = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      navigate.push("/login");
+    }
+
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <main className="w-full flex items-center flex-col">
       <div className="fixed top-0 right-0 p-5">

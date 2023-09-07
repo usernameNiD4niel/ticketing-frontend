@@ -1,4 +1,6 @@
+import { validationSchema } from "@/app/(auth)/register/validation";
 import { IconType } from "react-icons";
+import { z } from "zod";
 
 export type DepartmentProps = {
   url: string;
@@ -17,3 +19,5 @@ export type LoginProps = {
   password: string;
   csrfToken?: string;
 };
+
+export type FormRegisterSchema = z.infer<typeof validationSchema>;

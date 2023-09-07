@@ -1,23 +1,25 @@
-import { LoginProps } from "@/constants/types";
+import { LoginProps, LoginResponseProps } from "@/constants/types";
 import axios from "axios";
 
 export const login = async ({ email, password }: LoginProps) => {
+  // const csrfToken = "Bearer LG159w8YrCvueGpOebzuyhcYUgHGSeHRuYcJxxC2";
+
   const header = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer LG159w8YrCvueGpOebzuyhcYUgHGSeHRuYcJxxC2",
+    Accept: "application/json",
   };
 
-  // const body = {
-  //   email,
-  //   password,
-  // };
+  const body = {
+    email,
+    password,
+  };
 
+  // axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
   const d = axios
     .post(
-      "http://localhost:8000/api/v1/accounts/login/",
+      "http://127.0.0.1:8000/api/login",
       {
-        owner_name: email,
-        password: password,
+        email,
+        password,
       },
       {
         headers: header,
@@ -29,14 +31,14 @@ export const login = async ({ email, password }: LoginProps) => {
     return item;
   });
 
-  // const accounts = await fetch("http://localhost:8000/api/v1/accounts/login/", {
+  // const accounts = await fetch("http://127.0.0.1:8000/api/login", {
   //   method: "POST",
   //   headers: header,
   //   body: JSON.stringify(body),
   // });
 
   // if (!accounts.ok) {
-  //   throw new Error(accounts.statusText);
+  //   throw new Error("wag naman " + accounts.statusText);
   // }
 
   // const accountsData: LoginResponseProps = await accounts.json();
