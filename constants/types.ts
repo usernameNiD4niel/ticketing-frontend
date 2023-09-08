@@ -1,6 +1,8 @@
 import { validationSchema } from "@/app/(auth)/register/validation";
+import { validationSchema as loginValidaiton } from "@/app/(auth)/login/validation";
 import { IconType } from "react-icons";
 import { z } from "zod";
+import { otpValidationSchema } from "@/app/(auth)/register/otp/validation";
 
 export type DepartmentProps = {
   url: string;
@@ -21,3 +23,5 @@ export type LoginProps = {
 };
 
 export type FormRegisterSchema = z.infer<typeof validationSchema>;
+export type FormLoginSchema = z.infer<typeof loginValidaiton>;
+export type FormOtpSchema = z.infer<typeof otpValidationSchema>;

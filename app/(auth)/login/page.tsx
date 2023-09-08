@@ -7,23 +7,32 @@ import Link from "next/link";
 import styles from "./styles.module.css";
 import { Button } from "@/components/ui/button";
 import { DialogBox } from "@/components/utils/DialogBox";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { LoadingButton } from "@/components/utils/LoadingButton";
+import { validationSchema } from "./validation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { FormLoginSchema } from "@/constants/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Login = () => {
   const navigate = useRouter();
-
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
 
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { login } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormLoginSchema>({
+    resolver: zodResolver(validationSchema),
+  });
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -34,13 +43,11 @@ const Login = () => {
     setIsLoading(false);
   }, []);
 
-  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmitForm: SubmitHandler<FormLoginSchema> = async (data) => {
     setIsLoadingButton(true);
 
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
+    const email = data.email;
+    const password = data.password;
 
     await login({ email, password, setError, setIsLoadingButton });
   };
@@ -71,33 +78,48 @@ const Login = () => {
           <h1 className="text-4xl font-bold">Welcome back!</h1>
           <p className="font-light">Login to continue your progress with us</p>
         </div>
-        <form className="flex flex-col gap-y-6" onSubmit={handleSubmitForm}>
-          {error && <p className="text-red-400 text-sm">{error}</p>}
+        <form
+          className="flex flex-col gap-y-6"
+          onSubmit={handleSubmit(handleSubmitForm)}
+        >
+          {error && <p className="text-red-400 text-sm font-bold">{error}</p>}
           <Label htmlFor="email" className={styles.labels}>
             Email
             <Input
               placeholder="juantamad@devexsolutions.com"
               type="email"
               id="email"
-              ref={emailRef}
-              name="email"
               autoFocus={true}
+              {...register("email")}
             />
+            {errors.email && (
+              <span className="text-red-500 text-sm">
+                {errors.email.message}
+              </span>
+            )}
           </Label>
           <Label htmlFor="password" className={styles.labels}>
             Password
             <Input
               placeholder="Enter your password"
               id="password"
-              ref={passwordRef}
               type="password"
-              name="password"
+              {...register("password")}
             />
+            {errors.password && (
+              <span className="text-red-500 text-sm">
+                {errors.password.message}
+              </span>
+            )}
           </Label>
           <div className="flex text-sm justify-end items-center">
             <DialogBox />
           </div>
-          {isLoadingButton ? <LoadingButton /> : <Button>LOGIN</Button>}
+          {isLoadingButton ? (
+            <LoadingButton isFullWidth={true} />
+          ) : (
+            <Button>LOGIN</Button>
+          )}
           <Label className="text-sm md:text-base font-normal w-full text-center">
             Don&#39;t have an account yet?{" "}
             <Link href="/register" className="font-bold text-[#0B64B9]">

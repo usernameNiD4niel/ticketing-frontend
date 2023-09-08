@@ -36,9 +36,13 @@ export const useAuth = () => {
     setIsLoadingButton(false);
   };
 
-  const register = async ({ setError, setIsLoadingButton, ...props }) => {
+  const register = async ({
+    setBackendValidationError,
+    setIsLoadingButton,
+    ...props
+  }) => {
     await csrf();
-    setError("");
+    setBackendValidationError("");
 
     try {
       const response = await axios.post("/api/register", props);
@@ -49,7 +53,7 @@ export const useAuth = () => {
     } catch (error) {
       console.log(error.response.status === 401, error);
       if (error.response.status === 401) {
-        setError(error.response.data.message);
+        setBackendValidationError(error.response.data.message);
       } else {
         throw error;
       }
@@ -104,6 +108,7 @@ export const useAuth = () => {
     // Perform the logout actions here
     // For example, clearing the token from cookies/localStorage
     // Redirect to the login page
+    Cookies.remove("token");
     router.push("/login");
   };
 
