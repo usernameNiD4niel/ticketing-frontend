@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/provider/theme-provider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "700"],
@@ -22,7 +23,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <main className="w-full flex items-center flex-col">{children}</main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

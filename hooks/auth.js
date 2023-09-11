@@ -39,16 +39,22 @@ export const useAuth = () => {
   const register = async ({
     setBackendValidationError,
     setIsLoadingButton,
+    reset,
     ...props
   }) => {
     await csrf();
     setBackendValidationError("");
 
     try {
+      Object.keys(props).forEach((key, index) => {
+        console.log(`${key}: ${props[key]}`);
+      });
       const response = await axios.post("/api/register", props);
+
       // Registration was successful, you can handle it as needed
       const { token } = response.data.data;
       Cookies.set("token", token, { expires: 7 });
+      reset();
       router.push("/");
     } catch (error) {
       console.log(error.response.status === 401, error);
@@ -61,21 +67,80 @@ export const useAuth = () => {
     setIsLoadingButton(false);
   };
 
-  const forgotPassword = async ({ setErrors, setStatus, email }) => {
+  const generateOtp = async ({
+    setIsLoadingButton,
+    setBackendValidationError,
+    userObject,
+    setUserData,
+    ...props
+  }) => {
     await csrf();
-    setErrors([]);
-    setStatus(null);
+    setBackendValidationError("");
 
     try {
-      const response = await axios.post("/forgot-password", { email });
-      setStatus(response.data.status);
+      const response = await axios.post("api/otp", props);
+      const { otp } = response.data;
+      console.log("The otp is: ", otp);
+      userObject["otp"] = otp;
+      console.log(userObject);
+      setUserData(userObject);
+      router.push("/register/otp");
     } catch (error) {
       if (error.response.status === 422) {
-        setErrors(error.response.data.errors);
+        console.log(error.response.status === 422, "is error is equal to 422");
+        console.log("The error is: ", error);
+        setBackendValidationError(error.response.data.error);
       } else {
         throw error;
       }
     }
+    setIsLoadingButton(false);
+  };
+
+  const reGenerateOtp = async ({
+    setIsLoadingButton,
+    setBackendValidationError,
+    setResendOtp,
+    ...props
+  }) => {
+    await csrf();
+    setBackendValidationError("");
+    try {
+      const response = await axios.post("api/otp", props);
+      const { otp } = response.data;
+      setResendOtp(otp);
+    } catch (error) {
+      if (error.response.status === 422) {
+        setBackendValidationError(error.response.data.error);
+      } else {
+        setBackendValidationError(
+          "You might refresh the page, please click the back button"
+        );
+        throw error;
+      }
+    }
+    setIsLoadingButton(false);
+  };
+
+  const forgotPassword = async ({
+    setIsLoadingButton,
+    setBackendValidationError,
+    setGeneratedOtp,
+    email,
+  }) => {
+    await csrf();
+
+    try {
+      const response = await axios.post("api/forgot-otp", { email });
+      const { otp } = response.data;
+
+      setGeneratedOtp(otp);
+    } catch (error) {
+      setBackendValidationError(
+        "You might have a poor internet connection, please refresh your browser by pressing 'F5' or 'ctrl + r'"
+      );
+    }
+    setIsLoadingButton(false);
   };
 
   const resetPassword = async ({ setErrors, setStatus, ...props }) => {
@@ -119,5 +184,7 @@ export const useAuth = () => {
     resetPassword,
     resendEmailVerification,
     logout,
+    generateOtp,
+    reGenerateOtp,
   };
 };

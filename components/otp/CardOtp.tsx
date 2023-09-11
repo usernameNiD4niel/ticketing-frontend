@@ -14,12 +14,47 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { otpValidationSchema } from "@/app/(auth)/register/otp/validation";
 import { LoadingButton } from "../utils/LoadingButton";
+import { useAuth } from "@/hooks/auth";
+import { UserDataProps } from "@/constants/types";
+import { useRouter } from "next/navigation";
 
-export function CardOtp() {
+type CardOtpProps = {
+  emailOtp: string;
+  reset: () => void;
+  userData: UserDataProps;
+};
+
+const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
   const [otp, setOtp] = React.useState("");
   const [error, setError] = React.useState("");
+  const router = useRouter();
+
+  const [counter, setCounter] = React.useState(60);
+
+  const { register, reGenerateOtp } = useAuth();
+
+  const [resendOtp, setResendOtp] = React.useState("");
 
   const [isLoadingButton, setIsLoadingButton] = React.useState(false);
+
+  React.useEffect(() => {
+    let countDownInterval: NodeJS.Timeout;
+
+    if (counter > 1) {
+      countDownInterval = setInterval(() => {
+        if (counter > 1) {
+          setCounter(counter - 1);
+        } else {
+          clearInterval(countDownInterval);
+        }
+      }, 1000);
+    } else {
+      setCounter(0);
+    }
+    return () => {
+      clearInterval(countDownInterval);
+    };
+  }, [counter]);
 
   const handleFormValidation = (event: React.FormEvent) => {
     event.preventDefault();
@@ -36,13 +71,49 @@ export function CardOtp() {
 
     setIsLoadingButton(true);
 
-    setTimeout(() => {
+    console.log("email otp: ", typeof emailOtp.toString());
+    console.log("user otp: ", typeof otp);
+    console.log("is equal: ", otp === emailOtp);
+
+    if (emailOtp.toString() !== otp) {
+      setError("OTP entered is incorrect!");
       setIsLoadingButton(false);
-    }, 2000);
+    } else {
+      const { email, name, password, role, department } = userData;
+      register({
+        setBackendValidationError: setError,
+        setIsLoadingButton,
+        reset,
+        email,
+        name,
+        password,
+        role,
+        department,
+      });
+      console.log("malinis");
+
+      console.log("after reset: ", userData + " : " + email);
+    }
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtp(e.target.value);
+  };
+
+  const handleBackButton = () => {
+    router.push("/register");
+  };
+
+  const handleResendCode = async () => {
+    const { email } = userData;
+    setCounter(60);
+
+    await reGenerateOtp({
+      setBackendValidationError: setError,
+      setIsLoadingButton,
+      setResendOtp,
+      email,
+    });
   };
 
   return (
@@ -55,12 +126,15 @@ export function CardOtp() {
               alt="Devex Inc logo"
               width={90}
               height={90}
-              className="w-[140px] h-auto"
+              className="w-[90] md:w-[140px] h-auto"
             />
           </div>
           <CardTitle>OTP has been send!</CardTitle>
           <CardDescription>
-            Please your email, we have send to your email the 6 digit OTP code.
+            Please check <span className="font-bold">{userData.email}</span>{" "}
+            email we have sent you the OTP code. If you didn't receive a code
+            you can click the button "Didn't receive a code?" or restart your
+            Thunderbird
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -79,17 +153,36 @@ export function CardOtp() {
         </CardContent>
         <CardFooter className="flex flex-col items-end w-full">
           <div className="w-full">
-            <Button variant="link" type="button">
-              Didn't receive a code?
-            </Button>
+            {counter === 0 ? (
+              <Button
+                variant="customLink"
+                className="p-0"
+                type="button"
+                onClick={handleResendCode}
+              >
+                Didn't receive a code?
+              </Button>
+            ) : (
+              <p className="text-xs">
+                You can request a code in{" "}
+                <span className="font-bold text-red-500">{counter}</span>
+              </p>
+            )}
           </div>
-          {isLoadingButton ? (
-            <LoadingButton isFullWidth={false} />
-          ) : (
-            <Button>Verify OTP</Button>
-          )}
+          <div className="flex items-center justify-end gap-x-2 my-5">
+            <Button variant="ghost" type="button" onClick={handleBackButton}>
+              Back
+            </Button>
+            {isLoadingButton ? (
+              <LoadingButton isFullWidth={false} />
+            ) : (
+              <Button>Verify OTP</Button>
+            )}
+          </div>
         </CardFooter>
       </form>
     </Card>
   );
-}
+};
+
+export default CardOtp;

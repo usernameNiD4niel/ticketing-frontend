@@ -24,6 +24,8 @@ const buttonVariants = cva(
           "bg-white text-[#0B64B9] hover:text-white hover:bg-[#0B64B9] transition duration-300 ease-in-out",
         primaryInActive:
           "text-[#0B64B9] dark:text-white hover:text-white hover:bg-[#0B64B9] transition duration-300 ease-in-out",
+        customLink:
+          "text-stone-900 underline-offset-4 hover:underline dark:text-stone-50",
       },
       size: {
         default: "h-10 px-4 py-2",

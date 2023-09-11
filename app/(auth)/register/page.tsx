@@ -15,8 +15,9 @@ import { useRouter } from "next/navigation";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormRegisterSchema } from "@/constants/types";
+import { FormRegisterSchema, UserDataProps } from "@/constants/types";
 import { validationSchema } from "./validation";
+import useRegisterStore from "@/hooks/states/useRegisterStore";
 
 const Register = () => {
   const [department, setDepartment] = useState("");
@@ -26,11 +27,15 @@ const Register = () => {
 
   const navigate = useRouter();
 
-  const { register: reg } = useAuth();
+  const [userData] = useRegisterStore((state) => [state.userData]);
+
+  const { generateOtp } = useAuth();
 
   const [departmentError, setDepartmentError] = useState("");
 
   const [backendValidationError, setBackendValidationError] = useState("");
+
+  const [setUserData] = useRegisterStore((state) => [state.setUserData]);
 
   const {
     register,
@@ -38,6 +43,12 @@ const Register = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormRegisterSchema>({
     resolver: zodResolver(validationSchema),
+    defaultValues: {
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+      confirmPassword: "",
+    },
   });
 
   useEffect(() => {
@@ -46,6 +57,9 @@ const Register = () => {
     if (token) {
       navigate.push("/");
     }
+
+    setDepartment(userData.department);
+
     setIsLoading(false);
   }, []);
 
@@ -57,16 +71,21 @@ const Register = () => {
     const email = data.email;
     const password = data.password;
 
-    // ! navigate to otp component and do not issue a cookie yet or invoke the register function
-    // ! do that when the otp is sent and the user successfully entered a correct otp
-    await reg({
+    const userObject: UserDataProps = {
+      role,
       name,
       email,
       password,
-      role,
+      otp: "",
       department,
-      setBackendValidationError,
+    };
+
+    await generateOtp({
       setIsLoadingButton,
+      setBackendValidationError,
+      userObject,
+      setUserData,
+      email,
     });
   };
 

@@ -25,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full flex items-center flex-col">
+    <>
       <div className="fixed top-0 right-0 p-5">
         <ModeToggle />
       </div>
@@ -65,6 +65,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-    </main>
+    </>
   );
 }

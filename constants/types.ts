@@ -25,3 +25,12 @@ export type LoginProps = {
 export type FormRegisterSchema = z.infer<typeof validationSchema>;
 export type FormLoginSchema = z.infer<typeof loginValidaiton>;
 export type FormOtpSchema = z.infer<typeof otpValidationSchema>;
+
+export type UserDataProps = {
+  role: string;
+  name: string;
+  password: string;
+  otp: string;
+  email: string;
+  department: string;
+};
