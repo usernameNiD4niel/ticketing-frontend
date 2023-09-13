@@ -6,6 +6,7 @@ import { Departments } from "@/constants/objects";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import Loading from "./loading";
 
 export default function Home() {
   const navigate = useRouter();
@@ -21,7 +22,7 @@ export default function Home() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

@@ -13,7 +13,6 @@ import { FaHome } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { BsTicketFill } from "react-icons/bs";
 import { MdAccountBox } from "react-icons/md";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import Link from "next/link";
 
 const LeftSheet = () => {

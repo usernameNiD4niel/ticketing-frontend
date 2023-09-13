@@ -13,14 +13,5 @@ export const validationSchema = z.object({
         message: 'Email should end with "devexsolutions.com" or "devexinc.com"',
       }
     ),
-  password: z
-    .string()
-    .min(6, "Password should be at least 6 characters long")
-    .refine(
-      (value) => /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value),
-      {
-        message:
-          "Password should contain at least one uppercase letter, one lowercase letter, and one digit",
-      }
-    ),
+  password: z.string().min(6, "Password should be at least 6 characters long"),
 });

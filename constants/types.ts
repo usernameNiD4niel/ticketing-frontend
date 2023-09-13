@@ -3,6 +3,7 @@ import { validationSchema as loginValidaiton } from "@/app/(auth)/login/validati
 import { IconType } from "react-icons";
 import { z } from "zod";
 import { otpValidationSchema } from "@/app/(auth)/register/otp/validation";
+import { AvailableTabs } from "./enums";
 
 export type DepartmentProps = {
   url: string;
@@ -32,5 +33,31 @@ export type UserDataProps = {
   password: string;
   otp: string;
   email: string;
+  department: string;
+};
+
+export type TabActive = {
+  activeTab: AvailableTabs;
+};
+
+export type FeedTicketProps = {
+  id: number;
+  status: string;
+  subject: string;
+  created_at: string;
+  priority: string;
+  department: "IT";
+  updated_at: string;
+  resolved_date: string;
+  description: string;
+};
+
+export type AccountProps = {
+  id: number;
+  name: string;
+  email: string;
+  created_at: string;
+  updated_at: string;
+  role: string;
   department: string;
 };

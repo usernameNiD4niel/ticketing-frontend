@@ -16,6 +16,7 @@ import { validationSchema } from "./validation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormLoginSchema } from "@/constants/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const navigate = useRouter();
@@ -25,6 +26,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const { login } = useAuth();
+  const { toast } = useToast();
 
   const {
     register,
@@ -40,7 +42,17 @@ const Login = () => {
     if (token) {
       navigate.push("/");
     }
+
+    if (localStorage.getItem("SUCCESS")) {
+      toast({
+        title: "Password reset successfully",
+        duration: 5000,
+        description: "Try to use your new password by logging in here!",
+      });
+    }
     setIsLoading(false);
+
+    return () => localStorage.clear();
   }, []);
 
   const handleSubmitForm: SubmitHandler<FormLoginSchema> = async (data) => {
@@ -118,7 +130,7 @@ const Login = () => {
           {isLoadingButton ? (
             <LoadingButton isFullWidth={true} />
           ) : (
-            <Button>LOGIN</Button>
+            <Button disabled={isSubmitting}>LOGIN</Button>
           )}
           <Label className="text-sm md:text-base font-normal w-full text-center">
             Don&#39;t have an account yet?{" "}

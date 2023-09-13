@@ -21,11 +21,16 @@ const buttonVariants = cva(
           "hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-stone-800 dark:hover:text-stone-50",
         link: "text-stone-900 underline-offset-4 hover:underline dark:text-stone-50",
         primaryActive:
-          "bg-white text-[#0B64B9] hover:text-white hover:bg-[#0B64B9] transition duration-300 ease-in-out",
+          "bg-white text-[#0B64B9] hover:text-white hover:bg-[#0B64B9] transition duration-150 ease-in-out",
         primaryInActive:
-          "text-[#0B64B9] dark:text-white hover:text-white hover:bg-[#0B64B9] transition duration-300 ease-in-out",
+          "text-[#0B64B9] dark:text-white hover:text-white hover:bg-[#0B64B9] transition duration-150 ease-in-out",
         customLink:
           "text-stone-900 underline-offset-4 hover:underline dark:text-stone-50",
+        noVariant: "",
+        buttonPrimary:
+          "bg-[#EEF7FF] border-[1px] border-[#0B64B9] rounded text-[#0B64B9] w-44",
+        buttonDanger:
+          "bg-[#EEF7FF] border-[1px] border-red-500 rounded text-red-500 w-44",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -1,23 +1,20 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/utils/Header";
+import MobileDrawer from "@/components/utils/MobileDrawer";
 import { ModeToggle } from "@/components/utils/ModeToggle";
+import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { BsTicketFill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
-import { FaHome } from "react-icons/fa";
-import { IoIosCreate } from "react-icons/io";
-import { IoAdd } from "react-icons/io5";
-import { MdAccountBox } from "react-icons/md";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState<string>(
     `${theme === "system" ? systemTheme : theme}`
   );
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(
     () => setCurrentTheme(`${theme === "system" ? systemTheme : theme}`),
@@ -29,24 +26,16 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
         <Header />
       </header>
       <main className="mt-20 md:mt-10 w-full flex items-center justify-center">
-        <aside className="w-20 fixed top-0 left-0 bottom-0 bg-[#EEF7FF] dark:bg-[#1a1919] drop-shadow-xl hidden md:flex gap-y-6 flex-col items-center justify-center">
-          <Button className="text-center text-xl" variant="primaryActive">
-            <FaHome />
-          </Button>
-          <Button className="text-xl text-center" variant="primaryInActive">
-            <IoIosCreate />
-          </Button>
-          <Button className="text-xl text-center" variant="primaryInActive">
-            <BsTicketFill />
-          </Button>
-          <Button className="text-xl text-center" variant="primaryInActive">
-            <MdAccountBox />
-          </Button>
-          <Button className="text-xl text-center" variant="primaryInActive">
-            <AiOutlineArrowRight />
-          </Button>
-        </aside>
-        <section className="md:ml-20 w-full flex flex-col gap-y-4 px-2 md:px-9">
+        <MobileDrawer
+          setIsDrawerOpen={setIsDrawerOpen}
+          isDrawerOpen={isDrawerOpen}
+        />
+        <section
+          className={cn(
+            "w-full flex flex-col gap-y-4 px-2 md:px-9",
+            isDrawerOpen ? "md:ml-[350px]" : "md:ml-20"
+          )}
+        >
           <form className="w-full relative hidden md:block">
             <div className="absolute top-[13px] left-3 text-2xl opacity-60">
               <CiSearch />
@@ -56,19 +45,13 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
               name="search"
               required
               placeholder="Search ticket (eg. Ticket No, Status, Date Posted)"
-              className="py-6 pl-10 pr-3"
+              className="py-6 pl-10 pr-3 md:max-w-[87%]"
             />
           </form>
           {children}
         </section>
-        <Button
-          variant="secondary"
-          className="absolute bottom-2 text-2xl right-2 p-3"
-        >
-          <IoAdd />
-        </Button>
       </main>
-      <footer className="fixed bottom-0 left-0 p-4">
+      <footer className="fixed bottom-0 left-0 p-4 z-10">
         <ModeToggle />
       </footer>
     </>
