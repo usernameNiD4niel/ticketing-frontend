@@ -132,9 +132,9 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
           <CardTitle>OTP has been send!</CardTitle>
           <CardDescription>
             Please check <span className="font-bold">{userData.email}</span>{" "}
-            email we have sent you the OTP code. If you didn't receive a code
-            you can click the button "Didn't receive a code?" or restart your
-            Thunderbird
+            email we have sent you the OTP code. If you didn&apos;t receive a
+            code you can click the button &quot;Didn&apos;t receive a
+            code?&quot; or restart your Thunderbird
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -160,7 +160,7 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
                 type="button"
                 onClick={handleResendCode}
               >
-                Didn't receive a code?
+                Didn&apos;t receive a code?
               </Button>
             ) : (
               <p className="text-xs">
