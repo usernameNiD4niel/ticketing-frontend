@@ -36,7 +36,7 @@ const BottomSheet = () => {
         </SheetTrigger>
         <SheetContent
           side={"bottom"}
-          className="max-h-[700px] max-w-3xl mx-auto top-[15%] overflow-auto"
+          className="h-fit max-w-3xl mx-auto top-[15%] overflow-auto"
         >
           <SheetHeader>
             <SheetTitle>Comments</SheetTitle>
@@ -45,7 +45,10 @@ const BottomSheet = () => {
             </SheetDescription>
           </SheetHeader>
           <div className="flex flex-col gap-y-3 my-4">
-            <Comment
+            <div className="h-32 flex items-center justify-center">
+              <h1 className="text-center">No comment yet</h1>
+            </div>
+            {/* <Comment
               comment="This is a sample comment"
               name="Daniel Rey"
               role="Requestor"
@@ -89,7 +92,7 @@ const BottomSheet = () => {
               comment="This is a sample comment 3"
               name="Sir Bry"
               role="Champion"
-            />
+            /> */}
           </div>
           <div className="mt-10">
             <Textarea

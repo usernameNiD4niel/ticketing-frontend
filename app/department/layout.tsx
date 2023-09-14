@@ -5,21 +5,34 @@ import MobileDrawer from "@/components/utils/MobileDrawer";
 import { ModeToggle } from "@/components/utils/ModeToggle";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import Cookies from "js-cookie";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
+
+  const router = useRouter();
   const [currentTheme, setCurrentTheme] = useState<string>(
     `${theme === "system" ? systemTheme : theme}`
   );
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
   useEffect(
     () => setCurrentTheme(`${theme === "system" ? systemTheme : theme}`),
     [currentTheme]
   );
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    const email = Cookies.get("email");
+
+    if (!token || !email) {
+      router.push("/login");
+    }
+  });
   return (
     <>
       <header className="flex w-full md:hidden items-center justify-between z-10 drop-shadow-md p-2 bg-[#EEF7FF] dark:bg-[#0C0A09] dark:drop-shadow-md h-16 fixed top-0 left-0">

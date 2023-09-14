@@ -3,4 +3,6 @@ export enum AvailableTabs {
   "Create Ticket",
   "My Tickets",
   "Accounts",
+  "Unhandled Tickets",
+  "Pending Role",
 }

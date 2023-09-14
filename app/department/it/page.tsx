@@ -62,13 +62,16 @@ const Page = () => {
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
         <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
           {tickets &&
-            tickets.map((ticket) => (
-              <TroubleCard
-                classColor={cn(getTicketColor(ticket.priority))}
-                ticket={ticket}
-                key={ticket.id}
-              />
-            ))}
+            tickets
+              .slice(0)
+              .reverse()
+              .map((ticket) => (
+                <TroubleCard
+                  classColor={cn(getTicketColor(ticket.priority))}
+                  ticket={ticket}
+                  key={ticket.id}
+                />
+              ))}
         </div>
         <Link
           href="/department/it/create-ticket"

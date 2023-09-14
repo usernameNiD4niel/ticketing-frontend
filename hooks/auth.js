@@ -78,7 +78,7 @@ export const useAuth = () => {
 
       if (response.data) {
         setError("");
-        console.log(response.data.account);
+        console.log("test", response.data.account);
         setIsFetching(false);
         return response.data.account;
       }
@@ -124,7 +124,7 @@ export const useAuth = () => {
       const response = await axios.post("/api/login", props);
       const { token } = response.data.data; // Extract the token from the response
       Cookies.set("token", token, { expires: 7 });
-      Cookies.set("email", props.email);
+      Cookies.set("email", props.email, { expires: 7 });
       // Save the token (e.g., in a cookie or localStorage)
       // You can use a library like 'js-cookie' for this
       // Example with 'js-cookie':
@@ -159,7 +159,7 @@ export const useAuth = () => {
       // Registration was successful, you can handle it as needed
       const { token } = response.data.data;
       Cookies.set("token", token, { expires: 7 });
-      Cookies.set("email", props.email);
+      Cookies.set("email", props.email, { expires: 7 });
       reset();
       router.push("/");
     } catch (error) {
@@ -201,6 +201,24 @@ export const useAuth = () => {
       }
     }
     setIsLoadingButton(false);
+  };
+
+  const getPendingRoles = async ({ setIsFetching, setBackendError, token }) => {
+    await csrf();
+    setBackendError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.get("api/pending-role");
+
+      if (response.data) {
+        setBackendError("");
+        setIsFetching(false);
+        console.log("users: ", response.data.users);
+        return response.data.users;
+      }
+    } catch (error) {}
+    setIsFetching(false);
   };
 
   const reGenerateOtp = async ({
@@ -300,5 +318,6 @@ export const useAuth = () => {
     createTicket,
     getTickets,
     getSpecificAccount,
+    getPendingRoles,
   };
 };

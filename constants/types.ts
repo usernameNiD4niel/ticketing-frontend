@@ -61,3 +61,10 @@ export type AccountProps = {
   role: string;
   department: string;
 };
+
+export type ProfileTabProps = {
+  displayText: string;
+  isActive: boolean;
+  route: string;
+  onClick: () => void;
+};

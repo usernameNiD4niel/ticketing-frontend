@@ -1,4 +1,4 @@
-import { DepartmentProps } from "./types";
+import { DepartmentProps, ProfileTabProps } from "./types";
 import { CgSmartHomeRefrigerator } from "react-icons/cg";
 import { GrServices } from "react-icons/gr";
 import { BsShop } from "react-icons/bs";

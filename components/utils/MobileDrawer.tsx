@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { MdAccountBox } from "react-icons/md";
 import { BsBoxArrowInLeft, BsTicketFill } from "react-icons/bs";
@@ -9,6 +9,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
 import { AvailableTabs } from "@/constants/enums";
+import Cookies from "js-cookie";
+import { AiFillFileExclamation } from "react-icons/ai";
+import { RiPassPendingFill } from "react-icons/ri";
 
 type MobileDrawerProps = {
   isDrawerOpen: boolean;
@@ -25,6 +28,17 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
 
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
 
+  const [isRequestor, setIsRequestor] = useState(true);
+
+  useEffect(() => {
+    const role = Cookies.get("role");
+    if (role && (role === "requestor" || role === "unset")) {
+      setIsRequestor(true);
+    } else {
+      setIsRequestor(false);
+    }
+  }, []);
+
   return (
     <aside
       className={cn(
@@ -32,10 +46,13 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         isDrawerOpen ? "w-[350px] justify-normal" : "w-20 justify-center"
       )}
     >
-      <h1 className={cn("font-bold text-4xl my-24", !isDrawerOpen && "hidden")}>
+      <Link
+        href="/"
+        className={cn("font-bold text-4xl my-24", !isDrawerOpen && "hidden")}
+      >
         <span className="text-[#0B64B9]">OP</span>
         <span className="text-[#99CC68]">PA</span>
-      </h1>
+      </Link>
       <div className="flex flex-col w-full gap-y-3">
         <Link
           className={cn(
@@ -50,32 +67,64 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           </span>
           {isDrawerOpen && <span className="text-sm">Feed</span>}
         </Link>
-        <Link
-          className={cn(
-            "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-            activeTab === AvailableTabs["Create Ticket"] &&
-              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-          )}
-          href="/department/it/create-ticket"
-        >
-          <span>
-            <IoIosCreate />
-          </span>
-          {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
-        </Link>
-        <Link
-          className={cn(
-            "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-            activeTab === AvailableTabs["My Tickets"] &&
-              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-          )}
-          href="/department/it/my-tickets"
-        >
-          <span>
-            <BsTicketFill />
-          </span>
-          {isDrawerOpen && <span className="text-sm">My Ticket</span>}
-        </Link>
+        {isRequestor ? (
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["Create Ticket"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+            )}
+            href="/department/it/create-ticket"
+          >
+            <span>
+              <IoIosCreate />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
+          </Link>
+        ) : (
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["Pending Role"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+            )}
+            href="/department/it/pending-role"
+          >
+            <span>
+              <RiPassPendingFill />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Pending Role</span>}
+          </Link>
+        )}
+        {isRequestor ? (
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["My Tickets"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+            )}
+            href="/department/it/my-tickets"
+          >
+            <span>
+              <BsTicketFill />
+            </span>
+            {isDrawerOpen && <span className="text-sm">My Ticket</span>}
+          </Link>
+        ) : (
+          <Link
+            href="/department/it/unhandled-tickets"
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["Unhandled Tickets"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+            )}
+          >
+            <span>
+              <AiFillFileExclamation />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Unhandled Tickets</span>}
+          </Link>
+        )}
 
         <Link
           className={cn(
@@ -83,7 +132,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             activeTab === AvailableTabs.Accounts &&
               "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
           )}
-          href="/department/it/accounts"
+          href="/department/it/accounts/recent"
         >
           <span>
             <MdAccountBox />
