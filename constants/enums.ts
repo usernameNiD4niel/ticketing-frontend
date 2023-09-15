@@ -6,3 +6,9 @@ export enum AvailableTabs {
   "Unhandled Tickets",
   "Pending Role",
 }
+
+export enum TypeOfUser {
+  "requestor",
+  "champion",
+  "catalyst",
+}

@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { AvailableTabs } from "@/constants/enums";
+import { AvailableTabs, TypeOfUser } from "@/constants/enums";
 import { AccountProps, ProfileTabProps } from "@/constants/types";
 import { useAuth } from "@/hooks/auth";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
@@ -101,6 +101,17 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     setTabs(updatedTabs);
   };
 
+  const getRole = (role: string): "requestor" | "champion" | "catalyst" => {
+    switch (role.toLowerCase()) {
+      case "requestor":
+        return "requestor";
+      case "champion":
+        return "champion";
+      default:
+        return "catalyst";
+    }
+  };
+
   if (isFetching) {
     return <div>Loading...</div>;
   }
@@ -123,7 +134,9 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
           className="w-[150px] h-auto rounded-full"
         />
         <div className="flex gap-y-1 items-center justify-center flex-col">
-          <Badge variant="requestor">{account.role.toUpperCase()}</Badge>
+          <Badge variant={getRole(account.role)}>
+            {account.role.toUpperCase()}
+          </Badge>
           <h2 className="text-2xl font-bold">{account.name}</h2>
           <p>{account.department}</p>
           <p className="text-sm">@{account.email}</p>

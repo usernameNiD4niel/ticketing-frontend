@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Cookies from "js-cookie";
+import useCounterStore from "@/hooks/states/useCounterStore";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
@@ -17,6 +18,15 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const [currentTheme, setCurrentTheme] = useState<string>(
     `${theme === "system" ? systemTheme : theme}`
   );
+
+  const [pendingRoleCount, unhandledTicketsCount] = useCounterStore((state) => [
+    state.pendingRoleCount,
+    state.unhandledTicketsCount,
+  ]);
+
+  // ! Fetch the data from the database
+  // ! create a route that do this job done
+  // ! that function should return a
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
@@ -32,7 +42,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     if (!token || !email) {
       router.push("/login");
     }
-  });
+  }, []);
+
   return (
     <>
       <header className="flex w-full md:hidden items-center justify-between z-10 drop-shadow-md p-2 bg-[#EEF7FF] dark:bg-[#0C0A09] dark:drop-shadow-md h-16 fixed top-0 left-0">

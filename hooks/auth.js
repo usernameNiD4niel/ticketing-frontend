@@ -122,9 +122,10 @@ export const useAuth = () => {
 
     try {
       const response = await axios.post("/api/login", props);
-      const { token } = response.data.data; // Extract the token from the response
+      const { token, role } = response.data.data; // Extract the token from the response
       Cookies.set("token", token, { expires: 7 });
       Cookies.set("email", props.email, { expires: 7 });
+      Cookies.set("role", role, { expires: 7 });
       // Save the token (e.g., in a cookie or localStorage)
       // You can use a library like 'js-cookie' for this
       // Example with 'js-cookie':
@@ -140,8 +141,8 @@ export const useAuth = () => {
       } else {
         // throw error;
       }
+      setIsLoadingButton(false);
     }
-    setIsLoadingButton(false);
   };
 
   const register = async ({
@@ -160,6 +161,7 @@ export const useAuth = () => {
       const { token } = response.data.data;
       Cookies.set("token", token, { expires: 7 });
       Cookies.set("email", props.email, { expires: 7 });
+      Cookies.set("role", props.role, { expires: 7 });
       reset();
       router.push("/");
     } catch (error) {
@@ -246,6 +248,31 @@ export const useAuth = () => {
     setIsLoadingButton(false);
   };
 
+  const updatePendingRoles = async ({
+    setIsLoadingButton,
+    setBackendValidationError,
+    emails,
+    role,
+  }) => {
+    await csrf();
+    setBackendValidationError("");
+
+    try {
+      const response = await axios.post("api/pending-role", {
+        emails,
+        role,
+      });
+
+      if (response.data.message) {
+        setIsLoadingButton(false);
+        return response.data;
+      }
+    } catch (error) {
+      setBackendValidationError(error.response.data.message);
+      setIsLoadingButton(false);
+    }
+  };
+
   const forgotPassword = async ({
     setIsLoadingButton,
     setBackendValidationError,
@@ -305,6 +332,28 @@ export const useAuth = () => {
     router.push("/login");
   };
 
+  const getUnHandledTickets = async ({ setIsFetching, setError, token }) => {
+    await csrf();
+    setError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.get("api/unhandled-tickets");
+
+      if (response.data) {
+        setIsFetching(false);
+        return response.data.tickets;
+      } else {
+        setError(
+          "Please press F5 or refresh or browser, if your're still seeing this try to relogin"
+        );
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+    setIsFetching(false);
+  };
+
   return {
     login,
     register,
@@ -319,5 +368,7 @@ export const useAuth = () => {
     getTickets,
     getSpecificAccount,
     getPendingRoles,
+    updatePendingRoles,
+    getUnHandledTickets,
   };
 };

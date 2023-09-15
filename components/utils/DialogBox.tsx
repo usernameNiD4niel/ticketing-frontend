@@ -17,8 +17,6 @@ import { useAuth } from "@/hooks/auth";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { LoadingButton } from "./LoadingButton";
 import CustomAlert from "./CustomAlert";
-import { useToast } from "../ui/use-toast";
-
 export function DialogBox() {
   const [showAlertDialog, setShowAlertDialog] = useState<boolean>(false);
 
@@ -43,8 +41,6 @@ export function DialogBox() {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const [isSuccessMessageShowing, setIsSuccessMessageShowing] = useState(false);
-
-  const { toast } = useToast();
 
   const handleSendEmail = () => {
     console.log(emailField);
@@ -76,8 +72,6 @@ export function DialogBox() {
       email: emailField,
     });
   };
-
-  // ! CREATE VALIDATION HERE, WE CAN USE ZOD VALIDATION
 
   const handleSubmitOtp = () => {
     if (generatedOtp.toString() === otp) {
@@ -112,11 +106,6 @@ export function DialogBox() {
   };
 
   const handleResetContinue = () => {
-    console.log(
-      "Accepted",
-      " Email: " + emailField + " = Password: " + newPasswordField
-    );
-
     setIsLoadingButton(true);
     updatePassword({
       setIsLoadingButton,

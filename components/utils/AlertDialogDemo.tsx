@@ -42,8 +42,8 @@ export const AlertDialogDemo: FC<AlertDialogProps> = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              By clicking continue, you must not forget your new password and
+              you should use that when logging in here.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

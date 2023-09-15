@@ -6,18 +6,13 @@ import Loading from "./loading";
 import { useAuth } from "@/hooks/auth";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { FeedTicketProps } from "@/constants/types";
-import TroubleCard from "@/components/utils/TroubleCard";
 
-const UnhandledTickets = () => {
+export const UnhandledTickets = () => {
   const setActiveTab = useNavigationStore((state) => state.setActiveTab);
   const { getUnHandledTickets } = useAuth();
   const router = useRouter();
   const [error, setError] = useState("");
   const [isFetching, setIsFetching] = useState(true);
-  const [unhandledTickets, setUnhandledTickets] = useState<FeedTicketProps[]>(
-    []
-  );
 
   useEffect(() => {
     setActiveTab(AvailableTabs["Unhandled Tickets"]);
@@ -29,43 +24,38 @@ const UnhandledTickets = () => {
       return;
     }
     const getTickets = async () => {
-      const data: FeedTicketProps[] = await getUnHandledTickets({
-        setError,
-        setIsFetching,
-        token,
-      });
-      if (data) {
-        setUnhandledTickets(data);
-      }
+      const data = getUnHandledTickets({ setError, setIsFetching, token });
     };
-
-    getTickets();
   }, []);
 
   if (isFetching) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
+    return <div>Loading</div>;
   }
 
   return (
     <Suspense fallback={<Loading />}>
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
         <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
-          {unhandledTickets &&
-            unhandledTickets.map((ticket) => (
-              <TroubleCard
-                classColor="bg-[#EEF7FF] dark:bg-[#EEF7FF]/50"
-                ticket={ticket}
-                key={ticket.id}
-              />
-            ))}
+          {tickets &&
+            tickets
+              .slice(0)
+              .reverse()
+              .map((ticket) => (
+                <TroubleCard
+                  classColor={cn(getTicketColor(ticket.priority))}
+                  ticket={ticket}
+                  key={ticket.id}
+                />
+              ))}
         </div>
+        <Link
+          href="/department/it/create-ticket"
+          className="fixed bottom-5 text-xl right-5 bg-[#EEF7FF] dar:bg-[#EEF7FF]/50 rounded-md flex items-center justify-center gap-x-1 py-2 px-4 text-[#0B64B9] border-[1px] border-[#0B64B9]"
+        >
+          <IoAdd />
+          <span className=" text-sm">Ticket</span>
+        </Link>
       </section>
     </Suspense>
   );
 };
-
-export default UnhandledTickets;

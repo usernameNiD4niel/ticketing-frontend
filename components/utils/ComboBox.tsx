@@ -29,13 +29,6 @@ export const ComboboxDemo: React.FC<ComboboxDemo> = ({
 }) => {
   const [open, setOpen] = React.useState(false);
 
-  const departmentRef = React.useRef<HTMLInputElement>(null);
-
-  React.useEffect(
-    () => console.log("LOG", departmentRef.current?.value),
-    [department]
-  );
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -45,12 +38,8 @@ export const ComboboxDemo: React.FC<ComboboxDemo> = ({
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {department
-            ? Departments.find(
-                (departmentItem) => departmentItem.value === department
-              )?.label
-            : "Select your department..."}
-          {department.toUpperCase()}
+          {department ? department : "Select your department..."}
+          {/* {department.toUpperCase()} */}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

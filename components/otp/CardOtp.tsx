@@ -71,10 +71,6 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
 
     setIsLoadingButton(true);
 
-    console.log("email otp: ", typeof emailOtp.toString());
-    console.log("user otp: ", typeof otp);
-    console.log("is equal: ", otp === emailOtp);
-
     if (emailOtp.toString() !== otp) {
       setError("OTP entered is incorrect!");
       setIsLoadingButton(false);
@@ -90,9 +86,6 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
         role,
         department,
       });
-      console.log("malinis");
-
-      console.log("after reset: ", userData + " : " + email);
     }
   };
 

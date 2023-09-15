@@ -27,11 +27,8 @@ const Otp = () => {
 
     setIsHydrating(false);
 
-    const { otp, email, department } = userData;
+    const { otp } = userData;
     setOtp(otp);
-    console.log(otp, " this is otp");
-    console.log(email, " this is email");
-    console.log(department, " this is department");
   }, []);
 
   if (isHydrating) {

@@ -10,11 +10,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const CustomSelect = () => {
+type CustomSelectProps = {
+  setSelectedRole: React.Dispatch<React.SetStateAction<string>>;
+  selectedRole: string;
+};
+
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  setSelectedRole,
+  selectedRole,
+}) => {
+  const handleOnSelectedRole = (value: string) => {
+    setSelectedRole(value);
+  };
   return (
-    <Select>
+    <Select onValueChange={handleOnSelectedRole}>
       <SelectTrigger className="w-[280px] ">
-        <SelectValue placeholder="Select a role" />
+        <SelectValue
+          placeholder={selectedRole ? selectedRole : "Select a role"}
+        />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

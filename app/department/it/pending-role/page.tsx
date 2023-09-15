@@ -11,22 +11,26 @@ type UserProps = {
   id?: number;
   name?: string;
   email: string;
-  accountCreated?: string;
+  created_at?: string;
 };
 
 const PendingRole = () => {
-  const [selectedCard, setSelectedCard] = useState<UserProps[]>([]);
   const [clickCounter, setClickCounter] = useState(0);
   const setActiveTab = useNavigationStore((state) => state.setActiveTab);
-  useEffect(() => setActiveTab(AvailableTabs["Pending Role"]), []);
+  const [activeCards, setActiveCards] = useState<string[]>([]);
 
   const { getPendingRoles } = useAuth();
   const [backendError, setBackendError] = useState("");
   const [isFetching, setIsFetching] = useState(true);
   const [users, setUsers] = useState<UserProps[]>([]);
 
+  const [signalForRefetch, setSignalForRefetch] = useState(false);
+
   useEffect(() => {
+    setActiveTab(AvailableTabs["Pending Role"]);
+
     const token = Cookies.get("token");
+    setIsFetching(false);
 
     const getRoles = async () => {
       const data: UserProps[] = await getPendingRoles({
@@ -39,7 +43,11 @@ const PendingRole = () => {
     };
 
     getRoles();
-  }, []);
+  }, [signalForRefetch]);
+
+  useEffect(() => {
+    console.log(activeCards);
+  }, [activeCards]);
 
   if (isFetching) {
     return <div>Loading...</div>;
@@ -49,39 +57,49 @@ const PendingRole = () => {
     return <div>Error {backendError}</div>;
   }
 
+  if (users.length === 0) {
+    return <h2>No pending roles for today</h2>;
+  }
+
   return (
     <div className="flex gap-3 flex-wrap pb-7">
       {users.map((data) => (
         <PendingRoleCard
-          accountCreated={data.accountCreated}
+          created_at={data.created_at}
+          activeCards={activeCards}
           email={data.email}
           name={data.name}
           setClickCounter={setClickCounter}
-          setSelectedCard={setSelectedCard}
+          setActiveCards={setActiveCards}
           key={data.id}
         />
       ))}
 
       {clickCounter > 0 && (
         // <Button className="fixed bottom-5 right-3 md:right-10">Create</Button>
-        <PendingRoleAssign />
+        <PendingRoleAssign
+          activeCards={activeCards}
+          setSignalForRefetch={setSignalForRefetch}
+        />
       )}
     </div>
   );
 };
 
 type PendingRoleCardProps = {
-  setSelectedCard: React.Dispatch<React.SetStateAction<UserProps[]>>;
+  setActiveCards: React.Dispatch<React.SetStateAction<string[]>>;
   setClickCounter: React.Dispatch<React.SetStateAction<number>>;
+  activeCards: string[];
   name?: string;
-  accountCreated?: string;
+  created_at?: string;
   email: string;
 };
 
 const PendingRoleCard: FC<PendingRoleCardProps> = ({
-  setSelectedCard,
+  setActiveCards,
   setClickCounter,
-  accountCreated,
+  activeCards,
+  created_at,
   email,
   name,
 }) => {
@@ -102,8 +120,17 @@ const PendingRoleCard: FC<PendingRoleCardProps> = ({
 
   const handleCardSelection = () => {
     setIsClicked((prev) => !prev);
-    const newArr: UserProps[] = [{ email }];
-    setSelectedCard((prev) => [...prev, ...newArr]);
+
+    const cleanedData = activeCards.filter(
+      (activeCard) => activeCard !== email
+    );
+
+    //? If this is true means the cleaned data has an item same as active cards which means also that we need to add the email to the array
+    //? else we won't do anything since the filter is eleminates the unselected item
+    if (cleanedData.length === activeCards.length) {
+      cleanedData.push(email);
+    }
+    setActiveCards(cleanedData);
   };
 
   return (
@@ -117,7 +144,7 @@ const PendingRoleCard: FC<PendingRoleCardProps> = ({
       )}
     >
       <h3 className="font-bold">{name}</h3>
-      <p className="md:text-sm text-xs">Account Creation: {accountCreated}</p>
+      <p className="md:text-sm text-xs">Account Creation: {created_at}</p>
       <p className="md:text-sm text-xs">Department: IT</p>
     </div>
   );

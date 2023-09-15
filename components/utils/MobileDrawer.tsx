@@ -12,6 +12,7 @@ import { AvailableTabs } from "@/constants/enums";
 import Cookies from "js-cookie";
 import { AiFillFileExclamation } from "react-icons/ai";
 import { RiPassPendingFill } from "react-icons/ri";
+import useCounterStore from "@/hooks/states/useCounterStore";
 
 type MobileDrawerProps = {
   isDrawerOpen: boolean;
@@ -28,11 +29,16 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
 
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
 
+  const [pendingRoleCount, unhandledTicketsCount] = useCounterStore((state) => [
+    state.pendingRoleCount,
+    state.unhandledTicketsCount,
+  ]);
+
   const [isRequestor, setIsRequestor] = useState(true);
 
   useEffect(() => {
     const role = Cookies.get("role");
-    if (role && (role === "requestor" || role === "unset")) {
+    if (role && role === "requestor") {
       setIsRequestor(true);
     } else {
       setIsRequestor(false);
@@ -93,7 +99,11 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             <span>
               <RiPassPendingFill />
             </span>
-            {isDrawerOpen && <span className="text-sm">Pending Role</span>}
+            {isDrawerOpen && (
+              <span className="text-sm">
+                Pending Role {pendingRoleCount !== 0 && pendingRoleCount}
+              </span>
+            )}
           </Link>
         )}
         {isRequestor ? (
@@ -122,7 +132,12 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             <span>
               <AiFillFileExclamation />
             </span>
-            {isDrawerOpen && <span className="text-sm">Unhandled Tickets</span>}
+            {isDrawerOpen && (
+              <span className="text-sm">
+                Unhandled Tickets{" "}
+                {unhandledTicketsCount !== 0 && unhandledTicketsCount}
+              </span>
+            )}
           </Link>
         )}
 
