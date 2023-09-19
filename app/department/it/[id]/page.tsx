@@ -3,10 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import BottomSheet from "@/components/utils/BottomSheet";
 import EditCard from "@/components/utils/EditCard";
 import RightSheet from "@/components/utils/RightSheet";
-import { FeedTicketProps } from "@/constants/types";
+import { ActivitiesProps, FeedTicketProps } from "@/constants/types";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { BsChevronRight } from "react-icons/bs";
 import Cookies from "js-cookie";
 import { useAuth } from "@/hooks/auth";
@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/auth";
 const TicketPage = ({ params }: { params: { id: string } }) => {
   const [ticket, setTicket] = useState<FeedTicketProps | null>(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [count, setCount] = useState(0);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -21,7 +22,7 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
 
   const id = params.id;
 
-  const { getSpecificTicket } = useAuth();
+  const { getSpecificTicket, getActivitiesCount } = useAuth();
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -39,7 +40,16 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
       setTicket(response);
     };
 
+    const getCount = async () => {
+      await getActivitiesCount({
+        id,
+        token,
+        setCount,
+      });
+    };
+
     getTicket();
+    getCount();
   }, []);
   return (
     <section className="w-full">
@@ -67,26 +77,43 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
           <h3 className="font-bold">Trying to fetch ticket #{id}</h3>
         </div>
       ) : (
-        <TicketContentViewer ticket={ticket} />
+        <TicketContentViewer ticket={ticket} count={count} />
       )}
     </section>
   );
 };
 type T = {
   ticket: FeedTicketProps | null;
+  count: number;
 };
 
-const TicketContentViewer: React.FC<T> = ({ ticket }) => {
+const TicketContentViewer: React.FC<T> = ({ ticket, count }) => {
   return (
     <React.Fragment>
-      {ticket ? <TicketContent {...ticket} /> : <div>No data found</div>}
+      {ticket ? (
+        <TicketContent ticket={ticket} count={count} />
+      ) : (
+        <div>No data found</div>
+      )}
     </React.Fragment>
   );
 };
 
-const TicketContent = (ticket: FeedTicketProps) => {
+type TicketContentProps = {
+  ticket: FeedTicketProps;
+  count: number;
+};
+
+const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
   const role = Cookies.get("role");
+  const token = Cookies.get("token");
   const email = Cookies.get("email");
+
+  const { getSpecificNotification } = useAuth();
+
+  const [activities, setActivities] = useState<ActivitiesProps | null>(null);
+  const [error, setError] = useState("");
+  const [isFetching, setIsFetching] = useState(true);
 
   // if true then the current user and the owner of the ticket is the same
   const [success, setSuccess] = useState(false);
@@ -95,7 +122,6 @@ const TicketContent = (ticket: FeedTicketProps) => {
   const { isUserOwnerOfTicket } = useAuth();
   useEffect(() => {
     if (role?.toLowerCase() === "requestor") {
-      const token = Cookies.get("token");
       console.log("The current user is requestor");
 
       const name = ticket.name;
@@ -103,11 +129,30 @@ const TicketContent = (ticket: FeedTicketProps) => {
       if (token) {
         const verifyCurrentUser = async () => {
           await isUserOwnerOfTicket({ setSuccess, token, email, name });
+
+          await getSpecificNotification({
+            id: ticket.id,
+            setActivities,
+            setError,
+            setIsFetching,
+            token,
+          });
         };
         verifyCurrentUser();
       }
     }
   }, [refetch]);
+
+  const handleShowRightSheet = () => {
+    getSpecificNotification({
+      id: ticket.id,
+      setActivities,
+      setError,
+      setIsFetching,
+      token,
+    });
+  };
+
   return (
     <div className="mt-4 flex items-center justify-center mx-2 md:mx-0">
       <div className="max-w-6xl relative md:w-full">
@@ -162,7 +207,13 @@ const TicketContent = (ticket: FeedTicketProps) => {
             />
           )
         )}
-        <RightSheet />
+        <RightSheet
+          activities={activities}
+          error={error}
+          isFetching={isFetching}
+          handleShowRightSheet={handleShowRightSheet}
+          count={count}
+        />
         <BottomSheet />
       </div>
     </div>

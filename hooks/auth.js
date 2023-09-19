@@ -95,6 +95,7 @@ export const useAuth = () => {
   };
 
   const getTickets = async ({ setIsFetching, token }) => {
+    await csrf();
     try {
       console.log("props");
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -435,6 +436,7 @@ export const useAuth = () => {
   };
 
   const getCurrentUserName = async (token) => {
+    await csrf();
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const name = await axios.get("api/name");
@@ -453,6 +455,7 @@ export const useAuth = () => {
     setIsLoading,
     ...props
   }) => {
+    await csrf();
     setError("");
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -464,13 +467,21 @@ export const useAuth = () => {
         });
       }
     } catch (error) {
+      if (error.response.status === 500) {
+        toast({
+          title: "Error Update",
+          description: "You can't update data to a similar data",
+        });
+        return;
+      }
       setError("Please press F5 or ctrl + r to refresh your browser data");
-      console.log(error);
+      console.log("erro lods: " + error);
     }
     setIsLoading(false);
   };
 
   const getSpecificTicket = async ({ id, setIsFetching, token }) => {
+    await csrf();
     try {
       const response = await fetch(
         process.env.NEXT_PUBLIC_BACKEND_URL + `/api/all-tickets/${id}`,
@@ -495,8 +506,9 @@ export const useAuth = () => {
   };
 
   const getUnsetCounts = async (token) => {
+    await csrf();
     try {
-      const response = fetch(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user-count`,
         {
           headers: {
@@ -508,6 +520,58 @@ export const useAuth = () => {
       return response;
     } catch (error) {
       console.log("getUnsetCounts: ", error);
+    }
+  };
+
+  const getSpecificNotification = async ({
+    id,
+    token,
+    setActivities,
+    setError,
+    setIsFetching,
+  }) => {
+    await csrf();
+    setError("");
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/activities/${id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          cache: "no-store",
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => setActivities(data));
+    } catch (error) {
+      setError("Please press F5 or ctrl + r to refresh your browser data");
+      console.log("error getSpecificNotification");
+    }
+    setIsFetching(false);
+  };
+
+  const getActivitiesCount = async ({ id, token, setCount }) => {
+    await csrf();
+
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/activities/${id}/count`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          cache: "no-store",
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setCount(data["activity-count"]);
+          console.log("count of the day: ", data["activity-count"]);
+        });
+    } catch (error) {
+      setError("Please press F5 or ctrl + r to refresh your browser data");
+      console.log("error getActivitiesCount");
     }
   };
 
@@ -536,5 +600,7 @@ export const useAuth = () => {
     updateSpecifiedTicketField,
     getSpecificTicket,
     getUnsetCounts,
+    getSpecificNotification,
+    getActivitiesCount,
   };
 };

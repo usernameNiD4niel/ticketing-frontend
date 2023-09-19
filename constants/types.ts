@@ -70,3 +70,17 @@ export type ProfileTabProps = {
   route: string;
   onClick: () => void;
 };
+
+type Activity = {
+  id: number;
+  ticket_id: number;
+  activity_type: string;
+  user_id: number;
+  details: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ActivitiesProps = {
+  activities: Activity[];
+};
