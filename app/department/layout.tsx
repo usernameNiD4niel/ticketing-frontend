@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Cookies from "js-cookie";
 import useCounterStore from "@/hooks/states/useCounterStore";
+import { useAuth } from "@/hooks/auth";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
@@ -19,9 +20,16 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     `${theme === "system" ? systemTheme : theme}`
   );
 
-  const [pendingRoleCount, unhandledTicketsCount] = useCounterStore((state) => [
-    state.pendingRoleCount,
+  const [
+    setPendingRoleCount,
+    setUnhandledTicketsCount,
+    unhandledTicketsCount,
+    pendingRoleCount,
+  ] = useCounterStore((state) => [
+    state.setPendingRoleCount,
+    state.setUnhandledTicketsCount,
     state.unhandledTicketsCount,
+    state.pendingRoleCount,
   ]);
 
   // ! Fetch the data from the database
@@ -29,6 +37,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   // ! that function should return a
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+
+  const { getCurrentUserName, getUnsetCounts } = useAuth();
 
   useEffect(
     () => setCurrentTheme(`${theme === "system" ? systemTheme : theme}`),
@@ -42,6 +52,22 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     if (!token || !email) {
       router.push("/login");
     }
+
+    const getName = async () => {
+      const name = await getCurrentUserName(token);
+
+      Cookies.set("name", name, { expires: 7 });
+    };
+
+    const unsetCounts = async () => {
+      const { unset_user_count, unset_priority_ticket_count } =
+        await getUnsetCounts(token);
+      setPendingRoleCount(unset_user_count);
+      setUnhandledTicketsCount(unset_priority_ticket_count);
+    };
+
+    unsetCounts();
+    getName();
   }, []);
 
   return (
@@ -53,6 +79,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
         <MobileDrawer
           setIsDrawerOpen={setIsDrawerOpen}
           isDrawerOpen={isDrawerOpen}
+          unhandledTicketsCount={unhandledTicketsCount}
+          pendingRoleCount={pendingRoleCount}
         />
         <section
           className={cn(

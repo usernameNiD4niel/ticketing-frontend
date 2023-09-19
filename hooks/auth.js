@@ -95,24 +95,18 @@ export const useAuth = () => {
   };
 
   const getTickets = async ({ setIsFetching, token }) => {
-    await csrf();
     try {
       console.log("props");
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
-      const response = await axios.get("/api/tickets");
+      const response = await axios.get("/api/all-tickets");
 
-      if (response.data.success) {
+      if (response.data.tickets) {
         setIsFetching(false);
-        return response.data.data;
+        return response.data.tickets;
       }
     } catch (error) {
       console.log("what is the error", error);
-      // toast({
-      //   title: "Error",
-      //   description: error,
-      //   duration: 3000,
-      // });
     }
   };
 
@@ -354,6 +348,169 @@ export const useAuth = () => {
     setIsFetching(false);
   };
 
+  const getAllChampions = async ({ setError, setChampions, token }) => {
+    await csrf();
+    setError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const champions = await axios.get("/api/champions");
+      setChampions(champions.data.champions);
+    } catch (error) {
+      setError("Please press F5 or ctrl + r");
+      console.error(error);
+    }
+  };
+
+  const getSpecificTicketStatus = async ({
+    setError,
+    setStatus,
+    token,
+    id,
+  }) => {
+    await csrf();
+    setError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const status = await axios.get(`/api/tickets/${id}/status`);
+      setStatus(status.data.status);
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError(error.response.data.message);
+      } else {
+        setError("Please press F5 or ctrl + r");
+      }
+      console.error(error);
+    }
+  };
+
+  const getPriority = async ({ setError, setPriority, token, id }) => {
+    await csrf();
+    setError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const status = await axios.get(`/api/tickets/${id}/priority`);
+      setPriority(status.data.priority);
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError(error.response.data.message);
+      } else {
+        setError("Please press F5 or ctrl + r");
+      }
+      console.error(error);
+    }
+  };
+
+  const getSpecificAsssignTo = async ({ setError, setAssignTo, token, id }) => {
+    await csrf();
+    setError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const status = await axios.get(`/api/tickets/${id}/assigned-to`);
+      setAssignTo(status.data.assigned_to);
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError(error.response.data.message);
+      } else {
+        setError("Please press F5 or ctrl + r");
+      }
+      console.error(error);
+    }
+  };
+
+  const isUserOwnerOfTicket = async ({ setSuccess, token, ...props }) => {
+    await csrf();
+
+    console.log("props object: ", props);
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const status = await axios.post(`/api/email-check`, props);
+      setSuccess(status.data.success);
+    } catch (error) {
+      setSuccess(false);
+    }
+  };
+
+  const getCurrentUserName = async (token) => {
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const name = await axios.get("api/name");
+      console.log(name.data.name, "current user name");
+
+      return name.data.name;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const updateSpecifiedTicketField = async ({
+    token,
+    id,
+    setError,
+    setIsLoading,
+    ...props
+  }) => {
+    setError("");
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const { data } = await axios.patch(`/api/all-tickets/${id}`, props);
+      if (data.message) {
+        toast({
+          title: "Update Successfully",
+          description: "You have successfully updated ticket " + id,
+        });
+      }
+    } catch (error) {
+      setError("Please press F5 or ctrl + r to refresh your browser data");
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
+  const getSpecificTicket = async ({ id, setIsFetching, token }) => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_URL + `/api/all-tickets/${id}`,
+        {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            Authorization: "Bearer " + token,
+            Accept: "Content-Type",
+          },
+          cache: "no-store",
+        }
+      ).then((res) => res.json());
+
+      console.log("response: ", response);
+      if (response.ticket) {
+        setIsFetching(false);
+        return response.ticket;
+      }
+    } catch (error) {
+      console.log("fetch error: ", error);
+    }
+  };
+
+  const getUnsetCounts = async (token) => {
+    try {
+      const response = fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user-count`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          cache: "no-store",
+        }
+      ).then((res) => res.json());
+      return response;
+    } catch (error) {
+      console.log("getUnsetCounts: ", error);
+    }
+  };
+
   return {
     login,
     register,
@@ -370,5 +527,14 @@ export const useAuth = () => {
     getPendingRoles,
     updatePendingRoles,
     getUnHandledTickets,
+    getAllChampions,
+    getSpecificTicketStatus,
+    getPriority,
+    getSpecificAsssignTo,
+    isUserOwnerOfTicket,
+    getCurrentUserName,
+    updateSpecifiedTicketField,
+    getSpecificTicket,
+    getUnsetCounts,
   };
 };

@@ -1,15 +1,9 @@
-"use client";
-
 import { IoNotificationsOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,

@@ -106,6 +106,7 @@ const Settings = () => {
     Cookies.remove("email");
     Cookies.remove("token");
     Cookies.remove("role");
+    Cookies.remove("name");
     localStorage.clear();
     router.push("/login");
   };

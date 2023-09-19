@@ -9,35 +9,48 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "../ui/label";
 
 type CustomSelectProps = {
-  setSelectedRole: React.Dispatch<React.SetStateAction<string>>;
-  selectedRole: string;
+  setSelectedState: React.Dispatch<React.SetStateAction<string>>;
+  selectedState: string;
+  placeHolder: string;
+  label: string;
+  selectItems: string[];
+  isFullWidth: boolean;
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
-  setSelectedRole,
-  selectedRole,
+  setSelectedState,
+  selectedState,
+  label,
+  placeHolder,
+  selectItems,
+  isFullWidth,
 }) => {
   const handleOnSelectedRole = (value: string) => {
-    setSelectedRole(value);
+    setSelectedState(value);
   };
   return (
-    <Select onValueChange={handleOnSelectedRole}>
-      <SelectTrigger className="w-[280px] ">
-        <SelectValue
-          placeholder={selectedRole ? selectedRole : "Select a role"}
-        />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Roles</SelectLabel>
-          <SelectItem value="requestor">Requestor</SelectItem>
-          <SelectItem value="champion">Champion</SelectItem>
-          <SelectItem value="catalyst">Catalyst</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <Label className="space-y-2">
+      <span>{label}</span>
+      <Select onValueChange={handleOnSelectedRole}>
+        <SelectTrigger className={isFullWidth ? "w-full" : "w-[280px]"}>
+          <SelectValue
+            placeholder={selectedState ? selectedState : placeHolder}
+          />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {selectItems.map((selectItem, index) => (
+              <SelectItem value={selectItem.toUpperCase()} key={index}>
+                {selectItem.toUpperCase()}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </Label>
   );
 };
 

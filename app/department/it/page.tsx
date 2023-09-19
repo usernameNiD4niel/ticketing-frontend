@@ -70,6 +70,7 @@ const Page = () => {
                   classColor={cn(getTicketColor(ticket.priority))}
                   ticket={ticket}
                   key={ticket.id}
+                  tabName="Feed"
                 />
               ))}
         </div>

@@ -1,22 +1,17 @@
-"use client";
 import { FeedTicketProps } from "@/constants/types";
 import Link from "next/link";
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 
 type TroubleCardProps = {
   classColor: string;
   ticket: FeedTicketProps;
+  tabName: string;
 };
 
-const TroubleCard: FC<TroubleCardProps> = ({ classColor, ticket }) => {
-  const handleClickLink = () => {
-    localStorage.setItem("TICKET", JSON.stringify(ticket));
-  };
-
+const TroubleCard: FC<TroubleCardProps> = ({ classColor, ticket, tabName }) => {
   return (
     <Link
-      href={`/department/it/${ticket.id}`}
-      onClick={handleClickLink}
+      href={{ pathname: `/department/it/${ticket.id}`, query: { tabName } }}
       className={`${classColor} rounded-md md:max-w-[300px] w-full px-4 py-6 space-y-2 hover:cursor-pointer md:hover:scale-105 transition-scale duration-300 ease-in-out`}
     >
       <div className="flex justify-end items-center">

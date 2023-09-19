@@ -60,6 +60,7 @@ const UnhandledTickets = () => {
                 classColor="bg-[#EEF7FF] dark:bg-[#EEF7FF]/50"
                 ticket={ticket}
                 key={ticket.id}
+                tabName="Unhandled Tickets"
               />
             ))}
         </div>

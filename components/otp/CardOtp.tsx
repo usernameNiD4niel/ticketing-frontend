@@ -71,22 +71,35 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
 
     setIsLoadingButton(true);
 
-    if (emailOtp.toString() !== otp) {
-      setError("OTP entered is incorrect!");
-      setIsLoadingButton(false);
+    if (resendOtp) {
+      if (resendOtp === otp) {
+        registerUser();
+      } else {
+        setError("OTP entered is incorrect!");
+        setIsLoadingButton(false);
+      }
     } else {
-      const { email, name, password, role, department } = userData;
-      register({
-        setBackendValidationError: setError,
-        setIsLoadingButton,
-        reset,
-        email,
-        name,
-        password,
-        role,
-        department,
-      });
+      if (emailOtp.toString() !== otp) {
+        setError("OTP entered is incorrect!");
+        setIsLoadingButton(false);
+      } else {
+        registerUser();
+      }
     }
+  };
+
+  const registerUser = () => {
+    const { email, name, password, role, department } = userData;
+    register({
+      setBackendValidationError: setError,
+      setIsLoadingButton,
+      reset,
+      email,
+      name,
+      password,
+      role,
+      department,
+    });
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

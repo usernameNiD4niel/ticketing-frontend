@@ -11,9 +11,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import { LoadingButton } from "@/components/utils/LoadingButton";
-import CreateTicketCard from "@/components/utils/CreateTicketCard";
 
-const CreateTicket = () => {
+const CreateTicket = async () => {
   const [setActiveTab] = useNavigationStore((state) => [state.setActiveTab]);
 
   const { createTicket } = useAuth();
@@ -21,6 +20,8 @@ const CreateTicket = () => {
   //   Field Reference
   const subjectRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  const name = Cookies.get("name");
 
   //   State fields error
   const [subjectError, setSubjectError] = React.useState("");
@@ -34,6 +35,11 @@ const CreateTicket = () => {
   const { toast } = useToast();
 
   const router = useRouter();
+
+  if (!name) {
+    router.push("/login");
+    return;
+  }
 
   const handleOnSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,7 +80,7 @@ const CreateTicket = () => {
       setIsLoadingButton,
       handleResetBehavior,
       token,
-      name: "Daniel doy ahhha",
+      name,
       subject,
       description,
       priority: "unset",

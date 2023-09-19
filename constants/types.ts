@@ -50,6 +50,8 @@ export type FeedTicketProps = {
   updated_at: string;
   resolved_date: string;
   description: string;
+  assigned_to: string;
+  name: string;
 };
 
 export type AccountProps = {
