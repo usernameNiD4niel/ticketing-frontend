@@ -69,7 +69,9 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
           <BsChevronRight />
         </li>
         <li>
-          <Link href={`/department/it/${params.id}`}>Ticket {params.id}</Link>
+          <Link href={`/department/it/${id}?tabName=${currentTab}`}>
+            Ticket {params.id}
+          </Link>
         </li>
       </ul>
       {isFetching ? (

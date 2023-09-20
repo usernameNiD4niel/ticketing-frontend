@@ -11,8 +11,9 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import { LoadingButton } from "@/components/utils/LoadingButton";
+import useCounterStore from "@/hooks/states/useCounterStore";
 
-const CreateTicket = async () => {
+const CreateTicket = () => {
   const [setActiveTab] = useNavigationStore((state) => [state.setActiveTab]);
 
   const { createTicket } = useAuth();
@@ -24,8 +25,8 @@ const CreateTicket = async () => {
   const name = Cookies.get("name");
 
   //   State fields error
-  const [subjectError, setSubjectError] = React.useState("");
-  const [descriptionError, setDescriptionError] = React.useState("");
+  const [subjectError, setSubjectError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const [backendError, setBackendError] = useState("");
 
   //   Signal
@@ -33,6 +34,10 @@ const CreateTicket = async () => {
 
   //   Create Toast
   const { toast } = useToast();
+
+  const [setUnhandledTicketsCount, unhandledTicketsCount] = useCounterStore(
+    (state) => [state.setUnhandledTicketsCount, state.unhandledTicketsCount]
+  );
 
   const router = useRouter();
 
@@ -104,6 +109,7 @@ const CreateTicket = async () => {
 
     setSubjectError("");
     setDescriptionError("");
+    setUnhandledTicketsCount(unhandledTicketsCount + 1);
   };
 
   return (

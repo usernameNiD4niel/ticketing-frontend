@@ -40,8 +40,8 @@ const RightSheet: FC<RightSheetProps> = ({
             <span className="text-xl">
               <IoNotificationsOutline />
             </span>
-            <span className="text-[0.65rem] absolute top-2 right-2">
-              {count > 0 && count}
+            <span className="text-[0.65rem] absolute top-2 right-2 font-bold">
+              {count > 0 && `+${count}`}
             </span>
           </Button>
         </SheetTrigger>

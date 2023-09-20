@@ -24,6 +24,7 @@ const Login = () => {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isRegisterClick, setIsRegisterClick] = useState(false);
 
   const { login } = useAuth();
   const { toast } = useToast();
@@ -35,6 +36,10 @@ const Login = () => {
   } = useForm<FormLoginSchema>({
     resolver: zodResolver(validationSchema),
   });
+
+  const handleChangingRoute = () => {
+    setIsRegisterClick((prev) => !prev);
+  };
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -134,9 +139,17 @@ const Login = () => {
           )}
           <Label className="text-sm md:text-base font-normal w-full text-center">
             Don&#39;t have an account yet?{" "}
-            <Link href="/register" className="font-bold text-[#0B64B9]">
-              Register
-            </Link>
+            {isRegisterClick ? (
+              <span className="text-[#0B64B9]">Navigating...</span>
+            ) : (
+              <Link
+                href="/register"
+                className="font-bold text-[#0B64B9]"
+                onClick={handleChangingRoute}
+              >
+                Register
+              </Link>
+            )}
           </Label>
         </form>
       </section>

@@ -37,6 +37,8 @@ const Register = () => {
 
   const [setUserData] = useRegisterStore((state) => [state.setUserData]);
 
+  const [isLinkClicked, setIsLinkClicked] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -96,6 +98,10 @@ const Register = () => {
     }
 
     createRequest(data);
+  };
+
+  const handleLoadingLink = () => {
+    setIsLinkClicked((prev) => !prev);
   };
 
   if (isLoading) {
@@ -232,9 +238,17 @@ const Register = () => {
           )}
           <Label className="text-sm md:text-base font-normal w-full text-center">
             Already have an account?{" "}
-            <Link href="/login" className="font-bold text-[#0B64B9]">
-              Login
-            </Link>
+            {isLinkClicked ? (
+              <span className="text-[#0B64B9]">Navigating...</span>
+            ) : (
+              <Link
+                href="/login"
+                onClick={handleLoadingLink}
+                className="font-bold text-[#0B64B9]"
+              >
+                Login
+              </Link>
+            )}
           </Label>
         </form>
       </section>
