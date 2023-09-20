@@ -62,7 +62,8 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           className={cn(
             "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
             activeTab === AvailableTabs.Feed &&
-              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+            !isDrawerOpen ? "justify-center items-center" : "justify-start"
           )}
           href="/department/it"
         >
@@ -76,7 +77,8 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
               activeTab === AvailableTabs["Create Ticket"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
             href="/department/it/create-ticket"
           >
@@ -90,16 +92,24 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
               activeTab === AvailableTabs["Pending Role"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
             href="/department/it/pending-role"
           >
             <span>
               <RiPassPendingFill />
             </span>
-            {isDrawerOpen && (
+            {isDrawerOpen ? (
               <span className="text-sm">
-                Pending Role {pendingRoleCount !== 0 && pendingRoleCount}
+                Pending Role{" "}
+                <span className="text-xs ms-2 font-bold text-red-500">
+                  {pendingRoleCount !== 0 && pendingRoleCount}
+                </span>
+              </span>
+            ) : (
+              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
+                {pendingRoleCount !== 0 && pendingRoleCount}
               </span>
             )}
           </Link>
@@ -109,7 +119,8 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
               activeTab === AvailableTabs["My Tickets"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
             href="/department/it/my-tickets"
           >
@@ -122,20 +133,25 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           <Link
             href="/department/it/unhandled-tickets"
             className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
               activeTab === AvailableTabs["Unhandled Tickets"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
           >
             <span>
               <AiFillFileExclamation />
             </span>
-            {isDrawerOpen && (
+            {isDrawerOpen ? (
               <span className="text-sm">
-                Unhandled Tickets{" "}
+                Unhandled Tickets
                 <span className="text-xs ms-2 font-bold text-red-500">
                   {unhandledTicketsCount !== 0 && unhandledTicketsCount}
                 </span>
+              </span>
+            ) : (
+              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
+                {unhandledTicketsCount !== 0 && unhandledTicketsCount}
               </span>
             )}
           </Link>
@@ -145,7 +161,8 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           className={cn(
             "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
             activeTab === AvailableTabs.Accounts &&
-              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+            !isDrawerOpen ? "justify-center items-center" : "justify-start"
           )}
           href="/department/it/accounts/recent"
         >
