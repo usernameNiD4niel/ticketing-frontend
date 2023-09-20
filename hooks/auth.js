@@ -363,19 +363,14 @@ export const useAuth = () => {
     }
   };
 
-  const getSpecificTicketStatus = async ({
-    setError,
-    setStatus,
-    token,
-    id,
-  }) => {
+  const getSpecificTicketStatus = async ({ setError, token, id }) => {
     await csrf();
     setError("");
 
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const status = await axios.get(`/api/tickets/${id}/status`);
-      setStatus(status.data.status);
+      return status.data.status;
     } catch (error) {
       if (error.response.status === 404) {
         setError(error.response.data.message);
@@ -386,14 +381,14 @@ export const useAuth = () => {
     }
   };
 
-  const getPriority = async ({ setError, setPriority, token, id }) => {
+  const getPriority = async ({ setError, token, id }) => {
     await csrf();
     setError("");
 
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const status = await axios.get(`/api/tickets/${id}/priority`);
-      setPriority(status.data.priority);
+      return status.data.priority;
     } catch (error) {
       if (error.response.status === 404) {
         setError(error.response.data.message);
@@ -404,14 +399,14 @@ export const useAuth = () => {
     }
   };
 
-  const getSpecificAsssignTo = async ({ setError, setAssignTo, token, id }) => {
+  const getSpecificAsssignTo = async ({ setError, token, id }) => {
     await csrf();
     setError("");
 
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const status = await axios.get(`/api/tickets/${id}/assigned-to`);
-      setAssignTo(status.data.assigned_to);
+      const assignTo = await axios.get(`/api/tickets/${id}/assigned-to`);
+      return assignTo.data.assigned_to;
     } catch (error) {
       if (error.response.status === 404) {
         setError(error.response.data.message);
@@ -457,9 +452,17 @@ export const useAuth = () => {
   }) => {
     await csrf();
     setError("");
+    if (props.hasOwnProperty("request")) {
+      console.log("props catalyst or champ: ", props.request);
+    } else {
+      console.log("props: ", props);
+    }
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const { data } = await axios.patch(`/api/all-tickets/${id}`, props);
+      const { data } = await axios.patch(
+        `/api/all-tickets/${id}`,
+        props.hasOwnProperty("request") ? props.request : props
+      );
       if (data.message) {
         toast({
           title: "Update Successfully",
@@ -467,6 +470,7 @@ export const useAuth = () => {
         });
       }
     } catch (error) {
+      console.log(error);
       if (error.response.status === 500) {
         toast({
           title: "Error Update",
@@ -575,6 +579,30 @@ export const useAuth = () => {
     }
   };
 
+  const getUserRecentActivities = async ({
+    setError,
+    token,
+    email,
+    setActivities,
+  }) => {
+    await csrf();
+    setError("");
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const { data } = await axios.post(`/api/accounts/recent`, { email });
+      if (data) {
+        setActivities(data.ticket_content);
+      }
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError("Your session is expired, please try to re-login, thank you!");
+        return;
+      }
+      setError("Please press F5 or ctrl + r to refresh your browser data");
+      console.log("erro lods: " + error);
+    }
+  };
+
   return {
     login,
     register,
@@ -602,5 +630,6 @@ export const useAuth = () => {
     getUnsetCounts,
     getSpecificNotification,
     getActivitiesCount,
+    getUserRecentActivities,
   };
 };

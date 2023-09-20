@@ -29,6 +29,10 @@ const DisplayForm: FC<DisplayFormProps> = ({
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [statusComparator, setStatusComparator] = useState("");
+  const [assignToComparator, setAssignToComparator] = useState("");
+  const [priorityComparator, setPriorityComparator] = useState("");
+
   const router = useRouter();
 
   const token = Cookies.get("token");
@@ -66,39 +70,34 @@ const DisplayForm: FC<DisplayFormProps> = ({
     }
 
     const getStatus = async () => {
-      const status_ = await getSpecificTicketStatus({
+      const message = await getSpecificTicketStatus({
         id,
-        setStatus,
         setError,
         token,
       });
-      if (typeof status_ === "string") {
-        setStatus(status_);
-      }
+      setStatusComparator(message);
+      setStatus(message);
     };
 
     const getPriorityFetcher = async () => {
-      const priority_ = await getPriority({
+      const message = await getPriority({
         id,
-        setPriority,
         setError,
         token,
       });
-      if (typeof priority_ === "string") {
-        setPriority(priority_);
-      }
+      setPriorityComparator(message);
+      setPriority(message);
     };
 
     const getAssignedTo = async () => {
-      const assignedTo_ = await getSpecificAsssignTo({
+      const message = await getSpecificAsssignTo({
         id,
-        setAssignTo,
         setError,
         token,
       });
-      if (typeof assignedTo_ === "string") {
-        setAssignTo(assignedTo_);
-      }
+
+      setAssignToComparator(message);
+      setAssignTo(message);
     };
 
     getAssignedTo();
@@ -109,12 +108,22 @@ const DisplayForm: FC<DisplayFormProps> = ({
 
   const handleUpdateTicket = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Clicked!");
+
+    const request: Response = {
+      status,
+      assigned_to: assignTo,
+      priority,
+    };
 
     const id = ticket?.id;
     if (id) {
       setIsLoading(true);
       if (isTicketOwner) {
+        if (status === statusComparator) {
+          setIsLoading(false);
+          return;
+        }
+
         updateSpecifiedTicketField({
           token,
           id,
@@ -123,14 +132,38 @@ const DisplayForm: FC<DisplayFormProps> = ({
           status,
         });
       } else {
+        // The purpose of this code is to check if the user doesn't change any data yet they click "Update"
+        if (!statusComparator && !assignToComparator && !priorityComparator) {
+          setIsLoading(false);
+          console.log("update mo eh wala ka naman nilagay na data");
+          console.log("status " + status + " : " + statusComparator);
+          console.log("assignTo " + assignTo + " : " + assignToComparator);
+          console.log("priority " + priority + " : " + priorityComparator);
+
+          return;
+        }
+        if (status === statusComparator) {
+          delete request.status;
+        }
+
+        if (assignTo === assignToComparator) {
+          delete request.assigned_to;
+        }
+
+        if (priority === priorityComparator) {
+          delete request.priority;
+        }
+
+        console.log("status " + status + " : " + statusComparator);
+        console.log("assignTo " + assignTo + " : " + assignToComparator);
+        console.log("priority " + priority + " : " + priorityComparator);
+
         updateSpecifiedTicketField({
           token,
           id,
           setError,
           setIsLoading,
-          status,
-          assigned_to: assignTo,
-          priority,
+          request,
         });
       }
       setRefetch((prev) => !prev);
@@ -186,6 +219,12 @@ const DisplayForm: FC<DisplayFormProps> = ({
       </div>
     </form>
   );
+};
+
+type Response = {
+  status?: string;
+  assigned_to?: string;
+  priority?: string;
 };
 
 type HighProfileInmateProps = {

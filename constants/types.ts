@@ -84,3 +84,11 @@ type Activity = {
 export type ActivitiesProps = {
   activities: Activity[];
 };
+
+export type TicketContent = {
+  id: number;
+  title: string;
+  description: string;
+  created_date: string;
+  created_time: string;
+};

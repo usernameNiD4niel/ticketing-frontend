@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import CardAccount from "@/components/utils/CardAccount";
 import React, { FC, useState } from "react";
 import Cookies from "js-cookie";
 import { LoadingButton } from "@/components/utils/LoadingButton";
+import AccountRecent from "@/components/utils/AccountRecent";
 
 type AccountTabProps = {
   params: { slug: string };
@@ -17,7 +17,7 @@ const AccountTab: FC<AccountTabProps> = ({ params }) => {
   let contentTab = null;
 
   if (params.slug === "recent") {
-    contentTab = <Recent />;
+    contentTab = <AccountRecent />;
   } else if (params.slug === "edit-profile") {
     contentTab = <EditProfile />;
   } else if (params.slug === "update-password") {
@@ -27,45 +27,6 @@ const AccountTab: FC<AccountTabProps> = ({ params }) => {
   }
 
   return <div className="my-5 mx-3 text-xs md:text-sm">{contentTab}</div>;
-};
-
-const Recent = () => {
-  return (
-    <div className="flex gap-2 flex-wrap items-center justify-center">
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-      <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-      />
-    </div>
-  );
 };
 
 const EditProfile = () => {
