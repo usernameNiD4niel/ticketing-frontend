@@ -491,9 +491,7 @@ export const useAuth = () => {
         process.env.NEXT_PUBLIC_BACKEND_URL + `/api/all-tickets/${id}`,
         {
           headers: {
-            "X-Requested-With": "XMLHttpRequest",
             Authorization: "Bearer " + token,
-            Accept: "Content-Type",
           },
           cache: "no-store",
         }
@@ -603,6 +601,86 @@ export const useAuth = () => {
     }
   };
 
+  const postComment = async ({
+    ticket_id,
+    token,
+    comment,
+    setIsLoading,
+    setError,
+  }) => {
+    await csrf();
+    setError("");
+
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const { data } = await axios.post(`/api/comments/${ticket_id}`, {
+        comment,
+      });
+      if (data.message === "Comment created successfully") {
+        toast({
+          title: "Comment Success",
+          description: data.message,
+          duration: 4000,
+        });
+      } else {
+        console.log("else part");
+      }
+      console.log(data.message);
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError("Your session is expired, please try to re-login, thank you!");
+      }
+      if (error.response.status === 401) {
+        router.push("/login");
+      } else {
+        setError("Please press F5 or ctrl + r to refresh your browser data");
+      }
+      console.log("erro lods: " + error);
+    }
+
+    setIsLoading(false);
+  };
+
+  const getComments = async ({
+    ticket_id,
+    token,
+    setComments,
+    setIsFetching,
+    setError,
+  }) => {
+    await csrf();
+    setError("");
+
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comments/${ticket_id}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+        },
+        cache: "no-store",
+      }
+    )
+      .then((data) => data.json())
+      .then((data) => setComments(data.comments))
+      .catch((error) => setError(error.message));
+    setIsFetching(false);
+  };
+
+  const getCommentsCount = async ({ setCount, token, id }) => {
+    await csrf();
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const { data } = await axios.get(`/api/comments/${id}/count`);
+
+      if (data) {
+        setCount(data["comments-count"]);
+      }
+    } catch (error) {
+      console.log("getCommentsCount: " + error);
+    }
+  };
+
   return {
     login,
     register,
@@ -631,5 +709,8 @@ export const useAuth = () => {
     getSpecificNotification,
     getActivitiesCount,
     getUserRecentActivities,
+    postComment,
+    getComments,
+    getCommentsCount,
   };
 };

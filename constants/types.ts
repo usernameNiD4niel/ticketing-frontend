@@ -92,3 +92,11 @@ export type TicketContent = {
   created_date: string;
   created_time: string;
 };
+
+export type CommentProps = {
+  role: string;
+  name: string;
+  comment: string;
+  date_commented: string;
+  time_commented: string;
+};

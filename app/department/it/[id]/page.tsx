@@ -168,7 +168,7 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
             <h3>Requestor: {ticket.name}</h3>
             <h3>Department: IT</h3>
             <p className="text-sm">
-              Champion:{" "}
+              Champion:
               {ticket.assigned_to
                 ? ticket.assigned_to
                 : "This ticket is not yet assigned"}
@@ -216,7 +216,7 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
           handleShowRightSheet={handleShowRightSheet}
           count={count}
         />
-        <BottomSheet />
+        <BottomSheet ticket_id={ticket.id} />
       </div>
     </div>
   );

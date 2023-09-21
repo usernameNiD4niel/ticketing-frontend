@@ -2,8 +2,6 @@
 
 import { AiOutlineComment } from "react-icons/ai";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import {
   Sheet,
   SheetClose,
@@ -14,11 +12,88 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { Textarea } from "../ui/textarea";
+import { useAuth } from "@/hooks/auth";
 
-const BottomSheet = () => {
+import Cookies from "js-cookie";
+import { LoadingButton } from "./LoadingButton";
+import { CommentProps } from "@/constants/types";
+
+type BottomSheetProps = {
+  ticket_id: number;
+};
+
+const BottomSheet: FC<BottomSheetProps> = ({ ticket_id }) => {
+  const { postComment, getComments, getCommentsCount } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState("");
+  const [comment, setComment] = useState("");
+  const token = Cookies.get("token");
+  const [comments, setComments] = useState<CommentProps[]>([]);
+  const [count, setCount] = useState(0);
+
+  const handlePostComment = () => {
+    if (!comment) {
+      setError("Comment cannot be empty!");
+      return;
+    }
+
+    if (token) {
+      createComment();
+      setComment("");
+    }
+  };
+
+  const createComment = async () => {
+    setIsLoading(true);
+    await postComment({
+      comment,
+      setError,
+      setIsLoading,
+      ticket_id,
+      token,
+    });
+  };
+
+  useEffect(() => {
+    if (token) {
+      getComments({
+        setComments,
+        setError,
+        setIsFetching,
+        ticket_id,
+        token,
+      });
+
+      getCommentsCount({
+        id: ticket_id,
+        setCount,
+        token,
+      });
+    }
+  }, [isLoading]);
+
+  const ContentBody = () => {
+    if (error) {
+      return (
+        <div className="h-[120px] w-full flex items-center justify-center">
+          <h3 className="text-red-500 font-bold text-sm">{error}</h3>
+        </div>
+      );
+    }
+    if (isFetching) {
+      return (
+        <div className="h-[120px] w-full flex items-center justify-center">
+          <h3 className="font-bold text-sm">Comments are fetched...</h3>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="fixed bottom-4 md:bottom-8 right-1 md:right-8 text-2xl flex bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90 rounded-full w-12 h-12 items-center justify-center hover:cursor-pointer">
       {/* <div className="grid grid-cols-2 gap-2"> */}
@@ -31,12 +106,14 @@ const BottomSheet = () => {
             <span className="text-xl">
               <AiOutlineComment />
             </span>
-            <span className="text-[0.65rem] absolute top-2 right-2">+9</span>
+            <span className="text-[0.65rem] absolute top-2 right-1 font-bold">
+              {count != 0 && <>+{count}</>}
+            </span>
           </Button>
         </SheetTrigger>
         <SheetContent
           side={"bottom"}
-          className="h-fit max-w-3xl mx-auto top-[15%] overflow-auto"
+          className=" max-w-3xl mx-auto top-0 h-full md:top-[15%] overflow-auto"
         >
           <SheetHeader>
             <SheetTitle>Comments</SheetTitle>
@@ -44,69 +121,48 @@ const BottomSheet = () => {
               Your comment will be publicly posted in here.
             </SheetDescription>
           </SheetHeader>
-          <div className="flex flex-col gap-y-3 my-4">
-            <div className="h-32 flex items-center justify-center">
-              <h1 className="text-center">No comment yet</h1>
-            </div>
-            {/* <Comment
-              comment="This is a sample comment"
-              name="Daniel Rey"
-              role="Requestor"
-            />
-            <Comment
-              comment="This is a sample comment 2"
-              name="Sir Doni"
-              role="Catalyst"
-            />
-            <Comment
-              comment="This is a sample comment 3"
-              name="Sir Bry"
-              role="Champion"
-            />
-            <Comment
-              comment="This is a sample comment"
-              name="Daniel Rey"
-              role="Requestor"
-            />
-            <Comment
-              comment="This is a sample comment 2"
-              name="Sir Doni"
-              role="Catalyst"
-            />
-            <Comment
-              comment="This is a sample comment 3"
-              name="Sir Bry"
-              role="Champion"
-            />
-            <Comment
-              comment="This is a sample comment"
-              name="Daniel Rey"
-              role="Requestor"
-            />
-            <Comment
-              comment="This is a sample comment 2"
-              name="Sir Doni"
-              role="Catalyst"
-            />
-            <Comment
-              comment="This is a sample comment 3"
-              name="Sir Bry"
-              role="Champion"
-            /> */}
+          <div className="flex flex-col gap-y-3 my-4 md:h-[400px] overflow-y-auto">
+            <ContentBody />
+
+            {comments.length === 0 ? (
+              <div className="h-[120px] w-full flex items-center justify-center">
+                <h3>No data found</h3>
+              </div>
+            ) : (
+              comments.map((com, index) => (
+                <Comment
+                  comment={com.comment}
+                  date_commented={com.date_commented}
+                  name={com.name}
+                  role={com.role}
+                  time_commented={com.time_commented}
+                  key={index}
+                />
+              ))
+            )}
           </div>
-          <div className="mt-10">
+          <div className="mt-10 mb-4">
             <Textarea
               placeholder="Enter your comment"
-              className="w-full rounded-md my-4"
+              className="w-full rounded-md"
+              onChange={(e) => setComment(e.target.value)}
+              value={comment}
             />
+            <p className="text-red-500 text-sm mt-2">{error}</p>
           </div>
-          <SheetFooter>
+          <SheetFooter className="flex flex-row justify-end items-center gap-2">
             <SheetClose asChild>
-              <Button type="button" variant="ghost" className="my-2">
+              <Button type="button" variant="ghost" className="my-2 w-fit">
                 Cancel
               </Button>
             </SheetClose>
-            <Button className="my-2">Post Comment</Button>
+            {isLoading ? (
+              <LoadingButton isFullWidth={false} />
+            ) : (
+              <Button className="my-2 w-fit" onClick={handlePostComment}>
+                Post Comment
+              </Button>
+            )}
           </SheetFooter>
         </SheetContent>
       </Sheet>
@@ -114,13 +170,7 @@ const BottomSheet = () => {
   );
 };
 
-type CommentProps = {
-  role: string;
-  name: string;
-  comment: string;
-};
-
-const Comment: FC<CommentProps> = ({ comment, name, role }) => {
+const Comment: FC<CommentProps> = ({ comment, name, role, date_commented }) => {
   const getVariant = (role: string): "catalyst" | "champion" | "requestor" => {
     switch (role) {
       case "Requestor":
@@ -139,12 +189,13 @@ const Comment: FC<CommentProps> = ({ comment, name, role }) => {
   return (
     <>
       <hr />
-      <div className="space-y-2">
+      <div>
         <Badge variant={getVariant(role)} className="text-xs font-light">
           {role}
         </Badge>
-        <h4 className="font-medium">{name}</h4>
+        <h4 className="font-bold text-sm">{name}</h4>
         <p className="text-xs">{comment}</p>
+        <p className="text-gray-400 text-xs mt-2">{date_commented}</p>
       </div>
     </>
   );

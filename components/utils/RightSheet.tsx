@@ -56,12 +56,16 @@ const RightSheet: FC<RightSheetProps> = ({
             {isFetching && <div>Please wait...</div>}
             {error && <div>{error}</div>}
             {activities ? (
-              activities.activities.map((activity) => (
-                <NotificationCard
-                  key={activity.id}
-                  description={activity.details}
-                />
-              ))
+              activities.activities
+                .slice(0)
+                .reverse()
+                .map((activity) => (
+                  <NotificationCard
+                    key={activity.id}
+                    description={activity.details}
+                    created_at={activity.created_at}
+                  />
+                ))
             ) : (
               <div>No data found</div>
             )}
@@ -74,12 +78,19 @@ const RightSheet: FC<RightSheetProps> = ({
 
 type NotificationCardProps = {
   description: string;
+  created_at: string;
 };
 
-const NotificationCard: FC<NotificationCardProps> = ({ description }) => {
+const NotificationCard: FC<NotificationCardProps> = ({
+  description,
+  created_at,
+}) => {
   return (
-    <div className="w-full hover:cursor-pointer hover:border-s-2 hover:border-s-[#0B64B9] p-3 hover:text-[#0B64B9]">
+    <div className="w-full hover:cursor-pointer hover:border-s-2 hover:border-s-[#0B64B9] p-3 hover:text-[#0B64B9] group">
       <p className="text-xs">{description}</p>
+      <p className="text-xs text-gray-400 group-hover:text-[#0B64B9]">
+        {created_at}
+      </p>
     </div>
   );
 };
