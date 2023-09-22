@@ -24,6 +24,12 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
 
   const { getSpecificTicket, getActivitiesCount } = useAuth();
 
+  const role = Cookies.get("role");
+  const tabRole =
+    role === "requestor"
+      ? "/department/it/my-tickets"
+      : "department/it/unhandled-tickets";
+
   useEffect(() => {
     const token = Cookies.get("token");
     if (!token) {
@@ -55,13 +61,7 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
     <section className="w-full">
       <ul className="flex gap-x-2 items-center text-xs">
         <li>
-          <Link
-            href={
-              currentTab === "Feed"
-                ? "/department/it"
-                : "/department/it/unhandled-tickets"
-            }
-          >
+          <Link href={currentTab === "Feed" ? "/department/it" : tabRole}>
             {currentTab}
           </Link>
         </li>

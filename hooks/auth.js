@@ -681,6 +681,27 @@ export const useAuth = () => {
     }
   };
 
+  const getMyTickets = async ({
+    setIsFetching,
+    setError,
+    setMyTickets,
+    token,
+    name,
+  }) => {
+    await csrf();
+    setError("");
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const { data } = await axios.post("/api/tickets/my-tickets", { name });
+      if (data) {
+        setMyTickets(data["my-tickets"]);
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+    setIsFetching(false);
+  };
+
   return {
     login,
     register,
@@ -712,5 +733,6 @@ export const useAuth = () => {
     postComment,
     getComments,
     getCommentsCount,
+    getMyTickets,
   };
 };

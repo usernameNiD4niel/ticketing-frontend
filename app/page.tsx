@@ -7,10 +7,16 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import Loading from "./loading";
+import { DepartmentProps } from "@/constants/types";
 
 export default function Home() {
   const navigate = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+
+  const [departments, setDepartments] =
+    useState<DepartmentProps[]>(Departments);
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -21,9 +27,21 @@ export default function Home() {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    // Filter departments based on the search input
+    const filteredDepartments = Departments.filter((department) =>
+      department.value.toLowerCase().includes(search.toLowerCase())
+    );
+    setDepartments(filteredDepartments);
+  }, [search]);
+
   if (isLoading) {
     return <Loading />;
   }
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
   return (
     <>
@@ -44,19 +62,21 @@ export default function Home() {
               ipsum numquam!
             </p>
           </div>
-          <form>
+          <form className="relative">
             <Input
               type="text"
               placeholder="Search department here..."
               className="py-6"
+              onChange={handleOnChange}
+              value={search}
             />
           </form>
         </div>
         <div className="w-full">
           <h2 className="text-2xl font-bold">Departments</h2>
         </div>
-        <div className="flex flex-wrap gap-2 items-center justify-center">
-          {Departments.map((department, index) => (
+        <div className="flex flex-wrap gap-2 w-full">
+          {departments.map((department, index) => (
             <CardLaunch
               cardTitle={department.value}
               catalyst="Danilo Franco"

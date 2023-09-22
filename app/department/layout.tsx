@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import Header from "@/components/utils/Header";
 import MobileDrawer from "@/components/utils/MobileDrawer";
 import { ModeToggle } from "@/components/utils/ModeToggle";
@@ -7,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { CiSearch } from "react-icons/ci";
 import Cookies from "js-cookie";
 import useCounterStore from "@/hooks/states/useCounterStore";
 import { useAuth } from "@/hooks/auth";
@@ -88,18 +86,6 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
             isDrawerOpen ? "md:ml-[350px]" : "md:ml-20"
           )}
         >
-          <form className="w-full relative hidden md:block">
-            <div className="absolute top-[13px] left-3 text-2xl opacity-60">
-              <CiSearch />
-            </div>
-            <Input
-              type="text"
-              name="search"
-              required
-              placeholder="Search ticket (eg. Ticket No, Status, Date Posted)"
-              className="py-6 pl-10 pr-3 md:max-w-[87%]"
-            />
-          </form>
           {children}
         </section>
       </main>
