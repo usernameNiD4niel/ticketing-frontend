@@ -4,6 +4,7 @@ import { IconType } from "react-icons";
 import { z } from "zod";
 import { otpValidationSchema } from "@/app/(auth)/register/otp/validation";
 import { AvailableTabs } from "./enums";
+import { updatePasswordSchema } from "@/app/department/it/accounts/validation";
 
 export type DepartmentProps = {
   url: string;
@@ -24,6 +25,7 @@ export type LoginProps = {
 };
 
 export type FormRegisterSchema = z.infer<typeof validationSchema>;
+export type FormUpdatePasswordSchema = z.infer<typeof updatePasswordSchema>;
 export type FormLoginSchema = z.infer<typeof loginValidaiton>;
 export type FormOtpSchema = z.infer<typeof otpValidationSchema>;
 

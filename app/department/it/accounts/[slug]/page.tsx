@@ -8,6 +8,7 @@ import React, { FC, useState } from "react";
 import Cookies from "js-cookie";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import AccountRecent from "@/components/utils/AccountRecent";
+import UpdatePassword from "@/components/utils/UpdatePassword";
 
 type AccountTabProps = {
   params: { slug: string };
@@ -16,12 +17,14 @@ type AccountTabProps = {
 const AccountTab: FC<AccountTabProps> = ({ params }) => {
   let contentTab = null;
 
+  const token = Cookies.get("token");
+
   if (params.slug === "recent") {
     contentTab = <AccountRecent />;
   } else if (params.slug === "edit-profile") {
     contentTab = <EditProfile />;
   } else if (params.slug === "update-password") {
-    contentTab = <UpdatePassword />;
+    contentTab = <UpdatePassword token={token} />;
   } else {
     contentTab = <Settings />;
   }
@@ -31,31 +34,6 @@ const AccountTab: FC<AccountTabProps> = ({ params }) => {
 
 const EditProfile = () => {
   return <div></div>;
-};
-
-const UpdatePassword = () => {
-  return (
-    <div className="flex justify-center items-center">
-      <form className="flex gap-y-4 flex-col w-full md:w-[70%]">
-        <h3 className="font-bold text-lg">Change Password</h3>
-        <Label className="space-y-2">
-          <span>Current Password</span>
-          <Input placeholder="Enter your current password here" />
-        </Label>
-        <Label className="space-y-2">
-          <span>New Password</span>
-          <Input placeholder="Enter your new password here" />
-        </Label>
-        <Label className="space-y-2">
-          <span>Confirm Password</span>
-          <Input placeholder="Confirm your new password" />
-        </Label>
-        <div className="w-full flex justify-end items-center">
-          <Button>Submit</Button>
-        </div>
-      </form>
-    </div>
-  );
 };
 
 const Settings = () => {

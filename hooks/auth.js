@@ -21,7 +21,6 @@ export const useAuth = () => {
     setError("");
 
     try {
-      console.log("Forgot password PUT LOG: ", props);
       await axios.put("/api/update-password", props);
       handleSuccessForgotPassword();
     } catch (error) {
@@ -293,21 +292,40 @@ export const useAuth = () => {
     setIsLoadingButton(false);
   };
 
-  const resetPassword = async ({ setErrors, setStatus, ...props }) => {
+  const changePassword = async ({
+    setError,
+    setIsUpdating,
+    token,
+    email,
+    event,
+    ...props
+  }) => {
     await csrf();
-    setErrors([]);
-    setStatus(null);
+    setError("");
 
     try {
-      const response = await axios.post("/reset-password", {
-        token: router.query.token,
-        ...props,
-      });
-      router.push("/login?reset=" + btoa(response.data.status));
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.post(
+        `/api/accounts/${email}/change-password`,
+        props
+      );
+      if (response.data) {
+        toast({
+          title: "Password updated successfully",
+          description: response.data.message,
+        });
+        setIsUpdating(false);
+        event.target.reset();
+      }
     } catch (error) {
-      if (error.response.status === 422) {
-        setErrors(error.response.data.errors);
+      setIsUpdating(false);
+      if (error.response.status === 404) {
+        setError(error.response.data.message);
+      } else if (error.response.status === 400) {
+        console.log("400", error.response.data.message);
+        setError(error.response.data.message);
       } else {
+        console.log("throw", error);
         throw error;
       }
     }
@@ -706,7 +724,7 @@ export const useAuth = () => {
     login,
     register,
     forgotPassword,
-    resetPassword,
+    changePassword,
     resendEmailVerification,
     logout,
     generateOtp,
