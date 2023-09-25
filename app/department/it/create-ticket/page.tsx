@@ -38,13 +38,15 @@ const CreateTicket = () => {
   const [setUnhandledTicketsCount, unhandledTicketsCount] = useCounterStore(
     (state) => [state.setUnhandledTicketsCount, state.unhandledTicketsCount]
   );
-
   const router = useRouter();
 
-  if (!name) {
-    router.push("/login");
-    return;
-  }
+  useEffect(() => {
+    setActiveTab(AvailableTabs["Create Ticket"]);
+    if (!name) {
+      router.push("/login");
+      return;
+    }
+  }, []);
 
   const handleOnSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -92,10 +94,6 @@ const CreateTicket = () => {
       status: "open",
     });
   };
-
-  useEffect(() => {
-    setActiveTab(AvailableTabs["Create Ticket"]);
-  }, []);
 
   const handleResetBehavior = () => {
     if (subjectRef.current) {

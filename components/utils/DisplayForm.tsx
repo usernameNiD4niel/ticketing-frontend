@@ -14,14 +14,9 @@ import { AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
   isTicketOwner: boolean;
-  setRefetch: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const DisplayForm: FC<DisplayFormProps> = ({
-  ticket,
-  isTicketOwner,
-  setRefetch,
-}) => {
+const DisplayForm: FC<DisplayFormProps> = ({ ticket, isTicketOwner }) => {
   const [priority, setPriority] = useState("");
   const [assignTo, setAssignTo] = useState("");
   const [status, setStatus] = useState("");
@@ -166,7 +161,6 @@ const DisplayForm: FC<DisplayFormProps> = ({
           request,
         });
       }
-      setRefetch((prev) => !prev);
     }
     console.log("End clicked!");
   };

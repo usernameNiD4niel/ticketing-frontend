@@ -19,14 +19,12 @@ type EditCardProps = {
   ticketNumber: string;
   ticket: FeedTicketProps | null;
   isTicketOwner: boolean;
-  setRefetch: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditCard: FC<EditCardProps> = ({
   ticketNumber,
   ticket,
   isTicketOwner,
-  setRefetch,
 }) => {
   return (
     <div className="fixed bottom-[120px] py-4 md:bottom-[135px] mb-2 right-1 md:right-8 text-2xl flex bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90 rounded-full w-12 h-12 items-center justify-center hover:cursor-pointer">
@@ -48,11 +46,7 @@ const EditCard: FC<EditCardProps> = ({
               <AlertDialogDescription>
                 This will be publicly edit the ticket information.
               </AlertDialogDescription>
-              <DisplayForm
-                ticket={ticket}
-                isTicketOwner={isTicketOwner}
-                setRefetch={setRefetch}
-              />
+              <DisplayForm ticket={ticket} isTicketOwner={isTicketOwner} />
             </AlertDialogHeader>
           </AlertDialogContent>
         </div>

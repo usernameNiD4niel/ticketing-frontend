@@ -119,7 +119,6 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
 
   // if true then the current user and the owner of the ticket is the same
   const [success, setSuccess] = useState(false);
-  const [refetch, setRefetch] = useState(false);
 
   const { isUserOwnerOfTicket } = useAuth();
   useEffect(() => {
@@ -143,7 +142,7 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
         verifyCurrentUser();
       }
     }
-  }, [refetch]);
+  }, []);
 
   const handleShowRightSheet = () => {
     getSpecificNotification({
@@ -197,7 +196,6 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
             ticket={ticket}
             ticketNumber={`#${ticket.id}`}
             isTicketOwner={false}
-            setRefetch={setRefetch}
           />
         ) : (
           success && (
@@ -205,7 +203,6 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
               ticket={ticket}
               ticketNumber={`#${ticket.id}`}
               isTicketOwner={true}
-              setRefetch={setRefetch}
             />
           )
         )}

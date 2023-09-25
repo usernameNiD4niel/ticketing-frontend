@@ -12,6 +12,7 @@ type UserProps = {
   name?: string;
   email: string;
   created_at?: string;
+  department?: string;
 };
 
 const PendingRole = () => {
@@ -70,6 +71,7 @@ const PendingRole = () => {
           email={data.email}
           name={data.name}
           setClickCounter={setClickCounter}
+          department={data.department}
           setActiveCards={setActiveCards}
           key={data.id}
         />
@@ -93,6 +95,7 @@ type PendingRoleCardProps = {
   name?: string;
   created_at?: string;
   email: string;
+  department?: string;
 };
 
 const PendingRoleCard: FC<PendingRoleCardProps> = ({
@@ -100,6 +103,7 @@ const PendingRoleCard: FC<PendingRoleCardProps> = ({
   setClickCounter,
   activeCards,
   created_at,
+  department,
   email,
   name,
 }) => {
@@ -145,7 +149,7 @@ const PendingRoleCard: FC<PendingRoleCardProps> = ({
     >
       <h3 className="font-bold">{name}</h3>
       <p className="md:text-sm text-xs">Account Creation: {created_at}</p>
-      <p className="md:text-sm text-xs">Department: IT</p>
+      <p className="md:text-sm text-xs">Department: {department}</p>
     </div>
   );
 };
