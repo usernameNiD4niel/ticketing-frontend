@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import useCounterStore from "@/hooks/states/useCounterStore";
 import { useAuth } from "@/hooks/auth";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
+import useNavigationStore from "@/hooks/states/useNavigationStore";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
@@ -19,6 +18,10 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const [currentTheme, setCurrentTheme] = useState<string>(
     `${theme === "system" ? systemTheme : theme}`
   );
+
+  const role = Cookies.get("role");
+
+  const [activeTab] = useNavigationStore((state) => [state.activeTab]);
 
   const [
     setPendingRoleCount,
@@ -31,10 +34,6 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     state.unhandledTicketsCount,
     state.pendingRoleCount,
   ]);
-
-  // ! Fetch the data from the database
-  // ! create a route that do this job done
-  // ! that function should return a
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
@@ -73,7 +72,13 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <header className="flex w-full md:hidden items-center justify-between z-10 drop-shadow-md p-2 bg-[#EEF7FF] dark:bg-[#0C0A09] dark:drop-shadow-md h-16 fixed top-0 left-0">
-        <Header />
+        <Header
+          isDrawerOpen={isDrawerOpen}
+          unhandledTicketsCount={unhandledTicketsCount}
+          pendingRoleCount={pendingRoleCount}
+          activeTab={activeTab}
+          role={role}
+        />
       </header>
       <main className="mt-20 md:mt-10 w-full flex items-center justify-center">
         <MobileDrawer
