@@ -113,7 +113,7 @@ const BottomSheet: FC<BottomSheetProps> = ({ ticket_id }) => {
         </SheetTrigger>
         <SheetContent
           side={"bottom"}
-          className=" max-w-3xl mx-auto top-0 h-full md:top-[15%] overflow-auto"
+          className=" max-w-3xl mx-auto top-0 md:top-[15%] overflow-auto h-full md:h-fit"
         >
           <SheetHeader>
             <SheetTitle>Comments</SheetTitle>
@@ -173,13 +173,13 @@ const BottomSheet: FC<BottomSheetProps> = ({ ticket_id }) => {
 const Comment: FC<CommentProps> = ({ comment, name, role, date_commented }) => {
   const getVariant = (role: string): "catalyst" | "champion" | "requestor" => {
     switch (role) {
-      case "Requestor":
+      case "requestor":
         return "requestor";
-      case "Unset":
+      case "unset":
         return "requestor";
-      case "Catalyst":
+      case "catalyst":
         return "catalyst";
-      case "Champion":
+      case "champion":
         return "champion";
       default:
         return "requestor";
@@ -190,11 +190,14 @@ const Comment: FC<CommentProps> = ({ comment, name, role, date_commented }) => {
     <>
       <hr />
       <div>
-        <Badge variant={getVariant(role)} className="text-xs font-light">
-          {role}
+        <Badge
+          variant={getVariant(role.toLowerCase())}
+          className="text-xs font-light"
+        >
+          {role.toLowerCase()}
         </Badge>
         <h4 className="font-bold text-sm">{name}</h4>
-        <p className="text-xs">{comment}</p>
+        <p className="text-sm">{comment}</p>
         <p className="text-gray-400 text-xs mt-2">{date_commented}</p>
       </div>
     </>

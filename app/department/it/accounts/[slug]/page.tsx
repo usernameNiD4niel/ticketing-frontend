@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import AccountRecent from "@/components/utils/AccountRecent";
 import UpdatePassword from "@/components/utils/UpdatePassword";
+import EditProfile from "@/components/server/accounts/EditProfile";
 
 type AccountTabProps = {
   params: { slug: string };
@@ -30,10 +31,6 @@ const AccountTab: FC<AccountTabProps> = ({ params }) => {
   }
 
   return <div className="my-5 mx-3 text-xs md:text-sm">{contentTab}</div>;
-};
-
-const EditProfile = () => {
-  return <div></div>;
 };
 
 const Settings = () => {

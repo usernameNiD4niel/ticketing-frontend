@@ -9,6 +9,8 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import useCounterStore from "@/hooks/states/useCounterStore";
 import { useAuth } from "@/hooks/auth";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();

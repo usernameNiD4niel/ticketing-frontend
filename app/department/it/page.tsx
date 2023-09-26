@@ -112,7 +112,7 @@ const Page = () => {
               .reverse()
               .map((ticket) => (
                 <TroubleCard
-                  classColor={cn(getTicketColor(ticket.priority))}
+                  classColor={cn(getTicketColor(ticket.priority.toLowerCase()))}
                   ticket={ticket}
                   key={ticket.id}
                   tabName="Feed"
