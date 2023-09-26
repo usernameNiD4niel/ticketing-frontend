@@ -45,7 +45,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDrawerOpen = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen(false);
   };
 
   return (
@@ -55,7 +55,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
           <Button
             variant="outline"
             className="text-xl"
-            onClick={handleDrawerOpen}
+            onClick={() => setIsOpen(true)}
           >
             <HiMenuAlt2 />
           </Button>

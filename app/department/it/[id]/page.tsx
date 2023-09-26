@@ -26,9 +26,7 @@ const TicketPage = ({ params }: { params: { id: string } }) => {
 
   const role = Cookies.get("role");
   const tabRole =
-    role === "requestor"
-      ? "/department/it/my-tickets"
-      : "department/it/unhandled-tickets";
+    role === "requestor" ? "/department/it/my-tickets" : "unhandled-tickets";
 
   useEffect(() => {
     const token = Cookies.get("token");

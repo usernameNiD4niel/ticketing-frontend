@@ -139,7 +139,9 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
           </Badge>
           <h2 className="text-2xl font-bold">{account.name}</h2>
           <p>{account.department}</p>
-          <p className="text-sm">@{account.email}</p>
+          <p className="text-sm underline underline-offset-1">
+            @{account.email}
+          </p>
           <p className="text-sm">Joined On: {account.created_at}</p>
         </div>
       </section>

@@ -20,8 +20,7 @@ const CardAccount: FC<CardACcountProps> = ({
         <hr className="my-3" />
         <p className="text-xs">{recentActivityDescription}</p>
       </div>
-      <div className="flex w-full justify-between items-center">
-        <p className="text-xs text-gray-600">{time}</p>
+      <div className="w-full flex justify-end items-center">
         <p className="text-xs text-gray-600">{date}</p>
       </div>
     </div>

@@ -56,11 +56,6 @@ const AccountRecent = () => {
           />
         ))
       )}
-      {/* <CardAccount
-        recentActivityDescription="Sample description"
-        recentActivityTitle="Sample title"
-        date="9/20/2023"
-      /> */}
     </div>
   );
 };
