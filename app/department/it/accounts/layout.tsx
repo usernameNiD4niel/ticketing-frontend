@@ -4,7 +4,7 @@ import { AvailableTabs, TypeOfUser } from "@/constants/enums";
 import { AccountProps, ProfileTabProps } from "@/constants/types";
 import { useAuth } from "@/hooks/auth";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
-import Image from "next/image";
+import Avatar from "react-avatar";
 import React, { FC, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -105,6 +105,8 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     switch (role.toLowerCase()) {
       case "requestor":
         return "requestor";
+      case "unset":
+        return "requestor";
       case "champion":
         return "champion";
       default:
@@ -126,13 +128,14 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
   return (
     <main className="w-full">
       <section className="w-full flex items-center justify-center flex-col gap-y-3">
-        <Image
+        {/* <Image
           src="/nobita.svg"
           alt="Nobita picture"
           width={350}
           height={350}
           className="w-[150px] h-auto rounded-full"
-        />
+        /> */}
+        <Avatar name={account.name} size="150" round={true} />
         <div className="flex gap-y-1 items-center justify-center flex-col">
           <Badge variant={getRole(account.role)}>
             {account.role.toUpperCase()}
@@ -143,7 +146,7 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
             @{account.email}
           </p>
           <p className="text-sm">
-            Joined On: {account.created_at}|| {account.created_time}sdsdsd
+            Joined On: {account.created_at} - {account.created_time}
           </p>
         </div>
       </section>

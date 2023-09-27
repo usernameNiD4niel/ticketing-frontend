@@ -30,7 +30,7 @@ const AccountTab: FC<AccountTabProps> = ({ params }) => {
   if (params.slug === "recent") {
     contentTab = <AccountRecent />;
   } else if (params.slug === "edit-profile") {
-    contentTab = <EditProfile token={token!} />;
+    contentTab = <EditProfile />;
   } else if (params.slug === "update-password") {
     contentTab = <UpdatePassword token={token} />;
   } else {

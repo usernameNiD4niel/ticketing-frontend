@@ -111,9 +111,9 @@ const CreateTicket = () => {
   };
 
   return (
-    <div className="w-full flex justify-center mt-16 items-center">
+    <div className="w-full flex justify-center my-12 md:my-16 items-center">
       <form
-        className="w-full md:max-w-2xl space-y-4 flex flex-col"
+        className="w-full md:max-w-2xl space-y-4 flex flex-col px-4"
         onSubmit={handleOnSubmitForm}
       >
         <h1 className="text-2xl font-bold">Create trouble ticket</h1>
@@ -138,14 +138,16 @@ const CreateTicket = () => {
           )}
         </Label>
         {backendError && <p></p>}
-        <div className="w-full flex justify-end items-center py-5 gap-x-4">
-          <Button type="reset" variant="ghost" className="w-44">
+        <div className="w-full flex flex-col-reverse md:flex-row md:justify-end items-center py-5 gap-4">
+          <Button type="reset" variant="ghost" className="w-full md:w-44">
             Reset
           </Button>
           {isLoadingButton ? (
-            <LoadingButton isFullWidth={false} />
+            <div className="w-full md:w-44">
+              <LoadingButton isFullWidth={true} />
+            </div>
           ) : (
-            <Button type="submit" className="w-44">
+            <Button type="submit" className="w-full md:w-44">
               Create
             </Button>
           )}

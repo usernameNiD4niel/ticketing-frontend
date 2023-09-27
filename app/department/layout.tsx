@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import useCounterStore from "@/hooks/states/useCounterStore";
 import { useAuth } from "@/hooks/auth";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
+import { AvailableTabs } from "@/constants/enums";
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
@@ -22,6 +23,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   const role = Cookies.get("role");
 
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
+
+  const [name, setName] = useState("");
 
   const [
     setPendingRoleCount,
@@ -36,6 +39,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   ]);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+
+  const [tab, setTab] = useState("");
 
   const { getCurrentUserName, getUnsetCounts } = useAuth();
 
@@ -53,9 +58,11 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     }
 
     const getName = async () => {
-      const name = await getCurrentUserName(token);
+      const name_ = await getCurrentUserName(token);
 
-      Cookies.set("name", name, { expires: 7 });
+      setName(name_);
+
+      Cookies.set("name", name_, { expires: 7 });
     };
 
     const unsetCounts = async () => {
@@ -69,6 +76,28 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     getName();
   }, []);
 
+  useEffect(() => {
+    switch (activeTab) {
+      case AvailableTabs.Feed:
+        setTab("Feed");
+        break;
+      case AvailableTabs["Create Ticket"]:
+        setTab("Create Ticket");
+        break;
+      case AvailableTabs["Pending Role"]:
+        setTab("Pending Role");
+        break;
+      case AvailableTabs["My Tickets"]:
+        setTab("My Ticket");
+        break;
+      case AvailableTabs["Unhandled Tickets"]:
+        setTab("Unhandled Tickets");
+        break;
+      default:
+        setTab("Accounts");
+    }
+  }, [activeTab]);
+
   return (
     <>
       <header className="flex w-full md:hidden items-center justify-between z-10 drop-shadow-md p-2 bg-[#EEF7FF] dark:bg-[#0C0A09] dark:drop-shadow-md h-16 fixed top-0 left-0">
@@ -78,6 +107,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
           pendingRoleCount={pendingRoleCount}
           activeTab={activeTab}
           role={role}
+          tab={tab}
+          name={name}
         />
       </header>
       <main className="mt-20 md:mt-10 w-full flex items-center justify-center">
