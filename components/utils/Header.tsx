@@ -28,7 +28,7 @@ const Header: FC<HeaderProps> = ({
         activeTab={activeTab}
         role={role}
       />
-      <h1 className="font-bold">Head</h1>
+      <h1 className="font-bold">{activeTab}</h1>
       <Button variant="outline">
         <BsSearch />
       </Button>

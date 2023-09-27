@@ -13,6 +13,7 @@ type UserProps = {
   email: string;
   created_at?: string;
   department?: string;
+  created_time: string;
 };
 
 const PendingRole = () => {
@@ -58,7 +59,7 @@ const PendingRole = () => {
     return <div>Error {backendError}</div>;
   }
 
-  if (users.length === 0) {
+  if (!users) {
     return <h2>No pending roles for today</h2>;
   }
 
@@ -66,12 +67,9 @@ const PendingRole = () => {
     <div className="flex gap-3 flex-wrap pb-7">
       {users.map((data) => (
         <PendingRoleCard
-          created_at={data.created_at}
+          data={data}
           activeCards={activeCards}
-          email={data.email}
-          name={data.name}
           setClickCounter={setClickCounter}
-          department={data.department}
           setActiveCards={setActiveCards}
           key={data.id}
         />
@@ -92,22 +90,18 @@ type PendingRoleCardProps = {
   setActiveCards: React.Dispatch<React.SetStateAction<string[]>>;
   setClickCounter: React.Dispatch<React.SetStateAction<number>>;
   activeCards: string[];
-  name?: string;
-  created_at?: string;
-  email: string;
-  department?: string;
+  data: UserProps;
 };
 
 const PendingRoleCard: FC<PendingRoleCardProps> = ({
   setActiveCards,
   setClickCounter,
   activeCards,
-  created_at,
-  department,
-  email,
-  name,
+  data,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
+
+  const { email, created_at, department, created_time, name } = data;
 
   useEffect(() => {
     if (isClicked) {
@@ -150,6 +144,9 @@ const PendingRoleCard: FC<PendingRoleCardProps> = ({
       <h3 className="font-bold">{name}</h3>
       <p className="md:text-sm text-xs">Account Creation: {created_at}</p>
       <p className="md:text-sm text-xs">Department: {department}</p>
+      <div className="flex items-center justify-end">
+        <p className="text-sm">{created_time}</p>
+      </div>
     </div>
   );
 };
