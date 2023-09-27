@@ -64,6 +64,7 @@ export type AccountProps = {
   updated_at: string;
   role: string;
   department: string;
+  created_time: string;
 };
 
 export type ProfileTabProps = {

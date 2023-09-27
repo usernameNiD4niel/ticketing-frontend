@@ -142,7 +142,9 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
           <p className="text-sm underline underline-offset-1">
             @{account.email}
           </p>
-          <p className="text-sm">Joined On: {account.created_at}</p>
+          <p className="text-sm">
+            Joined On: {account.created_at}|| {account.created_time}sdsdsd
+          </p>
         </div>
       </section>
       <ul className="flex gap-x-2 items-center border-b-[1px] justify-center border-b-[#ccc] py-3 mt-10 dark:border-b-[#ccc]/20 flex-wrap">
