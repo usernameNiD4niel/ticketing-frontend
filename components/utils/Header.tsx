@@ -1,10 +1,7 @@
-import { Button } from "../ui/button";
-import { BsSearch } from "react-icons/bs";
 import LeftSheet from "./LeftSheet";
 import { FC } from "react";
 import { AvailableTabs } from "@/constants/enums";
-import Avatar from "react-avatar";
-import Link from "next/link";
+import LogoutDropDown from "./LogoutDropDown";
 
 type HeaderProps = {
   isDrawerOpen: boolean;
@@ -35,10 +32,7 @@ const Header: FC<HeaderProps> = ({
         role={role}
       />
       <h1 className="font-bold">{tab}</h1>
-      <Link href="accounts/recent">
-        {/* <BsSearch /> */}
-        <Avatar name={name} size="35" round={true} />
-      </Link>
+      <LogoutDropDown name={name} />
     </>
   );
 };
