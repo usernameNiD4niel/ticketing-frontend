@@ -18,12 +18,19 @@ type AccountTabProps = {
 const AccountTab: FC<AccountTabProps> = ({ params }) => {
   let contentTab = null;
 
-  const token = Cookies.get("token");
+  const token = Cookies.get("token") || "no token";
+
+  const router = useRouter();
+
+  if (!token) {
+    router.push("/login");
+    return;
+  }
 
   if (params.slug === "recent") {
     contentTab = <AccountRecent />;
   } else if (params.slug === "edit-profile") {
-    contentTab = <EditProfile />;
+    contentTab = <EditProfile token={token!} />;
   } else if (params.slug === "update-password") {
     contentTab = <UpdatePassword token={token} />;
   } else {

@@ -44,7 +44,9 @@ const AccountRecent = () => {
   return (
     <div className="flex gap-2 flex-wrap">
       {activities.length === 0 ? (
-        <div>No Recent activity found</div>
+        <div className="my-20 flex items-center justify-center w-full">
+          No Recent activity found
+        </div>
       ) : (
         activities.map((activity) => (
           <CardAccount

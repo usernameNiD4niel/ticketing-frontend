@@ -102,3 +102,17 @@ export type CommentProps = {
   date_commented: string;
   time_commented: string;
 };
+
+export type UsersType = {
+  user: User;
+};
+
+type User = {
+  id: number;
+  email: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  role: string;
+  department: string;
+};
