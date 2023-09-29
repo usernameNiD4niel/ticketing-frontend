@@ -88,7 +88,26 @@ const BottomSheet: FC<BottomSheetProps> = ({ ticket_id }) => {
     if (isFetching) {
       return (
         <div className="h-[120px] w-full flex items-center justify-center">
-          <h3 className="font-bold text-sm">Comments are fetched...</h3>
+          <h3 className="font-bold text-sm">Feting comments...</h3>
+        </div>
+      );
+    }
+
+    if (comments && comments.length > 0) {
+      return comments.map((com, index) => (
+        <Comment
+          comment={com.comment}
+          date_commented={com.date_commented}
+          name={com.name}
+          role={com.role}
+          time_commented={com.time_commented}
+          key={index}
+        />
+      ));
+    } else {
+      return (
+        <div className="h-full w-full flex items-center justify-center">
+          <h3 className="md:text-sm text-xs">No comments found🍔</h3>
         </div>
       );
     }
@@ -124,7 +143,7 @@ const BottomSheet: FC<BottomSheetProps> = ({ ticket_id }) => {
           <div className="flex flex-col gap-y-3 my-4 md:h-[400px] overflow-y-auto">
             <ContentBody />
 
-            {comments.length === 0 ? (
+            {/* {comments.length === 0 ? (
               <div className="h-[120px] w-full flex items-center justify-center">
                 <h3>No data found</h3>
               </div>
@@ -139,7 +158,7 @@ const BottomSheet: FC<BottomSheetProps> = ({ ticket_id }) => {
                   key={index}
                 />
               ))
-            )}
+            )} */}
           </div>
           <div className="mt-10 mb-4">
             <Textarea
@@ -196,7 +215,7 @@ const Comment: FC<CommentProps> = ({ comment, name, role, date_commented }) => {
         >
           {role.toLowerCase()}
         </Badge>
-        <h4 className="font-bold text-sm">{name}</h4>
+        <h4 className="font-bold text-sm">{name} ✔</h4>
         <p className="text-sm">{comment}</p>
         <p className="text-gray-400 text-xs mt-2">{date_commented}</p>
       </div>

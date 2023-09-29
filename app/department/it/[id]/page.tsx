@@ -107,7 +107,6 @@ type TicketContentProps = {
 const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
   const role = Cookies.get("role");
   const token = Cookies.get("token");
-  const email = Cookies.get("email");
 
   const { getSpecificNotification } = useAuth();
 
@@ -115,20 +114,20 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
   const [error, setError] = useState("");
   const [isFetching, setIsFetching] = useState(true);
 
-  // if true then the current user and the owner of the ticket is the same
-  const [success, setSuccess] = useState(false);
+  const { is_ticket_owner } = ticket;
 
-  const { isUserOwnerOfTicket } = useAuth();
   useEffect(() => {
-    if (role?.toLowerCase() === "requestor") {
-      console.log("The current user is requestor");
+    console.log("is ticket owner: ", ticket.is_ticket_owner);
+    console.log("role: ", role);
 
-      const name = ticket.name;
+    if (
+      role?.toLowerCase() === "requestor" ||
+      role?.toLowerCase() === "unset"
+    ) {
+      console.log("The current user is requestor");
 
       if (token) {
         const verifyCurrentUser = async () => {
-          await isUserOwnerOfTicket({ setSuccess, token, email, name });
-
           await getSpecificNotification({
             id: ticket.id,
             setActivities,
@@ -163,7 +162,7 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
               <Badge>{ticket.status.toUpperCase()}</Badge>
             </div>
             <h3>Requestor: {ticket.name}</h3>
-            <h3>Department: IT</h3>
+            <h3>Department: {ticket.department}</h3>
             <p className="text-sm">
               Champion:
               {ticket.assigned_to
@@ -189,20 +188,23 @@ const TicketContent: FC<TicketContentProps> = ({ count, ticket }) => {
           <h2 className="text-2xl font-bold my-2">{ticket.subject}</h2>
           <p className="text-sm text-justify">{ticket.description}</p>
         </div>
-        {role?.toLowerCase() !== "requestor" ? (
+        {role?.toLowerCase() === "champion" ||
+        role?.toLowerCase() === "catalyst" ? (
           <EditCard
             ticket={ticket}
             ticketNumber={`#${ticket.id}`}
             isTicketOwner={false}
           />
         ) : (
-          success && (
-            <EditCard
-              ticket={ticket}
-              ticketNumber={`#${ticket.id}`}
-              isTicketOwner={true}
-            />
-          )
+          <>
+            {is_ticket_owner && (
+              <EditCard
+                ticket={ticket}
+                ticketNumber={`#${ticket.id}`}
+                isTicketOwner={is_ticket_owner}
+              />
+            )}
+          </>
         )}
         <RightSheet
           activities={activities}

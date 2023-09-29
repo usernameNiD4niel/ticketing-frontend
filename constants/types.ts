@@ -48,12 +48,13 @@ export type FeedTicketProps = {
   subject: string;
   created_at: string;
   priority: string;
-  department: "IT";
+  department: string;
   updated_at: string;
   resolved_date: string;
   description: string;
   assigned_to: string;
   name: string;
+  is_ticket_owner: boolean;
 };
 
 export type AccountProps = {
@@ -116,4 +117,13 @@ type User = {
   updated_at: string;
   role: string;
   department: string;
+};
+
+export type Payment = {
+  id: string;
+  requestor: string;
+  date: string;
+  subject: string;
+  champion: string;
+  status: "open" | "close" | "resolved" | "expired" | "re-opened";
 };

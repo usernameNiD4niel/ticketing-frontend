@@ -24,6 +24,8 @@ const Page = () => {
 
   const router = useRouter();
 
+  const role = Cookies.get("role");
+
   useEffect(() => {
     setActiveTab(AvailableTabs.Feed);
 
@@ -119,13 +121,16 @@ const Page = () => {
                 />
               ))}
         </div>
-        <Link
-          href="/department/it/create-ticket"
-          className="fixed bottom-5 text-xl right-5 bg-[#EEF7FF] dar:bg-[#EEF7FF]/50 rounded-md flex items-center justify-center gap-x-1 py-2 px-4 text-[#0B64B9] border-[1px] border-[#0B64B9]"
-        >
-          <IoAdd />
-          <span className=" text-sm">Ticket</span>
-        </Link>
+        {(role && role.toLowerCase() === "unset") ||
+          (role?.toLowerCase() === "requestor" && (
+            <Link
+              href="/department/it/create-ticket"
+              className="fixed bottom-5 text-xl right-5 bg-[#EEF7FF] dar:bg-[#EEF7FF]/50 rounded-md flex items-center justify-center gap-x-1 py-2 px-4 text-[#0B64B9] border-[1px] border-[#0B64B9]"
+            >
+              <IoAdd />
+              <span className=" text-sm">Ticket</span>
+            </Link>
+          ))}
       </section>
     </Suspense>
   );

@@ -111,7 +111,7 @@ const CreateTicket = () => {
   };
 
   return (
-    <div className="w-full flex justify-center my-12 md:my-16 items-center">
+    <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
       <form
         className="w-full md:max-w-2xl space-y-4 flex flex-col px-4"
         onSubmit={handleOnSubmitForm}

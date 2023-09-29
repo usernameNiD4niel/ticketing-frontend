@@ -50,23 +50,33 @@ const MyTickets = () => {
   };
 
   if (isFetching) {
-    <div className="h-[90%]">
-      <h3>Getting your trouble tickets</h3>
-    </div>;
+    return (
+      <div className="h-[90vh] flex items-center justify-center">
+        <h3 className="text-xs md:text-sm">Getting your trouble tickets</h3>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-[90vh] flex items-center justify-center">
+        <h3>Getting your trouble tickets</h3>
+      </div>
+    );
   }
 
   return (
     <section className="p-2 w-full flex justify-center flex-col gap-y-2">
       <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
-        {!myTickets ? (
-          <div>
-            <p>
+        {!myTickets || myTickets.length === 0 ? (
+          <div className="w-full h-[90vh] flex items-center justify-center">
+            <p className="text-xs md:text-sm">
               You don&apos;t have any troubles yet,{" "}
               <Link
                 href="department/it/create-ticket"
-                className="underline-offset-1"
+                className="underline underline-offset-1"
               >
-                create your trouble ticket
+                Create your trouble ticket
               </Link>
             </p>
           </div>
