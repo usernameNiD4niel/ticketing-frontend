@@ -14,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -35,7 +34,7 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "requestor",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -48,13 +47,11 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="text-left ml-5 font-medium">
-        {row.getValue("requestor")}
-      </div>
+      <div className="text-left ml-5 font-medium">{row.getValue("name")}</div>
     ),
   },
   {
-    accessorKey: "date",
+    accessorKey: "created_at",
     header: ({ column }) => {
       return (
         <Button
@@ -68,7 +65,9 @@ export const columns: ColumnDef<Payment>[] = [
     },
     cell: ({ row }) => {
       return (
-        <div className="text-left ml-5 font-medium">{row.getValue("date")}</div>
+        <div className="text-left ml-5 font-medium">
+          {row.getValue("created_at")}
+        </div>
       );
     },
   },
@@ -82,7 +81,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "champion",
+    accessorKey: "assigned_to",
     header: ({ column }) => {
       return (
         <Button
@@ -97,7 +96,7 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-left ml-5 font-medium">
-          {row.getValue("champion")}
+          {row.getValue("assigned_to")}
         </div>
       );
     },

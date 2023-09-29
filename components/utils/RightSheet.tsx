@@ -10,41 +10,17 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { FC } from "react";
-import { ActivitiesProps } from "@/constants/types";
+import { Activity } from "@/constants/types";
 
 type RightSheetProps = {
-  handleShowRightSheet: React.MouseEventHandler<HTMLButtonElement>;
-  activities: ActivitiesProps | null;
-  error: string;
-  isFetching: boolean;
+  activities: Activity[];
   count: number;
 };
 
-const RightSheet: FC<RightSheetProps> = ({
-  handleShowRightSheet,
-  activities,
-  error,
-  count,
-  isFetching,
-}) => {
+const RightSheet: FC<RightSheetProps> = ({ activities, count }) => {
   const DisplayContent = () => {
-    if (isFetching) {
-      return (
-        <div className="h-[70vh] w-full flex items-center justify-center">
-          <h2 className="text-sm">Please wait...</h2>
-        </div>
-      );
-    }
-    if (error) {
-      return (
-        <div className="h-[70vh] w-full flex items-center justify-center">
-          <h2 className="text-sm">{error}</h2>
-        </div>
-      );
-    }
-
-    if (activities && activities.activities.length > 0) {
-      return activities.activities
+    if (activities && activities.length > 0) {
+      return activities
         .slice(0)
         .reverse()
         .map((activity) => (
@@ -73,7 +49,6 @@ const RightSheet: FC<RightSheetProps> = ({
           <Button
             variant="noVariant"
             className="text-center flex items-center justify-center rounded-full w-12 h-12"
-            onClick={handleShowRightSheet}
           >
             <span className="text-xl">
               <IoNotificationsOutline />
@@ -91,22 +66,6 @@ const RightSheet: FC<RightSheetProps> = ({
             </SheetDescription>
           </SheetHeader>
           <div className="flex flex-col gap-y-2 my-4">
-            {/* {isFetching && <div>Please wait...</div>}
-            {error && <div>{error}</div>}
-            {activities ? (
-              activities.activities
-                .slice(0)
-                .reverse()
-                .map((activity) => (
-                  <NotificationCard
-                    key={activity.id}
-                    description={activity.details}
-                    created_at={activity.created_at}
-                  />
-                ))
-            ) : (
-              <div>No data found</div>
-            )} */}
             <DisplayContent />
           </div>
         </SheetContent>

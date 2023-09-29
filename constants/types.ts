@@ -75,7 +75,7 @@ export type ProfileTabProps = {
   onClick: () => void;
 };
 
-type Activity = {
+export type Activity = {
   id: number;
   ticket_id: number;
   activity_type: string;
@@ -121,9 +121,9 @@ type User = {
 
 export type Payment = {
   id: string;
-  requestor: string;
-  date: string;
+  name: string;
+  created_at: string;
   subject: string;
-  champion: string;
+  assigned_to: string;
   status: "open" | "close" | "resolved" | "expired" | "re-opened";
 };

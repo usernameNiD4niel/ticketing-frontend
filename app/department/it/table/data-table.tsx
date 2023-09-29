@@ -18,7 +18,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -28,6 +27,7 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -63,16 +63,20 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const router = useRouter();
+
+  const handleNavigation = (destination: string) => {
+    router.push(destination);
+  };
+
   return (
     <div>
       <div className="flex items-center pb-4">
         <Input
           placeholder="Filter by ticket requestor..."
-          value={
-            (table.getColumn("requestor")?.getFilterValue() as string) ?? ""
-          }
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("requestor")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -102,6 +106,11 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  onClick={() =>
+                    handleNavigation(
+                      `/department/it/${row.getValue("id")}?tabName=Feed`
+                    )
+                  }
                   // data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
