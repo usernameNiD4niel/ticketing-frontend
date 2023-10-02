@@ -14,10 +14,9 @@ import { Activity } from "@/constants/types";
 
 type RightSheetProps = {
   activities: Activity[];
-  count: number;
 };
 
-const RightSheet: FC<RightSheetProps> = ({ activities, count }) => {
+const RightSheet: FC<RightSheetProps> = ({ activities }) => {
   const DisplayContent = () => {
     if (activities && activities.length > 0) {
       return activities
@@ -32,7 +31,7 @@ const RightSheet: FC<RightSheetProps> = ({ activities, count }) => {
         ));
     } else {
       return (
-        <div className="h-[70vh] w-full flex items-center justify-center">
+        <div className="h-40 w-full flex items-center justify-center">
           <h2 className="text-sm">
             This ticket hasn&apos;t omit any activities yet
           </h2>
@@ -42,9 +41,16 @@ const RightSheet: FC<RightSheetProps> = ({ activities, count }) => {
   };
 
   return (
-    <div className="fixed bottom-16 md:bottom-20 mb-2 right-1 md:right-8 text-2xl flex bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90 rounded-full w-12 h-12 items-center justify-center hover:cursor-pointer">
+    <div className="flex flex-col">
       {/* <div className="grid grid-cols-2 gap-2"> */}
-      <Sheet key={"right"}>
+      <h3 className="font-bold">Ticket Events</h3>
+      <div className="text-justify text-sm">
+        Changes to ticket will appear here
+      </div>
+      <div className="flex flex-col gap-y-2 my-4">
+        <DisplayContent />
+      </div>
+      {/* <Sheet key={"right"}>
         <SheetTrigger asChild>
           <Button
             variant="noVariant"
@@ -69,7 +75,7 @@ const RightSheet: FC<RightSheetProps> = ({ activities, count }) => {
             <DisplayContent />
           </div>
         </SheetContent>
-      </Sheet>
+      </Sheet> */}
     </div>
   );
 };

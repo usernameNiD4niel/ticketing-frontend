@@ -4,19 +4,14 @@ import TicketContent from "./ticket-content";
 
 type TicketContentViewerProps = {
   ticket: FeedTicketProps;
-  count: number;
   id: string;
 };
 
-const TicketContentViewer: FC<TicketContentViewerProps> = ({
-  count,
-  ticket,
-  id,
-}) => {
+const TicketContentViewer: FC<TicketContentViewerProps> = ({ ticket, id }) => {
   return (
     <React.Fragment>
       {ticket ? (
-        <TicketContent id={id} ticket={ticket} count={count} />
+        <TicketContent id={id} ticket={ticket} />
       ) : (
         <div>No data found</div>
       )}

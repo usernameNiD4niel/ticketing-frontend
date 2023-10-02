@@ -62,6 +62,9 @@ const TicketPage = async ({ params }: { params: { id: string } }) => {
 
   const id = params.id;
 
+  console.log("token", token);
+  console.log("role", role);
+
   const ticketData: ResponseProps = await getTicketData(id, token!);
 
   const { "activity-count": count }: CountResponse = await getActivities(
@@ -75,18 +78,17 @@ const TicketPage = async ({ params }: { params: { id: string } }) => {
     role === "requestor" ? "/department/it/my-tickets" : "unhandled-tickets";
 
   const ContentBody = () => {
-    if (!ticketData.success) {
+    if (!ticketData) {
       return (
         <div className="flex items-center justify-center w-full h-[80vh]">
-          <p className="text-center mx-4">{ticketData.message}</p>
+          <>{JSON.stringify(ticketData)}</>
+          <p className="text-center mx-4">Ticket not found😅</p>
         </div>
       );
     }
 
-    if (ticketData.success && ticketData.ticket) {
-      return (
-        <TicketContentViewer ticket={ticketData.ticket} count={count} id={id} />
-      );
+    if (ticketData && ticketData.ticket) {
+      return <TicketContentViewer ticket={ticketData.ticket} id={id} />;
     }
 
     return (
@@ -100,7 +102,7 @@ const TicketPage = async ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <section className="container">
+    <section className="md:container">
       <BreadCrumbs id={id} tabRole={tabRole} />
       <ContentBody />
     </section>

@@ -127,3 +127,16 @@ export type Payment = {
   assigned_to: string;
   status: "open" | "close" | "resolved" | "expired" | "re-opened";
 };
+
+export type CommentsProps = {
+  comments: CommentInfoProps[];
+  message?: string;
+};
+
+export type CommentInfoProps = {
+  date_commented: string;
+  time_commented: string;
+  role: string;
+  comment: string;
+  name: string;
+};

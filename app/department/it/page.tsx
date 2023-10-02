@@ -2,6 +2,7 @@ import { Payment } from "@/constants/types";
 import { columns } from "./table/columns";
 import { DataTable } from "./table/data-table";
 import { getCookies } from "next-client-cookies/server";
+import ActiveTabFeed from "@/components/client/feed/ActiveTab";
 
 type ResponseType = {
   tickets: Payment[];
@@ -18,6 +19,7 @@ async function getData(token: string): Promise<Payment[]> {
       },
     }
   );
+
   if (data.ok) {
     const response: Promise<ResponseType> = await data.json();
     const tickets = (await response).tickets;
@@ -48,6 +50,7 @@ export default async function DemoPage() {
   return (
     <div className="container  py-10">
       <DataTable columns={columns} data={data} />
+      <ActiveTabFeed />
     </div>
   );
 }
