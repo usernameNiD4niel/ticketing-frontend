@@ -141,7 +141,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
               <Link
                 className={cn(
                   "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                  activeTab === AvailableTabs["My Tickets"] &&
+                  activeTab === AvailableTabs["Existing Tickets"] &&
                     "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                   !isDrawerOpen
                     ? "justify-center items-center"
@@ -153,7 +153,9 @@ const LeftSheet: FC<LeftSheetProps> = ({
                 <span>
                   <BsTicketFill />
                 </span>
-                {isDrawerOpen && <span className="text-sm">My Ticket</span>}
+                {isDrawerOpen && (
+                  <span className="text-sm">Existing Ticket</span>
+                )}
               </Link>
             ) : (
               <Link

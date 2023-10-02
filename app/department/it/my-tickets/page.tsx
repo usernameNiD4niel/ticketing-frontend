@@ -19,7 +19,7 @@ const MyTickets = () => {
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
-    setActiveTab(AvailableTabs["My Tickets"]);
+    setActiveTab(AvailableTabs["Existing Tickets"]);
     getMyTicket();
   }, []);
 

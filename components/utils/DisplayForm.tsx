@@ -7,7 +7,6 @@ import { FeedTicketProps } from "@/constants/types";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth";
-import { Button } from "../ui/button";
 import { LoadingButton } from "./LoadingButton";
 import { AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
 

@@ -9,6 +9,9 @@ import React, { FC, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@/components/utils/LoadingButton";
+import { FiLogOut } from "react-icons/fi";
 
 type AccountLayoutProps = {
   children: React.ReactNode;
@@ -34,12 +37,6 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
       route: "update-password",
       onClick: () => handleTabClick("update-password"),
     },
-    {
-      displayText: "Settings",
-      isActive: false,
-      route: "settings",
-      onClick: () => handleTabClick("settings"),
-    },
   ];
   const setActiveTab = useNavigationStore((state) => state.setActiveTab);
 
@@ -47,6 +44,8 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
   const [error, setError] = useState("");
 
   const [account, setAccount] = useState<AccountProps | null>(null);
+
+  const [isLoggingingOut, setIsLoggingOut] = useState(false);
 
   const { getSpecificAccount } = useAuth();
 
@@ -93,6 +92,15 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     console.log("use effect: ", account);
   }, []);
 
+  const handleLogout = () => {
+    setIsLoggingOut(true);
+    Cookies.remove("email");
+    Cookies.remove("token");
+    Cookies.remove("role");
+    Cookies.remove("name");
+    localStorage.clear();
+  };
+
   const handleTabClick = (clickRoute: string) => {
     const updatedTabs = tabs.map((tab) => ({
       ...tab,
@@ -126,48 +134,57 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     return <div>Account not found</div>;
   }
   return (
-    <main className="w-full">
-      <section className="w-full flex items-center justify-center flex-col gap-y-3">
-        {/* <Image
-          src="/nobita.svg"
-          alt="Nobita picture"
-          width={350}
-          height={350}
-          className="w-[150px] h-auto rounded-full"
-        /> */}
-        <Avatar name={account.name} size="150" round={true} />
-        <div className="flex gap-y-1 items-center justify-center flex-col">
-          <Badge variant={getRole(account.role)}>
-            {account.role.toUpperCase()}
-          </Badge>
-          <h2 className="text-2xl font-bold">{account.name}</h2>
-          <p>{account.department}</p>
-          <p className="text-sm underline underline-offset-1">
-            @{account.email}
-          </p>
-          <p className="text-sm">
-            Joined On: {account.created_at} - {account.created_time}
-          </p>
-        </div>
-      </section>
-      <ul className="flex gap-x-2 items-center border-b-[1px] justify-center border-b-[#ccc] py-3 mt-10 dark:border-b-[#ccc]/20 flex-wrap">
-        {tabs.map((tab, index) => (
-          <li key={index}>
-            <Link
-              href={`${tab.route}`}
-              onClick={tab.onClick}
-              className={cn(
-                "py-3 px-2 lg:px-5 text-xs lg:text-sm text-center",
-                tab.isActive && "font-bold border-b-2 border-b-primary"
-              )}
+    <>
+      <main className="w-full">
+        <section className="w-full flex items-center justify-center flex-col gap-y-3">
+          <Avatar name={account.name} size="150" round={true} />
+          <div className="flex gap-y-1 items-center justify-center flex-col">
+            <Badge variant={getRole(account.role)}>
+              {account.role.toUpperCase()}
+            </Badge>
+            <h2 className="text-2xl font-bold">{account.name}</h2>
+            <p>{account.department}</p>
+            <p className="text-sm underline underline-offset-1">
+              @{account.email}
+            </p>
+            <p className="text-sm">
+              Joined On: {account.created_at} - {account.created_time}
+            </p>
+          </div>
+        </section>
+        <ul className="flex gap-x-2 items-center border-b-[1px] justify-center border-b-[#ccc] py-3 mt-10 dark:border-b-[#ccc]/20 flex-wrap">
+          {tabs.map((tab, index) => (
+            <li key={index}>
+              <Link
+                href={`${tab.route}`}
+                onClick={tab.onClick}
+                className={cn(
+                  "py-3 px-2 lg:px-5 text-xs lg:text-sm text-center",
+                  tab.isActive && "font-bold border-b-2 border-b-primary"
+                )}
+              >
+                {tab.displayText}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <section>{children}</section>
+      </main>
+      <footer className="fixed top-8 right-10">
+        {isLoggingingOut ? (
+          <LoadingButton isFullWidth={false} />
+        ) : (
+          <Link href="/login" onClick={handleLogout}>
+            <Button
+              className=" w-12 h-12 rounded-full text-2xl"
+              variant="destructive"
             >
-              {tab.displayText}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <section>{children}</section>
-    </main>
+              <FiLogOut />
+            </Button>
+          </Link>
+        )}
+      </footer>
+    </>
   );
 };
 

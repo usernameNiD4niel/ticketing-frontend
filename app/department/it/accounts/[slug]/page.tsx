@@ -31,10 +31,8 @@ const AccountTab: FC<AccountTabProps> = ({ params }) => {
     contentTab = <AccountRecent />;
   } else if (params.slug === "edit-profile") {
     contentTab = <EditProfile />;
-  } else if (params.slug === "update-password") {
-    contentTab = <UpdatePassword token={token} />;
   } else {
-    contentTab = <Settings />;
+    contentTab = <UpdatePassword token={token} />;
   }
 
   return <div className="my-5 mx-3 text-xs md:text-sm">{contentTab}</div>;

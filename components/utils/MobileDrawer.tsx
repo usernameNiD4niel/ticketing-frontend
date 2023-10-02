@@ -10,7 +10,11 @@ import Link from "next/link";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
 import { AvailableTabs } from "@/constants/enums";
 import Cookies from "js-cookie";
-import { AiFillFileExclamation } from "react-icons/ai";
+import {
+  AiFillFileExclamation,
+  AiOutlineDoubleLeft,
+  AiOutlineDoubleRight,
+} from "react-icons/ai";
 import { RiPassPendingFill } from "react-icons/ri";
 
 type MobileDrawerProps = {
@@ -118,7 +122,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           <Link
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-              activeTab === AvailableTabs["My Tickets"] &&
+              activeTab === AvailableTabs["Existing Tickets"] &&
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
@@ -127,7 +131,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             <span>
               <BsTicketFill />
             </span>
-            {isDrawerOpen && <span className="text-sm">My Ticket</span>}
+            {isDrawerOpen && <span className="text-sm">Existing Tickets</span>}
           </Link>
         ) : (
           <Link
@@ -177,7 +181,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         variant="outline"
         onClick={handleDrawerOpen}
       >
-        <BsBoxArrowInLeft />
+        {isDrawerOpen ? <AiOutlineDoubleLeft /> : <AiOutlineDoubleRight />}
       </Button>
     </aside>
   );
