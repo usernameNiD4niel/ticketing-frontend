@@ -89,7 +89,7 @@ const MyTickets = () => {
                 classColor={cn(getTicketColor(ticket.priority))}
                 ticket={ticket}
                 key={ticket.id}
-                tabName="My Ticket"
+                tabName="Existing Tickets"
               />
             ))
         )}

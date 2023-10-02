@@ -84,8 +84,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
       case AvailableTabs["Create Ticket"]:
         setTab("Create Ticket");
         break;
-      case AvailableTabs["Pending Role"]:
-        setTab("Pending Role");
+      case AvailableTabs["Departments Role"]:
+        setTab("Departments Role");
         break;
       case AvailableTabs["Existing Tickets"]:
         setTab("Existing Ticket");

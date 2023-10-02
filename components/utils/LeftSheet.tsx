@@ -111,7 +111,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
               <Link
                 className={cn(
                   "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                  activeTab === AvailableTabs["Pending Role"] &&
+                  activeTab === AvailableTabs["Departments Role"] &&
                     "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                   !isDrawerOpen
                     ? "justify-center items-center"
@@ -125,7 +125,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                 </span>
                 {isDrawerOpen ? (
                   <span className="text-sm">
-                    Pending Role{" "}
+                    Departments Role{" "}
                     <span className="text-xs ms-2 font-bold text-red-500">
                       {pendingRoleCount !== 0 && pendingRoleCount}
                     </span>

@@ -4,7 +4,7 @@ export enum AvailableTabs {
   "Existing Tickets",
   "Accounts",
   "Unhandled Tickets",
-  "Pending Role",
+  "Departments Role",
 }
 
 export enum TypeOfUser {

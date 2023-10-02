@@ -25,7 +25,7 @@ export const validationSchema = z
           /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value),
         {
           message:
-            "Password should contain at least one uppercase letter, one lowercase letter, and one digit",
+            "Password should contain at least one uppercase letter, one lowercase letter, and at least one number",
         }
       ),
     confirmPassword: z.string().min(1, "Confirm password is required"),

@@ -29,7 +29,7 @@ const PendingRole = () => {
   const [signalForRefetch, setSignalForRefetch] = useState(false);
 
   useEffect(() => {
-    setActiveTab(AvailableTabs["Pending Role"]);
+    setActiveTab(AvailableTabs["Departments Role"]);
 
     const token = Cookies.get("token");
     setIsFetching(false);
@@ -60,7 +60,7 @@ const PendingRole = () => {
   }
 
   if (!users) {
-    return <h2>No pending roles for today</h2>;
+    return <h2>No pending departments role for today</h2>;
   }
 
   return (
