@@ -94,7 +94,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         ) : (
           <Link
             className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
               activeTab === AvailableTabs["Departments Role"] &&
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
@@ -112,7 +112,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                 </span>
               </span>
             ) : (
-              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
+              <span className="text-xs ms-2 font-bold text-red-500 absolute right-2 top-2">
                 {pendingRoleCount !== 0 && pendingRoleCount}
               </span>
             )}
