@@ -30,19 +30,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";
 import { useRouter } from "next/navigation";
-import { ExcelHeaders } from "@/constants/types";
+import { ExcelHeaders, Payment } from "@/constants/types";
+import FilterPopover from "@/components/client/feed/FilterPopover";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps<TValue> {
+  columns: ColumnDef<Payment, TValue>[];
+  data: Payment[];
   responseObject: ExcelHeaders[];
+  setData: React.Dispatch<React.SetStateAction<Payment[]>>;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TValue>({
   columns,
   data,
+  setData,
   responseObject,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -77,7 +80,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="w-full flex justify-between py-3 items-center">
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Input
             placeholder="Filter by ticket requestor..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -86,11 +89,12 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm"
           />
+          <FilterPopover setData={setData} />
         </div>
         <div>
           <CSVLink
-            data={responseObject}
-            filename="daniel.txt"
+            data={data}
+            filename="tickets.csv"
             target="_blank"
             className="text-sm p-3 font-medium rounded-md bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
           >

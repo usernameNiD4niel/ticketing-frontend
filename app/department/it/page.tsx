@@ -1,8 +1,10 @@
+"use client";
 import { ExcelHeaders, Payment } from "@/constants/types";
 import { columns } from "./table/columns";
 import { DataTable } from "./table/data-table";
-import { getCookies } from "next-client-cookies/server";
+import Cookies from "js-cookie";
 import ActiveTabFeed from "@/components/client/feed/ActiveTab";
+import { useEffect, useState } from "react";
 
 type ResponseType = {
   tickets: Payment[];
@@ -43,10 +45,19 @@ async function getData(token: string): Promise<Payment[]> {
   }
 }
 
-export default async function DemoPage() {
-  const token = getCookies();
+export default function DemoPage() {
+  const token = Cookies.get("token");
 
-  const data = await getData(token.get("token")!);
+  const [data, setData] = useState<Payment[]>([]);
+
+  const fetchData = async () => {
+    const data_ = await getData(token!);
+    setData(data_);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const responseData: ExcelHeaders[] = [];
   data.map((d) => {
@@ -61,7 +72,12 @@ export default async function DemoPage() {
   });
   return (
     <div className="container  py-10">
-      <DataTable columns={columns} data={data} responseObject={responseData} />
+      <DataTable
+        columns={columns}
+        data={data}
+        responseObject={responseData}
+        setData={setData}
+      />
       <ActiveTabFeed />
     </div>
   );

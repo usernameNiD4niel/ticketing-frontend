@@ -106,7 +106,9 @@ export const columns: ColumnDef<Payment>[] = [
     header: () => <div className="text-left">Status</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-left font-medium">{row.getValue("status")}</div>
+        <div className="text-left font-medium">
+          {(row.getValue("status") as string).toUpperCase()}
+        </div>
       );
     },
   },
