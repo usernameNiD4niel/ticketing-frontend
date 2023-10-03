@@ -140,3 +140,22 @@ export type CommentInfoProps = {
   comment: string;
   name: string;
 };
+
+export type ExcelHeaders = {
+  /**
+   * responseData.push({
+      'Champion': d.assigned_to,
+      'Ticket Number': d.id,
+      'Requestor': d.name,
+      'Date Created': d.created_at,
+      'Subject': d.subject,
+      'Status': d.status
+    })
+   */
+  Champion: string;
+  "Ticket Number": string;
+  Requestor: string;
+  "Date Created": string;
+  Subject: string;
+  Status: string;
+};

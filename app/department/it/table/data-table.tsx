@@ -30,15 +30,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";
 import { useRouter } from "next/navigation";
+import { ExcelHeaders } from "@/constants/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  responseObject: ExcelHeaders[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  responseObject,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -71,19 +74,10 @@ export function DataTable<TData, TValue>({
     router.push(destination);
   };
 
-  // this function just returns a basic array, but you could also map or return some recently downloaded data in state
-  function dataFromAsyncProcess() {
-    return [
-      { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-      { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-      { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
-    ];
-  }
-
   return (
     <div>
-      <div className="w-full flex justify-between items-center">
-        <div className="flex items-center pb-4">
+      <div className="w-full flex justify-between py-3 items-center">
+        <div className="flex items-center">
           <Input
             placeholder="Filter by ticket requestor..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -95,11 +89,12 @@ export function DataTable<TData, TValue>({
         </div>
         <div>
           <CSVLink
-            data={dataFromAsyncProcess()}
-            filename="daniel.csv"
+            data={responseObject}
+            filename="daniel.txt"
             target="_blank"
+            className="text-sm p-3 font-medium rounded-md bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
           >
-            Export As
+            Export As CSV
           </CSVLink>
         </div>
       </div>

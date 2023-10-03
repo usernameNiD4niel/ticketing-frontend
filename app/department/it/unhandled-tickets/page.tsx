@@ -1,57 +1,37 @@
-"use client";
-import { AvailableTabs } from "@/constants/enums";
-import useNavigationStore from "@/hooks/states/useNavigationStore";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import Loading from "./loading";
-import { useAuth } from "@/hooks/auth";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 import { FeedTicketProps } from "@/constants/types";
 import TroubleCard from "@/components/utils/TroubleCard";
+import { getCookies } from "next-client-cookies/server";
+import UnHandledTab from "@/components/client/unhandled-tickets/tab";
 
-const UnhandledTickets = () => {
-  const setActiveTab = useNavigationStore((state) => state.setActiveTab);
-  const { getUnHandledTickets } = useAuth();
-  const router = useRouter();
-  const [error, setError] = useState("");
-  const [isFetching, setIsFetching] = useState(true);
-  const [unhandledTickets, setUnhandledTickets] = useState<FeedTicketProps[]>(
-    []
-  );
+type ResponseHelper = {
+  tickets: FeedTicketProps[];
+};
 
-  useEffect(() => {
-    setActiveTab(AvailableTabs["Unhandled Tickets"]);
-
-    const token = Cookies.get("token");
-
-    if (!token) {
-      router.push("/login");
-      return;
+const getUnHandledTickets = async (token: string) => {
+  const response: ResponseHelper = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/unhandled-tickets`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-    const getTickets = async () => {
-      const data: FeedTicketProps[] = await getUnHandledTickets({
-        setError,
-        setIsFetching,
-        token,
-      });
-      if (data) {
-        setUnhandledTickets(data);
-      }
-    };
+  )
+    .then((data) => data.json())
+    .catch((error) => error);
 
-    getTickets();
-  }, []);
+  return response.tickets;
+};
 
-  if (isFetching) {
-    return <Loading />;
-  }
+const UnhandledTickets = async () => {
+  const token = getCookies().get("token");
 
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
+  const unhandledTickets = await getUnHandledTickets(token!);
 
   return (
     <Suspense fallback={<Loading />}>
+      <UnHandledTab />
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
         <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
           {unhandledTickets &&

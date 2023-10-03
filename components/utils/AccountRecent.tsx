@@ -1,49 +1,39 @@
-"use client";
-import Cookies from "js-cookie";
 import { TicketContent } from "@/constants/types";
-import React, { useEffect, useState } from "react";
+import React, { FC } from "react";
 import CardAccount from "./CardAccount";
-import { useAuth } from "@/hooks/auth";
-import { useRouter } from "next/navigation";
 
-const AccountRecent = () => {
-  const { getUserRecentActivities } = useAuth();
+type AccountRecentProps = {
+  token: string;
+  email: string;
+};
 
-  const token = Cookies.get("token");
-  const email = Cookies.get("email");
+type ResponseUtils = {
+  ticket_content: TicketContent[];
+};
 
-  const [activities, setActivities] = useState<TicketContent[]>([]);
-  const [error, setError] = useState();
+const getRecentActivity = async (email: string, token: string) => {
+  const response: ResponseUtils = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/accounts/recent`,
+    {
+      method: "post",
+      body: JSON.stringify({ email }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+    .then((data) => data.json())
+    .catch((error) => error);
+  return response.ticket_content;
+};
 
-  const router = useRouter();
-
-  if (!(token || email)) {
-    router.push("/login");
-  }
-
-  useEffect(() => {
-    const getActivities = async () => {
-      await getUserRecentActivities({
-        email,
-        setActivities,
-        setError,
-        token,
-      });
-    };
-    getActivities();
-  }, []);
-
-  if (error) {
-    return (
-      <div>
-        <p className="text-red-500 text-sm font-bold">{error}</p>
-      </div>
-    );
-  }
+const AccountRecent: FC<AccountRecentProps> = async ({ token, email }) => {
+  // const [activities, setActivities] = useState<TicketContent[]>([]);
+  const activities = await getRecentActivity(email, token);
 
   return (
     <div className="flex gap-2 flex-wrap">
-      {activities.length === 0 ? (
+      {!activities || activities.length === 0 ? (
         <div className="my-20 flex items-center justify-center w-full">
           No Recent activity found
         </div>

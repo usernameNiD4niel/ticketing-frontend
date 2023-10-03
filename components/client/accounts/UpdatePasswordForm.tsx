@@ -11,13 +11,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Cookies from "js-cookie";
 
 type UpdatePasswordFormProps = {
-  token?: string;
+  token: string;
+  email: string;
 };
 
-const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({ token }) => {
+const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
+  token,
+  email,
+}) => {
   const {
     register,
     handleSubmit,
@@ -32,9 +35,6 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({ token }) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const { changePassword } = useAuth();
-
-  const email = Cookies.get("email");
-
   if (!token || !email) {
     router.push("/login");
   }

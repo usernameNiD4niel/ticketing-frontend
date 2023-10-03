@@ -1,4 +1,4 @@
-import { Payment } from "@/constants/types";
+import { ExcelHeaders, Payment } from "@/constants/types";
 import { columns } from "./table/columns";
 import { DataTable } from "./table/data-table";
 import { getCookies } from "next-client-cookies/server";
@@ -32,8 +32,8 @@ async function getData(token: string): Promise<Payment[]> {
         name: value.name,
         status: value.status,
         subject:
-          value.subject.length > 15
-            ? value.subject.substring(0, 15) + "..."
+          value.subject.length > 35
+            ? value.subject.substring(0, 35) + "..."
             : value.subject,
       });
     });
@@ -47,9 +47,21 @@ export default async function DemoPage() {
   const token = getCookies();
 
   const data = await getData(token.get("token")!);
+
+  const responseData: ExcelHeaders[] = [];
+  data.map((d) => {
+    responseData.push({
+      "Ticket Number": d.id,
+      Requestor: d.name,
+      "Date Created": d.created_at,
+      Champion: d.assigned_to,
+      Subject: d.subject,
+      Status: d.status,
+    });
+  });
   return (
     <div className="container  py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={data} responseObject={responseData} />
       <ActiveTabFeed />
     </div>
   );
