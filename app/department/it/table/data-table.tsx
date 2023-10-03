@@ -2,6 +2,8 @@
 
 import * as React from "react";
 
+import { CSVLink } from "react-csv";
+
 import {
   ColumnDef,
   flexRender,
@@ -69,17 +71,37 @@ export function DataTable<TData, TValue>({
     router.push(destination);
   };
 
+  // this function just returns a basic array, but you could also map or return some recently downloaded data in state
+  function dataFromAsyncProcess() {
+    return [
+      { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+      { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+      { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
+    ];
+  }
+
   return (
     <div>
-      <div className="flex items-center pb-4">
-        <Input
-          placeholder="Filter by ticket requestor..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <div className="w-full flex justify-between items-center">
+        <div className="flex items-center pb-4">
+          <Input
+            placeholder="Filter by ticket requestor..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+        <div>
+          <CSVLink
+            data={dataFromAsyncProcess()}
+            filename="daniel.csv"
+            target="_blank"
+          >
+            Export As
+          </CSVLink>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>

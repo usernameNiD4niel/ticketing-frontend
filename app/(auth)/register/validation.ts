@@ -40,3 +40,6 @@ export const validationSchema = z
       path: ["confirmPassword"],
     }
   );
+
+// ! Export table as CSV file
+// ! https://medium.com/how-to-react/how-to-add-export-to-csv-button-in-react-table-7e77ce93838b
