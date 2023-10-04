@@ -103,6 +103,7 @@ export type CommentProps = {
   comment: string;
   date_commented: string;
   time_commented: string;
+  department: string;
 };
 
 export type UsersType = {
@@ -139,6 +140,7 @@ export type CommentInfoProps = {
   role: string;
   comment: string;
   name: string;
+  department: string;
 };
 
 export type ExcelHeaders = {

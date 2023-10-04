@@ -25,16 +25,7 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
     }
 
     if (comments && comments.length > 0) {
-      return comments.map((com, index) => (
-        <Comment
-          comment={com.comment}
-          date_commented={com.date_commented}
-          name={com.name}
-          role={com.role}
-          time_commented={com.time_commented}
-          key={index}
-        />
-      ));
+      return comments.map((com, index) => <Comment {...com} key={index} />);
     } else {
       return (
         <div className="h-full w-full flex items-center justify-center">

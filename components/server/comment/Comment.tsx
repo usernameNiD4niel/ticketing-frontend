@@ -4,9 +4,10 @@ import { FC } from "react";
 
 const Comment: FC<CommentProps> = ({
   comment,
+  date_commented,
+  department,
   name,
   role,
-  date_commented,
   time_commented,
 }) => {
   const getVariant = (role: string): "catalyst" | "champion" | "requestor" => {
@@ -35,7 +36,9 @@ const Comment: FC<CommentProps> = ({
           >
             {role.toLowerCase()}
           </Badge>
-          <h4 className="font-bold text-sm">{name} ✔</h4>
+          <h4 className="font-bold text-sm">
+            {name} ✔ - ({department})
+          </h4>
           <p className="text-sm">{comment}</p>
           <p className="text-gray-400 text-xs mt-2">{date_commented}</p>
         </div>
