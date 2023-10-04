@@ -1,5 +1,5 @@
 "use client";
-import { ExcelHeaders, Payment } from "@/constants/types";
+import { Payment } from "@/constants/types";
 import { columns } from "./table/columns";
 import { DataTable } from "./table/data-table";
 import Cookies from "js-cookie";
@@ -59,25 +59,9 @@ export default function DemoPage() {
     fetchData();
   }, []);
 
-  const responseData: ExcelHeaders[] = [];
-  data.map((d) => {
-    responseData.push({
-      "Ticket Number": d.id,
-      Requestor: d.name,
-      "Date Created": d.created_at,
-      Champion: d.assigned_to,
-      Subject: d.subject,
-      Status: d.status,
-    });
-  });
   return (
     <div className="container  py-10">
-      <DataTable
-        columns={columns}
-        data={data}
-        responseObject={responseData}
-        setData={setData}
-      />
+      <DataTable columns={columns} data={data} setData={setData} />
       <ActiveTabFeed />
     </div>
   );

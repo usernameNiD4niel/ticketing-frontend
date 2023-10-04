@@ -2,8 +2,6 @@
 
 import * as React from "react";
 
-import { CSVLink } from "react-csv";
-
 import {
   ColumnDef,
   flexRender,
@@ -30,14 +28,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";
 import { useRouter } from "next/navigation";
-import { ExcelHeaders, Payment } from "@/constants/types";
+import { Payment } from "@/constants/types";
 import FilterPopover from "@/components/client/feed/FilterPopover";
 import ExportDialog from "@/components/server/feed/ExportDialog";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data: Payment[];
-  responseObject: ExcelHeaders[];
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
 }
 
@@ -45,7 +42,6 @@ export function DataTable<TValue>({
   columns,
   data,
   setData,
-  responseObject,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
