@@ -13,7 +13,7 @@ type ResponseType = {
 async function getData(token: string): Promise<Payment[]> {
   // Fetch data from your API here.
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/default`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

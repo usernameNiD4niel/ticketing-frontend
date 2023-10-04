@@ -11,9 +11,9 @@ type FilterFormProps = {
 };
 
 type RequestHelper = {
-  champion?: string;
-  status?: string;
-  date?: string;
+  champion: string;
+  status: string;
+  date: string;
 };
 
 type FilterRequestHelper = {
@@ -28,12 +28,15 @@ const updateTable = async (token: string, request: RequestHelper) => {
       method: "post",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
     }
   )
     .then((data) => data.json())
     .catch((error) => error);
+
+  console.log("response type all: ", response);
 
   return response.tickets;
 };
@@ -46,9 +49,9 @@ const FilterForm: FC<FilterFormProps> = ({ setData }) => {
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const champion = championRef.current?.value.toUpperCase();
-    const status = statusRef.current?.value.toUpperCase();
-    const date = dateRef.current?.value.toUpperCase();
+    const champion = championRef.current?.value.toUpperCase() || "";
+    const status = statusRef.current?.value.toUpperCase() || "";
+    const date = dateRef.current?.value.toUpperCase() || "";
 
     const request: RequestHelper = {
       champion,
@@ -63,6 +66,8 @@ const FilterForm: FC<FilterFormProps> = ({ setData }) => {
 
   const fetchedData = async (request: RequestHelper) => {
     const token = Cookies.get("token");
+
+    console.log("token: ", token);
 
     const serverData = await updateTable(token!, request);
 
