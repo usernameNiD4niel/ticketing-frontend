@@ -32,6 +32,7 @@ import { DataTablePagination } from "./DataTablePagination";
 import { useRouter } from "next/navigation";
 import { ExcelHeaders, Payment } from "@/constants/types";
 import FilterPopover from "@/components/client/feed/FilterPopover";
+import ExportDialog from "@/components/server/feed/ExportDialog";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -92,14 +93,7 @@ export function DataTable<TValue>({
           <FilterPopover setData={setData} />
         </div>
         <div>
-          <CSVLink
-            data={data}
-            filename="tickets.csv"
-            target="_blank"
-            className="text-sm p-3 font-medium rounded-md bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
-          >
-            Export As CSV
-          </CSVLink>
+          <ExportDialog data={data} />
         </div>
       </div>
       <div className="rounded-md border">
