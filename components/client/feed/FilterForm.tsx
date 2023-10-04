@@ -36,7 +36,21 @@ const updateTable = async (token: string, request: RequestHelper) => {
     .then((data) => data.json())
     .catch((error) => error);
 
-  console.log("response type all: ", response);
+  return response.tickets;
+};
+
+const getAllTickets = async (token: string) => {
+  const response: FilterRequestHelper = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+    .then((data) => data.json())
+    .catch((error) => error);
 
   return response.tickets;
 };
@@ -45,6 +59,8 @@ const FilterForm: FC<FilterFormProps> = ({ setData }) => {
   const championRef = useRef<HTMLInputElement>(null);
   const statusRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
+
+  const token = Cookies.get("token");
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -60,18 +76,16 @@ const FilterForm: FC<FilterFormProps> = ({ setData }) => {
     };
 
     fetchedData(request);
+  };
 
-    console.log("request: ", request);
+  const handleViewAll = async () => {
+    const data_ = await getAllTickets(token!);
+
+    setData(data_);
   };
 
   const fetchedData = async (request: RequestHelper) => {
-    const token = Cookies.get("token");
-
-    console.log("token: ", token);
-
     const serverData = await updateTable(token!, request);
-
-    console.log("response: ", serverData);
 
     setData(serverData);
   };
@@ -116,6 +130,9 @@ const FilterForm: FC<FilterFormProps> = ({ setData }) => {
           />
         </div>
         <Button>Filter</Button>
+        <Button variant="ghost" type="button" onClick={handleViewAll}>
+          View All
+        </Button>
       </form>
     </div>
   );

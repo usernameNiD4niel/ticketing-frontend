@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { FiLogOut } from "react-icons/fi";
+import DialogBoxAlert from "@/components/server/logout/DialogBoxAlert";
 
 type AccountLayoutProps = {
   children: React.ReactNode;
@@ -174,14 +175,7 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
         {isLoggingingOut ? (
           <LoadingButton isFullWidth={false} />
         ) : (
-          <Link href="/login" onClick={handleLogout}>
-            <Button
-              className=" w-12 h-12 rounded-full text-2xl"
-              variant="destructive"
-            >
-              <FiLogOut />
-            </Button>
-          </Link>
+          <DialogBoxAlert onclick={handleLogout} />
         )}
       </footer>
     </>
