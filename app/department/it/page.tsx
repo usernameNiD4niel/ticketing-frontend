@@ -60,7 +60,7 @@ export default function DemoPage() {
   }, []);
 
   return (
-    <div className="container  py-10">
+    <div className="w-full md:container py-10">
       <DataTable columns={columns} data={data} setData={setData} />
       <ActiveTabFeed />
     </div>

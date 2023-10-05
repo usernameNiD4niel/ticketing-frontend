@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Payment } from "@/constants/types";
 import { FC, useState } from "react";
+import { BiSolidFileExport } from "react-icons/bi";
 
 type ExportDialogProps = {
   data: Payment[];
@@ -21,7 +22,9 @@ const ExportDialog: FC<ExportDialogProps> = ({ data }) => {
   return (
     <Dialog open={isOpen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setIsOpen(true)}>Export As CSV</Button>
+        <Button onClick={() => setIsOpen(true)}>
+          <span className="text-sm">Export As CSV</span>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

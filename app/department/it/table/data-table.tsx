@@ -117,6 +117,7 @@ export function DataTable<TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  className="hover:cursor-pointer"
                   onClick={() =>
                     handleNavigation(
                       `/department/it/${row.getValue("id")}?tabName=Feed`

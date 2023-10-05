@@ -62,7 +62,7 @@ export default function Home() {
               ipsum numquam!
             </p>
           </div>
-          <form className="relative">
+          <div className="relative">
             <Input
               type="text"
               placeholder="Search department here..."
@@ -70,7 +70,7 @@ export default function Home() {
               onChange={handleOnChange}
               value={search}
             />
-          </form>
+          </div>
         </div>
         <div className="w-full">
           <h2 className="text-2xl font-bold">Departments</h2>
