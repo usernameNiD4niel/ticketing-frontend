@@ -39,11 +39,9 @@ const DialogBoxAlert: FC<DialogBoxAlertProps> = ({ onclick }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>
-            <Link href="/login" onClick={onclick}>
-              Continue
-            </Link>
-          </AlertDialogAction>
+          <Link href="/login" className="w-full" onClick={onclick}>
+            <AlertDialogAction className="w-full">Continue</AlertDialogAction>
+          </Link>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

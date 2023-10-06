@@ -166,7 +166,7 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
         </ul>
         <section>{children}</section>
       </main>
-      <footer className="fixed top-8 right-10">
+      <footer className="fixed bottom-4 right-4 md:top-8 md:right-10">
         {isLoggingingOut ? (
           <LoadingButton isFullWidth={false} />
         ) : (
