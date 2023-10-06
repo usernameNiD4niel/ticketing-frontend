@@ -76,7 +76,7 @@ const PendingRole = () => {
   }
 
   return (
-    <div className="flex gap-3 flex-wrap pb-7">
+    <div className="flex gap-3 flex-wrap items-center justify-center md:justify-start">
       {users.map((data) => (
         <PendingRoleCard
           data={data}
