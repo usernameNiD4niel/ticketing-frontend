@@ -3,11 +3,12 @@ import { AvailableTabs } from "@/constants/enums";
 import { FeedTicketProps } from "@/constants/types";
 import { useAuth } from "@/hooks/auth";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import TroubleCard from "@/components/utils/TroubleCard";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const MyTickets = () => {
   const [setActiveTab] = useNavigationStore((state) => [state.setActiveTab]);
@@ -18,7 +19,18 @@ const MyTickets = () => {
   const [error, setError] = useState("");
   const [isFetching, setIsFetching] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
+    const role = Cookies.get("role");
+
+    if (
+      role?.toUpperCase() === "CHAMPION" ||
+      role?.toUpperCase() === "CATALYST"
+    ) {
+      router.back();
+    }
+
     setActiveTab(AvailableTabs["Existing Tickets"]);
     getMyTicket();
   }, []);

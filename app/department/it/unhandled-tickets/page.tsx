@@ -15,6 +15,7 @@ const getUnHandledTickets = async (token: string) => {
     {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     }
   )
@@ -26,12 +27,13 @@ const getUnHandledTickets = async (token: string) => {
 
 const UnhandledTickets = async () => {
   const token = getCookies().get("token");
+  const role = getCookies().get("role");
 
   const unhandledTickets = await getUnHandledTickets(token!);
 
   return (
     <Suspense fallback={<Loading />}>
-      <UnHandledTab />
+      <UnHandledTab role={role!} />
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
         <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
           {unhandledTickets &&

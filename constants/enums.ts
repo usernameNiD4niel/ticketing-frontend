@@ -5,6 +5,7 @@ export enum AvailableTabs {
   "Accounts",
   "Unhandled Tickets",
   "Departments Role",
+  "Overview",
 }
 
 export enum TypeOfUser {

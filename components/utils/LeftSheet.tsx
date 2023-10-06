@@ -12,7 +12,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { FaHome } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { BsTicketFill } from "react-icons/bs";
-import { MdAccountBox } from "react-icons/md";
+import { MdAccountBox, MdMonitorHeart } from "react-icons/md";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AvailableTabs } from "@/constants/enums";
@@ -185,6 +185,26 @@ const LeftSheet: FC<LeftSheetProps> = ({
                     {unhandledTicketsCount !== 0 && unhandledTicketsCount}
                   </span>
                 )}
+              </Link>
+            )}
+
+            {!isRequestor && (
+              <Link
+                href="/department/it/overview"
+                className={cn(
+                  "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                  activeTab === AvailableTabs["Overview"] &&
+                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                  !isDrawerOpen
+                    ? "justify-center items-center"
+                    : "justify-start"
+                )}
+                onClick={handleDrawerOpen}
+              >
+                <span>
+                  <MdMonitorHeart />
+                </span>
+                {isDrawerOpen && <span className="text-sm">Overview</span>}
               </Link>
             )}
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { MdAccountBox } from "react-icons/md";
+import { MdAccountBox, MdMonitorHeart } from "react-icons/md";
 import { BsBoxArrowInLeft, BsTicketFill } from "react-icons/bs";
 import { IoIosCreate } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
@@ -158,6 +158,23 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                 {unhandledTicketsCount !== 0 && unhandledTicketsCount}
               </span>
             )}
+          </Link>
+        )}
+
+        {!isRequestor && (
+          <Link
+            href="/department/it/overview"
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["Overview"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
+            )}
+          >
+            <span>
+              <MdMonitorHeart />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Overview</span>}
           </Link>
         )}
 

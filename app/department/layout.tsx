@@ -70,6 +70,8 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
         await getUnsetCounts(token);
       setPendingRoleCount(unset_user_count);
       setUnhandledTicketsCount(unset_priority_ticket_count);
+      console.log("unset user count: ", unset_user_count);
+      console.log("unset priority ticket count: ", unset_priority_ticket_count);
     };
 
     unsetCounts();
@@ -92,6 +94,9 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
         break;
       case AvailableTabs["Unhandled Tickets"]:
         setTab("Unhandled Tickets");
+        break;
+      case AvailableTabs["Overview"]:
+        setTab("Overview");
         break;
       default:
         setTab("Accounts");

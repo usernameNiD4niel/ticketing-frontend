@@ -23,6 +23,7 @@ const CreateTicket = () => {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const name = Cookies.get("name");
+  const role = Cookies.get("role");
 
   //   State fields error
   const [subjectError, setSubjectError] = useState("");
@@ -44,6 +45,19 @@ const CreateTicket = () => {
     setActiveTab(AvailableTabs["Create Ticket"]);
     if (!name) {
       router.push("/login");
+      return;
+    }
+
+    if (
+      role?.toUpperCase() === "CHAMPION" ||
+      role?.toUpperCase() === "CATALYST"
+    ) {
+      toast({
+        title: "Navigation Error",
+        description: '"Champion" and "Catalyst" are not allowed in here',
+        duration: 3000,
+      });
+      router.back();
       return;
     }
   }, []);

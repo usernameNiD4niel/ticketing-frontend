@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { AvailableTabs, TypeOfUser } from "@/constants/enums";
+import { AvailableTabs } from "@/constants/enums";
 import { AccountProps, ProfileTabProps } from "@/constants/types";
 import { useAuth } from "@/hooks/auth";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
@@ -9,9 +9,7 @@ import React, { FC, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { LoadingButton } from "@/components/utils/LoadingButton";
-import { FiLogOut } from "react-icons/fi";
 import DialogBoxAlert from "@/components/server/logout/DialogBoxAlert";
 
 type AccountLayoutProps = {
@@ -39,6 +37,7 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
       onClick: () => handleTabClick("update-password"),
     },
   ];
+
   const setActiveTab = useNavigationStore((state) => state.setActiveTab);
 
   const [isFetching, setIsFetching] = useState(true);
@@ -67,11 +66,8 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
           email,
         });
 
-        console.log("email: ", email);
-
         setAccount(data);
       } else {
-        console.log("email: ", email);
         setAccount(null);
       }
     };
@@ -86,7 +82,6 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
       ...tab,
       isActive: tab.route === currentPathname,
     }));
-    console.log("Current Path: ", currentPathname);
 
     setTabs(updatedTabs);
 

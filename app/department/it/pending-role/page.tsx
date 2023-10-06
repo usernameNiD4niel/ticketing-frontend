@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import React, { FC, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useAuth } from "@/hooks/auth";
+import { useRouter } from "next/navigation";
 
 type UserProps = {
   id?: number;
@@ -28,7 +29,18 @@ const PendingRole = () => {
 
   const [signalForRefetch, setSignalForRefetch] = useState(false);
 
+  const router = useRouter();
+
   useEffect(() => {
+    const role = Cookies.get("role");
+
+    if (
+      role?.toUpperCase() === "REQUESTOR" ||
+      role?.toUpperCase() === "UNSET"
+    ) {
+      router.back();
+    }
+
     setActiveTab(AvailableTabs["Departments Role"]);
 
     const token = Cookies.get("token");
