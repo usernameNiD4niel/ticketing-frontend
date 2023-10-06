@@ -8,6 +8,7 @@ import { PiMathOperationsBold } from "react-icons/pi";
 import { LiaFileContractSolid } from "react-icons/lia";
 
 export const Departments: DepartmentProps[] = [
+  { url: "it", label: "IT", value: "IT", icon: LiaFileContractSolid },
   {
     url: "refrigeration",
     label: "Refrigeration",
@@ -108,7 +109,6 @@ export const Departments: DepartmentProps[] = [
     value: "Human Resources",
     icon: LiaFileContractSolid,
   },
-  { url: "it", label: "IT", value: "IT", icon: LiaFileContractSolid },
   { url: "ehs", label: "EHS", value: "EHS", icon: LiaFileContractSolid },
   {
     url: "strategic-business-growth",

@@ -7,7 +7,7 @@ const Overview = () => {
   return (
     <>
       <ActiveTab />
-      <div className="flex flex-col gap-10 container pb-10">
+      <div className="flex flex-col gap-10 md:container pb-10">
         <CreateTickets />
         <TicketsStatus />
       </div>

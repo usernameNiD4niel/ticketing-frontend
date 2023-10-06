@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Avatar from "react-avatar";
 import { Button } from "../ui/button";
+import SignOut from "../client/header/sign-out";
 
 type LogoutDropDownProps = {
   name: string;
@@ -20,7 +21,7 @@ const LogoutDropDown: React.FC<LogoutDropDownProps> = ({ name }) => {
           <Avatar name={name} size="35" round={true} />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-fit">
+      <DropdownMenuContent className="w-full">
         <DropdownMenuLabel>
           <div className="flex gap-x-2 items-center p-3">
             <Avatar name={name} size="60" round={true} />
@@ -28,12 +29,7 @@ const LogoutDropDown: React.FC<LogoutDropDownProps> = ({ name }) => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Button
-          variant={"noVariant"}
-          className="w-full text-xs md:text-sm text-start"
-        >
-          Sign Out
-        </Button>
+        <SignOut />
       </DropdownMenuContent>
     </DropdownMenu>
   );
