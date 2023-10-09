@@ -120,13 +120,6 @@ export const useAuth = () => {
       Cookies.set("token", token, { expires: 7 });
       Cookies.set("email", props.email, { expires: 7 });
       Cookies.set("role", role, { expires: 7 });
-      // Save the token (e.g., in a cookie or localStorage)
-      // You can use a library like 'js-cookie' for this
-      // Example with 'js-cookie':
-      // import Cookies from 'js-cookie';
-      // Cookies.set('authToken', token, { expires: 7 });
-
-      // Redirect to the desired page after successful login
       router.push("/");
     } catch (error) {
       console.log(error.response.status, error.response.status === 401);
