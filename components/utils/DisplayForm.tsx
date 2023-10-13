@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth";
 import { LoadingButton } from "./LoadingButton";
 import { AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
+import useCounterStore from "@/hooks/states/useCounterStore";
 
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
@@ -16,28 +17,26 @@ type DisplayFormProps = {
 };
 
 const DisplayForm: FC<DisplayFormProps> = ({ ticket, isTicketOwner }) => {
-  const [priority, setPriority] = useState("");
-  const [assignTo, setAssignTo] = useState("");
-  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState(ticket!.priority);
+  const [assignTo, setAssignTo] = useState(ticket!.assigned_to);
+  const [status, setStatus] = useState(ticket!.status);
   const [champions, setChampions] = useState<string[]>([]);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [statusComparator, setStatusComparator] = useState("");
-  const [assignToComparator, setAssignToComparator] = useState("");
-  const [priorityComparator, setPriorityComparator] = useState("");
+  const priority_ = ticket?.priority;
+  const assigned_to_ = ticket?.assigned_to;
+  const status_ = ticket?.status;
 
   const router = useRouter();
 
   const token = Cookies.get("token");
 
-  const {
-    getAllChampions,
-    getSpecificTicketStatus,
-    getPriority,
-    getSpecificAsssignTo,
-    updateSpecifiedTicketField,
-  } = useAuth();
+  const [unhandledTicketsCount, setUnhandledTicketsCount] = useCounterStore(
+    (state) => [state.unhandledTicketsCount, state.setUnhandledTicketsCount]
+  );
+
+  const { getAllChampions, updateSpecifiedTicketField } = useAuth();
 
   useEffect(() => {
     if (!token) {
@@ -54,66 +53,27 @@ const DisplayForm: FC<DisplayFormProps> = ({ ticket, isTicketOwner }) => {
       if (Array.isArray(champions_)) {
         setChampions(champions_);
       }
+
+      setIsLoading(false);
     };
 
-    const id = ticket?.id;
-
-    if (!id) {
-      router.refresh();
-      return;
-    }
-
-    const getStatus = async () => {
-      const message = await getSpecificTicketStatus({
-        id,
-        setError,
-        token,
-      });
-      setStatusComparator(message);
-      setStatus(message);
-    };
-
-    const getPriorityFetcher = async () => {
-      const message = await getPriority({
-        id,
-        setError,
-        token,
-      });
-      setPriorityComparator(message);
-      setPriority(message);
-    };
-
-    const getAssignedTo = async () => {
-      const message = await getSpecificAsssignTo({
-        id,
-        setError,
-        token,
-      });
-
-      setAssignToComparator(message);
-      setAssignTo(message);
-    };
-
-    getAssignedTo();
     getChampions();
-    getStatus();
-    getPriorityFetcher();
   }, []);
 
   const handleUpdateTicket = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const request: Response = {
-      status,
-      assigned_to: assignTo,
-      priority,
+      status: status || "",
+      assigned_to: assignTo || "",
+      priority: priority || "",
     };
 
     const id = ticket?.id;
     if (id) {
       setIsLoading(true);
       if (isTicketOwner) {
-        if (status === statusComparator) {
+        if (status === status_) {
           setIsLoading(false);
           return;
         }
@@ -125,32 +85,17 @@ const DisplayForm: FC<DisplayFormProps> = ({ ticket, isTicketOwner }) => {
           setIsLoading,
           status,
         });
-      } else {
-        // The purpose of this code is to check if the user doesn't change any data yet they click "Update"
-        if (!statusComparator && !assignToComparator && !priorityComparator) {
-          setIsLoading(false);
-          console.log("update mo eh wala ka naman nilagay na data");
-          console.log("status " + status + " : " + statusComparator);
-          console.log("assignTo " + assignTo + " : " + assignToComparator);
-          console.log("priority " + priority + " : " + priorityComparator);
 
+        setUnhandledTicketsCount(unhandledTicketsCount - 1);
+      } else {
+        if (
+          status_ === status &&
+          assigned_to_ === assignTo &&
+          priority_ === priority
+        ) {
+          setIsLoading(false);
           return;
         }
-        if (status === statusComparator) {
-          delete request.status;
-        }
-
-        if (assignTo === assignToComparator) {
-          delete request.assigned_to;
-        }
-
-        if (priority === priorityComparator) {
-          delete request.priority;
-        }
-
-        console.log("status " + status + " : " + statusComparator);
-        console.log("assignTo " + assignTo + " : " + assignToComparator);
-        console.log("priority " + priority + " : " + priorityComparator);
 
         updateSpecifiedTicketField({
           token,
@@ -159,9 +104,12 @@ const DisplayForm: FC<DisplayFormProps> = ({ ticket, isTicketOwner }) => {
           setIsLoading,
           request,
         });
+
+        if (status_ !== status) {
+          setUnhandledTicketsCount(unhandledTicketsCount - 1);
+        }
       }
     }
-    console.log("End clicked!");
   };
 
   if (error) {
@@ -190,18 +138,15 @@ const DisplayForm: FC<DisplayFormProps> = ({ ticket, isTicketOwner }) => {
           setPriority={setPriority}
         />
       )}
-      {status ? (
-        <CustomSelect
-          label="Status"
-          placeHolder="Status"
-          selectItems={["OPEN", "CLOSE", "RESOLVED", "EXPIRED", "RE-OPENED"]}
-          selectedState={status.toUpperCase()}
-          isFullWidth={true}
-          setSelectedState={setStatus}
-        />
-      ) : (
-        <div>Getting status...</div>
-      )}
+      <CustomSelect
+        label="Status"
+        placeHolder="Status"
+        selectItems={["OPEN", "CLOSE", "RESOLVED", "EXPIRED", "RE-OPENED"]}
+        selectedState={ticket!.status.toUpperCase()}
+        isFullWidth={true}
+        setSelectedState={setStatus}
+      />
+
       <div className="w-full flex justify-end items-center gap-x-3 mt-3">
         <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
         {isLoading ? (
@@ -238,18 +183,15 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
 }) => {
   return (
     <React.Fragment>
-      {priority ? (
-        <CustomSelect
-          label="Priority"
-          placeHolder="Priority"
-          selectItems={["LOW", "MEDIUM", "HIGH"]}
-          selectedState={priority.toUpperCase()}
-          isFullWidth={true}
-          setSelectedState={setPriority}
-        />
-      ) : (
-        <div>Getting priority...</div>
-      )}
+      <CustomSelect
+        label="Priority"
+        placeHolder="Priority"
+        selectItems={["LOW", "MEDIUM", "HIGH"]}
+        selectedState={priority.toUpperCase()}
+        isFullWidth={true}
+        setSelectedState={setPriority}
+      />
+
       {champions.length === 0 ? (
         <div>Getting champions...</div>
       ) : (
@@ -265,7 +207,5 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
     </React.Fragment>
   );
 };
-
-// ! Fetch all of the champion and display it in select assign to
 
 export default DisplayForm;

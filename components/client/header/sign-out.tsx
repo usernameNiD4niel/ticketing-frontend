@@ -12,7 +12,8 @@ const SignOut = () => {
     setIsLoggingOut(true);
     Cookies.remove("email");
     Cookies.remove("token");
-    Cookies.remove("role");
+    Cookies.remove("it_access_level");
+    Cookies.remove("hr_access_level");
     Cookies.remove("name");
     localStorage.clear();
     router.push("/login");

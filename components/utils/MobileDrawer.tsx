@@ -1,8 +1,12 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { MdAccountBox, MdMonitorHeart } from "react-icons/md";
-import { BsBoxArrowInLeft, BsTicketFill } from "react-icons/bs";
+import {
+  MdAccountBox,
+  MdMarkEmailUnread,
+  MdMonitorHeart,
+} from "react-icons/md";
+import { BsTicketFill } from "react-icons/bs";
 import { IoIosCreate } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { cn } from "@/lib/utils";
@@ -35,12 +39,15 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   };
 
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
+  const role = Cookies.get("it_access_level");
 
   const [isRequestor, setIsRequestor] = useState(true);
 
   useEffect(() => {
-    const role = Cookies.get("role");
-    if ((role && role === "requestor") || role === "unset") {
+    if (
+      role &&
+      (role.toLowerCase() === "requestor" || role.toLowerCase() === "unset")
+    ) {
       setIsRequestor(true);
     } else {
       setIsRequestor(false);
@@ -192,6 +199,23 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           </span>
           {isDrawerOpen && <span className="text-sm">Accounts</span>}
         </Link>
+
+        {role && role === "SUPREME" && (
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs.Code &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
+            )}
+            href="/department/it/code"
+          >
+            <span>
+              <MdMarkEmailUnread />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Code</span>}
+          </Link>
+        )}
       </div>
       <Button
         className="absolute top-10 -right-3 text-sm text-center"

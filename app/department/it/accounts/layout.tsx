@@ -57,6 +57,7 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     const getAccount = async () => {
       const email = Cookies.get("email");
       const token = Cookies.get("token");
+      console.log("email: ", email);
 
       if (email) {
         const data: AccountProps = await getSpecificAccount({
@@ -92,7 +93,8 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     setIsLoggingOut(true);
     Cookies.remove("email");
     Cookies.remove("token");
-    Cookies.remove("role");
+    Cookies.remove("it_access_level");
+    Cookies.remove("hr_access_level");
     Cookies.remove("name");
     localStorage.clear();
   };
@@ -135,8 +137,8 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
         <section className="w-full flex items-center justify-center flex-col gap-y-3">
           <Avatar name={account.name} size="150" round={true} />
           <div className="flex gap-y-1 items-center justify-center flex-col">
-            <Badge variant={getRole(account.role)}>
-              {account.role.toUpperCase()}
+            <Badge variant={getRole(account.access_level.it_access_level)}>
+              {account.access_level.it_access_level.toUpperCase()}
             </Badge>
             <h2 className="text-2xl font-bold">{account.name}</h2>
             <p>{account.department}</p>

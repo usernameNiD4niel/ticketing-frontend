@@ -23,7 +23,7 @@ const CreateTicket = () => {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const name = Cookies.get("name");
-  const role = Cookies.get("role");
+  const role = Cookies.get("it_access_level");
 
   //   State fields error
   const [subjectError, setSubjectError] = useState("");

@@ -32,7 +32,7 @@ const PendingRole = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const role = Cookies.get("role");
+    const role = Cookies.get("it_access_level");
 
     if (
       role?.toUpperCase() === "REQUESTOR" ||
@@ -59,20 +59,40 @@ const PendingRole = () => {
     getRoles();
   }, [signalForRefetch]);
 
-  useEffect(() => {
-    console.log(activeCards);
-  }, [activeCards]);
-
   if (isFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full flex items-center justify-center h-[90vh]">
+        <h2 className="text-sm">Getting department roles</h2>
+      </div>
+    );
   }
 
   if (backendError) {
-    return <div>Error {backendError}</div>;
+    return (
+      <div className="w-full flex items-center justify-center h-[90vh]">
+        <h2 className="text-sm">Error {backendError}</h2>
+      </div>
+    );
   }
 
   if (!users) {
-    return <h2>No pending departments role for today</h2>;
+    return (
+      <div className="w-full flex items-center justify-center h-[90vh]">
+        <h2 className="text-sm">
+          You're doing great! Continue handling all tickets well😉
+        </h2>
+      </div>
+    );
+  }
+
+  if (users.length === 0) {
+    return (
+      <div className="w-full flex items-center justify-center h-[90vh]">
+        <h2 className="text-sm">
+          You're doing great! Continue handling your department well😉
+        </h2>
+      </div>
+    );
   }
 
   return (

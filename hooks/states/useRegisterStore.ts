@@ -11,7 +11,6 @@ type Action = {
 
 const initialState: State = {
   userData: {
-    role: "",
     name: "",
     password: "",
     otp: "",

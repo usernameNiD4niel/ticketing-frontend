@@ -64,7 +64,6 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
     if (validationResult.success) {
       setError("");
     } else {
-      console.log(validationResult.error.errors[0].message);
       setError(validationResult.error.errors[0].message);
       return;
     }
@@ -89,7 +88,7 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
   };
 
   const registerUser = () => {
-    const { email, name, password, role, department } = userData;
+    const { email, name, password, department } = userData;
     register({
       setBackendValidationError: setError,
       setIsLoadingButton,
@@ -97,7 +96,6 @@ const CardOtp: React.FC<CardOtpProps> = ({ emailOtp, reset, userData }) => {
       email,
       name,
       password,
-      role,
       department,
     });
   };

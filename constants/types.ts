@@ -30,7 +30,6 @@ export type FormLoginSchema = z.infer<typeof loginValidaiton>;
 export type FormOtpSchema = z.infer<typeof otpValidationSchema>;
 
 export type UserDataProps = {
-  role: string;
   name: string;
   password: string;
   otp: string;
@@ -63,9 +62,14 @@ export type AccountProps = {
   email: string;
   created_at: string;
   updated_at: string;
-  role: string;
+  access_level: AccessLevelProps;
   department: string;
   created_time: string;
+};
+
+type AccessLevelProps = {
+  id: number;
+  it_access_level: string;
 };
 
 export type ProfileTabProps = {
@@ -98,7 +102,7 @@ export type TicketContent = {
 };
 
 export type CommentProps = {
-  role: string;
+  it_access_level: string;
   name: string;
   comment: string;
   date_commented: string;
@@ -116,7 +120,7 @@ type User = {
   name: string;
   created_at: string;
   updated_at: string;
-  role: string;
+  it_access_level: string;
   department: string;
 };
 
@@ -137,7 +141,7 @@ export type CommentsProps = {
 export type CommentInfoProps = {
   date_commented: string;
   time_commented: string;
-  role: string;
+  it_access_level: string;
   comment: string;
   name: string;
   department: string;

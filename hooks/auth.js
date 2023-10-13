@@ -75,6 +75,8 @@ export const useAuth = () => {
 
       const response = await axios.post("/api/accounts", { email });
 
+      console.log("the response: ", response);
+
       if (response.data) {
         setError("");
         console.log("test", response.data.account);
@@ -116,10 +118,11 @@ export const useAuth = () => {
 
     try {
       const response = await axios.post("/api/login", props);
-      const { token, role } = response.data.data; // Extract the token from the response
+      const { token, it_access_level, hr_access_level } = response.data.data; // Extract the token from the response
       Cookies.set("token", token, { expires: 7 });
       Cookies.set("email", props.email, { expires: 7 });
-      Cookies.set("role", role, { expires: 7 });
+      Cookies.set("it_access_level", it_access_level, { expires: 7 });
+      Cookies.set("hr_access_level", hr_access_level, { expires: 7 });
       router.push("/");
     } catch (error) {
       console.log(error.response.status, error.response.status === 401);
@@ -145,14 +148,14 @@ export const useAuth = () => {
       const response = await axios.post("/api/register", props);
 
       // Registration was successful, you can handle it as needed
-      const { token } = response.data.data;
+      const { token, it_access_level, hr_access_level } = response.data.data;
       Cookies.set("token", token, { expires: 7 });
       Cookies.set("email", props.email, { expires: 7 });
-      Cookies.set("role", props.role, { expires: 7 });
+      Cookies.set("it_access_level", it_access_level, { expires: 7 });
+      Cookies.set("hr_access_level", hr_access_level, { expires: 7 });
       reset();
       router.push("/");
     } catch (error) {
-      console.log(error.response.status === 401, error);
       if (error.response.status === 401) {
         setBackendValidationError(error.response.data.message);
       } else {
@@ -175,15 +178,11 @@ export const useAuth = () => {
     try {
       const response = await axios.post("api/otp", props);
       const { otp } = response.data;
-      console.log("The otp is: ", otp);
       userObject["otp"] = otp;
-      console.log(userObject);
       setUserData(userObject);
       router.push("/register/otp");
     } catch (error) {
       if (error.response.status === 422) {
-        console.log(error.response.status === 422, "is error is equal to 422");
-        console.log("The error is: ", error);
         setBackendValidationError(error.response.data.error);
       } else {
         throw error;
@@ -247,7 +246,7 @@ export const useAuth = () => {
     try {
       const response = await axios.post("api/pending-role", {
         emails,
-        role,
+        it_access_level: role,
       });
 
       if (response.data.message) {

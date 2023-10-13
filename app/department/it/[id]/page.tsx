@@ -32,16 +32,18 @@ const getTicketData = async (id: string, token: string) => {
 
 const TicketPage = async ({ params }: { params: { id: string } }) => {
   const token = getCookies().get("token");
-  const role = getCookies().get("role");
+  const role = getCookies().get("it_access_level");
 
   const id = params.id;
 
   const ticketData: ResponseProps = await getTicketData(id, token!);
 
-  console.log("data...", JSON.stringify(ticketData.ticket));
+  console.log("this is ticket data: ", ticketData);
 
   const tabRole =
-    role === "requestor" ? "/department/it/my-tickets" : "unhandled-tickets";
+    role?.toLowerCase() === "requestor"
+      ? "/department/it/my-tickets"
+      : "unhandled-tickets";
 
   const ContentBody = () => {
     if (!ticketData) {

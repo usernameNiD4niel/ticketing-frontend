@@ -68,13 +68,11 @@ const Register = () => {
   const createRequest: SubmitHandler<FormRegisterSchema> = async (data) => {
     setIsLoadingButton(true);
 
-    const role = "unset";
     const name = data.name;
     const email = data.email;
     const password = data.password;
 
     const userObject: UserDataProps = {
-      role,
       name,
       email,
       password,

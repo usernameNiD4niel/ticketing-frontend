@@ -22,7 +22,7 @@ const MyTickets = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const role = Cookies.get("role");
+    const role = Cookies.get("it_access_level");
 
     if (
       role?.toUpperCase() === "CHAMPION" ||

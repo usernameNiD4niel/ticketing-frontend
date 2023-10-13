@@ -12,7 +12,11 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { FaHome } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { BsTicketFill } from "react-icons/bs";
-import { MdAccountBox, MdMonitorHeart } from "react-icons/md";
+import {
+  MdAccountBox,
+  MdMarkEmailUnread,
+  MdMonitorHeart,
+} from "react-icons/md";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AvailableTabs } from "@/constants/enums";
@@ -35,14 +39,18 @@ const LeftSheet: FC<LeftSheetProps> = ({
   unhandledTicketsCount,
   role,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   let isRequestor = true;
-  if ((role && role === "requestor") || role === "unset") {
+  if (
+    role &&
+    (role.toLocaleUpperCase() === "requestor" || role.toLowerCase() === "unset")
+  ) {
     isRequestor = true;
   } else {
     isRequestor = false;
   }
 
-  const [isOpen, setIsOpen] = useState(false);
+  console.log("the role is: ", role);
 
   const handleDrawerOpen = () => {
     setIsOpen(false);
@@ -223,6 +231,26 @@ const LeftSheet: FC<LeftSheetProps> = ({
               </span>
               {isDrawerOpen && <span className="text-sm">Accounts</span>}
             </Link>
+
+            {role && role === "SUPREME" && (
+              <Link
+                className={cn(
+                  "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                  activeTab === AvailableTabs.Code &&
+                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                  !isDrawerOpen
+                    ? "justify-center items-center"
+                    : "justify-start"
+                )}
+                href="/department/it/code"
+                onClick={handleDrawerOpen}
+              >
+                <span>
+                  <MdMarkEmailUnread />
+                </span>
+                {isDrawerOpen && <span className="text-sm">Code</span>}
+              </Link>
+            )}
           </section>
         </SheetContent>
       </Sheet>

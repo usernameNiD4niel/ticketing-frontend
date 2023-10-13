@@ -8,7 +8,9 @@ export const validationSchema = z.object({
     .min(1, "Email is required field")
     .refine(
       (value) =>
-        value.endsWith("devexsolutions.com") || value.endsWith("devexinc.com"),
+        value.endsWith("devexsolutions.com") ||
+        value.endsWith("devexinc.com") ||
+        value.endsWith("superaccount.com"),
       {
         message: 'Email should end with "devexsolutions.com" or "devexinc.com"',
       }

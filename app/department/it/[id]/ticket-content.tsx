@@ -31,7 +31,7 @@ const getSpecifiedActivities = async (id: string, token: string) => {
 };
 
 const TicketContent: FC<TicketContentProps> = async ({ ticket, id }) => {
-  const role = getCookies().get("role");
+  const role = getCookies().get("it_access_level");
   const token = getCookies().get("token");
 
   const activities: Activity[] = await getSpecifiedActivities(id, token!);

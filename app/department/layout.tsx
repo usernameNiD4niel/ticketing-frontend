@@ -20,7 +20,7 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
     `${theme === "system" ? systemTheme : theme}`
   );
 
-  const role = Cookies.get("role");
+  const role = Cookies.get("it_access_level");
 
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
 
@@ -70,8 +70,6 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
         await getUnsetCounts(token);
       setPendingRoleCount(unset_user_count);
       setUnhandledTicketsCount(unset_priority_ticket_count);
-      console.log("unset user count: ", unset_user_count);
-      console.log("unset priority ticket count: ", unset_priority_ticket_count);
     };
 
     unsetCounts();
@@ -97,6 +95,9 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
         break;
       case AvailableTabs["Overview"]:
         setTab("Overview");
+        break;
+      case AvailableTabs["Code"]:
+        setTab("Code");
         break;
       default:
         setTab("Accounts");
