@@ -107,7 +107,9 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     setTabs(updatedTabs);
   };
 
-  const getRole = (role: string): "requestor" | "champion" | "catalyst" => {
+  const getRole = (
+    role: string
+  ): "requestor" | "champion" | "catalyst" | "supreme" => {
     switch (role.toLowerCase()) {
       case "requestor":
         return "requestor";
@@ -115,6 +117,8 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
         return "requestor";
       case "champion":
         return "champion";
+      case "supreme":
+        return "supreme";
       default:
         return "catalyst";
     }

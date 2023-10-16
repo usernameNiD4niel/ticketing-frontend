@@ -13,30 +13,8 @@ import { Column, ColumnDef } from "@tanstack/react-table";
 import Cookies from "js-cookie";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-
-const deleteByEmail = async (email: string) => {
-  const token = Cookies.get("token");
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/otps/${email}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (response.ok) {
-    const data = await response.json();
-    const message: string = data.message;
-
-    return message;
-  }
-
-  throw new Error(`Cannot delete the row of ${email}`);
-};
+import CopyToClipboards from "./copy-to-clipboard";
+import DropdownDelete from "./dropdown-delete";
 
 const handleSorting = (column: Column<CodeTableProps, unknown>) =>
   column.toggleSorting(column.getIsSorted() === "asc");
@@ -82,26 +60,6 @@ export const columns: ColumnDef<CodeTableProps>[] = [
     id: "actions",
     cell: ({ row }) => {
       const code = row.original;
-      const { toast } = useToast();
-      const router = useRouter();
-
-      const handleDeletion = async (email: string) => {
-        const message = await deleteByEmail(email);
-
-        if (message && message.length > 10) {
-          toast({
-            title: "Deletion Success",
-            description: message,
-          });
-          router.refresh();
-        } else {
-          toast({
-            title: "Failed to Delete",
-            description: "OTP cannot be deleted",
-          });
-        }
-      };
-
       return (
         <>
           <DropdownMenu>
@@ -114,21 +72,9 @@ export const columns: ColumnDef<CodeTableProps>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem>
-                <CopyToClipboard
-                  text={code.otp}
-                  onCopy={() =>
-                    toast({
-                      description: `✔ Copied to clipboard "${code.otp}"`,
-                      duration: 2000,
-                    })
-                  }
-                >
-                  <span>Copy OTP</span>
-                </CopyToClipboard>
+                <CopyToClipboards otp={code.otp} />
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDeletion(code.email)}>
-                Delete Row
-              </DropdownMenuItem>
+              <DropdownDelete email={code.email} />
             </DropdownMenuContent>
           </DropdownMenu>
         </>

@@ -20,7 +20,9 @@ const badgeVariants = cva(
         champion:
           "border-transparent bg-[#0B64B9] text-stone-50 hover:bg-[#0B64B9]/80",
         requestor:
-          "borderh-transparent bg-[#AEACAC] text-stone-50 hover:bg-[#AEACAC]/80",
+          "border-transparent bg-[#AEACAC] text-stone-50 hover:bg-[#AEACAC]/80",
+        supreme:
+          "border-transparent bg-[#FFC80B] text-stone-50 hover:bg-[#FFC80B]/80",
       },
     },
     defaultVariants: {

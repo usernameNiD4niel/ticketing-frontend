@@ -10,7 +10,9 @@ const Comment: FC<CommentProps> = ({
   it_access_level,
   time_commented,
 }) => {
-  const getVariant = (role: string): "catalyst" | "champion" | "requestor" => {
+  const getVariant = (
+    role: string
+  ): "catalyst" | "champion" | "requestor" | "supreme" => {
     switch (role) {
       case "requestor":
         return "requestor";
@@ -20,6 +22,8 @@ const Comment: FC<CommentProps> = ({
         return "catalyst";
       case "champion":
         return "champion";
+      case "supreme":
+        return "supreme";
       default:
         return "requestor";
     }
