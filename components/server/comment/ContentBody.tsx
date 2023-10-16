@@ -34,6 +34,7 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
       );
     }
   };
+  // ! Paliitin ang comment kapag may comment(height to height fit)
   return (
     <div className="flex flex-col gap-y-3 my-4 md:h-[400px] overflow-y-auto">
       <Element />

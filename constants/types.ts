@@ -163,3 +163,9 @@ export type StatusCount = {
   resolved: number;
   "re-opened": number;
 };
+
+export type CodeTableProps = {
+  email: string;
+  otp: string;
+  created_at: string;
+};

@@ -79,7 +79,7 @@ const PendingRole = () => {
     return (
       <div className="w-full flex items-center justify-center h-[90vh]">
         <h2 className="text-sm">
-          You're doing great! Continue handling all tickets well😉
+          You&apos;re doing great! Continue handling all tickets well😉
         </h2>
       </div>
     );
@@ -89,7 +89,7 @@ const PendingRole = () => {
     return (
       <div className="w-full flex items-center justify-center h-[90vh]">
         <h2 className="text-sm">
-          You're doing great! Continue handling your department well😉
+          You&apos;re doing great! Continue handling your department well😉
         </h2>
       </div>
     );

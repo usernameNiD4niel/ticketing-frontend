@@ -1,17 +1,40 @@
-"use client";
+import { columns } from "@/components/client/code/columns";
+import { DataTable } from "@/components/client/code/data-table";
+import Tabs from "@/components/client/code/tabs";
+import { CodeTableProps } from "@/constants/types";
+import { getCookies } from "next-client-cookies/server";
 
-import { AvailableTabs } from "@/constants/enums";
-import useNavigationStore from "@/hooks/states/useNavigationStore";
-import { useEffect } from "react";
+const getCodeData = async () => {
+  const token = getCookies().get("token");
+  const codes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codes`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-cache",
+    }
+  );
 
-const Code = () => {
-  const [setActiveTab] = useNavigationStore((state) => [state.setActiveTab]);
+  if (codes.ok) {
+    const theCode = await codes.json();
+    const actualCode: CodeTableProps[] = theCode.code;
+    return actualCode;
+  }
 
-  useEffect(() => {
-    setActiveTab(AvailableTabs["Code"]);
-  }, []);
+  throw new Error("Cannot get the codes");
+};
 
-  return <div>Code</div>;
+const Code = async () => {
+  const data = await getCodeData();
+
+  return (
+    <div>
+      <Tabs />
+      <DataTable columns={columns} data={data} />
+    </div>
+  );
 };
 
 export default Code;
