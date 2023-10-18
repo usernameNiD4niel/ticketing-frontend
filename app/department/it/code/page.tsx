@@ -7,7 +7,7 @@ import { getCookies } from "next-client-cookies/server";
 const getCodeData = async () => {
   const token = getCookies().get("token");
   const codes = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codes`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codes?page=1&perPage=10`,
     {
       headers: {
         "Content-Type": "application/json",

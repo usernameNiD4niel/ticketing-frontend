@@ -36,12 +36,14 @@ interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data: Payment[];
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
+  next_page_url: string | null;
 }
 
 export function DataTable<TValue>({
   columns,
   data,
   setData,
+  next_page_url,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -148,7 +150,11 @@ export function DataTable<TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        setData={setData}
+        table={table}
+        next_page_url={next_page_url}
+      />
 
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button

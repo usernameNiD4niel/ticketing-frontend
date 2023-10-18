@@ -169,3 +169,9 @@ export type CodeTableProps = {
   otp: string;
   created_at: string;
 };
+
+export type PaginatedType = {
+  data: Payment[];
+  next_page_url: string | null;
+  prev_page_url: string | null;
+};

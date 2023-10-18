@@ -44,9 +44,12 @@ const Comment: FC<CommentProps> = ({
             {name} ✔ - ({department})
           </h4>
           <p className="text-sm">{comment}</p>
-          <p className="text-gray-400 text-xs mt-2">{date_commented}</p>
+          <div className="flex items-center gap-x-2 mt-2">
+            <p className="text-gray-400 text-xs">{time_commented}</p>
+            <p className="text-gray-400 text-xs">|</p>
+            <p className="text-gray-400 text-xs">{date_commented}</p>
+          </div>
         </div>
-        <p className="text-gray-400 text-xs">{time_commented}</p>
       </div>
     </>
   );
