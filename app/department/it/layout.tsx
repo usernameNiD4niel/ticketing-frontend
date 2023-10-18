@@ -1,16 +1,14 @@
 import React from "react";
-import { ClientCookiesProvider } from "./CookiesProvider";
-
 import { cookies } from "next/headers";
+import { ClientCookiesProvider } from "./CookiesProvider";
+import HelperLayout from "./layout3";
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
-      <ClientCookiesProvider value={cookies().getAll()}>
-        {children}
-      </ClientCookiesProvider>
-    </div>
+    <ClientCookiesProvider value={cookies().getAll()}>
+      <HelperLayout> {children}</HelperLayout>
+    </ClientCookiesProvider>
   );
 };
 
-export default RootLayout;
+export default RootLayoutDepartment;

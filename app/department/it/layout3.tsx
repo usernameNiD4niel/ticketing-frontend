@@ -12,7 +12,7 @@ import { useAuth } from "@/hooks/auth";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
 import { AvailableTabs } from "@/constants/enums";
 
-const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
+const HelperLayout = ({ children }: { children: React.ReactNode }) => {
   const { theme, systemTheme } = useTheme();
 
   const router = useRouter();
@@ -131,6 +131,7 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
           )}
         >
           {children}
+          {/* {children} */}
         </section>
       </main>
       <footer className="fixed bottom-0 left-0 p-4 z-10">
@@ -140,4 +141,4 @@ const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default RootLayoutDepartment;
+export default HelperLayout;

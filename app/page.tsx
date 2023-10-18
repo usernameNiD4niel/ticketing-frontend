@@ -79,7 +79,7 @@ export default function Home() {
           {departments.map((department, index) => (
             <CardLaunch
               cardTitle={department.value}
-              catalyst="Danilo Franco"
+              catalyst={department.catalyst}
               url={department.url}
               key={index}
             />
