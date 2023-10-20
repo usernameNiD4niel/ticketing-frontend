@@ -28,7 +28,6 @@ const getComments = async (id: number, token: string) => {
     const { comments } = data;
     return comments;
   } else {
-    console.log("error, cannot retreive all the comments to this ticket");
   }
 };
 
@@ -39,8 +38,6 @@ const CommentBody: FC<CommentBodyProps> = ({ id, token }) => {
     const comments_ = await getComments(id, token);
     if (comments_) {
       setComments(comments_);
-    } else {
-      console.log("error");
     }
   };
 

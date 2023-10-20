@@ -94,8 +94,6 @@ const CreateTicket = () => {
 
     setIsLoadingButton(true);
 
-    console.log(token);
-
     createTicket({
       setBackendError,
       setIsLoadingButton,

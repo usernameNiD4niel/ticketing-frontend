@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import Loading from "./loading";
 import { DepartmentProps } from "@/constants/types";
+import Link from "next/link";
 
 export default function Home() {
   const navigate = useRouter();

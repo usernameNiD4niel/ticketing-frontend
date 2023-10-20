@@ -29,9 +29,9 @@ const postComment = async (
       return x;
     })
     .catch((error) => {
-      console.log(error);
       setError(
-        "Can't post your comment, please refresh your browser or reset your internet"
+        "Can't post your comment, please refresh your browser or reset your internet " +
+          error
       );
     });
 

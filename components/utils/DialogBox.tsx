@@ -43,8 +43,6 @@ export function DialogBox() {
   const [isSuccessMessageShowing, setIsSuccessMessageShowing] = useState(false);
 
   const handleSendEmail = () => {
-    console.log(emailField);
-
     if (!emailField) {
       setEmailError("Email is required");
       return;

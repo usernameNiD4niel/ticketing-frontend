@@ -7,12 +7,6 @@ type ContentBodyProps = {
 };
 
 const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
-  if (comments && comments.length > 0) {
-    console.log("comments: ", comments);
-  } else {
-    console.log("wala talga ", comments[0]);
-  }
-
   const Element = () => {
     if (!comments) {
       return (

@@ -57,7 +57,6 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     const getAccount = async () => {
       const email = Cookies.get("email");
       const token = Cookies.get("token");
-      console.log("email: ", email);
 
       if (email) {
         const data: AccountProps = await getSpecificAccount({
@@ -85,8 +84,6 @@ const AccountLayout: FC<AccountLayoutProps> = ({ children }) => {
     }));
 
     setTabs(updatedTabs);
-
-    console.log("use effect: ", account);
   }, []);
 
   const handleLogout = () => {

@@ -52,9 +52,7 @@ export default function DemoPage() {
   const [data, setData] = useState<Payment[]>([]);
   const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    console.log("the next page is: ", nextPageUrl);
-  }, [nextPageUrl]);
+  useEffect(() => {}, [nextPageUrl]);
 
   const fetchData = async () => {
     const data_ = await getData(1, token!, setNextPageUrl);

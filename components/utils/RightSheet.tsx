@@ -1,14 +1,3 @@
-// "use client";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { Button } from "../ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
 import { FC } from "react";
 import { Activity } from "@/constants/types";
 
@@ -42,7 +31,6 @@ const RightSheet: FC<RightSheetProps> = ({ activities }) => {
 
   return (
     <div className="flex flex-col">
-      {/* <div className="grid grid-cols-2 gap-2"> */}
       <h3 className="font-bold">Ticket Events</h3>
       <div className="text-justify text-sm">
         Changes to ticket will appear here
@@ -50,32 +38,6 @@ const RightSheet: FC<RightSheetProps> = ({ activities }) => {
       <div className="flex flex-col gap-y-2 my-4">
         <DisplayContent />
       </div>
-      {/* <Sheet key={"right"}>
-        <SheetTrigger asChild>
-          <Button
-            variant="noVariant"
-            className="text-center flex items-center justify-center rounded-full w-12 h-12"
-          >
-            <span className="text-xl">
-              <IoNotificationsOutline />
-            </span>
-            <span className="text-[0.65rem] absolute top-2 right-2 font-bold">
-              {count > 0 && `+${count}`}
-            </span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side={"right"} className="overflow-auto">
-          <SheetHeader>
-            <SheetTitle>Notifications</SheetTitle>
-            <SheetDescription>
-              Changes to ticket will appear here
-            </SheetDescription>
-          </SheetHeader>
-          <div className="flex flex-col gap-y-2 my-4">
-            <DisplayContent />
-          </div>
-        </SheetContent>
-      </Sheet> */}
     </div>
   );
 };

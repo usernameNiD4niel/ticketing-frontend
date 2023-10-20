@@ -154,7 +154,6 @@ export function DataTable<TValue>({
         setData={setData}
         table={table}
         next_page_url={next_page_url}
-        data={data}
       />
     </div>
   );

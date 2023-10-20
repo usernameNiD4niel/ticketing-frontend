@@ -36,29 +36,23 @@ const PendingRoleAssign: FC<PendingRoleAssignProps> = ({
 
   const handleOnSubmit = () => {
     const message = createRequest();
-    console.log("log 1");
 
     if (!message) {
-      console.log("log 2");
       setBackendValidationError(
         "Please refrain your steps, you might miss important step"
       );
       return;
     }
-    console.log("log 3");
-    // router.refresh();
-    // window.location.reload();
+
     setSignalForRefetch((prev) => !prev);
     toast({
       title: "Roles Update",
       description: "You have successfully updated roles",
       duration: 3000,
     });
-    console.log("handle selected: ", selectedRole);
   };
 
   const createRequest = async () => {
-    console.log("log 4");
     setIsLoadingButton(true);
     const { message }: any = updatePendingRoles({
       emails: activeCards,
@@ -66,7 +60,6 @@ const PendingRoleAssign: FC<PendingRoleAssignProps> = ({
       setBackendValidationError,
       setIsLoadingButton,
     });
-    console.log("log 5");
 
     return message;
   };

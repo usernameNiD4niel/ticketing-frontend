@@ -50,8 +50,6 @@ const LeftSheet: FC<LeftSheetProps> = ({
     isRequestor = false;
   }
 
-  console.log("the role is: ", role);
-
   const handleDrawerOpen = () => {
     setIsOpen(false);
   };

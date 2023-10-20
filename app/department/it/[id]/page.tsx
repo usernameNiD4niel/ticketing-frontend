@@ -38,8 +38,6 @@ const TicketPage = async ({ params }: { params: { id: string } }) => {
 
   const ticketData: ResponseProps = await getTicketData(id, token!);
 
-  console.log("this is ticket data: ", ticketData);
-
   const tabRole =
     role?.toLowerCase() === "requestor"
       ? "/department/it/my-tickets"
