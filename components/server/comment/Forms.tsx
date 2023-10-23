@@ -4,7 +4,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { CommentInfoProps } from "@/constants/types";
 import React, { FC, useState } from "react";
-import Comment from "./Comment";
 
 const postComment = async (
   id: number,
@@ -12,15 +11,19 @@ const postComment = async (
   comment: string,
   setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
+  const request = {
+    comment,
+    system_department: "it",
+  };
   const response: CommentInfoProps = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comments/${id}`,
     {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ comment }),
+      body: JSON.stringify(request),
     }
   )
     .then((data) => {

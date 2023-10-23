@@ -103,7 +103,7 @@ export type TicketContent = {
 };
 
 export type CommentProps = {
-  it_access_level: string;
+  access_level: string;
   name: string;
   comment: string;
   date_commented: string;
@@ -142,7 +142,7 @@ export type CommentsProps = {
 export type CommentInfoProps = {
   date_commented: string;
   time_commented: string;
-  it_access_level: string;
+  access_level: string;
   comment: string;
   name: string;
   department: string;

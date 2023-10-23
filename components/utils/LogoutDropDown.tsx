@@ -6,7 +6,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Avatar from "react-avatar";
-import { Button } from "../ui/button";
 import SignOut from "../client/header/sign-out";
 
 type LogoutDropDownProps = {

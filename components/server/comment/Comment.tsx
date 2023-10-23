@@ -7,7 +7,7 @@ const Comment: FC<CommentProps> = ({
   date_commented,
   department,
   name,
-  it_access_level,
+  access_level,
   time_commented,
 }) => {
   const getVariant = (
@@ -35,10 +35,10 @@ const Comment: FC<CommentProps> = ({
       <div className="flex items-center justify-center">
         <div className="w-full">
           <Badge
-            variant={getVariant(it_access_level.toLowerCase())}
+            variant={getVariant(access_level.toLowerCase())}
             className="text-xs font-light"
           >
-            {it_access_level.toLowerCase()}
+            {access_level.toLowerCase()}
           </Badge>
           <h4 className="font-bold text-sm">
             {name} ✔ - ({department})

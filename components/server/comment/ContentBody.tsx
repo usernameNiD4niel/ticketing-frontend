@@ -1,4 +1,4 @@
-import { CommentInfoProps, CommentsProps } from "@/constants/types";
+import { CommentInfoProps } from "@/constants/types";
 import React, { FC } from "react";
 import Comment from "./Comment";
 
