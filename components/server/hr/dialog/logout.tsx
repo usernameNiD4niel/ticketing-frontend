@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { FC } from "react";
 import { Button } from "@/components/ui/button";
-import LoggingOut from "@/components/client/hr/home/helper/logging-out";
+import LoggingOut from "@/components/client/hr/helper/logging-out";
 import { MenuTypes } from "@/constants/types";
 
 interface LogoutProps {

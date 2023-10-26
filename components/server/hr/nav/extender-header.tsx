@@ -2,7 +2,7 @@
 import React from "react";
 import MenuSheet from "../helper/menu-sheet";
 import useNavigateStore from "@/hooks/hr/useNavigationStore";
-import { getCurrentTab } from "@/components/client/hr/home/helper/functions";
+import { getCurrentTab } from "@/components/client/hr/helper/functions";
 
 const ExtenderHeader = () => {
   const [activeTab] = useNavigateStore((state) => [state.activeTab]);

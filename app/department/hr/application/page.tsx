@@ -1,0 +1,121 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cookies } from "next/headers";
+import { IoMdAdd } from "react-icons/io";
+import { CiSearch } from "react-icons/ci";
+import { ApplicationTypes } from "@/constants/types";
+import { AvailableTabs } from "@/constants/hr/enums";
+import Selector from "@/components/client/hr/tab-mutator/selector";
+import ApplicationList from "@/components/server/hr/application/application-list";
+import Content from "@/components/server/hr/application/Content";
+
+const getApplications = async () => {
+  const token = cookies().get("token");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codes`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+    .then((data) => data.json())
+    .then((data) => {
+      console.log("codessss ", data);
+
+      // const applications: ApplicationTypes[] = data.applications;
+      // return applications;
+      return data;
+    })
+    .catch((err) => {
+      console.log(`the error is ${err}`);
+
+      const applications: ApplicationTypes[] = [];
+      return applications;
+    });
+
+  return response;
+};
+
+type CommentInfoProps = {
+  date_commented: string;
+  time_commented: string;
+  access_level: string;
+  comment: string;
+  name: string;
+  department: string;
+};
+
+type Props = {
+  comments: CommentInfoProps[];
+};
+
+const getComments = async () => {
+  const token = cookies().get("token");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comments/79`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (response.ok) {
+    const data: Props = await response.json();
+    const { comments } = data;
+    console.log("the comments: ", comments);
+
+    return comments;
+  } else {
+    console.log("the comments: ");
+    throw new Error("Error fetching comments");
+  }
+};
+
+const Application = async () => {
+  const comments = await getComments();
+  const application = await getApplications();
+
+  console.log(`applications: ${application}`);
+  console.log(`comments: ${comments}`);
+
+  return (
+    <div className="w-full py-8 px-14">
+      <Selector activeTab={AvailableTabs.Application} />
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-2xl">Application</h1>
+        <div className="relative text-lg">
+          <span className="absolute left-5 top-[1.09rem]">
+            <CiSearch />
+          </span>
+          <Input
+            placeholder="Search..."
+            className="w-[380px] rounded-full bg-[#EDEDED] ps-11 py-6"
+          />
+        </div>
+      </div>
+      <div className="w-full grid grid-cols-[350px_1fr] gap-4 py-4">
+        <ApplicationList />
+        <Content />
+      </div>
+      <div className="fixed bottom-6 right-6">
+        <Button className="text-white bg-[#879FFF] flex gap-1 rounded-md px-8 py-6 text-base hover:bg-[#7a90e7]">
+          <span className="text-2xl">
+            <IoMdAdd />
+          </span>
+          <span>Add</span>
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Application;
+
+/**
+ * https://firebasestorage.googleapis.com/v0/b/devex-inc.appspot.com/o/October%2025%2C%202023%2Fjerry-resume.pdf?alt=media&token=de668352-34d5-4dc0-8335-965a14ad7247
+ */

@@ -183,3 +183,12 @@ export type MenuTypes = {
   inactiveIcon: IconType;
   route: string;
 };
+
+export type ApplicationTypes = {
+  id: number;
+  applicant: string;
+  position: string;
+  notes: string;
+  cv_resume: string | null;
+  creator: string;
+};
