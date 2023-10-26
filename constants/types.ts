@@ -176,3 +176,10 @@ export type PaginatedType = {
   next_page_url: string | null;
   prev_page_url: string | null;
 };
+
+export type MenuTypes = {
+  activeIcon: IconType;
+  text: string;
+  inactiveIcon: IconType;
+  route: string;
+};
