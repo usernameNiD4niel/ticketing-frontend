@@ -1,5 +1,12 @@
 import Navigation from "@/components/server/hr/home/navigation";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "OPPA | HR",
+  description:
+    "This is system is created for HR Recruiters. This is a part of OPPA project",
+};
 
 const HrRootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
