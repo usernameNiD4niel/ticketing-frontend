@@ -1,0 +1,11 @@
+.bg-primary {
+    @apply bg-[#879FFF] dark:bg-[#879FFF]/40
+  }
+  
+  .text-primary {
+    @apply text-[#879FFF] dark:text-[#879FFF]/40
+  }
+  
+  .bg-background {
+    @apply bg-[#EFF3F4]
+  }

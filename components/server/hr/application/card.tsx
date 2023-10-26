@@ -16,7 +16,7 @@ const Card: FC<CardProps> = ({
   position,
 }) => {
   return (
-    <div className="rounded-lg bg-white w-full py-4 px-6 hover:cursor-pointer">
+    <div className="rounded-lg bg-white w-full py-4 px-6 hover:cursor-pointer dark:bg-[#2C2C2C]/20">
       <h1 className="font-bold my-2 text-xl">{position}</h1>
       <p className="font-bold">{applicant}</p>
       <p className="text-sm">Creator - {creator}</p>

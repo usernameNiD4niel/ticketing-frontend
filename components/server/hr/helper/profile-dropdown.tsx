@@ -25,7 +25,7 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({ email }) => {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="px-4 py-5 space-y-2 mr-5">
+      <DropdownMenuContent className="px-4 py-5 space-y-2 mr-5 dark:bg-[#2C2C2C]">
         <DropdownMenuLabel>{email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>

@@ -4,7 +4,7 @@ import { FiEdit } from "react-icons/fi";
 
 const Content = () => {
   return (
-    <div className="w-full h-[85vh] py-6 px-12 rounded-md border overflow-y-auto bg-white text-[#879FFF] border-[#879FFF]">
+    <div className="w-full h-[85vh] py-6 px-12 rounded-md overflow-y-auto bg-white dark:bg-[#2C2C2C]/20 hidden md:flex flex-col">
       <div className="w-full flex justify-end items-center">
         <Button variant={"outline"}>
           <FiEdit />
@@ -12,8 +12,8 @@ const Content = () => {
       </div>
       <div className="flex justify-between mt-4">
         <div className="space-y-2">
-          <h3 className="text-primary font-bold text-5xl">QS Engineer</h3>
-          <p className="font-bold text-2xl text-[#879FFF]">Juan Dela Cruz</p>
+          <h3 className=" font-bold text-5xl">QS Engineer</h3>
+          <p className="font-bold text-2xl">Juan Dela Cruz</p>
           <ul className="space-y-2">
             <li className="">
               <span className="font-bold">Creator</span>{" "}

@@ -7,7 +7,7 @@ interface ApplicationListProps {
 
 const ApplicationList: FC<ApplicationListProps> = () => {
   return (
-    <div className="w-full space-y-2 overflow-y-auto h-[85vh] scroll-smooth scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-200 pe-1">
+    <div className="w-full space-y-2 md:overflow-y-auto h-[85vh] scroll-smooth scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 pe-1">
       <Card
         applicant="Juan Dela Cruz"
         createdOn="10 . 25 . 2023"

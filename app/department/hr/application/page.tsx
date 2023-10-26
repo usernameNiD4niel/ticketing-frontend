@@ -13,7 +13,7 @@ const getApplications = async () => {
   const token = cookies().get("token");
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/codes`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/applications`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -23,11 +23,8 @@ const getApplications = async () => {
   )
     .then((data) => data.json())
     .then((data) => {
-      console.log("codessss ", data);
-
-      // const applications: ApplicationTypes[] = data.applications;
-      // return applications;
-      return data;
+      const applications: ApplicationTypes[] = data.applications;
+      return applications;
     })
     .catch((err) => {
       console.log(`the error is ${err}`);
@@ -39,49 +36,10 @@ const getApplications = async () => {
   return response;
 };
 
-type CommentInfoProps = {
-  date_commented: string;
-  time_commented: string;
-  access_level: string;
-  comment: string;
-  name: string;
-  department: string;
-};
-
-type Props = {
-  comments: CommentInfoProps[];
-};
-
-const getComments = async () => {
-  const token = cookies().get("token");
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comments/79`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  if (response.ok) {
-    const data: Props = await response.json();
-    const { comments } = data;
-    console.log("the comments: ", comments);
-
-    return comments;
-  } else {
-    console.log("the comments: ");
-    throw new Error("Error fetching comments");
-  }
-};
-
 const Application = async () => {
-  const comments = await getComments();
-  const application = await getApplications();
+  const applications = await getApplications();
 
-  console.log(`applications: ${application}`);
-  console.log(`comments: ${comments}`);
+  console.log(`APPLICATIONS ${applications}`);
 
   return (
     <div className="w-full py-8 px-14">

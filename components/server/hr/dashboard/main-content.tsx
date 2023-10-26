@@ -24,7 +24,7 @@ const MainContent = () => {
             url_button="/hr/dashboard/hire-cancel"
           />
         </div>
-        <div className="w-full rounded-xl space-y-4 bg-white p-6">
+        <div className="w-full rounded-xl space-y-4 bg-white dark:bg-[#2C2C2C] p-6">
           <h2 className="font-bold text-2xl">Recent Application</h2>
           <RecentApplicationItem
             date="11 . 12 .2023"
