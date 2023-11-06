@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
+import { ClientCookiesProvider } from "./department/it/CookiesProvider";
+import { cookies } from "next/headers";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "700"],
@@ -23,7 +25,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="w-full flex items-center flex-col">{children}</main>
+          <ClientCookiesProvider value={cookies().getAll()}>
+            <main className="w-full flex items-center flex-col">
+              {children}
+            </main>
+          </ClientCookiesProvider>
           <Toaster />
         </ThemeProvider>
       </body>

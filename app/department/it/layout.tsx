@@ -1,6 +1,4 @@
 import React from "react";
-import { cookies } from "next/headers";
-import { ClientCookiesProvider } from "./CookiesProvider";
 import HelperLayout from "./layout3";
 import { Metadata } from "next";
 
@@ -11,11 +9,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayoutDepartment = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <ClientCookiesProvider value={cookies().getAll()}>
-      <HelperLayout> {children}</HelperLayout>
-    </ClientCookiesProvider>
-  );
+  return <HelperLayout> {children}</HelperLayout>;
 };
 
 export default RootLayoutDepartment;

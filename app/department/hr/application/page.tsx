@@ -9,8 +9,8 @@ import Selector from "@/components/client/hr/tab-mutator/selector";
 import ApplicationList from "@/components/server/hr/application/application-list";
 import Content from "@/components/server/hr/application/Content";
 
-const getApplications = async () => {
-  const token = cookies().get("token");
+const getApplications = async (token: string) => {
+  console.log(`the token ${token}`);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/applications`,
@@ -27,17 +27,15 @@ const getApplications = async () => {
       return applications;
     })
     .catch((err) => {
-      console.log(`the error is ${err}`);
-
-      const applications: ApplicationTypes[] = [];
-      return applications;
+      throw new Error("error: " + err);
     });
 
   return response;
 };
 
 const Application = async () => {
-  const applications = await getApplications();
+  const token = cookies().get("token")?.value;
+  const applications = await getApplications(token!);
 
   console.log(`APPLICATIONS ${applications}`);
 
