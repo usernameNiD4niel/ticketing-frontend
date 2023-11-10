@@ -16,7 +16,7 @@ const AbsoluteRedirect: FC<AbsoluteRedirectProps> = ({
   const router = useRouter();
 
   const handleRedirection = () => {
-    router.push("http://10.10.1.120:3001/hr/dashboard");
+    router.push(`${process.env.NEXT_PUBLIC_HR_URL}/hr/dashboard`);
   };
 
   return (
