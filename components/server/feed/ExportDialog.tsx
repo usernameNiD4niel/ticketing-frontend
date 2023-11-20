@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Payment } from "@/constants/types";
 import { FC, useState } from "react";
-import { BiSolidFileExport } from "react-icons/bi";
 
 type ExportDialogProps = {
   data: Payment[];

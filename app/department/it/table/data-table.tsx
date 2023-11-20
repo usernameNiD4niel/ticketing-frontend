@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import {
@@ -22,8 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";

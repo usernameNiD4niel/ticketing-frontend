@@ -2,7 +2,7 @@
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 
-const theme = () => {
+const Theme = () => {
   const { theme, systemTheme } = useTheme();
 
   const [currentTheme, setCurrentTheme] = useState<string>(
@@ -16,4 +16,4 @@ const theme = () => {
   return <div>theme</div>;
 };
 
-export default theme;
+export default Theme;
