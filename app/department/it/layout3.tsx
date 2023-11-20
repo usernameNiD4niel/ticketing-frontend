@@ -1,138 +1,37 @@
-"use client";
 import Header from "@/components/utils/Header";
-import MobileDrawer from "@/components/utils/MobileDrawer";
 import { ModeToggle } from "@/components/utils/ModeToggle";
-import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import useCounterStore from "@/hooks/states/useCounterStore";
-import { useAuth } from "@/hooks/auth";
-import useNavigationStore from "@/hooks/states/useNavigationStore";
-import { AvailableTabs } from "@/constants/enums";
+import React from "react";
+import ManageTab from "@/components/helper/manage-tab";
+import MainContent from "@/components/client/feed/MainContent";
 
-const HelperLayout = ({ children }: { children: React.ReactNode }) => {
-  const { theme, systemTheme } = useTheme();
-
-  const router = useRouter();
-  const [currentTheme, setCurrentTheme] = useState<string>(
-    `${theme === "system" ? systemTheme : theme}`
-  );
-
-  const role = Cookies.get("it_access_level");
-
-  const [activeTab] = useNavigationStore((state) => [state.activeTab]);
-
-  const [name, setName] = useState("");
-
-  const [
-    setPendingRoleCount,
-    setUnhandledTicketsCount,
-    unhandledTicketsCount,
-    pendingRoleCount,
-  ] = useCounterStore((state) => [
-    state.setPendingRoleCount,
-    state.setUnhandledTicketsCount,
-    state.unhandledTicketsCount,
-    state.pendingRoleCount,
-  ]);
-
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-
-  const [tab, setTab] = useState("");
-
-  const { getCurrentUserName, getUnsetCounts } = useAuth();
-
-  useEffect(
-    () => setCurrentTheme(`${theme === "system" ? systemTheme : theme}`),
-    [currentTheme]
-  );
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    const email = Cookies.get("email");
-
-    if (!token || !email) {
-      router.push("/login");
-    }
-
-    const getName = async () => {
-      const name_ = await getCurrentUserName(token);
-
-      setName(name_);
-
-      Cookies.set("name", name_, { expires: 7 });
-    };
-
-    const unsetCounts = async () => {
-      const { unset_user_count, unset_priority_ticket_count } =
-        await getUnsetCounts(token);
-      setPendingRoleCount(unset_user_count);
-      setUnhandledTicketsCount(unset_priority_ticket_count);
-    };
-
-    unsetCounts();
-    getName();
-  }, []);
-
-  useEffect(() => {
-    switch (activeTab) {
-      case AvailableTabs.Feed:
-        setTab("Feed");
-        break;
-      case AvailableTabs["Create Ticket"]:
-        setTab("Create Ticket");
-        break;
-      case AvailableTabs["Departments Role"]:
-        setTab("Departments Role");
-        break;
-      case AvailableTabs["Existing Tickets"]:
-        setTab("Existing Ticket");
-        break;
-      case AvailableTabs["Unhandled Tickets"]:
-        setTab("Unhandled Tickets");
-        break;
-      case AvailableTabs["Overview"]:
-        setTab("Overview");
-        break;
-      case AvailableTabs["Code"]:
-        setTab("Code");
-        break;
-      default:
-        setTab("Accounts");
-    }
-  }, [activeTab]);
-
+const HelperLayout = ({
+  children,
+  unset_user_count,
+  user_priority_ticket_count,
+}: {
+  children: React.ReactNode;
+  unset_user_count: number;
+  user_priority_ticket_count: number;
+}) => {
   return (
     <>
+      <ManageTab
+        unset_user_count={unset_user_count}
+        user_priority_ticket_count={user_priority_ticket_count}
+      />
       <header className="flex w-full md:hidden items-center justify-between z-10 drop-shadow-md p-2 bg-[#EEF7FF] dark:bg-[#0C0A09] dark:drop-shadow-md h-16 fixed top-0 left-0">
         <Header
-          isDrawerOpen={isDrawerOpen}
-          unhandledTicketsCount={unhandledTicketsCount}
-          pendingRoleCount={pendingRoleCount}
-          activeTab={activeTab}
-          role={role}
-          tab={tab}
-          name={name}
+          unhandledTicketsCount={user_priority_ticket_count}
+          pendingRoleCount={unset_user_count}
         />
       </header>
       <main className="mt-20 md:mt-10 w-full flex items-center justify-center">
-        <MobileDrawer
-          setIsDrawerOpen={setIsDrawerOpen}
-          isDrawerOpen={isDrawerOpen}
-          unhandledTicketsCount={unhandledTicketsCount}
-          pendingRoleCount={pendingRoleCount}
-        />
-        <section
-          className={cn(
-            "w-full flex flex-col gap-y-4 px-2 md:px-9",
-            isDrawerOpen ? "md:ml-[350px]" : "md:ml-20"
-          )}
+        <MainContent
+          unset_user_count={unset_user_count}
+          user_priority_ticket_count={user_priority_ticket_count}
         >
           {children}
-          {/* {children} */}
-        </section>
+        </MainContent>
       </main>
       <footer className="fixed bottom-0 left-0 p-4 z-10">
         <ModeToggle />

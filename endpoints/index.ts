@@ -1,3 +1,4 @@
 import getChampions from "./getChampions";
+import getNavigationCount from "./getNavigationCount";
 
-export { getChampions };
+export { getChampions, getNavigationCount };

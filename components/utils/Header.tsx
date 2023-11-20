@@ -1,38 +1,30 @@
 import LeftSheet from "./LeftSheet";
 import { FC } from "react";
-import { AvailableTabs } from "@/constants/enums";
 import LogoutDropDown from "./LogoutDropDown";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type HeaderProps = {
-  isDrawerOpen: boolean;
   unhandledTicketsCount: number;
   pendingRoleCount: number;
-  activeTab: AvailableTabs;
-  role?: string;
-  name: string;
-  tab: string;
 };
 
 const Header: FC<HeaderProps> = ({
-  isDrawerOpen,
   pendingRoleCount,
   unhandledTicketsCount,
-  activeTab,
-  role,
-  name,
-  tab,
 }) => {
+  const name = cookies().get("name")?.value;
+  const role = cookies().get("it_access_level")?.value;
+
   return (
     <>
       <LeftSheet
-        isDrawerOpen={isDrawerOpen}
         unhandledTicketsCount={unhandledTicketsCount}
         pendingRoleCount={pendingRoleCount}
-        activeTab={activeTab}
-        role={role}
+        role={role!}
       />
-      <h1 className="font-bold">{tab}</h1>
-      <LogoutDropDown name={name} />
+
+      <LogoutDropDown name={name!} />
     </>
   );
 };
