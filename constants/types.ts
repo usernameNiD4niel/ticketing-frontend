@@ -173,8 +173,8 @@ export type CodeTableProps = {
 
 export type PaginatedType = {
   data: Payment[];
-  next_page_url: string | null;
-  prev_page_url: string | null;
+  next_page_url: number | null;
+  prev_page_url: number | null;
 };
 
 export type MenuTypes = {

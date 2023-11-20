@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 import {
@@ -10,6 +11,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 
 import {
@@ -30,15 +32,13 @@ import ExportDialog from "@/components/server/feed/ExportDialog";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
-  data: Payment[];
-  setData: React.Dispatch<React.SetStateAction<Payment[]>>;
-  next_page_url: string | null;
+  data_: Payment[];
+  next_page_url: number | null;
 }
 
 export function DataTable<TValue>({
   columns,
-  data,
-  setData,
+  data_,
   next_page_url,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -48,6 +48,11 @@ export function DataTable<TValue>({
   );
 
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const [data, setData] = React.useState(data_);
+
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -59,12 +64,25 @@ export function DataTable<TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
       rowSelection,
+      columnVisibility,
     },
   });
+
+  React.useEffect(() => {
+    const width = window.innerWidth;
+
+    if (width < 768) {
+      table.getColumn("name")?.toggleVisibility(false);
+      table.getColumn("created_at")?.toggleVisibility(false);
+      table.getColumn("subject")?.toggleVisibility(false);
+      table.getColumn("assigned_to")?.toggleVisibility(false);
+    }
+  }, []);
 
   const router = useRouter();
 
@@ -128,6 +146,22 @@ export function DataTable<TValue>({
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
+                      )}
+                      {cell.column.id !== "status" && (
+                        <div className="flex flex-col ml-4">
+                          <span className="md:hidden">
+                            {row.getValue("name")}
+                          </span>
+                          <span className="md:hidden">
+                            {row.getValue("created_at")}
+                          </span>
+                          <span className="md:hidden">
+                            {row.getValue("subject")}
+                          </span>
+                          <span className="md:hidden">
+                            {row.getValue("assigned_to")}
+                          </span>
+                        </div>
                       )}
                     </TableCell>
                   ))}

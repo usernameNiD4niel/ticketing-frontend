@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { PaginatedType, Payment } from "@/constants/types";
 import { Table } from "@tanstack/react-table";
@@ -8,15 +7,15 @@ import { useEffect, useState } from "react";
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
-  next_page_url: string | null;
+  next_page_url: number | null;
 }
 
 async function getData(
   token: string,
   setData: React.Dispatch<React.SetStateAction<Payment[]>>,
-  nextPageUrl: string | null,
-  setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
-  setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>
+  nextPageUrl: number | null,
+  setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
+  setPreviousPageUrl: React.Dispatch<React.SetStateAction<number | null>>
 ) {
   // Fetch data from your API here.
   if (nextPageUrl) {
@@ -62,9 +61,9 @@ async function getData(
 async function getPrevious(
   token: string,
   setData: React.Dispatch<React.SetStateAction<Payment[]>>,
-  previousPageUrl: string | null,
-  setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
-  setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>
+  previousPageUrl: number | null,
+  setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
+  setPreviousPageUrl: React.Dispatch<React.SetStateAction<number | null>>
 ) {
   // Fetch data from your API here.
   if (previousPageUrl) {
@@ -112,8 +111,8 @@ export function DataTablePagination<TData>({
   next_page_url,
   setData,
 }: DataTablePaginationProps<TData>) {
-  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
-  const [previousPageUrl, setPreviousPageUrl] = useState<string | null>(null);
+  const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
+  const [previousPageUrl, setPreviousPageUrl] = useState<number | null>(null);
 
   useEffect(() => {
     if (next_page_url) {
