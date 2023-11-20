@@ -12,33 +12,33 @@ import {
 import { Label } from "../ui/label";
 
 type CustomSelectProps = {
-  setSelectedState: React.Dispatch<React.SetStateAction<string>>;
   selectedState: string;
-  placeHolder: string;
   label: string;
   selectItems: string[];
   isFullWidth: boolean;
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
-  setSelectedState,
   selectedState,
   label,
-  placeHolder,
   selectItems,
   isFullWidth,
 }) => {
+  const [value, setValue] = React.useState(selectedState);
+
   const handleOnSelectedRole = (value: string) => {
-    setSelectedState(value);
+    setValue(value);
   };
+
   return (
     <Label className="space-y-2">
       <span>{label}</span>
-      <Select onValueChange={handleOnSelectedRole}>
+      <Select
+        onValueChange={handleOnSelectedRole}
+        name={label.toLowerCase().split(" ").join("_")}
+      >
         <SelectTrigger className={isFullWidth ? "w-full" : "w-[280px]"}>
-          <SelectValue
-            placeholder={selectedState ? selectedState : placeHolder}
-          />
+          <SelectValue placeholder={value} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

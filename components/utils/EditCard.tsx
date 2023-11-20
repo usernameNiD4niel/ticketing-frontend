@@ -1,10 +1,7 @@
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -14,6 +11,9 @@ import { FeedTicketProps } from "@/constants/types";
 import { FC } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import DisplayForm from "./DisplayForm";
+import { getChampions } from "@/endpoints";
+import { cookies } from "next/headers";
+import { Toaster } from "../ui/toaster";
 
 type EditCardProps = {
   ticketNumber: string;
@@ -21,11 +21,15 @@ type EditCardProps = {
   isTicketOwner: boolean;
 };
 
-const EditCard: FC<EditCardProps> = ({
+const EditCard: FC<EditCardProps> = async ({
   ticketNumber,
   ticket,
   isTicketOwner,
 }) => {
+  const token = cookies().get("token")?.value;
+
+  const champions = await getChampions(token!);
+
   return (
     <div className="absolute top-[80px] py-4 mb-2 right-0 text-2xl flex bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90 rounded-full w-28 h-12 items-center justify-center hover:cursor-pointer">
       <AlertDialog>
@@ -47,7 +51,12 @@ const EditCard: FC<EditCardProps> = ({
               <AlertDialogDescription>
                 This will be publicly edit the ticket information.
               </AlertDialogDescription>
-              <DisplayForm ticket={ticket} isTicketOwner={isTicketOwner} />
+              <DisplayForm
+                ticket={ticket}
+                isTicketOwner={isTicketOwner}
+                champions={champions}
+              />
+              <Toaster />
             </AlertDialogHeader>
           </AlertDialogContent>
         </div>

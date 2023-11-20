@@ -17,6 +17,9 @@ const getTicketData = async (id: string, token: string) => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+      next: {
+        tags: [`it-tickets-item-${id}`],
+      },
     }
   );
 
