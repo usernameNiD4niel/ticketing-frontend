@@ -1,12 +1,11 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import CustomSelect from "./CustomSelect";
 import { FeedTicketProps } from "@/constants/types";
 import { LoadingButton } from "./LoadingButton";
 import { AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
-import useCounterStore from "@/hooks/states/useCounterStore";
 import { updateActivities } from "@/app/actions";
 import { useToast } from "../ui/use-toast";
 

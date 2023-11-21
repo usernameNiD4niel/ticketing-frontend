@@ -7,9 +7,9 @@ export default async function updateActivities(id: string, formData: FormData) {
   const token = cookies().get("token")?.value;
 
   const requestUpdate = {
-    priority: formData.get("priority") ?? null,
-    assigned_to: formData.get("assigned_to") ?? null,
-    status: formData.get("status") ?? null,
+    priority: formData.get("priority")?.toString().toLowerCase() ?? null,
+    assigned_to: formData.get("assigned_to")?.toString().toLowerCase() ?? null,
+    status: formData.get("status")?.toString().toLowerCase() ?? null,
   };
 
   const response = await fetch(
