@@ -31,8 +31,9 @@ const RootLayoutDepartment = async ({
     <HelperLayout
       unset_user_count={unset_user_count}
       user_priority_ticket_count={user_priority_ticket_count}
-      children={children}
-    />
+    >
+      {children}
+    </HelperLayout>
   );
 };
 

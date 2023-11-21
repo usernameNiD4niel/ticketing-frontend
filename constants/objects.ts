@@ -1,27 +1,14 @@
-import {
-  CodeTableProps,
-  DepartmentProps,
-  MenuTypes,
-  Payment,
-  ProfileTabProps,
-} from "./types";
-import { CgSmartHomeRefrigerator } from "react-icons/cg";
-import { GrServices } from "react-icons/gr";
-import { BsShop } from "react-icons/bs";
+import { DepartmentProps, MenuTypes, Payment } from "./types";
 import { LiaFileContractSolid } from "react-icons/lia";
 
 import { MdDashboard } from "react-icons/md";
-import {
-  TbLayoutDashboard,
-  TbBrandFeedly,
-  TbAirConditioning,
-} from "react-icons/tb";
+import { TbLayoutDashboard, TbBrandFeedly } from "react-icons/tb";
 import { SiFeedly, SiGoogledocs } from "react-icons/si";
 import { SlDocs } from "react-icons/sl";
-import { PiMathOperationsBold, PiUserCircleGearFill } from "react-icons/pi";
+import { PiUserCircleGearFill } from "react-icons/pi";
 import { LuUserCog2 } from "react-icons/lu";
 import { AiOutlinePoweroff } from "react-icons/ai";
-import { FaGripfire, FaPowerOff } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
 import { BsChatRightHeartFill, BsChatRightHeart } from "react-icons/bs";
 
 export const Departments: DepartmentProps[] = [
@@ -39,188 +26,188 @@ export const Departments: DepartmentProps[] = [
     icon: LiaFileContractSolid,
     catalyst: "HR Head",
   },
-  {
-    url: "refrigeration",
-    label: "Refrigeration",
-    value: "Refrigeration",
-    icon: CgSmartHomeRefrigerator,
-    catalyst: "Unknown",
-  },
-  {
-    url: "service",
-    label: "Service",
-    value: "Service",
-    icon: GrServices,
-    catalyst: "Unknown",
-  },
-  {
-    url: "shopfitting-and-warehouse-racking",
-    label: "Shopfitting and Warehouse Racking",
-    value: "Shopfitting and Warehouse Racking",
-    icon: BsShop,
-    catalyst: "Unknown",
-  },
-  {
-    url: "hvac",
-    label: "HVAC",
-    value: "HVAC",
-    icon: TbAirConditioning,
-    catalyst: "Unknown",
-  },
-  {
-    url: "mepfs",
-    label: "MEPFS",
-    value: "MEPFS",
-    icon: FaGripfire,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-operations",
-    label: "CONS - Operations",
-    value: "CONS - Operations",
-    icon: PiMathOperationsBold,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-document-billing-and-contracts",
-    label: "CONS - Document, Billing and Contracts",
-    value: "CONS - Document, Billing and Contracts",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-document-management",
-    label: "CONS - Document Management",
-    value: "CONS - Document Management",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-cost-control",
-    label: "CONS - Cost Control",
-    value: "CONS - Cost Control",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-tsg",
-    label: "CONS - TSG",
-    value: "CONS - TSG",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-tender",
-    label: "CONS - Tender",
-    value: "CONS - Tender",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-qaqc",
-    label: "CONS - QAQC",
-    value: "CONS - QAQC",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-formworks",
-    label: "CONS - Formworks",
-    value: "CONS - Formworks",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-rebar",
-    label: "CONS - Rebar",
-    value: "CONS - Rebar",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-foundation",
-    label: "CONS - Foundation",
-    value: "CONS - Foundation",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "cons-equipment",
-    label: "CONS - Equipment",
-    value: "CONS - Equipment",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "management-accounting",
-    label: "Management Accounting",
-    value: "Management Accounting",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "treasury",
-    label: "Treasury",
-    value: "Treasury",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "audit",
-    label: "Audit",
-    value: "Audit",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "human-resources",
-    label: "Human Resources",
-    value: "Human Resources",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "ehs",
-    label: "EHS",
-    value: "EHS",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "strategic-business-growth",
-    label: "Strategic Business Growth",
-    value: "Strategic Business Growth",
-    icon: LiaFileContractSolid,
-    catalyst: "Danilo Franco",
-  },
-  {
-    url: "government-relations",
-    label: "Government Relations",
-    value: "Government Relations",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "importation",
-    label: "Importation",
-    value: "Importation",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "purchasing",
-    label: "Purchasing",
-    value: "Purchasing",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
-  {
-    url: "warehouse-and-logistics",
-    label: "Warehouse & Logistics",
-    value: "Warehouse & Logistics",
-    icon: LiaFileContractSolid,
-    catalyst: "Unknown",
-  },
+  // {
+  //   url: "refrigeration",
+  //   label: "Refrigeration",
+  //   value: "Refrigeration",
+  //   icon: CgSmartHomeRefrigerator,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "service",
+  //   label: "Service",
+  //   value: "Service",
+  //   icon: GrServices,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "shopfitting-and-warehouse-racking",
+  //   label: "Shopfitting and Warehouse Racking",
+  //   value: "Shopfitting and Warehouse Racking",
+  //   icon: BsShop,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "hvac",
+  //   label: "HVAC",
+  //   value: "HVAC",
+  //   icon: TbAirConditioning,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "mepfs",
+  //   label: "MEPFS",
+  //   value: "MEPFS",
+  //   icon: FaGripfire,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-operations",
+  //   label: "CONS - Operations",
+  //   value: "CONS - Operations",
+  //   icon: PiMathOperationsBold,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-document-billing-and-contracts",
+  //   label: "CONS - Document, Billing and Contracts",
+  //   value: "CONS - Document, Billing and Contracts",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-document-management",
+  //   label: "CONS - Document Management",
+  //   value: "CONS - Document Management",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-cost-control",
+  //   label: "CONS - Cost Control",
+  //   value: "CONS - Cost Control",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-tsg",
+  //   label: "CONS - TSG",
+  //   value: "CONS - TSG",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-tender",
+  //   label: "CONS - Tender",
+  //   value: "CONS - Tender",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-qaqc",
+  //   label: "CONS - QAQC",
+  //   value: "CONS - QAQC",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-formworks",
+  //   label: "CONS - Formworks",
+  //   value: "CONS - Formworks",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-rebar",
+  //   label: "CONS - Rebar",
+  //   value: "CONS - Rebar",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-foundation",
+  //   label: "CONS - Foundation",
+  //   value: "CONS - Foundation",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "cons-equipment",
+  //   label: "CONS - Equipment",
+  //   value: "CONS - Equipment",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "management-accounting",
+  //   label: "Management Accounting",
+  //   value: "Management Accounting",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "treasury",
+  //   label: "Treasury",
+  //   value: "Treasury",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "audit",
+  //   label: "Audit",
+  //   value: "Audit",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "human-resources",
+  //   label: "Human Resources",
+  //   value: "Human Resources",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "ehs",
+  //   label: "EHS",
+  //   value: "EHS",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "strategic-business-growth",
+  //   label: "Strategic Business Growth",
+  //   value: "Strategic Business Growth",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Danilo Franco",
+  // },
+  // {
+  //   url: "government-relations",
+  //   label: "Government Relations",
+  //   value: "Government Relations",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "importation",
+  //   label: "Importation",
+  //   value: "Importation",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "purchasing",
+  //   label: "Purchasing",
+  //   value: "Purchasing",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
+  // {
+  //   url: "warehouse-and-logistics",
+  //   label: "Warehouse & Logistics",
+  //   value: "Warehouse & Logistics",
+  //   icon: LiaFileContractSolid,
+  //   catalyst: "Unknown",
+  // },
 ];
 
 export const payments: Payment[] = [

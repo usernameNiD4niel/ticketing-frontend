@@ -7,15 +7,10 @@ type AccountRecentProps = {
   email: string;
 };
 
-type ResponseUtils = {
-  ticket_content: TicketContent[];
-};
-
 const getRecentActivity = async (email: string, token: string) => {
-  const response: ResponseUtils = await fetch(
+  const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/accounts/recent`,
     {
-      method: "post",
       body: JSON.stringify({ email }),
       headers: {
         Authorization: `Bearer ${token}`,
@@ -24,7 +19,7 @@ const getRecentActivity = async (email: string, token: string) => {
   )
     .then((data) => data.json())
     .catch((error) => error);
-  return response.ticket_content;
+  return response.ticket_content as TicketContent[];
 };
 
 const AccountRecent: FC<AccountRecentProps> = async ({ token, email }) => {

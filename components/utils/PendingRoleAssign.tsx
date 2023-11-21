@@ -86,10 +86,8 @@ const PendingRoleAssign: FC<PendingRoleAssignProps> = ({
           )}
         </AlertDialogHeader>
         <CustomSelect
-          setSelectedState={setSelectedRole}
           selectedState={selectedRole}
           label="Role"
-          placeHolder="Select a role"
           selectItems={["Requestor", "Champion", "Catalyst"]}
           isFullWidth={false}
         />
