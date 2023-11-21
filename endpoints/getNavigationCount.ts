@@ -12,7 +12,7 @@ export default async function getNavigationCount(token: string) {
   if (response.ok) {
     const data: {
       unset_user_count: number;
-      user_priority_ticket_count: number;
+      unset_priority_ticket_count: number;
     } = await response.json();
     return data;
   }

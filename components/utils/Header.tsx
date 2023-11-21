@@ -2,7 +2,6 @@ import LeftSheet from "./LeftSheet";
 import { FC } from "react";
 import LogoutDropDown from "./LogoutDropDown";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 type HeaderProps = {
   unhandledTicketsCount: number;
