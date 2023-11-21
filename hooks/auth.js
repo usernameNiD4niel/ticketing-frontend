@@ -118,13 +118,15 @@ export const useAuth = () => {
 
     try {
       const response = await axios.post("/api/login", props);
-      const { token, name, it_access_level, hr_access_level } =
+      const { token, name, email, it_access_level, hr_access_level } =
         response.data.data; // Extract the token from the response
       Cookies.set("token", token, { expires: 7 });
       Cookies.set("email", props.email, { expires: 7 });
       Cookies.set("it_access_level", it_access_level, { expires: 7 });
       Cookies.set("hr_access_level", hr_access_level, { expires: 7 });
       Cookies.set("name", name, { expires: 7 });
+      Cookies.set("email", email, { expires: 7 });
+
       router.push("/");
     } catch (error) {
       console.log(error.response.status, error.response.status === 401);

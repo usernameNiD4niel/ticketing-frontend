@@ -192,3 +192,8 @@ export type ApplicationTypes = {
   cv_resume: string | null;
   creator: string;
 };
+
+export type PostTicketTypes = {
+  subject: string;
+  description: string;
+};

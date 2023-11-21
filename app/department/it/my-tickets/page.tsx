@@ -1,52 +1,16 @@
-"use client";
-import { AvailableTabs } from "@/constants/enums";
-import { FeedTicketProps } from "@/constants/types";
-import { useAuth } from "@/hooks/auth";
-import useNavigationStore from "@/hooks/states/useNavigationStore";
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import React from "react";
 import Link from "next/link";
 import TroubleCard from "@/components/utils/TroubleCard";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { getMyTickets } from "@/endpoints";
+import { cookies } from "next/headers";
+import TabMutator from "@/components/helper/tab-mutator";
+import { AvailableTabs } from "@/constants/enums";
 
-const MyTickets = () => {
-  const [setActiveTab] = useNavigationStore((state) => [state.setActiveTab]);
+const MyTickets = async () => {
+  const token = cookies().get("token")?.value;
 
-  const { getMyTickets } = useAuth();
-
-  const [myTickets, setMyTickets] = useState<FeedTicketProps[]>([]);
-  const [error, setError] = useState("");
-  const [isFetching, setIsFetching] = useState(true);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const role = Cookies.get("it_access_level");
-
-    if (
-      role?.toUpperCase() === "CHAMPION" ||
-      role?.toUpperCase() === "CATALYST"
-    ) {
-      router.back();
-    }
-
-    setActiveTab(AvailableTabs["Existing Tickets"]);
-    getMyTicket();
-  }, []);
-
-  const getMyTicket = async () => {
-    const token = Cookies.get("token");
-    const name = Cookies.get("name");
-
-    getMyTickets({
-      name,
-      setError,
-      setIsFetching,
-      setMyTickets,
-      token,
-    });
-  };
+  const myTickets = await getMyTickets(token!);
 
   const getTicketColor = (priority: string) => {
     switch (priority) {
@@ -61,24 +25,9 @@ const MyTickets = () => {
     }
   };
 
-  if (isFetching) {
-    return (
-      <div className="h-[90vh] flex items-center justify-center">
-        <h3 className="text-xs md:text-sm">Getting your trouble tickets</h3>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="h-[90vh] flex items-center justify-center">
-        <h3>Getting your trouble tickets</h3>
-      </div>
-    );
-  }
-
   return (
     <section className="p-2 w-full flex justify-center flex-col gap-y-2">
+      <TabMutator availableTab={AvailableTabs["Existing Tickets"]} />
       <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
         {!myTickets || myTickets.length === 0 ? (
           <div className="w-full h-[90vh] flex items-center justify-center">
@@ -93,17 +42,14 @@ const MyTickets = () => {
             </p>
           </div>
         ) : (
-          myTickets
-            .slice(0)
-            .reverse()
-            .map((ticket) => (
-              <TroubleCard
-                classColor={cn(getTicketColor(ticket.priority))}
-                ticket={ticket}
-                key={ticket.id}
-                tabName="Existing Tickets"
-              />
-            ))
+          myTickets.map((ticket) => (
+            <TroubleCard
+              classColor={cn(getTicketColor(ticket.priority))}
+              ticket={ticket}
+              key={ticket.id}
+              tabName="Existing Tickets"
+            />
+          ))
         )}
       </div>
     </section>
