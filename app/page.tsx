@@ -20,6 +20,8 @@ export default function Home() {
 
   useEffect(() => {
     const token = Cookies.get("token");
+    // const laravel_session = Cookies.get("laravel_session");
+
     if (!token) {
       navigate.push("/login");
     }

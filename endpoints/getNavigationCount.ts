@@ -6,6 +6,9 @@ export default async function getNavigationCount(token: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: ["navigation-count-tag"],
+      },
     }
   );
 

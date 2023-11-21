@@ -29,6 +29,10 @@ export default async function updateActivities(id: string, formData: FormData) {
 
     revalidateTag("it-activities");
     revalidateTag(`it-tickets-item-${id}`);
+
+    if (formData.get("assigned_to")) {
+      revalidateTag("navigation-count-tag");
+    }
     return data.message as string;
   } else {
     throw new Error("Cannot process update...");

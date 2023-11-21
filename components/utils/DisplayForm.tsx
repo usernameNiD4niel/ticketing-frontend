@@ -27,18 +27,10 @@ const DisplayForm: FC<DisplayFormProps> = ({
 
   const { toast } = useToast();
 
-  // ! just revalidate this
-  const [unhandledTicketsCount, setUnhandledTicketsCount] = useCounterStore(
-    (state) => [state.unhandledTicketsCount, state.setUnhandledTicketsCount]
-  );
-
   const handleSubmitServerAction = async (formData: FormData) => {
     const message = await updateAction(formData);
 
-    console.log(`this is the messsage ::: ${message}`);
-
     if (message) {
-      console.log(`this is the messsage ::: ${message}`);
       toast({
         title: "Update success",
         description: message,
