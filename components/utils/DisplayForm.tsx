@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import CustomSelect from "./CustomSelect";
@@ -8,6 +8,7 @@ import { LoadingButton } from "./LoadingButton";
 import { AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
 import { updateActivities } from "@/app/actions";
 import { useToast } from "../ui/use-toast";
+import Cookies from "js-cookie";
 
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
@@ -23,6 +24,16 @@ const DisplayForm: FC<DisplayFormProps> = ({
   const updateAction = updateActivities.bind(null, ticket!.id.toString());
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const role = Cookies.get("it_access_level")?.toLowerCase();
+
+  const selectableItems = ["EXPIRED"];
+
+  if (role === "requestor" || role === "unset") {
+    selectableItems.push("CLOSED");
+  } else {
+    selectableItems.push("RESOLVED");
+  }
 
   const { toast } = useToast();
 
@@ -73,7 +84,7 @@ const DisplayForm: FC<DisplayFormProps> = ({
       )}
       <CustomSelect
         label="Status"
-        selectItems={["OPEN", "CLOSE", "RESOLVED", "EXPIRED", "RE-OPENED"]}
+        selectItems={selectableItems} // we remove the open here because we added it manually inside
         selectedState={ticket?.status.toUpperCase() ?? "Set status here"}
         isFullWidth={true}
       />

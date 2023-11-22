@@ -31,7 +31,7 @@ const EditCard: FC<EditCardProps> = async ({
   const champions = await getChampions(token!);
 
   return (
-    <div className="absolute top-[80px] py-4 mb-2 right-0 text-2xl flex bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90 rounded-full w-28 h-12 items-center justify-center hover:cursor-pointer">
+    <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90 rounded-full w-28 h-12 items-center justify-center hover:cursor-pointer">
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button

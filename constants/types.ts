@@ -55,6 +55,9 @@ export type FeedTicketProps = {
   assigned_to: string;
   name: string;
   is_ticket_owner: boolean;
+  closed_date: string;
+  due_date: string;
+  re_opened_date: string;
 };
 
 export type AccountProps = {
