@@ -14,54 +14,38 @@ import { Button } from "@/components/ui/button";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import CustomSelect from "./CustomSelect";
 import { FC, useState } from "react";
-import { useAuth } from "@/hooks/auth";
 import { LoadingButton } from "./LoadingButton";
 import { useToast } from "../ui/use-toast";
+import updateDepartmentRole from "@/app/actions/update-department-role";
 
 type PendingRoleAssignProps = {
-  activeCards: string[];
-  setSignalForRefetch: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedUserIds: number[];
 };
 
-const PendingRoleAssign: FC<PendingRoleAssignProps> = ({
-  activeCards,
-  setSignalForRefetch,
-}) => {
-  const [selectedRole, setSelectedRole] = useState("");
+const PendingRoleAssign: FC<PendingRoleAssignProps> = ({ selectedUserIds }) => {
   const { toast } = useToast();
-  const { updatePendingRoles } = useAuth();
 
-  const [backendValidationError, setBackendValidationError] = useState("");
   const [isLoadingButton, setIsLoadingButton] = useState(false);
 
-  const handleOnSubmit = () => {
-    const message = createRequest();
+  const handleFormAction = async (formData: FormData) => {
+    const formAction = await updateDepartmentRole(selectedUserIds, formData);
 
-    if (!message) {
-      setBackendValidationError(
-        "Please refrain your steps, you might miss important step"
-      );
-      return;
+    if (formAction.success) {
+      toast({
+        title: "Update success",
+        description: formAction.message,
+      });
+    } else {
+      toast({
+        title: "Update failed",
+        description: formAction.message,
+      });
     }
-
-    setSignalForRefetch((prev) => !prev);
-    toast({
-      title: "Roles Update",
-      description: "You have successfully updated roles",
-      duration: 3000,
-    });
+    setIsLoadingButton(false);
   };
 
-  const createRequest = async () => {
+  const handleFormSubmit = () => {
     setIsLoadingButton(true);
-    const { message }: any = updatePendingRoles({
-      emails: activeCards,
-      role: selectedRole,
-      setBackendValidationError,
-      setIsLoadingButton,
-    });
-
-    return message;
   };
 
   return (
@@ -81,29 +65,25 @@ const PendingRoleAssign: FC<PendingRoleAssignProps> = ({
           <AlertDialogDescription>
             The selected user will have their role base on your selected role
           </AlertDialogDescription>
-          {backendValidationError && (
-            <p className="text-red-500 text-sm">{backendValidationError}</p>
-          )}
         </AlertDialogHeader>
-        <CustomSelect
-          selectedState={selectedRole}
-          label="Role"
-          selectItems={["Requestor", "Champion", "Catalyst"]}
-          isFullWidth={false}
-        />
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          {isLoadingButton ? (
-            <LoadingButton isFullWidth={false} />
-          ) : (
-            <AlertDialogAction
-              disabled={selectedRole.length === 0}
-              onClick={handleOnSubmit}
-            >
-              Save
-            </AlertDialogAction>
-          )}
-        </AlertDialogFooter>
+        <form action={handleFormAction} onSubmit={handleFormSubmit}>
+          <CustomSelect
+            selectedState={"Select a role"}
+            label="Role"
+            selectItems={["Requestor", "Champion", "Catalyst"]}
+            isFullWidth={false}
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
+            {isLoadingButton ? (
+              <LoadingButton isFullWidth={false} />
+            ) : (
+              <AlertDialogAction asChild>
+                <Button type="submit">Save</Button>
+              </AlertDialogAction>
+            )}
+          </AlertDialogFooter>
+        </form>
       </AlertDialogContent>
     </AlertDialog>
   );

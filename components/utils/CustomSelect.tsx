@@ -9,7 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "../ui/label";
-import Cookies from "js-cookie";
 
 type CustomSelectProps = {
   selectedState: string;
@@ -42,15 +41,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {value.toUpperCase() === "OPEN" ? (
-              <SelectItem value={"OPEN"} key={"open"}>
-                OPEN
-              </SelectItem>
-            ) : (
-              <SelectItem value={"RE-OPENED"} key={"re-opened"}>
-                RE-OPENED
-              </SelectItem>
-            )}
             {selectItems.map((selectItem, index) => (
               <SelectItem value={selectItem.toUpperCase()} key={index}>
                 {selectItem.toUpperCase()}

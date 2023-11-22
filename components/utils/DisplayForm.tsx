@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import CustomSelect from "./CustomSelect";
@@ -27,12 +27,20 @@ const DisplayForm: FC<DisplayFormProps> = ({
 
   const role = Cookies.get("it_access_level")?.toLowerCase();
 
+  const status = ticket?.status.toUpperCase();
+
   const selectableItems = ["EXPIRED"];
 
   if (role === "requestor" || role === "unset") {
     selectableItems.push("CLOSED");
   } else {
     selectableItems.push("RESOLVED");
+  }
+
+  if (status === "open") {
+    selectableItems.push("OPEN");
+  } else {
+    selectableItems.push("RE-OPENED");
   }
 
   const { toast } = useToast();

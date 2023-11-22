@@ -200,3 +200,16 @@ export type PostTicketTypes = {
   subject: string;
   description: string;
 };
+
+export type UserProps = {
+  id: number;
+  name: string;
+  created_at: string;
+  department: string;
+  created_time: string;
+};
+
+export type DepartmentRolePatch = {
+  role: string;
+  user_ids: number[];
+};
