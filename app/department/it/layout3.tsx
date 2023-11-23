@@ -8,10 +8,12 @@ const HelperLayout = ({
   children,
   unset_user_count,
   user_priority_ticket_count,
+  my_assigned_tickets,
 }: {
   children: React.ReactNode;
   unset_user_count: number;
   user_priority_ticket_count: number;
+  my_assigned_tickets: number;
 }) => {
   return (
     <>
@@ -23,12 +25,14 @@ const HelperLayout = ({
         <Header
           unhandledTicketsCount={user_priority_ticket_count}
           pendingRoleCount={unset_user_count}
+          myAssignedTickets={my_assigned_tickets}
         />
       </header>
       <main className="mt-20 md:mt-10 w-full flex items-center justify-center">
         <MainContent
           unset_user_count={unset_user_count}
           user_priority_ticket_count={user_priority_ticket_count}
+          my_assigned_tickets={my_assigned_tickets}
         >
           {children}
         </MainContent>

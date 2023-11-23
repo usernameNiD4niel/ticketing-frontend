@@ -26,6 +26,7 @@ type MobileDrawerProps = {
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
   unhandledTicketsCount: number;
   pendingRoleCount: number;
+  my_assigned_tickets: number;
 };
 
 const MobileDrawer: FC<MobileDrawerProps> = ({
@@ -33,6 +34,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   setIsDrawerOpen,
   pendingRoleCount,
   unhandledTicketsCount,
+  my_assigned_tickets,
 }) => {
   const handleDrawerOpen = () => {
     setIsDrawerOpen((prevState) => !prevState);
@@ -98,7 +100,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </span>
             {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
           </Link>
-        ) : (
+        ) : role?.toLowerCase() !== "champion" ? (
           <Link
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
@@ -119,8 +121,34 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                 </span>
               </span>
             ) : (
-              <span className="text-xs ms-2 font-bold text-red-500 absolute right-2 top-2">
+              <span className="text-xs ms-2 font-bold text-red-500 absolute right-1 top-2">
                 {pendingRoleCount !== 0 && pendingRoleCount}
+              </span>
+            )}
+          </Link>
+        ) : (
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["Assigned Tickets"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
+            )}
+            href="/department/it/assigned-tickets"
+          >
+            <span>
+              <IoIosCreate />
+            </span>
+            {isDrawerOpen ? (
+              <span className="text-sm">
+                Assigned Tickets
+                <span className="text-xs ms-2 font-bold text-red-500">
+                  {my_assigned_tickets !== 0 && my_assigned_tickets}
+                </span>
+              </span>
+            ) : (
+              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
+                {my_assigned_tickets !== 0 && my_assigned_tickets}
               </span>
             )}
           </Link>

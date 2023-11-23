@@ -16,6 +16,7 @@ export default async function getNavigationCount(token: string) {
     const data: {
       unset_user_count: number;
       unset_priority_ticket_count: number;
+      my_assigned_tickets: number;
     } = await response.json();
     return data;
   }

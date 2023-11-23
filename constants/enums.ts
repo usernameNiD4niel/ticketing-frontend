@@ -7,6 +7,7 @@ export enum AvailableTabs {
   "Departments Role",
   "Overview",
   "Code",
+  "Assigned Tickets",
 }
 
 export enum TypeOfUser {

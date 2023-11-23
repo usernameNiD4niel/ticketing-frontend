@@ -17,7 +17,7 @@ const RootLayoutDepartment = async ({
   children: React.ReactNode;
 }) => {
   const token = cookies().get("token")?.value;
-  const { unset_user_count, unset_priority_ticket_count } =
+  const { unset_user_count, unset_priority_ticket_count, my_assigned_tickets } =
     await getNavigationCount(token!);
 
   if (!token) {
@@ -28,6 +28,7 @@ const RootLayoutDepartment = async ({
     <HelperLayout
       unset_user_count={unset_user_count}
       user_priority_ticket_count={unset_priority_ticket_count}
+      my_assigned_tickets={my_assigned_tickets}
     >
       {children}
     </HelperLayout>

@@ -1,5 +1,4 @@
 import React, { Suspense } from "react";
-import Loading from "./loading";
 import { FeedTicketProps } from "@/constants/types";
 import TroubleCard from "@/components/utils/TroubleCard";
 import { getCookies } from "next-client-cookies/server";
@@ -32,7 +31,7 @@ const UnhandledTickets = async () => {
   const unhandledTickets = await getUnHandledTickets(token!);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <>
       <UnHandledTab role={role!} />
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
         <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
@@ -54,7 +53,7 @@ const UnhandledTickets = async () => {
           )}
         </div>
       </section>
-    </Suspense>
+    </>
   );
 };
 

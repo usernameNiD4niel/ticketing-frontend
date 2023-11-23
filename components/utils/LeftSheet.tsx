@@ -29,11 +29,13 @@ type LeftSheetProps = {
   unhandledTicketsCount: number;
   pendingRoleCount: number;
   role: string;
+  myAssignedTickets: number;
 };
 
 const LeftSheet: FC<LeftSheetProps> = ({
   pendingRoleCount,
   unhandledTicketsCount,
+  myAssignedTickets,
   role,
 }) => {
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
@@ -125,25 +127,48 @@ const LeftSheet: FC<LeftSheetProps> = ({
                   {<span className="text-sm">Create Ticket</span>}
                 </Link>
               ) : (
-                <Link
-                  className={cn(
-                    "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
-                    activeTab === AvailableTabs["Departments Role"] &&
-                      "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                <>
+                  {role.toLowerCase() !== "champion" ? (
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                        activeTab === AvailableTabs["Departments Role"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      onClick={handleDrawerOpen}
+                      href="/department/it/pending-role"
+                    >
+                      <span>
+                        <RiPassPendingFill />
+                      </span>
+                      <span className="text-sm">
+                        Departments Role{" "}
+                        <span className="text-xs ms-2 font-bold text-red-500">
+                          {pendingRoleCount !== 0 && pendingRoleCount}
+                        </span>
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                        activeTab === AvailableTabs["Assigned Tickets"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      href="/department/it/assigned-tickets"
+                    >
+                      <span>
+                        <IoIosCreate />
+                      </span>
+                      <span className="text-sm">
+                        Assigned Tickets{" "}
+                        <span className="text-xs ms-2 font-bold text-red-500">
+                          {myAssignedTickets !== 0 && myAssignedTickets}
+                        </span>
+                      </span>
+                    </Link>
                   )}
-                  onClick={handleDrawerOpen}
-                  href="/department/it/pending-role"
-                >
-                  <span>
-                    <RiPassPendingFill />
-                  </span>
-                  <span className="text-sm">
-                    Departments Role{" "}
-                    <span className="text-xs ms-2 font-bold text-red-500">
-                      {pendingRoleCount !== 0 && pendingRoleCount}
-                    </span>
-                  </span>
-                </Link>
+                </>
               )}
               {isRequestor ? (
                 <Link

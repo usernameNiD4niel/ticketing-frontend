@@ -7,12 +7,14 @@ interface MainContentProps {
   children: React.ReactNode;
   user_priority_ticket_count: number;
   unset_user_count: number;
+  my_assigned_tickets: number;
 }
 
 export default function MainContent({
   children,
   unset_user_count,
   user_priority_ticket_count,
+  my_assigned_tickets,
 }: MainContentProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
 
@@ -23,6 +25,7 @@ export default function MainContent({
         isDrawerOpen={isDrawerOpen}
         unhandledTicketsCount={user_priority_ticket_count}
         pendingRoleCount={unset_user_count}
+        my_assigned_tickets={my_assigned_tickets}
       />
       <section
         className={cn(
