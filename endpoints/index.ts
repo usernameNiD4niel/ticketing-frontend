@@ -6,6 +6,7 @@ import postTroubleTicket from "./postTroubleTicket";
 import getFilteredData from "./getFilteredData";
 import getPendingDepartmentRole from "./getPendingDepartmentRole";
 import patchPendingDepartmentRole from "./patchPendingDepartmentRole";
+import getCodes from "./getCodes";
 
 export {
   getChampions,
@@ -16,4 +17,5 @@ export {
   getFilteredData,
   getPendingDepartmentRole,
   patchPendingDepartmentRole,
+  getCodes,
 };

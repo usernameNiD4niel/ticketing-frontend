@@ -228,7 +228,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           {isDrawerOpen && <span className="text-sm">Accounts</span>}
         </Link>
 
-        {role && role === "SUPREME" && (
+        {role && role.toUpperCase() === "SUPREME" && (
           <Link
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",

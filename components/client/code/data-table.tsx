@@ -7,6 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -19,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import DeleteAllDialog from "./delete-all-dialog";
 
@@ -43,11 +44,20 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       sorting,
       columnFilters,
     },
   });
+
+  useEffect(() => {
+    if (!data || data.length === 0) {
+      console.log(`the data has an item ${data}`);
+
+      table.getColumn("actions")?.toggleVisibility(false);
+    }
+  }, [data]);
 
   return (
     <div>
