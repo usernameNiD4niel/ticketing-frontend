@@ -60,6 +60,14 @@ export type FeedTicketProps = {
   re_opened_date: string;
 };
 
+export type CardTicket = {
+  id: string;
+  subject: string;
+  status: string;
+  priority: string;
+  created_at: string;
+};
+
 export type AccountProps = {
   id: number;
   name: string;

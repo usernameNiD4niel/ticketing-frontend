@@ -1,32 +1,12 @@
-import React, { Suspense } from "react";
-import { FeedTicketProps } from "@/constants/types";
+import React from "react";
 import TroubleCard from "@/components/utils/TroubleCard";
-import { getCookies } from "next-client-cookies/server";
 import UnHandledTab from "@/components/client/unhandled-tickets/tab";
-
-type ResponseHelper = {
-  tickets: FeedTicketProps[];
-};
-
-const getUnHandledTickets = async (token: string) => {
-  const response: ResponseHelper = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/unhandled-tickets`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  )
-    .then((data) => data.json())
-    .catch((error) => error);
-
-  return response.tickets;
-};
+import { getUnHandledTickets } from "@/endpoints";
+import { cookies } from "next/headers";
 
 const UnhandledTickets = async () => {
-  const token = getCookies().get("token");
-  const role = getCookies().get("it_access_level");
+  const token = cookies().get("token")?.value;
+  const role = cookies().get("it_access_level")?.value;
 
   const unhandledTickets = await getUnHandledTickets(token!);
 
@@ -40,7 +20,7 @@ const UnhandledTickets = async () => {
               <TroubleCard
                 classColor="bg-[#EEF7FF] dark:bg-[#EEF7FF]/50"
                 ticket={ticket}
-                key={ticket.id}
+                key={`UnhandledTickets${ticket.id}`}
                 tabName="Unhandled Tickets"
               />
             ))

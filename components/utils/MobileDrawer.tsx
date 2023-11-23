@@ -129,7 +129,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         ) : (
           <Link
             className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
               activeTab === AvailableTabs["Assigned Tickets"] &&
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"

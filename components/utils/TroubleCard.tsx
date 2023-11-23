@@ -1,10 +1,10 @@
-import { FeedTicketProps } from "@/constants/types";
+import { CardTicket } from "@/constants/types";
 import Link from "next/link";
 import React, { FC } from "react";
 
 type TroubleCardProps = {
   classColor: string;
-  ticket: FeedTicketProps;
+  ticket: CardTicket;
   tabName: string;
 };
 
@@ -18,9 +18,7 @@ const TroubleCard: FC<TroubleCardProps> = ({ classColor, ticket, tabName }) => {
         <p className="text-xs md:text-sm font-light">{ticket.status}</p>
       </div>
       <div>
-        <h2 className="text-3xl font-bold text-[#312F2F] dark:text-white">
-          #{ticket.id}
-        </h2>
+        <h2 className="text-3xl font-bold ">#{ticket.id}</h2>
         <p>{ticket.subject}</p>
       </div>
       <p className="font-thin text-xs md:text-sm">
