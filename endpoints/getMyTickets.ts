@@ -1,4 +1,4 @@
-import { FeedTicketProps } from "@/constants/types";
+import { CardTicket } from "@/constants/types";
 
 export default async function getMyTickets(token: string) {
   const response = await fetch(
@@ -13,7 +13,8 @@ export default async function getMyTickets(token: string) {
 
   if (response.ok) {
     const data = await response.json();
-    return data["my-tickets"] as FeedTicketProps[];
+
+    return data["my-tickets"] as CardTicket[];
   }
 
   throw new Error("Cannot fetch all of your tickets, please try again");

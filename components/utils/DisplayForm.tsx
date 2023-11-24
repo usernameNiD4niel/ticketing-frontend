@@ -120,6 +120,13 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
   assignTo,
   priority,
 }) => {
+  const name = Cookies.get("name");
+
+  const champs =
+    Cookies.get("it_access_level")?.toLowerCase() === "champion"
+      ? [name!]
+      : champions;
+
   return (
     <React.Fragment>
       <CustomSelect
@@ -134,7 +141,7 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
       ) : (
         <CustomSelect
           label="Assign To"
-          selectItems={champions}
+          selectItems={champs}
           selectedState={assignTo}
           isFullWidth={true}
         />
