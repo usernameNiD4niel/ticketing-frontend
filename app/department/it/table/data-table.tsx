@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { Payment } from "@/constants/types";
 import FilterPopover from "@/components/client/feed/FilterPopover";
 import ExportDialog from "@/components/server/feed/ExportDialog";
+import useScreenSize from "@/hooks/helper/useScreenSize";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -48,6 +49,8 @@ export function DataTable<TValue>({
   );
 
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const width = useScreenSize();
 
   const [data, setData] = React.useState(data_);
 
@@ -73,16 +76,23 @@ export function DataTable<TValue>({
     },
   });
 
-  React.useEffect(() => {
-    const width = window.innerWidth;
-
+  const handleWidth = (width: number) => {
     if (width < 768) {
       table.getColumn("name")?.toggleVisibility(false);
       table.getColumn("created_at")?.toggleVisibility(false);
       table.getColumn("subject")?.toggleVisibility(false);
       table.getColumn("assigned_to")?.toggleVisibility(false);
+    } else {
+      table.getColumn("name")?.toggleVisibility(true);
+      table.getColumn("created_at")?.toggleVisibility(true);
+      table.getColumn("subject")?.toggleVisibility(true);
+      table.getColumn("assigned_to")?.toggleVisibility(true);
     }
-  }, []);
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => handleWidth(width.width), 200);
+  }, [width.width]);
 
   const router = useRouter();
 
@@ -104,9 +114,11 @@ export function DataTable<TValue>({
           />
           <FilterPopover setData={setData} />
         </div>
-        <div>
-          <ExportDialog data={data} />
-        </div>
+        {data && data.length > 0 && (
+          <div>
+            <ExportDialog data={data} />
+          </div>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -139,7 +151,6 @@ export function DataTable<TValue>({
                       `/department/it/${row.getValue("id")}?tabName=Feed`
                     )
                   }
-                  // data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -180,11 +191,13 @@ export function DataTable<TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination
-        setData={setData}
-        table={table}
-        next_page_url={next_page_url}
-      />
+      {data && data.length > 0 && (
+        <DataTablePagination
+          setData={setData}
+          table={table}
+          next_page_url={next_page_url}
+        />
+      )}
     </div>
   );
 }
