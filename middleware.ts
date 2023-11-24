@@ -4,7 +4,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
 
   if (!token) {
-    return NextResponse.redirect(new URL("/", request.url)); // redirect user that is not authenticated
+    return NextResponse.redirect(new URL("/login", request.url)); // redirect user that is not authenticated
   }
 
   const pathname = request.nextUrl.pathname; // get the pathname of the page
@@ -15,25 +15,35 @@ export function middleware(request: NextRequest) {
     access_level?.toLowerCase() === "unset" ||
     access_level?.toLowerCase() === "requestor"
   ) {
-    if (pathname === "/departments/it/overview") {
+    if (pathname === "/department/it/overview") {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
-    if (pathname === "/departments/it/pending-role") {
+    if (pathname === "/department/it/pending-role") {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
-    if (pathname === "/departments/it/unhandled-tickets") {
+    if (pathname === "/department/it/unhandled-tickets") {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }
+
+  if (
+    access_level?.toLowerCase() !== "supreme" &&
+    pathname === "/department/it/code"
+  ) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
     "/",
-    "/departments/it/overview",
-    "/departments/it/pending-role",
-    "/departments/it/unhandled-tickets",
+    "/department/it/overview",
+    "/department/it/pending-role",
+    "/department/it/unhandled-tickets",
+    "/department/it/code",
   ],
 };
