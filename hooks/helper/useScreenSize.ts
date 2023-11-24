@@ -1,25 +1,27 @@
+"use client";
 // useScreenSize.js
 import { useState, useEffect } from "react";
 
 const useScreenSize = () => {
   const [screenSize, setScreenSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: global.innerWidth,
+    height: global.innerHeight,
   });
 
   useEffect(() => {
     const handleResize = () => {
       setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: global.innerWidth,
+        height: global.innerHeight,
       });
     };
 
-    window.addEventListener("resize", handleResize);
+    global.addEventListener("resize", handleResize);
+    console.log(global);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener("resize", handleResize);
+      global.removeEventListener("resize", handleResize);
     };
   }, []);
 

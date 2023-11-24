@@ -13,8 +13,6 @@ export default async function getFilteredData(token: string, params: string) {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(`tickets ::: ${JSON.stringify(data.tickets, null, 2)}`);
-    console.log(`params ::: ${params}`);
 
     return data.tickets as Payment[];
   }

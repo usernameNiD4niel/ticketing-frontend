@@ -6,8 +6,9 @@ interface HelperResponseType {
 }
 
 export default async function getPaginatedData(page: number, token: string) {
+  // http://10.10.1.120/api/all-tickets/pages?page=1&sortedBy=created_at&ordering=asc
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/pages?page=${page}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/pages?page=${page}&sortedBy=created_at&ordering=desc`,
     {
       headers: {
         "Content-Type": "application/json",

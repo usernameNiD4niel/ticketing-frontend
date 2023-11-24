@@ -94,6 +94,7 @@ export function DataTable<TValue>({
     setTimeout(() => handleWidth(width.width), 200);
   }, [width.width]);
 
+  const [isFiltering, setIsFiltering] = React.useState(false);
   const router = useRouter();
 
   const handleNavigation = (destination: string) => {
@@ -112,7 +113,7 @@ export function DataTable<TValue>({
             }
             className="max-w-sm"
           />
-          <FilterPopover setData={setData} />
+          <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
         </div>
         {data && data.length > 0 && (
           <div>
@@ -196,6 +197,7 @@ export function DataTable<TValue>({
           setData={setData}
           table={table}
           next_page_url={next_page_url}
+          isFiltering={isFiltering}
         />
       )}
     </div>

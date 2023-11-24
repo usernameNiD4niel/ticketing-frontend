@@ -8,6 +8,7 @@ interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
   next_page_url: number | null;
+  isFiltering: boolean;
 }
 
 async function getData(
@@ -19,37 +20,20 @@ async function getData(
 ) {
   // Fetch data from your API here.
   if (nextPageUrl) {
-    const data = await fetch(
-      // `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/pages?page=${page}`,
-      `${nextPageUrl}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const url = `${nextPageUrl}&sortedBy=created_at&ordering=desc`;
+    const data = await fetch(`${url}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (data.ok) {
       const response: Promise<PaginatedType> = await data.json();
-      const tickets = (await response).data;
-      const filteredTickets: Payment[] = [];
-      tickets.forEach((value) => {
-        filteredTickets.push({
-          id: value.id,
-          assigned_to: value.assigned_to,
-          created_at: value.created_at,
-          name: value.name,
-          status: value.status,
-          subject:
-            value.subject.length > 35
-              ? value.subject.substring(0, 35) + "..."
-              : value.subject,
-        });
-      });
+      const tickets: Payment[] = (await response).data;
       const nextPage = (await response).next_page_url;
 
-      setData(filteredTickets);
+      setData(tickets);
       setNextPageUrl(nextPage);
       setPreviousPageUrl((await response).prev_page_url);
     } else {
@@ -67,37 +51,20 @@ async function getPrevious(
 ) {
   // Fetch data from your API here.
   if (previousPageUrl) {
-    const data = await fetch(
-      // `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/pages?page=${page}`,
-      `${previousPageUrl}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const url = `${previousPageUrl}&sortedBy=created_at&ordering=desc`;
+    const data = await fetch(`${url}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (data.ok) {
       const response: Promise<PaginatedType> = await data.json();
-      const tickets = (await response).data;
-      const filteredTickets: Payment[] = [];
-      tickets.forEach((value) => {
-        filteredTickets.push({
-          id: value.id,
-          assigned_to: value.assigned_to,
-          created_at: value.created_at,
-          name: value.name,
-          status: value.status,
-          subject:
-            value.subject.length > 35
-              ? value.subject.substring(0, 35) + "..."
-              : value.subject,
-        });
-      });
+      const tickets: Payment[] = (await response).data;
       const nextPage = (await response).next_page_url;
 
-      setData(filteredTickets);
+      setData(tickets);
       setNextPageUrl(nextPage);
       setPreviousPageUrl((await response).prev_page_url);
     } else {
@@ -110,6 +77,7 @@ export function DataTablePagination<TData>({
   table,
   next_page_url,
   setData,
+  isFiltering,
 }: DataTablePaginationProps<TData>) {
   const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
   const [previousPageUrl, setPreviousPageUrl] = useState<number | null>(null);
@@ -136,7 +104,8 @@ export function DataTablePagination<TData>({
           );
           table.previousPage();
         }}
-        disabled={!previousPageUrl}
+        // disabled={!previousPageUrl}
+        disabled={isFiltering ? !table.getCanPreviousPage() : !previousPageUrl}
       >
         Previous
       </Button>
@@ -144,17 +113,19 @@ export function DataTablePagination<TData>({
         size="lg"
         variant={"outline"}
         onClick={() => {
-          const token = Cookies.get("token");
-          getData(
-            token!,
-            setData,
-            nextPageUrl,
-            setNextPageUrl,
-            setPreviousPageUrl
-          );
+          if (!isFiltering) {
+            const token = Cookies.get("token");
+            getData(
+              token!,
+              setData,
+              nextPageUrl,
+              setNextPageUrl,
+              setPreviousPageUrl
+            );
+          }
           table.nextPage();
         }}
-        disabled={!nextPageUrl}
+        disabled={isFiltering ? !table.getCanNextPage() : !nextPageUrl}
       >
         Next
       </Button>
