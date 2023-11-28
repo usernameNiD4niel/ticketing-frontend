@@ -221,3 +221,16 @@ export type DepartmentRolePatch = {
   role: string;
   user_ids: number[];
 };
+
+export type Login = {
+  email: string;
+  password: string;
+};
+
+export type LoginDataResponse = {
+  token: string;
+  name: string;
+  it_access_level: string;
+  hr_access_level: string;
+  email: string;
+};

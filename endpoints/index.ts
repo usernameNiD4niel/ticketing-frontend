@@ -9,6 +9,7 @@ import patchPendingDepartmentRole from "./patchPendingDepartmentRole";
 import getCodes from "./getCodes";
 import getUnHandledTickets from "./getUnhandledTickets";
 import getAssignedTickets from "./getAssignedTickets";
+import loginUser from "./login";
 
 export {
   getChampions,
@@ -22,4 +23,5 @@ export {
   getCodes,
   getUnHandledTickets,
   getAssignedTickets,
+  loginUser,
 };

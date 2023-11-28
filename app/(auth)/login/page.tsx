@@ -1,78 +1,9 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ModeToggle } from "@/components/utils/ModeToggle";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./styles.module.css";
-import { Button } from "@/components/ui/button";
-import { DialogBox } from "@/components/utils/DialogBox";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/auth";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-import { LoadingButton } from "@/components/utils/LoadingButton";
-import { validationSchema } from "./validation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FormLoginSchema } from "@/constants/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
+import LoginForm from "@/components/client/login/form";
 
 const Login = () => {
-  const navigate = useRouter();
-
-  const [isLoadingButton, setIsLoadingButton] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [isRegisterClick, setIsRegisterClick] = useState(false);
-
-  const { login } = useAuth();
-  const { toast } = useToast();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormLoginSchema>({
-    resolver: zodResolver(validationSchema),
-  });
-
-  const handleChangingRoute = () => {
-    setIsRegisterClick((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-
-    if (token) {
-      navigate.push("/");
-    }
-
-    if (localStorage.getItem("SUCCESS")) {
-      toast({
-        title: "Password reset successfully",
-        duration: 5000,
-        description: "Try to use your new password by logging in here!",
-      });
-    }
-    setIsLoading(false);
-
-    return () => localStorage.clear();
-  }, []);
-
-  const handleSubmitForm: SubmitHandler<FormLoginSchema> = async (data) => {
-    setIsLoadingButton(true);
-
-    const email = data.email;
-    const password = data.password;
-
-    await login({ email, password, setError, setIsLoadingButton });
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <main className="w-full grid md:grid-cols-[50%_1fr] lg:grid-cols-[40%_1fr] xl:grid-cols-[30%_1fr] h-screen">
       <section className="px-8 flex flex-col gap-y-7 mt-4 w-full">
@@ -95,63 +26,7 @@ const Login = () => {
           <h1 className="text-4xl font-bold">Welcome back!</h1>
           <p className="font-light">Login to continue your progress with us</p>
         </div>
-        <form
-          className="flex flex-col gap-y-6"
-          onSubmit={handleSubmit(handleSubmitForm)}
-        >
-          {error && <p className="text-red-400 text-sm font-bold">{error}</p>}
-          <Label htmlFor="email" className={styles.labels}>
-            Email
-            <Input
-              placeholder="juantamad@devexsolutions.com"
-              type="email"
-              id="email"
-              autoFocus={true}
-              {...register("email")}
-            />
-            {errors.email && (
-              <span className="text-red-500 text-sm">
-                {errors.email.message}
-              </span>
-            )}
-          </Label>
-          <Label htmlFor="password" className={styles.labels}>
-            Password
-            <Input
-              placeholder="Enter your password"
-              id="password"
-              type="password"
-              {...register("password")}
-            />
-            {errors.password && (
-              <span className="text-red-500 text-sm">
-                {errors.password.message}
-              </span>
-            )}
-          </Label>
-          <div className="flex text-sm justify-end items-center">
-            <DialogBox />
-          </div>
-          {isLoadingButton ? (
-            <LoadingButton isFullWidth={true} />
-          ) : (
-            <Button disabled={isSubmitting}>LOGIN</Button>
-          )}
-          <Label className="text-sm md:text-base font-normal w-full text-center">
-            Don&#39;t have an account yet?{" "}
-            {isRegisterClick ? (
-              <span className="text-[#0B64B9]">Navigating...</span>
-            ) : (
-              <Link
-                href="/register"
-                className="font-bold text-[#0B64B9]"
-                onClick={handleChangingRoute}
-              >
-                Register
-              </Link>
-            )}
-          </Label>
-        </form>
+        <LoginForm />
       </section>
       <section className="hidden md:flex bg-black overflow-hidden relative">
         <Image
