@@ -29,18 +29,6 @@ export default function LoginForm() {
     resolver: zodResolver(validationSchema),
   });
 
-  useEffect(() => {
-    if (localStorage.getItem("SUCCESS")) {
-      toast({
-        title: "Password reset successfully",
-        duration: 5000,
-        description: "Try to use your new password by logging in here!",
-      });
-    }
-
-    return () => localStorage.clear();
-  }, []);
-
   const handleSubmitForm: SubmitHandler<FormLoginSchema> = async (data) => {
     setIsValid(true);
 
@@ -59,23 +47,9 @@ export default function LoginForm() {
     }
   };
 
-  const handleFormAction = async (formData: FormData) => {
-    if (isValid) {
-      const isAuthorized = await login(formData);
-
-      if (isAuthorized) {
-        setError("");
-        router.push("/");
-      } else {
-        setError("Please try refreshing your browser and login again");
-        setIsValid(false);
-      }
-    }
-  };
   return (
     <form
       className="flex flex-col gap-y-6"
-      action={handleFormAction}
       onSubmit={handleSubmit(handleSubmitForm)}
     >
       {error && <p className="text-red-400 text-sm font-bold">{error}</p>}

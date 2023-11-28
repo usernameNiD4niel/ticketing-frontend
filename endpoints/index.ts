@@ -10,6 +10,9 @@ import getCodes from "./getCodes";
 import getUnHandledTickets from "./getUnhandledTickets";
 import getAssignedTickets from "./getAssignedTickets";
 import loginUser from "./login";
+import getForgotPasswordOTP from "./getForgotPasswordOTP";
+import postUpdatePassword from "./postUpdatePassword";
+import CSRF from "./csrf";
 
 export {
   getChampions,
@@ -24,4 +27,7 @@ export {
   getUnHandledTickets,
   getAssignedTickets,
   loginUser,
+  getForgotPasswordOTP,
+  postUpdatePassword,
+  CSRF,
 };

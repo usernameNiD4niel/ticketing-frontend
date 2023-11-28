@@ -234,3 +234,8 @@ export type LoginDataResponse = {
   hr_access_level: string;
   email: string;
 };
+
+export type ForgotPassword = {
+  email: string;
+  newPassword: string;
+};

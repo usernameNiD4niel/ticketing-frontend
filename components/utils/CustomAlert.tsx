@@ -1,14 +1,27 @@
-import { AlertCircle, MailCheck } from "lucide-react";
+import { MailCheck } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
-const CustomAlert = () => {
+interface CustomAlert {
+  success: boolean;
+  title: string;
+  description: string;
+}
+
+const CustomAlert = ({ description, success, title }: CustomAlert) => {
   return (
-    <Alert className="bg-green-500/50 dark:bg-green-500">
+    <Alert
+      className={cn(
+        success
+          ? "bg-green-500/50 dark:bg-green-500"
+          : "bg-red-500/50 dark:bg-red-500"
+      )}
+    >
       {/* <AlertCircle className="h-4 w-4" /> */}
       <MailCheck />
-      <AlertTitle>Validation Success</AlertTitle>
-      <AlertDescription>You have entered a correct OTP code</AlertDescription>
+      <AlertTitle>{title}</AlertTitle>
+      <AlertDescription>{description}</AlertDescription>
     </Alert>
   );
 };
