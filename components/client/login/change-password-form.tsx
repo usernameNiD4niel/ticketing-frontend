@@ -1,12 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Cookies from "js-cookie";
 
 export default function ChangePasswordForm() {
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     fieldName: string
   ) => {
-    setTimeout(() => localStorage.setItem(fieldName, event.target.value), 100);
+    setTimeout(() => Cookies.set(fieldName, event.target.value), 100);
   };
 
   return (

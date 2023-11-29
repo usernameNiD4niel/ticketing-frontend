@@ -5,21 +5,19 @@ import login from "@/app/actions/login";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
 import { DialogBox } from "@/components/utils/DialogBox";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { FormLoginSchema } from "@/constants/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function LoginForm() {
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
   const {
     register,

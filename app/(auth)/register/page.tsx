@@ -1,109 +1,15 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ModeToggle } from "@/components/utils/ModeToggle";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import { ComboboxDemo } from "@/components/utils/ComboBox";
-import { useAuth } from "@/hooks/auth";
-import Cookies from "js-cookie";
-import { LoadingButton } from "@/components/utils/LoadingButton";
-import { useRouter } from "next/navigation";
-
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormRegisterSchema, UserDataProps } from "@/constants/types";
-import { validationSchema } from "./validation";
-import useRegisterStore from "@/hooks/states/useRegisterStore";
+import RegisterForm from "@/components/client/register/register-form";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const Register = () => {
-  const [department, setDepartment] = useState("");
+  const token = cookies().get("token")?.value;
 
-  const [isLoadingButton, setIsLoadingButton] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const navigate = useRouter();
-
-  const [userData] = useRegisterStore((state) => [state.userData]);
-
-  const { generateOtp } = useAuth();
-
-  const [departmentError, setDepartmentError] = useState("");
-
-  const [backendValidationError, setBackendValidationError] = useState("");
-
-  const [setUserData] = useRegisterStore((state) => [state.setUserData]);
-
-  const [isLinkClicked, setIsLinkClicked] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormRegisterSchema>({
-    resolver: zodResolver(validationSchema),
-    defaultValues: {
-      name: userData.name,
-      email: userData.email,
-      password: userData.password,
-      confirmPassword: "",
-    },
-  });
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-
-    if (token) {
-      navigate.push("/");
-    }
-
-    setDepartment(userData.department);
-
-    setIsLoading(false);
-  }, []);
-
-  const createRequest: SubmitHandler<FormRegisterSchema> = async (data) => {
-    setIsLoadingButton(true);
-
-    const name = data.name;
-    const email = data.email;
-    const password = data.password;
-
-    const userObject: UserDataProps = {
-      name,
-      email,
-      password,
-      otp: "",
-      department,
-    };
-
-    await generateOtp({
-      setIsLoadingButton,
-      setBackendValidationError,
-      userObject,
-      setUserData,
-      email,
-    });
-  };
-
-  const handleFormSubmit: SubmitHandler<FormRegisterSchema> = (data) => {
-    if (!department) {
-      setDepartmentError("Department is required");
-      return;
-    }
-
-    createRequest(data);
-  };
-
-  const handleLoadingLink = () => {
-    setIsLinkClicked((prev) => !prev);
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (token) {
+    redirect("/");
   }
 
   return (
@@ -150,105 +56,7 @@ const Register = () => {
             Let&#39;s fix your day to day struggle and make your life easier
           </p>
         </div>
-        <form
-          className="flex flex-col gap-y-4 pb-4"
-          onSubmit={handleSubmit(handleFormSubmit)}
-        >
-          <div className="flex flex-col gap-y-3">
-            <Label htmlFor="fullName" className={styles.labels}>
-              FullName
-              <Input
-                placeholder="Juan Tamad"
-                type="text"
-                id="fullName"
-                {...register("name")}
-              />
-              {errors.name && (
-                <span className="text-red-800 block text-sm">
-                  {errors.name?.message}
-                </span>
-              )}
-            </Label>
-            <Label htmlFor="email" className={styles.labels}>
-              Email
-              <Input
-                placeholder="juantamad@devexsolutions.com"
-                type="email"
-                id="email"
-                {...register("email")}
-              />
-              {errors.email && (
-                <span className="text-red-800 block text-sm">
-                  {errors.email?.message}
-                </span>
-              )}
-            </Label>
-            <Label className={styles.labels}>
-              Department
-              <ComboboxDemo
-                department={department}
-                setDepartment={setDepartment}
-              />
-              {departmentError && !department && (
-                <span className="text-red-800 block text-sm">
-                  {departmentError}
-                </span>
-              )}
-            </Label>
-            <Label htmlFor="password" className={styles.labels}>
-              Password
-              <Input
-                placeholder="Enter your password"
-                id="password"
-                type="password"
-                {...register("password")}
-              />
-              {errors.password && (
-                <span className="text-red-800 block text-sm">
-                  {errors.password?.message}
-                </span>
-              )}
-            </Label>
-            <Label htmlFor="confirmPassword" className={styles.labels}>
-              Confirm Password
-              <Input
-                placeholder="Confirm your confirm password"
-                id="confirmPassword"
-                type="password"
-                {...register("confirmPassword")}
-              />
-              {errors.confirmPassword && (
-                <span className="text-red-800 block text-sm">
-                  {errors.confirmPassword?.message}
-                </span>
-              )}
-            </Label>
-          </div>
-          {backendValidationError && (
-            <span className="text-red-800 block text-sm">
-              {backendValidationError}
-            </span>
-          )}
-          {isLoadingButton ? (
-            <LoadingButton isFullWidth={true} />
-          ) : (
-            <Button disabled={isSubmitting}>SIGN UP</Button>
-          )}
-          <Label className="text-sm md:text-base font-normal w-full text-center">
-            Already have an account?{" "}
-            {isLinkClicked ? (
-              <span className="text-[#0B64B9]">Navigating...</span>
-            ) : (
-              <Link
-                href="/login"
-                onClick={handleLoadingLink}
-                className="font-bold text-[#0B64B9]"
-              >
-                Login
-              </Link>
-            )}
-          </Label>
-        </form>
+        <RegisterForm />
       </section>
     </main>
   );

@@ -239,3 +239,18 @@ export type ForgotPassword = {
   email: string;
   newPassword: string;
 };
+
+export type UserObject = {
+  name: string;
+  department: string;
+  email: string;
+  password: string;
+  otp: string;
+};
+
+export type CreateUserType = {
+  name: string;
+  department: string;
+  email: string;
+  password: string;
+};

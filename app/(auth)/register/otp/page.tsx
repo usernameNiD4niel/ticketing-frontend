@@ -1,43 +1,17 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CardOtp from "@/components/otp/CardOtp";
-import useRegisterStore from "@/hooks/states/useRegisterStore";
-
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 const Otp = () => {
-  const [reset, userData] = useRegisterStore((state) => [
-    state.reset,
-    state.userData,
-  ]);
-  const [otp, setOtp] = useState("");
-  const router = useRouter();
+  const token = cookies().get("token")?.value;
 
-  const [isHydrating, setIsHydrating] = useState(true);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-
-    if (token) {
-      router.push("/");
-    } else if (!userData.name) {
-      router.push("/register");
-    }
-
-    setIsHydrating(false);
-
-    const { otp } = userData;
-    setOtp(otp);
-  }, []);
-
-  if (isHydrating) {
-    return <div>Loading...</div>;
+  if (token) {
+    redirect("/");
   }
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <CardOtp emailOtp={otp} reset={reset} userData={userData} />
+      <CardOtp />
     </div>
   );
 };

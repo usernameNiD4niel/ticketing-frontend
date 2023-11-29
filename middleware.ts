@@ -41,6 +41,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
+    "/department/it",
     "/department/it/overview",
     "/department/it/pending-role",
     "/department/it/unhandled-tickets",

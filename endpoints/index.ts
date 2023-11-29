@@ -12,7 +12,8 @@ import getAssignedTickets from "./getAssignedTickets";
 import loginUser from "./login";
 import getForgotPasswordOTP from "./getForgotPasswordOTP";
 import postUpdatePassword from "./postUpdatePassword";
-import CSRF from "./csrf";
+import getOtpGenerated from "./getOtpGenerated";
+import createUser from "./createUser";
 
 export {
   getChampions,
@@ -29,5 +30,6 @@ export {
   loginUser,
   getForgotPasswordOTP,
   postUpdatePassword,
-  CSRF,
+  getOtpGenerated,
+  createUser,
 };

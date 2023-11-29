@@ -7,6 +7,7 @@ import { getForgotPasswordOTP } from "@/endpoints";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import CustomAlert from "@/components/utils/CustomAlert";
 import { useToast } from "@/components/ui/use-toast";
+import Cookies from "js-cookie";
 
 interface OtpFormProps {
   setIsCorrectOtp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +45,7 @@ export default function OtpForm({ setIsCorrectOtp }: OtpFormProps) {
     }
 
     // TODO: the user enter a correct otp, update the otp is correct
-    localStorage.setItem("email", email);
+    Cookies.set("email", email);
     setIsCorrectOtp(true);
   };
 
