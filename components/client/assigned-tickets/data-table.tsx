@@ -149,7 +149,9 @@ export function DataTable<TValue>({
                   className="hover:cursor-pointer"
                   onClick={() =>
                     handleNavigation(
-                      `/department/it/${row.getValue("id")}?tabName=Feed`
+                      `/department/it/${row.getValue(
+                        "id"
+                      )}?tabName=Assigned Tickets`
                     )
                   }
                 >

@@ -28,7 +28,7 @@ const getAllTickets = async (token: string) => {
     .then((data) => data.json())
     .catch((error) => error);
 
-  return response.tickets as AssignedTickets[];
+  return response["my-tickets"] as AssignedTickets[];
 };
 
 const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
@@ -104,9 +104,7 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
       </div>
       <form className="grid gap-2" action={handleFormAction}>
         <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="priority">
-            Priority <span>eg. (low, medium or high)</span>
-          </Label>
+          <Label htmlFor="priority">Priority</Label>
           <Input
             id="priority"
             className="col-span-2 h-8"
