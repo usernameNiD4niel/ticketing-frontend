@@ -2,7 +2,7 @@ import { AssignedTickets } from "@/constants/types";
 
 export default async function getMyTickets(token: string) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets/my-tickets`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/my-tickets`,
     {
       headers: {
         "Content-Type": "application/json",

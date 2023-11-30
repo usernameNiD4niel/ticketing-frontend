@@ -18,7 +18,9 @@ export default async function postTroubleTicket(
 
   if (response.ok) {
     const data_ = await response.json();
-    return data_.message as string;
+    console.log(`the id is ::: ${data_.id}`);
+
+    return { id: data_.id, message: data_.message as string };
   }
 
   throw new Error("Cannot post a trouble ticket");

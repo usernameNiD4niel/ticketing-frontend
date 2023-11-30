@@ -5,20 +5,20 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { AvailableTabs } from "@/constants/enums";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import TabMutator from "@/components/helper/tab-mutator";
 import { postTicket } from "@/app/actions";
+import { useRouter } from "next/navigation";
 
 const CreateTicket = () => {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const router = useRouter();
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
-    const { success, message } = await postTicket(formData);
-
-    console.log(`the form data ::: ${formData.get("description")}`);
+    const { success, message, id } = await postTicket(formData);
 
     if (success) {
       toast({
@@ -26,6 +26,7 @@ const CreateTicket = () => {
         description: message,
         duration: 3000,
       });
+      router.push(`/department/it/${id}?tabName=Create+Ticket`);
     } else {
       toast({
         title: "Ticket posting failed",
