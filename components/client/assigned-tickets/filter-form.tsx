@@ -1,28 +1,23 @@
-"use client";
-import filterTable from "@/app/actions/filter-table";
+import { filterTableAssigned } from "@/app/actions";
 import DatePicker from "@/components/helper/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SelectCustom from "@/components/utils/SelectCustom";
-import { Payment } from "@/constants/types";
+import { AssignedTickets } from "@/constants/types";
 import { PHILIPPINE_TIME_ZONE } from "@/constants/variables";
 import { format } from "date-fns-tz";
 import Cookies from "js-cookie";
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 
 type FilterFormProps = {
-  setData: React.Dispatch<React.SetStateAction<Payment[]>>;
+  setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type FilterRequestHelper = {
-  tickets: Payment[];
-};
-
 const getAllTickets = async (token: string) => {
-  const response: FilterRequestHelper = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets`,
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-my-tickets`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +28,7 @@ const getAllTickets = async (token: string) => {
     .then((data) => data.json())
     .catch((error) => error);
 
-  return response.tickets;
+  return response.tickets as AssignedTickets[];
 };
 
 const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
@@ -42,7 +37,7 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
   const token = Cookies.get("token");
 
   const handleFormAction = async (formData: FormData) => {
-    const champion = formData.get("champion")?.toString();
+    const priority = formData.get("priority")?.toString();
     const status = formData.get("status")?.toString();
     const sort_by = formData.get("sort_by")?.toString();
     let date_ = null;
@@ -54,13 +49,10 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
       date_ = formattedDate;
     }
 
-    console.log(`the formatted date ::: ${date_}`);
-    console.log(`the date ::: ${date}`);
-
     let params = "";
 
-    if (champion && champion !== null) {
-      params += `champion=${champion}&`;
+    if (priority && priority !== null) {
+      params += `priority=${priority}&`;
     }
 
     if (status && status !== null) {
@@ -89,7 +81,7 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
 
     params = params.substring(0, params.length);
 
-    const data = await filterTable(params);
+    const data = await filterTableAssigned(params);
     setData(data);
     setIsFiltering(true);
   };
@@ -106,17 +98,20 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
       <div className="space-y-2">
         <h4 className="font-medium leading-none">Filter Ticket</h4>
         <p className="text-sm text-muted-foreground">
-          Press enter to take effect your filtering
+          Press enter or click <span className="font-semibold">Filter</span> to
+          take effect your filtering
         </p>
       </div>
       <form className="grid gap-2" action={handleFormAction}>
         <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="champion">Champion</Label>
+          <Label htmlFor="priority">
+            Priority <span>eg. (low, medium or high)</span>
+          </Label>
           <Input
-            id="champion"
+            id="priority"
             className="col-span-2 h-8"
-            placeholder="Jose Rizal"
-            name="champion"
+            placeholder="Medium"
+            name="priority"
           />
         </div>
         <div className="grid grid-cols-3 items-center gap-4">
@@ -137,10 +132,10 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="sort_by">Sort By</Label>
           <SelectCustom
-            items={["Date Created", "Ticket Number", "Requestor"]}
+            items={["Date Created", "Ticket Number", "Status", "Priority"]}
             name="sort_by"
             placeholder="Sort column"
-            key={"SelectCustomFilterForm"}
+            key={"SelectCustomFilterFormAssignedTickets"}
           />
         </div>
         <div className="w-full mt-8 flex flex-col gap-y-3">

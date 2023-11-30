@@ -1,4 +1,4 @@
-import { CardTicket, FeedTicketProps } from "@/constants/types";
+import { AssignedTickets } from "@/constants/types";
 
 export default async function getUnHandledTickets(token: string) {
   const response = await fetch(
@@ -13,5 +13,5 @@ export default async function getUnHandledTickets(token: string) {
     .then((data) => data.json())
     .catch((error) => error);
 
-  return response.tickets as CardTicket[];
+  return response.tickets as AssignedTickets[];
 }

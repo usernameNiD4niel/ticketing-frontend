@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Payment } from "@/constants/types";
+import { AssignedTickets, Payment } from "@/constants/types";
 import React, { FC, useState } from "react";
 import { CSVLink } from "react-csv";
 import { AiOutlineClose } from "react-icons/ai";
 
 type ExportDialogFormProps = {
-  data: Payment[];
+  data: Payment[] | AssignedTickets[];
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 

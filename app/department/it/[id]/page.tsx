@@ -25,6 +25,7 @@ const getTicketData = async (id: string, token: string) => {
 
   if (ticketData.ok) {
     const data: ResponseProps = await ticketData.json();
+
     return data;
   } else {
     throw new Error(

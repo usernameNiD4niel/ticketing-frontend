@@ -9,11 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Payment } from "@/constants/types";
+import { AssignedTickets, Payment } from "@/constants/types";
 import { FC, useState } from "react";
 
 type ExportDialogProps = {
-  data: Payment[];
+  data: Payment[] | AssignedTickets[];
 };
 
 const ExportDialog: FC<ExportDialogProps> = ({ data }) => {

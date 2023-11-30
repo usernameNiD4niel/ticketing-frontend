@@ -1,8 +1,8 @@
-import { CardTicket } from "@/constants/types";
+import { AssignedPaginatedType, AssignedTickets } from "@/constants/types";
 
-export default async function getAssignedTickets(token: string) {
+export default async function getAssignedTickets(token: string, page: number) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/assigned`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/assigned?page=${page}&sortedBy=created_at&ordering=desc`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,8 @@ export default async function getAssignedTickets(token: string) {
 
   if (response.ok) {
     const data = await response.json();
-    return data.assigned_tickets as CardTicket[];
+
+    return data as AssignedPaginatedType;
   }
 
   throw new Error("Fetching all of the assigned tickets error");

@@ -1,3 +1,5 @@
+import { columns } from "@/components/client/assigned-tickets/columns";
+import { DataTable } from "@/components/client/assigned-tickets/data-table";
 import TabMutator from "@/components/helper/tab-mutator";
 import TroubleCard from "@/components/utils/TroubleCard";
 import { AvailableTabs } from "@/constants/enums";
@@ -7,7 +9,7 @@ import { cookies } from "next/headers";
 export default async function Page() {
   const token = cookies().get("token")?.value;
 
-  const tickets = await getAssignedTickets(token!);
+  const tickets = await getAssignedTickets(token!, 1);
 
   const getCardColor = (priority: string) => {
     switch (priority.toLowerCase()) {
@@ -26,7 +28,12 @@ export default async function Page() {
     <>
       <TabMutator availableTab={AvailableTabs["Assigned Tickets"]} />
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
-        <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
+        <DataTable
+          columns={columns}
+          data_={tickets.data}
+          next_page_url={tickets.next_page_url}
+        />
+        {/* <div className="flex flex-col flex-wrap w-full gap-2 md:flex-row">
           {tickets && tickets.length > 0 ? (
             tickets.map((ticket) => (
               <TroubleCard
@@ -43,7 +50,7 @@ export default async function Page() {
               </h3>
             </div>
           )}
-        </div>
+        </div> */}
       </section>
     </>
   );

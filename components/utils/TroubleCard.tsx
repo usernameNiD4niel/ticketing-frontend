@@ -1,10 +1,10 @@
-import { CardTicket } from "@/constants/types";
+import { AssignedTickets } from "@/constants/types";
 import Link from "next/link";
 import React, { FC } from "react";
 
 type TroubleCardProps = {
   classColor: string;
-  ticket: CardTicket;
+  ticket: AssignedTickets;
   tabName: string;
 };
 

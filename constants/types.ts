@@ -60,14 +60,6 @@ export type FeedTicketProps = {
   re_opened_date: string;
 };
 
-export type CardTicket = {
-  id: string;
-  subject: string;
-  status: string;
-  priority: string;
-  created_at: string;
-};
-
 export type AccountProps = {
   id: number;
   name: string;
@@ -99,6 +91,8 @@ export type Activity = {
   details: string;
   created_at: string;
   updated_at: string;
+  created_time: string;
+  updated_time: string;
 };
 
 export type ActivitiesProps = {
@@ -188,6 +182,12 @@ export type PaginatedType = {
   prev_page_url: number | null;
 };
 
+export type AssignedPaginatedType = {
+  data: AssignedTickets[];
+  next_page_url: number | null;
+  prev_page_url: number | null;
+};
+
 export type MenuTypes = {
   activeIcon: IconType;
   text: string;
@@ -253,4 +253,12 @@ export type CreateUserType = {
   department: string;
   email: string;
   password: string;
+};
+
+export type AssignedTickets = {
+  id: string;
+  subject: string;
+  priority: string;
+  created_at: string;
+  status: string;
 };

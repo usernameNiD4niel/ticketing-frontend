@@ -16,6 +16,7 @@ const RightSheet: FC<RightSheetProps> = ({ activities }) => {
             key={activity.id}
             description={activity.details}
             created_at={activity.created_at}
+            created_time={activity.created_time}
           />
         ));
     } else {
@@ -45,17 +46,19 @@ const RightSheet: FC<RightSheetProps> = ({ activities }) => {
 type NotificationCardProps = {
   description: string;
   created_at: string;
+  created_time: string;
 };
 
 const NotificationCard: FC<NotificationCardProps> = ({
   description,
   created_at,
+  created_time,
 }) => {
   return (
     <div className="w-full hover:cursor-pointer hover:border-s-2 hover:border-s-[#0B64B9] p-3 hover:text-[#0B64B9] group">
       <p className="text-xs">{description}</p>
       <p className="text-xs text-gray-400 group-hover:text-[#0B64B9]">
-        {created_at}
+        {created_at} | {created_time}
       </p>
     </div>
   );
