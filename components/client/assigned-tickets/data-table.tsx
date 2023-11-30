@@ -35,12 +35,14 @@ interface DataTableProps<TValue> {
   columns: ColumnDef<AssignedTickets, TValue>[];
   data_: AssignedTickets[];
   next_page_url: number | null;
+  isAssignedTickets: boolean;
 }
 
 export function DataTable<TValue>({
   columns,
   data_,
   next_page_url,
+  isAssignedTickets,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -77,7 +79,7 @@ export function DataTable<TValue>({
   });
 
   const handleWidth = (width: number) => {
-    if (width < 768) {
+    if (width < 1024) {
       table.getColumn("subject")?.toggleVisibility(false);
       table.getColumn("created_at")?.toggleVisibility(false);
       table.getColumn("status")?.toggleVisibility(false);
@@ -103,17 +105,24 @@ export function DataTable<TValue>({
     <div>
       <div className="w-full flex justify-between py-3 items-center">
         <div className="flex items-center gap-x-2">
-          <Input
-            placeholder="Filter by ticket status..."
-            value={
-              (table.getColumn("status")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("status")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
+          {isAssignedTickets && (
+            <>
+              <Input
+                placeholder="Filter by ticket status..."
+                value={
+                  (table.getColumn("status")?.getFilterValue() as string) ?? ""
+                }
+                onChange={(event) =>
+                  table.getColumn("status")?.setFilterValue(event.target.value)
+                }
+                className="max-w-sm"
+              />
+              <FilterPopover
+                setData={setData}
+                setIsFiltering={setIsFiltering}
+              />
+            </>
+          )}
         </div>
         {data && data.length > 0 && (
           <div>
@@ -161,15 +170,15 @@ export function DataTable<TValue>({
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      {cell.column.id !== "status" && (
+                      {cell.column.id !== "priority" && (
                         <div className="flex flex-col ml-4">
-                          <span className="md:hidden">
+                          <span className="lg:hidden">
                             {row.getValue("status")}
                           </span>
-                          <span className="md:hidden">
+                          <span className="lg:hidden">
                             {row.getValue("subject")}
                           </span>
-                          <span className="md:hidden">
+                          <span className="lg:hidden">
                             {row.getValue("created_at")}
                           </span>
                         </div>
