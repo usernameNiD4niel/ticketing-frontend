@@ -98,7 +98,13 @@ export function DataTable<TValue>({
   const router = useRouter();
 
   const handleNavigation = (destination: string) => {
-    router.push(destination);
+    let tabName = "Assigned Tickets";
+
+    if (!isAssignedTickets) {
+      tabName = "Unhandled Tickets";
+    }
+
+    router.push(`/department/it/${destination}?tabName=${tabName}`);
   };
 
   return (
@@ -156,13 +162,7 @@ export function DataTable<TValue>({
                 <TableRow
                   key={row.id}
                   className="hover:cursor-pointer"
-                  onClick={() =>
-                    handleNavigation(
-                      `/department/it/${row.getValue(
-                        "id"
-                      )}?tabName=Assigned Tickets`
-                    )
-                  }
+                  onClick={() => handleNavigation(row.getValue("id"))}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
