@@ -5,22 +5,30 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { AvailableTabs } from "@/constants/enums";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import TabMutator from "@/components/helper/tab-mutator";
 import { postTicket } from "@/app/actions";
 import { useRouter } from "next/navigation";
+import CreateTicketCombo from "@/components/utils/CreateTicketCombo";
 
 const CreateTicket = () => {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const router = useRouter();
 
+  const defaultContact = localStorage.getItem("contact")?.toString() || "";
+
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
     const { success, message, id } = await postTicket(formData);
 
     if (success) {
+      localStorage.setItem(
+        "contact",
+        formData.get("contact")?.toString() || ""
+      );
+
       toast({
         title: "Ticket posting sucess",
         description: message,
@@ -51,6 +59,7 @@ const CreateTicket = () => {
         onSubmit={handleFormSubmit}
       >
         <h1 className="text-2xl font-bold">Create trouble ticket</h1>
+
         <Label className="flex flex-col gap-y-2">
           <span className="text-base">Subject</span>
           <Input
@@ -59,6 +68,7 @@ const CreateTicket = () => {
             name="subject"
           />
         </Label>
+
         <Label className="flex flex-col gap-y-3">
           <span>Description</span>
           <Textarea
@@ -67,6 +77,26 @@ const CreateTicket = () => {
             name="description"
           />
         </Label>
+
+        <Label className="flex flex-col gap-y-3">
+          <span>Contact</span>
+          <Input
+            placeholder="Enter your phone number"
+            required
+            type="tel"
+            name="contact"
+            defaultValue={defaultContact}
+          />
+        </Label>
+
+        <Label className="flex flex-col gap-y-3">
+          <span>Location</span>
+          <CreateTicketCombo
+            items={["Head Office", "San Juan", "San Two", "San Three"]}
+            name="location"
+          />
+        </Label>
+
         <div className="w-full flex flex-col-reverse md:flex-row md:justify-end items-center py-5 gap-4">
           <Button type="reset" variant="ghost" className="w-full md:w-44">
             Reset
