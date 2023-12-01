@@ -17,10 +17,22 @@ const CreateTicket = () => {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const router = useRouter();
 
+  const [locationError, setLocationError] = useState("");
+
   const defaultContact = localStorage.getItem("contact")?.toString() || "";
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
+    const location = localStorage.getItem("location")?.toString();
+
+    if (!location) {
+      setIsLoadingButton(false);
+      setLocationError("You must provide a location");
+      return;
+    }
+
+    formData.append("location", location);
+
     const { success, message, id } = await postTicket(formData);
 
     if (success) {
@@ -95,6 +107,9 @@ const CreateTicket = () => {
             items={["Head Office", "San Juan", "San Two", "San Three"]}
             name="location"
           />
+          {locationError && locationError.length > 0 && (
+            <p className="text-red-500 text-sm">{locationError}</p>
+          )}
         </Label>
 
         <div className="w-full flex flex-col-reverse md:flex-row md:justify-end items-center py-5 gap-4">

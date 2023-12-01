@@ -54,8 +54,16 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket, id }) => {
             <h3>Requestor: {ticket.name}</h3>
             <h3>Department: {ticket.department}</h3>
             <p className="text-sm">
-              Champion:
+              <span className="mr-2">Champion:</span>
               {ticket.assigned_to ? ticket.assigned_to : "No champion assign"}
+            </p>
+            <p className="text-sm">
+              <span className="mr-2">Location:</span>
+              {ticket.location ? ticket.location : "No location"}
+            </p>
+            <p className="text-sm">
+              <span className="mr-2">Contact:</span>
+              {ticket.contact ? ticket.contact : "No contact"}
             </p>
           </div>
           <div className="text-sm md:text-end space-y-1">

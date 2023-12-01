@@ -58,6 +58,8 @@ export type FeedTicketProps = {
   closed_date: string;
   due_date: string;
   re_opened_date: string;
+  location: string;
+  contact: string;
 };
 
 export type AccountProps = {
@@ -207,6 +209,8 @@ export type ApplicationTypes = {
 export type PostTicketTypes = {
   subject: string;
   description: string;
+  location: string;
+  contact: string;
 };
 
 export type UserProps = {

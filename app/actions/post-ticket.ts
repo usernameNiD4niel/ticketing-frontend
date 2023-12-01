@@ -8,10 +8,14 @@ export default async function postTicket(formData: FormData) {
 
   const description = formData.get("description")!.toString();
   const subject = formData.get("subject")!.toString();
+  const contact = formData.get("contact")!.toString();
+  const location = formData.get("location")!.toString();
 
   const request: PostTicketTypes = {
     description,
     subject,
+    contact,
+    location,
   };
 
   const { message, id } = await postTroubleTicket(token!, request);
