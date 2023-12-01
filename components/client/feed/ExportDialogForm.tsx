@@ -1,16 +1,15 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AssignedTickets, Payment } from "@/constants/types";
 import React, { FC, useState } from "react";
 import { CSVLink } from "react-csv";
 import { AiOutlineClose } from "react-icons/ai";
 
 type ExportDialogFormProps = {
-  data: Payment[] | AssignedTickets[];
+  // data: Payment[] | AssignedTickets[];
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  data: any;
 };
 
 function getCurrentDateFormatted(): string {
@@ -25,8 +24,10 @@ function getCurrentDateFormatted(): string {
   return `${formattedDate}-Tickets`;
 }
 
-const ExportDialogForm: FC<ExportDialogFormProps> = ({ data, setIsOpen }) => {
+const ExportDialogForm: FC<ExportDialogFormProps> = ({ setIsOpen, data }) => {
   const [fileName, setFileName] = useState(getCurrentDateFormatted());
+
+  console.log(`data:::${JSON.stringify(data, null, 2)}`);
 
   const handleDialogClose = () => setIsOpen(false);
 

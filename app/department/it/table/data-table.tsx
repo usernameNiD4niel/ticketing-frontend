@@ -117,7 +117,7 @@ export function DataTable<TValue>({
         </div>
         {data && data.length > 0 && (
           <div>
-            <ExportDialog data={data} />
+            <ExportDialog url="all-tickets" />
           </div>
         )}
       </div>

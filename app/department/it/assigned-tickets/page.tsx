@@ -19,6 +19,8 @@ export default async function Page() {
           data_={tickets.data}
           isAssignedTickets={true}
           next_page_url={tickets.next_page_url}
+          url="all-tickets/assigned"
+          key={"AssignedTicketsDataTable"}
         />
       </section>
     </>

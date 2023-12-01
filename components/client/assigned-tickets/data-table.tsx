@@ -36,12 +36,14 @@ interface DataTableProps<TValue> {
   data_: AssignedTickets[];
   next_page_url: number | null;
   isAssignedTickets: boolean;
+  url: string;
 }
 
 export function DataTable<TValue>({
   columns,
   data_,
   next_page_url,
+  url,
   isAssignedTickets,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -132,7 +134,7 @@ export function DataTable<TValue>({
         </div>
         {data && data.length > 0 && (
           <div>
-            <ExportDialog data={data} />
+            <ExportDialog url={url} />
           </div>
         )}
       </div>
