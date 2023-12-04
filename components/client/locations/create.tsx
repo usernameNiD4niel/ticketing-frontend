@@ -31,13 +31,13 @@ export default function Create() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="min-w-[690px]">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="md:w-[690px]">
         <FormField
           control={form.control}
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base">Create Location</FormLabel>
+              <FormLabel>Create Location</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

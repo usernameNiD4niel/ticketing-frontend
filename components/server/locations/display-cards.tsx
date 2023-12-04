@@ -13,7 +13,7 @@ export default async function DisplayCard() {
 
   return locations && locations.length > 0 ? (
     locations.map((location) => (
-      <div className="w-80 bg-[#EEF7FF] dark:bg-[#1A1919] px-3 rounded-md flex justify-around flex-col">
+      <div className="w-full md:w-80 bg-[#EEF7FF] dark:bg-[#1A1919] px-3 rounded-md flex justify-around flex-col">
         <h3 className="font-bold">{location.location}</h3>
         <div className="font-light text-sm">
           <p>{location.created_at}</p>
@@ -22,7 +22,7 @@ export default async function DisplayCard() {
       </div>
     ))
   ) : (
-    <div className="w-80 text-sm h-40 rounded-md flex bg-[#EEF7FF] dark:bg-[#1A1919] justify-center items-center flex-col">
+    <div className="w-full md:w-80 text-sm h-40 rounded-md flex bg-[#EEF7FF] dark:bg-[#1A1919] justify-center items-center flex-col">
       No location found
     </div>
   );

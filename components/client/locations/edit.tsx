@@ -39,7 +39,7 @@ export default function Edit() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 min-w-[690px]"
+        className="space-y-8 md:w-[690px]"
       >
         <div>
           <Label htmlFor="selectedLocation">Locations</Label>
@@ -63,7 +63,11 @@ export default function Edit() {
           )}
         />
         <div className="w-full flex justify-end">
-          <Button type="submit" className="bg-[#0B64B9] hover:bg-blue-900 px-7">
+          <Button
+            type="submit"
+            className="bg-[#0B64B9] hover:bg-blue-900 px-7"
+            id="update-button"
+          >
             Update
           </Button>
         </div>
