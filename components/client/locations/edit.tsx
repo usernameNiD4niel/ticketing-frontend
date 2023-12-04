@@ -31,6 +31,7 @@ export default function Edit() {
   function onSubmit(values: z.infer<typeof editSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+
     console.log(selectedLocation);
     console.log(values.updatedLocation);
   }
