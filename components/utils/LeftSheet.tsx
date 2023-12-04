@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
+import { FaLocationDot } from "react-icons/fa6";
 import {
   Sheet,
   SheetClose,
@@ -64,6 +65,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Overview";
       case AvailableTabs["Unhandled Tickets"]:
         return "Unhandled Tickets";
+      case AvailableTabs.Locations:
+        return "Locations";
     }
   };
 
@@ -255,22 +258,40 @@ const LeftSheet: FC<LeftSheetProps> = ({
                 </Link>
               </SheetClose>
               {role && role.toUpperCase() === "SUPREME" && (
-                <SheetClose asChild>
-                  <Link
-                    className={cn(
-                      "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                      activeTab === AvailableTabs.Code &&
-                        "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                    )}
-                    href="/department/it/code"
-                    onClick={handleDrawerOpen}
-                  >
-                    <span>
-                      <MdMarkEmailUnread />
-                    </span>
-                    <span className="text-sm">Code</span>
-                  </Link>
-                </SheetClose>
+                <>
+                  <SheetClose asChild>
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                        activeTab === AvailableTabs.Code &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      href="/department/it/code"
+                      onClick={handleDrawerOpen}
+                    >
+                      <span>
+                        <MdMarkEmailUnread />
+                      </span>
+                      <span className="text-sm">Locations</span>
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                        activeTab === AvailableTabs.Locations &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      href="/department/it/locations"
+                      onClick={handleDrawerOpen}
+                    >
+                      <span>
+                        <FaLocationDot />
+                      </span>
+                      <span className="text-sm">Locations</span>
+                    </Link>
+                  </SheetClose>
+                </>
               )}
             </section>
           </SheetContent>

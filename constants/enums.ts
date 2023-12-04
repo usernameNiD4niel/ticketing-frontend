@@ -8,6 +8,7 @@ export enum AvailableTabs {
   "Overview",
   "Code",
   "Assigned Tickets",
+  "Locations",
 }
 
 export enum TypeOfUser {

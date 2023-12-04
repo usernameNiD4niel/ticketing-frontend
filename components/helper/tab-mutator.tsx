@@ -15,5 +15,5 @@ export default function TabMutator({ availableTab }: TabMutatorProps) {
     setActiveTab(availableTab);
   }, []);
 
-  return <div></div>;
+  return <></>;
 }

@@ -20,6 +20,7 @@ import {
   AiOutlineDoubleRight,
 } from "react-icons/ai";
 import { RiPassPendingFill } from "react-icons/ri";
+import { FaLocationDot } from "react-icons/fa6";
 
 type MobileDrawerProps = {
   isDrawerOpen: boolean;
@@ -229,20 +230,36 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         </Link>
 
         {role && role.toUpperCase() === "SUPREME" && (
-          <Link
-            className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-              activeTab === AvailableTabs.Code &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-              !isDrawerOpen ? "justify-center items-center" : "justify-start"
-            )}
-            href="/department/it/code"
-          >
-            <span>
-              <MdMarkEmailUnread />
-            </span>
-            {isDrawerOpen && <span className="text-sm">Code</span>}
-          </Link>
+          <>
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs.Code &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              href="/department/it/code"
+            >
+              <span>
+                <MdMarkEmailUnread />
+              </span>
+              {isDrawerOpen && <span className="text-sm">Code</span>}
+            </Link>
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs.Locations &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              href="/department/it/locations"
+            >
+              <span>
+                <FaLocationDot />
+              </span>
+              {isDrawerOpen && <span className="text-sm">Locations</span>}
+            </Link>
+          </>
         )}
       </div>
       <Button

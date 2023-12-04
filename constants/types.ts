@@ -266,3 +266,9 @@ export type AssignedTickets = {
   created_at: string;
   status: string;
 };
+
+export type Locations = {
+  location: string;
+  created_at: string;
+  updated_at: string;
+};
