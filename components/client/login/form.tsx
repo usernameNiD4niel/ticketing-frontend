@@ -54,7 +54,6 @@ export default function LoginForm() {
       <Label htmlFor="email" className={styles.labels}>
         Email
         <Input
-          placeholder="juantamad@devexsolutions.com"
           type="email"
           id="email"
           autoFocus={true}
@@ -66,12 +65,7 @@ export default function LoginForm() {
       </Label>
       <Label htmlFor="password" className={styles.labels}>
         Password
-        <Input
-          placeholder="Enter your password"
-          id="password"
-          type="password"
-          {...register("password")}
-        />
+        <Input id="password" type="password" {...register("password")} />
         {errors.password && (
           <span className="text-red-500 text-sm">
             {errors.password.message}

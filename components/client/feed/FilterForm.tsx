@@ -9,7 +9,8 @@ import { Payment } from "@/constants/types";
 import { PHILIPPINE_TIME_ZONE } from "@/constants/variables";
 import { format } from "date-fns-tz";
 import Cookies from "js-cookie";
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
+import DropdownStatus from "./dropdown-status";
 
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
@@ -46,6 +47,8 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
     const status = formData.get("status")?.toString();
     const sort_by = formData.get("sort_by")?.toString();
     let date_ = null;
+
+    console.log(`the status ::: ${status}`);
 
     if (date) {
       const formattedDate = format(date, "MM-dd-yyyy", {
@@ -121,12 +124,13 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
         </div>
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="status">Status</Label>
-          <Input
+          {/* <Input
             id="status"
             className="col-span-2 h-8"
             placeholder="CLOSED"
             name="status"
-          />
+          /> */}
+          <DropdownStatus />
         </div>
         <div className="w-full">
           <Label htmlFor="status">

@@ -84,12 +84,7 @@ export default function RegisterForm() {
       <div className="flex flex-col gap-y-3">
         <Label htmlFor="fullName" className={styles.labels}>
           FullName
-          <Input
-            placeholder="Juan Tamad"
-            type="text"
-            id="fullName"
-            {...register("name")}
-          />
+          <Input type="text" id="fullName" {...register("name")} />
           {errors.name && (
             <span className="text-red-800 block text-sm">
               {errors.name?.message}
@@ -98,12 +93,7 @@ export default function RegisterForm() {
         </Label>
         <Label htmlFor="email" className={styles.labels}>
           Email
-          <Input
-            placeholder="juantamad@devexsolutions.com"
-            type="email"
-            id="email"
-            {...register("email")}
-          />
+          <Input type="email" id="email" {...register("email")} />
           {errors.email && (
             <span className="text-red-800 block text-sm">
               {errors.email?.message}
@@ -121,12 +111,7 @@ export default function RegisterForm() {
         </Label>
         <Label htmlFor="password" className={styles.labels}>
           Password
-          <Input
-            placeholder="Enter your password"
-            id="password"
-            type="password"
-            {...register("password")}
-          />
+          <Input id="password" type="password" {...register("password")} />
           {errors.password && (
             <span className="text-red-800 block text-sm">
               {errors.password?.message}
@@ -136,7 +121,6 @@ export default function RegisterForm() {
         <Label htmlFor="confirmPassword" className={styles.labels}>
           Confirm Password
           <Input
-            placeholder="Confirm your confirm password"
             id="confirmPassword"
             type="password"
             {...register("confirmPassword")}
