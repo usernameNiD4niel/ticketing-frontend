@@ -17,14 +17,19 @@ export default async function login(formData: FormData) {
     message,
   } = await loginUser(postData);
 
-  console.log(`login action > token ::: ${token}`);
+  console.log(`login action > it_access_level ::: ${it_access_level}`);
 
   if (success) {
-    cookies().set("email", email);
-    cookies().set("hr_access_level", hr_access_level);
-    cookies().set("it_access_level", it_access_level);
-    cookies().set("name", name);
-    cookies().set("token", token);
+    const sevenDaysFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    cookies().set("email", email, { expires: sevenDaysFromNow });
+    cookies().set("hr_access_level", hr_access_level, {
+      expires: sevenDaysFromNow,
+    });
+    cookies().set("it_access_level", it_access_level, {
+      expires: sevenDaysFromNow,
+    });
+    cookies().set("name", name, { expires: sevenDaysFromNow });
+    cookies().set("token", token, { expires: sevenDaysFromNow });
   }
 
   return { success, message };

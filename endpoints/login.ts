@@ -9,6 +9,7 @@ export default async function loginUser(loginData: Login) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(loginData),
+      cache: "no-cache",
     }
   );
 
