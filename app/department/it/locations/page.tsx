@@ -4,7 +4,6 @@ import Edit from "@/components/client/locations/edit";
 import TabMutator from "@/components/helper/tab-mutator";
 import DisplayCard from "@/components/server/locations/display-cards";
 import { AvailableTabs } from "@/constants/enums";
-import { MdEdit } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export default async function Page() {

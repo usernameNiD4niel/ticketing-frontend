@@ -14,8 +14,12 @@ import { formSchema } from "./form-validation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import createLocationAction from "@/app/actions/create-location-action";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Create() {
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -23,10 +27,21 @@ export default function Create() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
+    formData.append("location", values.location);
+
+    const { message, success } = await createLocationAction(formData);
+
+    if (success) {
+      toast({
+        title: "Successfully created",
+        description: message,
+      });
+      form.reset();
+    } else {
+      form.setError("location", { message });
+    }
   }
 
   return (
