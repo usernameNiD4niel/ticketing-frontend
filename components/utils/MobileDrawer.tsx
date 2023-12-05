@@ -66,14 +66,20 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
       )}
     >
       <Link
+        as={"/"}
         href="/"
         className={cn("font-bold text-4xl my-24", !isDrawerOpen && "hidden")}
       >
         <span className="text-[#0B64B9]">OP</span>
         <span className="text-[#99CC68]">PA</span>
       </Link>
-      <div className="flex flex-col w-full justify-between h-full pb-4">
-        <div className="flex flex-col w-full gap-y-3">
+      <div
+        className={cn(
+          "flex flex-col w-full h-full pb-4",
+          isDrawerOpen ? "justify-between" : "justify-center"
+        )}
+      >
+        <div className={"flex flex-col w-full gap-y-3"}>
           <Link
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
@@ -81,6 +87,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
+            as={"/department/it"}
             href="/department/it"
           >
             <span>
@@ -96,6 +103,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                   "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                 !isDrawerOpen ? "justify-center items-center" : "justify-start"
               )}
+              as={"/department/it/create-ticket"}
               href="/department/it/create-ticket"
             >
               <span>
@@ -111,6 +119,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                   "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                 !isDrawerOpen ? "justify-center items-center" : "justify-start"
               )}
+              as={"/department/it/pending-role"}
               href="/department/it/pending-role"
             >
               <span>
@@ -137,6 +146,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                   "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                 !isDrawerOpen ? "justify-center items-center" : "justify-start"
               )}
+              as={"/department/it/assigned-tickets"}
               href="/department/it/assigned-tickets"
             >
               <span>
@@ -164,6 +174,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                   "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                 !isDrawerOpen ? "justify-center items-center" : "justify-start"
               )}
+              as={"/department/it/my-tickets"}
               href="/department/it/my-tickets"
             >
               <span>
@@ -175,6 +186,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </Link>
           ) : (
             <Link
+              as={"/department/it/unhandled-tickets"}
               href="/department/it/unhandled-tickets"
               className={cn(
                 "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
@@ -202,6 +214,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           )}
           {!isRequestor && (
             <Link
+              as={"/department/it/overview"}
               href="/department/it/overview"
               className={cn(
                 "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
@@ -223,6 +236,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
+            as={"/department/it/accounts/recent"}
             href="/department/it/accounts/recent"
           >
             <span>
@@ -241,6 +255,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                     ? "justify-center items-center"
                     : "justify-start"
                 )}
+                as={"/department/it/code"}
                 href="/department/it/code"
               >
                 <span>
@@ -257,6 +272,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                     ? "justify-center items-center"
                     : "justify-start"
                 )}
+                as={"/department/it/locations"}
                 href="/department/it/locations"
               >
                 <span>
@@ -267,7 +283,9 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </>
           )}
         </div>
-        <DialogBoxAlert isInTheMenu={true} key={"PCNavigationMenu"} />
+        {isDrawerOpen && (
+          <DialogBoxAlert isInTheMenu={true} key={"PCNavigationMenu"} />
+        )}
       </div>
       <Button
         className="absolute top-10 -right-3 text-sm text-center"

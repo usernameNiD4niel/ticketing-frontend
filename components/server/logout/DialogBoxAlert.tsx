@@ -32,8 +32,8 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
       <AlertDialogTrigger asChild>
         {isInTheMenu ? (
           <Button
-            variant={"noVariant"}
-            className="w-full text-xl flex py-3 px-3 space-x-2 bg-red-500 text-white"
+            variant={"destructive"}
+            className="w-full text-xl flex py-3 px-3 space-x-2 text-white"
           >
             <span>
               <FiLogOut />
@@ -59,7 +59,7 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>No</AlertDialogCancel>
-          <Link href="/login" onClick={handleLogout}>
+          <Link href="/login" onClick={handleLogout} as={"/login"}>
             <Button className="w-full md:w-fit">Yes</Button>
           </Link>
         </AlertDialogFooter>

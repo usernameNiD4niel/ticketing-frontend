@@ -85,7 +85,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
             <div>
               <SheetHeader>
                 <SheetTitle className="font-bold text-4xl mt-20">
-                  <Link href="/">
+                  <Link href="/" as={"/"}>
                     <span className="text-[#0B64B9]">OP</span>
                     <span className="text-[#99CC68]">PA</span>
                   </Link>
@@ -99,6 +99,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                       activeTab === AvailableTabs.Feed &&
                         "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                     )}
+                    as={"/department/it"}
                     href="/department/it"
                   >
                     <span>
@@ -115,6 +116,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                         activeTab === AvailableTabs["Create Ticket"] &&
                           "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                       )}
+                      as={"/department/it/create-ticket"}
                       href="/department/it/create-ticket"
                     >
                       <span>
@@ -133,6 +135,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                             activeTab === AvailableTabs["Departments Role"] &&
                               "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                           )}
+                          as={"/department/it/pending-role"}
                           href="/department/it/pending-role"
                         >
                           <span>
@@ -154,6 +157,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                             activeTab === AvailableTabs["Assigned Tickets"] &&
                               "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                           )}
+                          as={"/department/it/assigned-tickets"}
                           href="/department/it/assigned-tickets"
                         >
                           <span>
@@ -178,6 +182,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                         activeTab === AvailableTabs["Existing Tickets"] &&
                           "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                       )}
+                      as={"/department/it/my-tickets"}
                       href="/department/it/my-tickets"
                     >
                       <span>
@@ -189,6 +194,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                 ) : (
                   <SheetClose asChild>
                     <Link
+                      as={"/department/it/unhandled-tickets"}
                       href="/department/it/unhandled-tickets"
                       className={cn(
                         "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
@@ -211,6 +217,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                 {!isRequestor && (
                   <SheetClose asChild>
                     <Link
+                      as={"/department/it/overview"}
                       href="/department/it/overview"
                       className={cn(
                         "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
@@ -232,6 +239,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                       activeTab === AvailableTabs.Accounts &&
                         "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                     )}
+                    as={"/department/it/accounts/recent"}
                     href="/department/it/accounts/recent"
                   >
                     <span>
@@ -249,6 +257,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                           activeTab === AvailableTabs.Code &&
                             "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                         )}
+                        as={"/department/it/code"}
                         href="/department/it/code"
                       >
                         <span>
@@ -264,6 +273,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                           activeTab === AvailableTabs.Locations &&
                             "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                         )}
+                        as={"/department/it/locations"}
                         href="/department/it/locations"
                       >
                         <span>
