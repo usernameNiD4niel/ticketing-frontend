@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Locations } from "@/constants/types";
+import updateLocationAction from "@/app/actions/update-location-action";
+import { useToast } from "@/components/ui/use-toast";
 
 interface EditProps {
   locations: Locations[];
@@ -25,6 +27,7 @@ interface EditProps {
 
 export default function Edit({ locations }: EditProps) {
   const [selectedLocation, setSelectedLocation] = useState("");
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof editSchema>>({
     resolver: zodResolver(editSchema),
@@ -33,12 +36,25 @@ export default function Edit({ locations }: EditProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof editSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof editSchema>) {
+    const formData = new FormData();
+    formData.append("selectedLocation", selectedLocation);
+    formData.append("updatedLocation", values.updatedLocation);
 
-    console.log(selectedLocation);
-    console.log(values.updatedLocation);
+    const { message, success } = await updateLocationAction(formData);
+
+    if (success) {
+      toast({
+        title: "Update Success",
+        description: message,
+      });
+      form.reset();
+    } else {
+      toast({
+        title: "Update Failed",
+        description: message,
+      });
+    }
   }
 
   return (
