@@ -17,8 +17,13 @@ import { SelectLocations } from "./select-locations";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
+import { Locations } from "@/constants/types";
 
-export default function Edit() {
+interface EditProps {
+  locations: Locations[];
+}
+
+export default function Edit({ locations }: EditProps) {
   const [selectedLocation, setSelectedLocation] = useState("");
 
   const form = useForm<z.infer<typeof editSchema>>({
@@ -44,7 +49,11 @@ export default function Edit() {
       >
         <div>
           <Label htmlFor="selectedLocation">Locations</Label>
-          <SelectLocations setLocations={setSelectedLocation} />
+          <SelectLocations
+            locations={locations}
+            setLocations={setSelectedLocation}
+            form={form}
+          />
         </div>
         <FormField
           control={form.control}

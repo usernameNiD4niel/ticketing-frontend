@@ -1,23 +1,17 @@
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { getLocations } from "@/endpoints";
+import { Locations } from "@/constants/types";
 
-export default async function DisplayCard() {
-  const token = cookies().get("token")?.value;
+interface DisplayCardProps {
+  locations: Locations[];
+}
 
-  if (!token) {
-    redirect("/login");
-  }
-
-  const locations = await getLocations(token);
-
+export default function DisplayCard({ locations }: DisplayCardProps) {
   return locations && locations.length > 0 ? (
     locations.map((location) => (
-      <div className="w-full md:w-80 bg-[#EEF7FF] dark:bg-[#1A1919] px-3 rounded-md flex justify-around flex-col">
-        <h3 className="font-bold">{location.location}</h3>
-        <div className="font-light text-sm">
-          <p>{location.created_at}</p>
-          <p>{location.updated_at}</p>
+      <div className="w-full md:w-80 bg-[#EEF7FF] dark:bg-[#1A1919] p-7 rounded-md flex justify-around flex-col drop-shadow">
+        <h3 className="font-bold text-sm">{location.location}</h3>
+        <div className="font-light text-xs mt-2 space-y-1">
+          <p>Created: {location.created_at}</p>
+          <p>Updated: {location.updated_at}</p>
         </div>
       </div>
     ))

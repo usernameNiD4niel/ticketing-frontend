@@ -8,11 +8,15 @@ export default async function getLocations(token: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: ["locations-item"],
+      },
     }
   );
 
   if (response.ok) {
     const data = await response.json();
+
     return data.locations as Locations[];
   }
 

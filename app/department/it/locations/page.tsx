@@ -5,8 +5,19 @@ import TabMutator from "@/components/helper/tab-mutator";
 import DisplayCard from "@/components/server/locations/display-cards";
 import { AvailableTabs } from "@/constants/enums";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getLocations } from "@/endpoints";
 
 export default async function Page() {
+  const token = cookies().get("token")?.value;
+
+  if (!token) {
+    redirect("/login");
+  }
+
+  const locations = await getLocations(token);
+
   return (
     <div className="w-full flex px-3 md:ps-12 flex-col md:flex-row gap-20">
       {/* IGNORE: this is just an empty fragment */}
@@ -17,14 +28,16 @@ export default async function Page() {
         <h2 className="font-bold text-lg" id="location">
           Locations
         </h2>
-        <DisplayCard />
+        <div className="space-y-2 overflow-y-auto max-h-[800px]">
+          <DisplayCard locations={locations} />
+        </div>
       </div>
 
       {/* On PC */}
       <div className="w-full items-center justify-center flex-col gap-14 mt-10 h-[80vh]">
         <Create />
         <div className="w-full md:w-[690px] bg-slate-300 h-[1px] my-8" />
-        <Edit />
+        <Edit locations={locations && locations.length > 0 ? locations : []} />
       </div>
 
       {/* On Mobile */}
