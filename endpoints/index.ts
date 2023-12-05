@@ -17,6 +17,7 @@ import createUser from "./createUser";
 import filterAssignedTable from "./filterAssignedTable";
 import getLocations from "./getLocations";
 import createLocation from "./createLocation";
+import getAccount from "./getAccount";
 
 export {
   getChampions,
@@ -38,4 +39,5 @@ export {
   filterAssignedTable,
   getLocations,
   createLocation,
+  getAccount,
 };

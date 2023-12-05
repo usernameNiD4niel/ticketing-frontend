@@ -26,6 +26,7 @@ import { FC, useState } from "react";
 import { AiFillFileExclamation } from "react-icons/ai";
 import { RiPassPendingFill } from "react-icons/ri";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
+import DialogBoxAlert from "../server/logout/DialogBoxAlert";
 
 type LeftSheetProps = {
   unhandledTicketsCount: number;
@@ -41,8 +42,6 @@ const LeftSheet: FC<LeftSheetProps> = ({
   role,
 }) => {
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
-
-  const [isOpen, setIsOpen] = useState(false);
 
   let isRequestor =
     role.toUpperCase() === "REQUESTOR" || role.toUpperCase() === "UNSET";
@@ -70,230 +69,214 @@ const LeftSheet: FC<LeftSheetProps> = ({
     }
   };
 
-  const handleDrawerOpen = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
       <div className="grid grid-cols-2 gap-2">
-        <Sheet key={"left"} open={isOpen}>
+        <Sheet key={"left"}>
           <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              className="text-xl"
-              onClick={() => setIsOpen(true)}
-            >
+            <Button variant="outline" className="text-xl">
               <HiMenuAlt2 />
             </Button>
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="bg-[#EEF7FF]"
-            onClick={handleDrawerOpen}
+            className="bg-[#EEF7FF] h-full flex flex-col justify-between"
           >
-            <SheetHeader>
-              <SheetTitle className="font-bold text-4xl mt-20">
-                <Link href="/">
-                  <span className="text-[#0B64B9]">OP</span>
-                  <span className="text-[#99CC68]">PA</span>
-                </Link>
-              </SheetTitle>
-            </SheetHeader>
-
-            <section className="w-full items-start flex flex-col gap-y-3 mt-16">
-              <SheetClose asChild>
-                <Link
-                  className={cn(
-                    "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                    activeTab === AvailableTabs.Feed &&
-                      "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                  )}
-                  href="/department/it"
-                  onClick={handleDrawerOpen}
-                >
-                  <span>
-                    <FaHome />
-                  </span>
-                  <span className="text-sm">Feed</span>
-                </Link>
-              </SheetClose>
-              {isRequestor ? (
+            <div>
+              <SheetHeader>
+                <SheetTitle className="font-bold text-4xl mt-20">
+                  <Link href="/">
+                    <span className="text-[#0B64B9]">OP</span>
+                    <span className="text-[#99CC68]">PA</span>
+                  </Link>
+                </SheetTitle>
+              </SheetHeader>
+              <section className="w-full items-start flex flex-col gap-y-3 mt-16">
                 <SheetClose asChild>
                   <Link
                     className={cn(
                       "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                      activeTab === AvailableTabs["Create Ticket"] &&
+                      activeTab === AvailableTabs.Feed &&
                         "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                     )}
-                    href="/department/it/create-ticket"
-                    onClick={handleDrawerOpen}
+                    href="/department/it"
                   >
                     <span>
-                      <IoIosCreate />
+                      <FaHome />
                     </span>
-                    {<span className="text-sm">Create Ticket</span>}
+                    <span className="text-sm">Feed</span>
                   </Link>
                 </SheetClose>
-              ) : (
-                <>
-                  {role.toLowerCase() !== "champion" ? (
-                    <SheetClose asChild>
-                      <Link
-                        className={cn(
-                          "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
-                          activeTab === AvailableTabs["Departments Role"] &&
-                            "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                        )}
-                        onClick={handleDrawerOpen}
-                        href="/department/it/pending-role"
-                      >
-                        <span>
-                          <RiPassPendingFill />
-                        </span>
-                        <span className="text-sm">
-                          Departments Role{" "}
-                          <span className="text-xs ms-2 font-bold text-red-500">
-                            {pendingRoleCount !== 0 && pendingRoleCount}
+                {isRequestor ? (
+                  <SheetClose asChild>
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                        activeTab === AvailableTabs["Create Ticket"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      href="/department/it/create-ticket"
+                    >
+                      <span>
+                        <IoIosCreate />
+                      </span>
+                      {<span className="text-sm">Create Ticket</span>}
+                    </Link>
+                  </SheetClose>
+                ) : (
+                  <>
+                    {role.toLowerCase() !== "champion" ? (
+                      <SheetClose asChild>
+                        <Link
+                          className={cn(
+                            "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                            activeTab === AvailableTabs["Departments Role"] &&
+                              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                          )}
+                          href="/department/it/pending-role"
+                        >
+                          <span>
+                            <RiPassPendingFill />
                           </span>
-                        </span>
-                      </Link>
-                    </SheetClose>
-                  ) : (
-                    <SheetClose asChild>
-                      <Link
-                        className={cn(
-                          "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                          activeTab === AvailableTabs["Assigned Tickets"] &&
-                            "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                        )}
-                        href="/department/it/assigned-tickets"
-                      >
-                        <span>
-                          <IoIosCreate />
-                        </span>
-                        <span className="text-sm">
-                          Assigned Tickets{" "}
-                          <span className="text-xs ms-2 font-bold text-red-500">
-                            {myAssignedTickets !== 0 && myAssignedTickets}
+                          <span className="text-sm">
+                            Departments Role{" "}
+                            <span className="text-xs ms-2 font-bold text-red-500">
+                              {pendingRoleCount !== 0 && pendingRoleCount}
+                            </span>
                           </span>
+                        </Link>
+                      </SheetClose>
+                    ) : (
+                      <SheetClose asChild>
+                        <Link
+                          className={cn(
+                            "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                            activeTab === AvailableTabs["Assigned Tickets"] &&
+                              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                          )}
+                          href="/department/it/assigned-tickets"
+                        >
+                          <span>
+                            <IoIosCreate />
+                          </span>
+                          <span className="text-sm">
+                            Assigned Tickets{" "}
+                            <span className="text-xs ms-2 font-bold text-red-500">
+                              {myAssignedTickets !== 0 && myAssignedTickets}
+                            </span>
+                          </span>
+                        </Link>
+                      </SheetClose>
+                    )}
+                  </>
+                )}
+                {isRequestor ? (
+                  <SheetClose asChild>
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                        activeTab === AvailableTabs["Existing Tickets"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      href="/department/it/my-tickets"
+                    >
+                      <span>
+                        <BsTicketFill />
+                      </span>
+                      <span className="text-sm">Existing Ticket</span>
+                    </Link>
+                  </SheetClose>
+                ) : (
+                  <SheetClose asChild>
+                    <Link
+                      href="/department/it/unhandled-tickets"
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                        activeTab === AvailableTabs["Unhandled Tickets"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                    >
+                      <span>
+                        <AiFillFileExclamation />
+                      </span>
+                      <span className="text-sm">
+                        Unhandled Tickets
+                        <span className="text-xs ms-2 font-bold text-red-500">
+                          {unhandledTicketsCount !== 0 && unhandledTicketsCount}
                         </span>
-                      </Link>
-                    </SheetClose>
-                  )}
-                </>
-              )}
-              {isRequestor ? (
+                      </span>
+                    </Link>
+                  </SheetClose>
+                )}
+                {!isRequestor && (
+                  <SheetClose asChild>
+                    <Link
+                      href="/department/it/overview"
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                        activeTab === AvailableTabs["Overview"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                    >
+                      <span>
+                        <MdMonitorHeart />
+                      </span>
+                      <span className="text-sm">Overview</span>
+                    </Link>
+                  </SheetClose>
+                )}
                 <SheetClose asChild>
                   <Link
                     className={cn(
                       "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                      activeTab === AvailableTabs["Existing Tickets"] &&
+                      activeTab === AvailableTabs.Accounts &&
                         "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                     )}
-                    onClick={handleDrawerOpen}
-                    href="/department/it/my-tickets"
+                    href="/department/it/accounts/recent"
                   >
                     <span>
-                      <BsTicketFill />
+                      <MdAccountBox />
                     </span>
-                    <span className="text-sm">Existing Ticket</span>
+                    <span className="text-sm">Accounts</span>
                   </Link>
                 </SheetClose>
-              ) : (
-                <SheetClose asChild>
-                  <Link
-                    href="/department/it/unhandled-tickets"
-                    className={cn(
-                      "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
-                      activeTab === AvailableTabs["Unhandled Tickets"] &&
-                        "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                    )}
-                    onClick={handleDrawerOpen}
-                  >
-                    <span>
-                      <AiFillFileExclamation />
-                    </span>
-                    <span className="text-sm">
-                      Unhandled Tickets
-                      <span className="text-xs ms-2 font-bold text-red-500">
-                        {unhandledTicketsCount !== 0 && unhandledTicketsCount}
-                      </span>
-                    </span>
-                  </Link>
-                </SheetClose>
-              )}
-              {!isRequestor && (
-                <SheetClose asChild>
-                  <Link
-                    href="/department/it/overview"
-                    className={cn(
-                      "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
-                      activeTab === AvailableTabs["Overview"] &&
-                        "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                    )}
-                    onClick={handleDrawerOpen}
-                  >
-                    <span>
-                      <MdMonitorHeart />
-                    </span>
-                    <span className="text-sm">Overview</span>
-                  </Link>
-                </SheetClose>
-              )}
-              <SheetClose asChild>
-                <Link
-                  className={cn(
-                    "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                    activeTab === AvailableTabs.Accounts &&
-                      "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                  )}
-                  href="/department/it/accounts/recent"
-                  onClick={handleDrawerOpen}
-                >
-                  <span>
-                    <MdAccountBox />
-                  </span>
-                  <span className="text-sm">Accounts</span>
-                </Link>
-              </SheetClose>
-              {role && role.toUpperCase() === "SUPREME" && (
-                <>
-                  <SheetClose asChild>
-                    <Link
-                      className={cn(
-                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                        activeTab === AvailableTabs.Code &&
-                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                      )}
-                      href="/department/it/code"
-                      onClick={handleDrawerOpen}
-                    >
-                      <span>
-                        <MdMarkEmailUnread />
-                      </span>
-                      <span className="text-sm">Locations</span>
-                    </Link>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <Link
-                      className={cn(
-                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                        activeTab === AvailableTabs.Locations &&
-                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                      )}
-                      href="/department/it/locations"
-                      onClick={handleDrawerOpen}
-                    >
-                      <span>
-                        <FaLocationDot />
-                      </span>
-                      <span className="text-sm">Locations</span>
-                    </Link>
-                  </SheetClose>
-                </>
-              )}
-            </section>
+                {role && role.toUpperCase() === "SUPREME" && (
+                  <>
+                    <SheetClose asChild>
+                      <Link
+                        className={cn(
+                          "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                          activeTab === AvailableTabs.Code &&
+                            "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                        )}
+                        href="/department/it/code"
+                      >
+                        <span>
+                          <MdMarkEmailUnread />
+                        </span>
+                        <span className="text-sm">Code</span>
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        className={cn(
+                          "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                          activeTab === AvailableTabs.Locations &&
+                            "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                        )}
+                        href="/department/it/locations"
+                      >
+                        <span>
+                          <FaLocationDot />
+                        </span>
+                        <span className="text-sm">Locations</span>
+                      </Link>
+                    </SheetClose>
+                  </>
+                )}
+              </section>
+            </div>
+            <DialogBoxAlert isInTheMenu={true} key={"Mobile"} />
           </SheetContent>
         </Sheet>
       </div>
