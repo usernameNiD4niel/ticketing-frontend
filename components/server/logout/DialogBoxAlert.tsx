@@ -53,14 +53,14 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Do you really want to logout?</AlertDialogTitle>
           <AlertDialogDescription>
-            If you want to logout just click continue and and you will be
-            redirected to the login page.
+            If you want to logout click continue and you will be redirected to
+            the login page.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>No</AlertDialogCancel>
           <Link href="/login" onClick={handleLogout}>
-            <Button className="w-full md:w-fit">Continue</Button>
+            <Button className="w-full md:w-fit">Yes</Button>
           </Link>
         </AlertDialogFooter>
       </AlertDialogContent>

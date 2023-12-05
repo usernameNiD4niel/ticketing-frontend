@@ -21,6 +21,7 @@ import {
 } from "react-icons/ai";
 import { RiPassPendingFill } from "react-icons/ri";
 import { FaLocationDot } from "react-icons/fa6";
+import DialogBoxAlert from "../server/logout/DialogBoxAlert";
 
 type MobileDrawerProps = {
   isDrawerOpen: boolean;
@@ -71,196 +72,202 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         <span className="text-[#0B64B9]">OP</span>
         <span className="text-[#99CC68]">PA</span>
       </Link>
-      <div className="flex flex-col w-full gap-y-3">
-        <Link
-          className={cn(
-            "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-            activeTab === AvailableTabs.Feed &&
-              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-            !isDrawerOpen ? "justify-center items-center" : "justify-start"
-          )}
-          href="/department/it"
-        >
-          <span>
-            <FaHome />
-          </span>
-          {isDrawerOpen && <span className="text-sm">Feed</span>}
-        </Link>
-        {isRequestor ? (
+      <div className="flex flex-col w-full justify-between h-full pb-4">
+        <div className="flex flex-col w-full gap-y-3">
           <Link
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-              activeTab === AvailableTabs["Create Ticket"] &&
+              activeTab === AvailableTabs.Feed &&
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
-            href="/department/it/create-ticket"
+            href="/department/it"
           >
             <span>
-              <IoIosCreate />
+              <FaHome />
             </span>
-            {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
+            {isDrawerOpen && <span className="text-sm">Feed</span>}
           </Link>
-        ) : role?.toLowerCase() !== "champion" ? (
-          <Link
-            className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
-              activeTab === AvailableTabs["Departments Role"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-              !isDrawerOpen ? "justify-center items-center" : "justify-start"
-            )}
-            href="/department/it/pending-role"
-          >
-            <span>
-              <RiPassPendingFill />
-            </span>
-            {isDrawerOpen ? (
-              <span className="text-sm">
-                Departments Role{" "}
-                <span className="text-xs ms-2 font-bold text-red-500">
+          {isRequestor ? (
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs["Create Ticket"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              href="/department/it/create-ticket"
+            >
+              <span>
+                <IoIosCreate />
+              </span>
+              {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
+            </Link>
+          ) : role?.toLowerCase() !== "champion" ? (
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
+                activeTab === AvailableTabs["Departments Role"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              href="/department/it/pending-role"
+            >
+              <span>
+                <RiPassPendingFill />
+              </span>
+              {isDrawerOpen ? (
+                <span className="text-sm">
+                  Departments Role{" "}
+                  <span className="text-xs ms-2 font-bold text-red-500">
+                    {pendingRoleCount !== 0 && pendingRoleCount}
+                  </span>
+                </span>
+              ) : (
+                <span className="text-xs ms-2 font-bold text-red-500 absolute right-1 top-2">
                   {pendingRoleCount !== 0 && pendingRoleCount}
                 </span>
+              )}
+            </Link>
+          ) : (
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
+                activeTab === AvailableTabs["Assigned Tickets"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              href="/department/it/assigned-tickets"
+            >
+              <span>
+                <IoIosCreate />
               </span>
-            ) : (
-              <span className="text-xs ms-2 font-bold text-red-500 absolute right-1 top-2">
-                {pendingRoleCount !== 0 && pendingRoleCount}
-              </span>
-            )}
-          </Link>
-        ) : (
-          <Link
-            className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
-              activeTab === AvailableTabs["Assigned Tickets"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-              !isDrawerOpen ? "justify-center items-center" : "justify-start"
-            )}
-            href="/department/it/assigned-tickets"
-          >
-            <span>
-              <IoIosCreate />
-            </span>
-            {isDrawerOpen ? (
-              <span className="text-sm">
-                Assigned Tickets
-                <span className="text-xs ms-2 font-bold text-red-500">
+              {isDrawerOpen ? (
+                <span className="text-sm">
+                  Assigned Tickets
+                  <span className="text-xs ms-2 font-bold text-red-500">
+                    {my_assigned_tickets !== 0 && my_assigned_tickets}
+                  </span>
+                </span>
+              ) : (
+                <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
                   {my_assigned_tickets !== 0 && my_assigned_tickets}
                 </span>
+              )}
+            </Link>
+          )}
+          {isRequestor ? (
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs["Existing Tickets"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              href="/department/it/my-tickets"
+            >
+              <span>
+                <BsTicketFill />
               </span>
-            ) : (
-              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
-                {my_assigned_tickets !== 0 && my_assigned_tickets}
+              {isDrawerOpen && (
+                <span className="text-sm">Existing Tickets</span>
+              )}
+            </Link>
+          ) : (
+            <Link
+              href="/department/it/unhandled-tickets"
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
+                activeTab === AvailableTabs["Unhandled Tickets"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+            >
+              <span>
+                <AiFillFileExclamation />
               </span>
-            )}
-          </Link>
-        )}
-        {isRequestor ? (
-          <Link
-            className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-              activeTab === AvailableTabs["Existing Tickets"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-              !isDrawerOpen ? "justify-center items-center" : "justify-start"
-            )}
-            href="/department/it/my-tickets"
-          >
-            <span>
-              <BsTicketFill />
-            </span>
-            {isDrawerOpen && <span className="text-sm">Existing Tickets</span>}
-          </Link>
-        ) : (
-          <Link
-            href="/department/it/unhandled-tickets"
-            className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
-              activeTab === AvailableTabs["Unhandled Tickets"] &&
-                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-              !isDrawerOpen ? "justify-center items-center" : "justify-start"
-            )}
-          >
-            <span>
-              <AiFillFileExclamation />
-            </span>
-            {isDrawerOpen ? (
-              <span className="text-sm">
-                Unhandled Tickets
-                <span className="text-xs ms-2 font-bold text-red-500">
+              {isDrawerOpen ? (
+                <span className="text-sm">
+                  Unhandled Tickets
+                  <span className="text-xs ms-2 font-bold text-red-500">
+                    {unhandledTicketsCount !== 0 && unhandledTicketsCount}
+                  </span>
+                </span>
+              ) : (
+                <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
                   {unhandledTicketsCount !== 0 && unhandledTicketsCount}
                 </span>
+              )}
+            </Link>
+          )}
+          {!isRequestor && (
+            <Link
+              href="/department/it/overview"
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs["Overview"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+            >
+              <span>
+                <MdMonitorHeart />
               </span>
-            ) : (
-              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
-                {unhandledTicketsCount !== 0 && unhandledTicketsCount}
-              </span>
-            )}
-          </Link>
-        )}
-
-        {!isRequestor && (
+              {isDrawerOpen && <span className="text-sm">Overview</span>}
+            </Link>
+          )}
           <Link
-            href="/department/it/overview"
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-              activeTab === AvailableTabs["Overview"] &&
+              activeTab === AvailableTabs.Accounts &&
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
             )}
+            href="/department/it/accounts/recent"
           >
             <span>
-              <MdMonitorHeart />
+              <MdAccountBox />
             </span>
-            {isDrawerOpen && <span className="text-sm">Overview</span>}
+            {isDrawerOpen && <span className="text-sm">Accounts</span>}
           </Link>
-        )}
-
-        <Link
-          className={cn(
-            "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-            activeTab === AvailableTabs.Accounts &&
-              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-            !isDrawerOpen ? "justify-center items-center" : "justify-start"
+          {role && role.toUpperCase() === "SUPREME" && (
+            <>
+              <Link
+                className={cn(
+                  "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                  activeTab === AvailableTabs.Code &&
+                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                  !isDrawerOpen
+                    ? "justify-center items-center"
+                    : "justify-start"
+                )}
+                href="/department/it/code"
+              >
+                <span>
+                  <MdMarkEmailUnread />
+                </span>
+                {isDrawerOpen && <span className="text-sm">Code</span>}
+              </Link>
+              <Link
+                className={cn(
+                  "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                  activeTab === AvailableTabs.Locations &&
+                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                  !isDrawerOpen
+                    ? "justify-center items-center"
+                    : "justify-start"
+                )}
+                href="/department/it/locations"
+              >
+                <span>
+                  <FaLocationDot />
+                </span>
+                {isDrawerOpen && <span className="text-sm">Locations</span>}
+              </Link>
+            </>
           )}
-          href="/department/it/accounts/recent"
-        >
-          <span>
-            <MdAccountBox />
-          </span>
-          {isDrawerOpen && <span className="text-sm">Accounts</span>}
-        </Link>
-
-        {role && role.toUpperCase() === "SUPREME" && (
-          <>
-            <Link
-              className={cn(
-                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                activeTab === AvailableTabs.Code &&
-                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                !isDrawerOpen ? "justify-center items-center" : "justify-start"
-              )}
-              href="/department/it/code"
-            >
-              <span>
-                <MdMarkEmailUnread />
-              </span>
-              {isDrawerOpen && <span className="text-sm">Code</span>}
-            </Link>
-            <Link
-              className={cn(
-                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                activeTab === AvailableTabs.Locations &&
-                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                !isDrawerOpen ? "justify-center items-center" : "justify-start"
-              )}
-              href="/department/it/locations"
-            >
-              <span>
-                <FaLocationDot />
-              </span>
-              {isDrawerOpen && <span className="text-sm">Locations</span>}
-            </Link>
-          </>
-        )}
+        </div>
+        <DialogBoxAlert isInTheMenu={true} key={"PCNavigationMenu"} />
       </div>
       <Button
         className="absolute top-10 -right-3 text-sm text-center"
