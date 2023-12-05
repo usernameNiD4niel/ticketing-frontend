@@ -20,6 +20,8 @@ import { Label } from "@/components/ui/label";
 import { Locations } from "@/constants/types";
 import updateLocationAction from "@/app/actions/update-location-action";
 import { useToast } from "@/components/ui/use-toast";
+import ScalableDialogBox from "@/components/utils/ScalableDialogBox";
+import { cn } from "@/lib/utils";
 
 interface EditProps {
   locations: Locations[];
@@ -64,7 +66,28 @@ export default function Edit({ locations }: EditProps) {
         className="space-y-8 md:w-[690px]"
       >
         <div>
-          <Label htmlFor="selectedLocation">Locations</Label>
+          <div
+            className={cn(
+              "w-full flex justify-between items-center",
+              !selectedLocation && "py-2"
+            )}
+          >
+            <Label htmlFor="selectedLocation">Locations</Label>
+            {selectedLocation && (
+              <ScalableDialogBox
+                action="delete"
+                description={`Are you sure you want to delete the ${selectedLocation} location?`}
+                title="Are you abosolutely sure?"
+                triggerClass="text-red-500"
+                triggerText="Delete"
+                triggerVariant="link"
+                negativeText="No"
+                positionText="Yes"
+                data={selectedLocation}
+                key={"ScalableDialogBoxEditLocations"}
+              />
+            )}
+          </div>
           <SelectLocations
             locations={locations}
             setLocations={setSelectedLocation}
