@@ -16,7 +16,5 @@ export default async function getAccount(token: string, email: string) {
     return data.account as AccountProps;
   }
 
-  console.log(`status ::: ${response.status}`);
-
   throw new Error("Cannot fetch your account, please try again");
 }

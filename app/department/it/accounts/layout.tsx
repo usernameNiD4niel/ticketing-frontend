@@ -44,7 +44,11 @@ const AccountLayout: FC<AccountLayoutProps> = async ({ children }) => {
 
   const formatName = () => {
     const splitName = account.name.split(" ");
-    return `${splitName[0].substring(0, 1)}${splitName[1].substring(0, 1)}`;
+    if (splitName.length > 1) {
+      return `${splitName[0].substring(0, 1)}${splitName[1].substring(0, 1)}`;
+    }
+
+    return splitName[0].substring(0, 1);
   };
 
   return (
@@ -54,7 +58,7 @@ const AccountLayout: FC<AccountLayoutProps> = async ({ children }) => {
         <section className="w-full flex items-center justify-center flex-col gap-y-3">
           {/* <Avatar name={account.name} size="150" round={true} /> */}
           <Avatar className="text-2xl font-bold text-white p-12 bg-[#0964B9]">
-            <AvatarFallback>{formatName()}</AvatarFallback>
+            <AvatarFallback>{formatName().toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="flex gap-y-1 items-center justify-center flex-col">
             <Badge variant={getAccessLevel(account)}>
