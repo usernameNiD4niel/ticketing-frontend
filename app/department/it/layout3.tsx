@@ -1,8 +1,9 @@
 import Header from "@/components/utils/Header";
 import { ModeToggle } from "@/components/utils/ModeToggle";
-import React from "react";
+import React, { Suspense } from "react";
 import ManageTab from "@/components/helper/manage-tab";
 import MainContent from "@/components/client/feed/MainContent";
+import Loading from "@/app/department/it/loading";
 
 const HelperLayout = ({
   children,
@@ -34,7 +35,7 @@ const HelperLayout = ({
           user_priority_ticket_count={user_priority_ticket_count}
           my_assigned_tickets={my_assigned_tickets}
         >
-          {children}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </MainContent>
       </main>
       <footer className="fixed bottom-0 left-0 p-4 z-10">

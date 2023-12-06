@@ -30,6 +30,7 @@ import { AssignedTickets } from "@/constants/types";
 import ExportDialog from "@/components/server/feed/ExportDialog";
 import useScreenSize from "@/hooks/helper/useScreenSize";
 import FilterPopover from "./filter-popover";
+import TableFallback from "./table-fallback";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<AssignedTickets, TValue>[];
@@ -158,49 +159,51 @@ export function DataTable<TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  className="hover:cursor-pointer"
-                  onClick={() => handleNavigation(row.getValue("id"))}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                      {cell.column.id !== "priority" && (
-                        <div className="flex flex-col ml-4">
-                          <span className="lg:hidden">
-                            {row.getValue("status")}
-                          </span>
-                          <span className="lg:hidden">
-                            {row.getValue("subject")}
-                          </span>
-                          <span className="lg:hidden">
-                            {row.getValue("created_at")}
-                          </span>
-                        </div>
-                      )}
-                    </TableCell>
-                  ))}
+          <React.Suspense fallback={<TableFallback />}>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className="hover:cursor-pointer"
+                    onClick={() => handleNavigation(row.getValue("id"))}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {cell.column.id !== "priority" && (
+                          <div className="flex flex-col ml-4">
+                            <span className="lg:hidden">
+                              {row.getValue("status")}
+                            </span>
+                            <span className="lg:hidden">
+                              {row.getValue("subject")}
+                            </span>
+                            <span className="lg:hidden">
+                              {row.getValue("created_at")}
+                            </span>
+                          </div>
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    {table.getColumn("id")?.getFilterValue() as string}
+                    No results.
+                  </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  {table.getColumn("id")?.getFilterValue() as string}
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+              )}
+            </TableBody>
+          </React.Suspense>
         </Table>
       </div>
       {data && data.length > 0 && (
