@@ -55,9 +55,6 @@ export default function OtpForm({ setIsCorrectOtp }: OtpFormProps) {
 
     const { otp, message, success } = await getForgotPasswordOTP(email);
 
-    console.log(`otp ::: ${otp}`);
-    console.log(`message ::: ${message}`);
-
     if (success) {
       setError("");
       setGeneratedOtp(otp.toString());

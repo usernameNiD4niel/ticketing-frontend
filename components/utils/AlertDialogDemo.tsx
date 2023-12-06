@@ -14,6 +14,7 @@ import { useMemo, useState } from "react";
 import { postUpdatePassword } from "@/endpoints";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export const AlertDialogDemo = () => {
   const [error, setError] = useState("");
@@ -24,8 +25,8 @@ export const AlertDialogDemo = () => {
   const { toast } = useToast();
 
   const handleResettingPassword = () => {
-    const newPassword = localStorage.getItem("newPassword");
-    const confirmPassword = localStorage.getItem("confirmPassword");
+    const newPassword = Cookies.get("newPassword");
+    const confirmPassword = Cookies.get("confirmPassword");
 
     if (!newPassword) {
       setError("New Password field is required");
@@ -49,23 +50,23 @@ export const AlertDialogDemo = () => {
 
   const handleChangingPassword = async () => {
     // TODO: update the users password
-    const newPassword = localStorage.getItem("newPassword")!;
-    const email = localStorage.getItem("email")!;
+    const newPassword = Cookies.get("newPassword")!;
+    const email = Cookies.get("email")!;
 
     const { message, success } = await postUpdatePassword({
       email,
       newPassword,
     });
 
-    console.log(`message ::: ${message}`);
-    console.log(`${email} ::: ${newPassword}`);
-
     if (success) {
       toast({
         title: "Update Success",
         description: message,
       });
-      localStorage.clear();
+      // remove the cookies after success
+      Cookies.remove("newPassword");
+      Cookies.remove("confirmPassword");
+      Cookies.remove("email");
       router.refresh();
     } else {
       toast({
