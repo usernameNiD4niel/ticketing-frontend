@@ -30,6 +30,9 @@ import { Payment } from "@/constants/types";
 import FilterPopover from "@/components/client/feed/FilterPopover";
 import useScreenSize from "@/hooks/helper/useScreenSize";
 import ExportDialog from "@/components/server/feed/ExportDialog";
+import { Button } from "@/components/ui/button";
+import { myTickets } from "@/endpoints";
+import Cookies from "js-cookie";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -101,6 +104,15 @@ export function DataTable<TValue>({
     router.push(destination);
   };
 
+  async function getMyTickets() {
+    const token = Cookies.get("token");
+
+    const response = await myTickets(token!);
+
+    setIsFiltering(true);
+    setData(response);
+  }
+
   return (
     <div>
       <div className="w-full flex justify-between py-3 items-center">
@@ -116,7 +128,10 @@ export function DataTable<TValue>({
           <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
         </div>
         {data && data.length > 0 && (
-          <div>
+          <div className="space-x-2">
+            <Button variant={"link"} onClick={getMyTickets}>
+              My Tickets
+            </Button>
             <ExportDialog url="all-tickets" />
           </div>
         )}
