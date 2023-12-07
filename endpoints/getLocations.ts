@@ -1,5 +1,6 @@
 import { Locations } from "@/constants/types";
 
+// ! FIX THE LOCATION FIRST
 export default async function getLocations(token: string, isString?: boolean) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/locations${
