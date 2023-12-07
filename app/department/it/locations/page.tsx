@@ -8,6 +8,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getLocations } from "@/endpoints";
+import { Locations } from "@/constants/types";
 
 export default async function Page() {
   const token = cookies().get("token")?.value;
@@ -16,7 +17,7 @@ export default async function Page() {
     redirect("/login");
   }
 
-  const locations = await getLocations(token);
+  const locations = (await getLocations(token, false)) as Locations[];
 
   return (
     <div className="w-full flex px-3 md:ps-12 flex-col md:flex-row gap-20">

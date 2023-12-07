@@ -1,8 +1,10 @@
 import { Locations } from "@/constants/types";
 
-export default async function getLocations(token: string) {
+export default async function getLocations(token: string, isString?: boolean) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/locations`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/locations${
+      isString && "?isString=" + isString
+    }`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -17,6 +19,11 @@ export default async function getLocations(token: string) {
   if (response.ok) {
     const data = await response.json();
 
+    console.log(`locations ::: ${JSON.stringify(data, null, 2)}`);
+
+    if (isString) {
+      return data.locations as string[];
+    }
     return data.locations as Locations[];
   }
 
