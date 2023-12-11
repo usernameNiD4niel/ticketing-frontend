@@ -23,7 +23,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./DataTablePagination";
 import { useRouter } from "next/navigation";
 import { Payment } from "@/constants/types";
@@ -33,6 +32,7 @@ import ExportDialog from "@/components/server/feed/ExportDialog";
 import { Button } from "@/components/ui/button";
 import { myTickets } from "@/endpoints";
 import Cookies from "js-cookie";
+import SearchTable from "./search";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -117,13 +117,11 @@ export function DataTable<TValue>({
     <div>
       <div className="w-full flex justify-between py-3 items-center">
         <div className="flex items-center gap-x-2">
-          <Input
-            placeholder="Filter by ticket requestor..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
+          <SearchTable
+            setData={setData}
+            key={"SearchDataTable"}
+            clonedData={data_}
+            setIsFiltering={setIsFiltering}
           />
           <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
         </div>

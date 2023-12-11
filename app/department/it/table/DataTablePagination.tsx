@@ -85,7 +85,6 @@ export function DataTablePagination<TData>({
   useEffect(() => {
     if (next_page_url) {
       setNextPageUrl(next_page_url);
-    } else {
     }
   }, [next_page_url]);
   return (

@@ -31,6 +31,7 @@ import ExportDialog from "@/components/server/feed/ExportDialog";
 import useScreenSize from "@/hooks/helper/useScreenSize";
 import FilterPopover from "./filter-popover";
 import TableFallback from "./table-fallback";
+import SearchTable from "@/app/department/it/table/search";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<AssignedTickets, TValue>[];
@@ -116,15 +117,12 @@ export function DataTable<TValue>({
         <div className="flex items-center gap-x-2">
           {isAssignedTickets && (
             <>
-              <Input
-                placeholder="Filter by ticket status..."
-                value={
-                  (table.getColumn("status")?.getFilterValue() as string) ?? ""
-                }
-                onChange={(event) =>
-                  table.getColumn("status")?.setFilterValue(event.target.value)
-                }
-                className="max-w-sm"
+              <SearchTable
+                setData={setData}
+                key={"SearchDataTable"}
+                module="assigned_tickets"
+                clonedData={data_}
+                setIsFiltering={setIsFiltering}
               />
               <FilterPopover
                 setData={setData}

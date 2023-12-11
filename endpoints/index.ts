@@ -19,6 +19,7 @@ import createLocation from "./createLocation";
 import getAccount from "./getAccount";
 import updateLocation from "./updateLocation";
 import myTickets from "./myTickets";
+import searchTickets from "./searchTickets";
 
 export {
   getChampions,
@@ -42,4 +43,5 @@ export {
   getAccount,
   updateLocation,
   myTickets,
+  searchTickets,
 };
