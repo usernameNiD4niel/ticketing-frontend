@@ -18,6 +18,7 @@ export default async function Page() {
           columns={columns}
           data_={tickets.data}
           isAssignedTickets={true}
+          module="assigned_tickets"
           next_page_url={tickets.next_page_url}
           url="all-tickets/assigned"
           key={"AssignedTicketsDataTable"}

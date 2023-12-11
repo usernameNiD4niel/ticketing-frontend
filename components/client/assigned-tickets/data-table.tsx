@@ -39,6 +39,7 @@ interface DataTableProps<TValue> {
   next_page_url: number | null;
   isAssignedTickets: boolean;
   url: string;
+  module: string;
 }
 
 export function DataTable<TValue>({
@@ -46,6 +47,7 @@ export function DataTable<TValue>({
   data_,
   next_page_url,
   url,
+  module,
   isAssignedTickets,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -119,14 +121,15 @@ export function DataTable<TValue>({
             <>
               <SearchTable
                 setData={setData}
-                key={"SearchDataTable"}
-                module="assigned_tickets"
+                key={module}
+                module={module}
                 clonedData={data_}
                 setIsFiltering={setIsFiltering}
               />
               <FilterPopover
                 setData={setData}
                 setIsFiltering={setIsFiltering}
+                key={module}
               />
             </>
           )}

@@ -4,7 +4,11 @@ export default async function searchTickets<T>(
   module: string
 ) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/search?query=${search}&module=${module}`,
+    `${
+      process.env.NEXT_PUBLIC_BACKEND_URL
+    }/api/all-tickets/search?query=${search}${
+      module && module.length > 0 ? `&module=${module}` : ""
+    }`,
     {
       headers: {
         "Content-Type": "application/json",

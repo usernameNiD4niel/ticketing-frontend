@@ -18,6 +18,7 @@ const UnhandledTickets = async () => {
         <DataTable
           columns={columns}
           data_={unhandledTickets.data}
+          module="unhandled_tickets"
           next_page_url={unhandledTickets.next_page_url}
           isAssignedTickets={false}
           url="unhandled-tickets"
