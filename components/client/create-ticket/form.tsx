@@ -94,10 +94,19 @@ export default function CreateTicketForm({ locations }: CreateTicketFormProps) {
         <span>Contact</span>
         <Input
           placeholder="Enter your phone number"
-          required
-          type="tel"
+          //   required
+          //   type="number"
           name="contact"
+          max={"11"}
           defaultValue={defaultContact}
+          type="text"
+          pattern="09[0-9]{9}"
+          inputMode="numeric"
+          maxLength={11}
+          minLength={11}
+          title="Pakiusap naman mag enter ka ng tamang contact number mo, maraming salamat!"
+          //   placeholder="Enter 11 digits"
+          required
         />
       </Label>
 

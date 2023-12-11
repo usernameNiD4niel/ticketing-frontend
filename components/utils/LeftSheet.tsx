@@ -58,8 +58,6 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Create Ticket";
       case AvailableTabs["Departments Role"]:
         return "Department Role";
-      case AvailableTabs["Existing Tickets"]:
-        return "Existing Tickets";
       case AvailableTabs.Overview:
         return "Overview";
       case AvailableTabs["Unhandled Tickets"]:
@@ -174,24 +172,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                     )}
                   </>
                 )}
-                {isRequestor ? (
-                  <SheetClose asChild>
-                    <Link
-                      className={cn(
-                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
-                        activeTab === AvailableTabs["Existing Tickets"] &&
-                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                      )}
-                      as={"/department/it/my-tickets"}
-                      href="/department/it/my-tickets"
-                    >
-                      <span>
-                        <BsTicketFill />
-                      </span>
-                      <span className="text-sm">Existing Ticket</span>
-                    </Link>
-                  </SheetClose>
-                ) : (
+                {!isRequestor && (
                   <SheetClose asChild>
                     <Link
                       as={"/department/it/unhandled-tickets"}

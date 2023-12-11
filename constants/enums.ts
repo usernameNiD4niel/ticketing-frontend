@@ -1,7 +1,6 @@
 export enum AvailableTabs {
   "Feed",
   "Create Ticket",
-  "Existing Tickets",
   "Accounts",
   "Unhandled Tickets",
   "Departments Role",
@@ -9,7 +8,7 @@ export enum AvailableTabs {
   "Code",
   "Assigned Tickets",
   "Locations",
-  "Logout"
+  "Logout",
 }
 
 export enum TypeOfUser {
