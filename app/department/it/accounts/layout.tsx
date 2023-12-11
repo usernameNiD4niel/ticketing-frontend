@@ -27,7 +27,9 @@ const AccountLayout: FC<AccountLayoutProps> = async ({ children }) => {
   const getAccessLevel = (
     account: AccountProps
   ): "requestor" | "champion" | "catalyst" | "supreme" => {
-    const access = account.access_level.it_access_level.toString();
+    const access = account.access_level.it_access_level
+      .toString()
+      .toLowerCase();
 
     switch (access) {
       case "requestor":

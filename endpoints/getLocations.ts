@@ -1,10 +1,16 @@
 import { Locations } from "@/constants/types";
 
-// ! FIX THE LOCATION FIRST
 export default async function getLocations(token: string, isString?: boolean) {
+  console.log("get location invoke");
+  console.log(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/locations${
+      isString ? `?isString=${isString}` : ""
+    }`
+  );
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/locations${
-      isString && "?isString=" + isString
+      isString ? `?isString=${isString}` : ""
     }`,
     {
       headers: {
@@ -32,5 +38,8 @@ export default async function getLocations(token: string, isString?: boolean) {
     throw new Error("You are not allowed to access the page");
   }
 
-  return [] as Locations[];
+  console.log(response);
+
+  throw new Error("error noooo!");
+  // return [] as Locations[];
 }
