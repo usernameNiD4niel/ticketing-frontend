@@ -117,22 +117,17 @@ export function DataTable<TValue>({
     <div>
       <div className="w-full flex justify-between py-3 items-center">
         <div className="flex items-center gap-x-2">
-          {isAssignedTickets && (
-            <>
-              <SearchTable
-                setData={setData}
-                key={module}
-                module={module}
-                clonedData={data_}
-                setIsFiltering={setIsFiltering}
-              />
-              <FilterPopover
-                setData={setData}
-                setIsFiltering={setIsFiltering}
-                key={module}
-              />
-            </>
-          )}
+          <SearchTable
+            setData={setData}
+            module={module}
+            clonedData={data_}
+            setIsFiltering={setIsFiltering}
+          />
+          <FilterPopover
+            setData={setData}
+            setIsFiltering={setIsFiltering}
+            module={module}
+          />
         </div>
         {data && data.length > 0 && (
           <div>

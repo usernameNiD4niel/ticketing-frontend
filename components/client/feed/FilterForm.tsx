@@ -130,7 +130,11 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
             placeholder="CLOSED"
             name="status"
           /> */}
-          <DropdownStatus />
+          <DropdownStatus
+            filter_by="status"
+            items={["OPEN", "CLOSED", "RE-OPENED", "EXPIRED", "RESOLVED"]}
+            key={"dropdownstatusfilterform"}
+          />
         </div>
         <div className="w-full">
           <Label htmlFor="status">

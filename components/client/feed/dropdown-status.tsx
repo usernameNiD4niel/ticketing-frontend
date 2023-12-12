@@ -14,7 +14,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
 
-export default function DropdownStatus() {
+interface DropdownStatus {
+  filter_by: string;
+  items: string[];
+}
+
+export default function DropdownStatus({ filter_by, items }: DropdownStatus) {
   const [status, setStatus] = React.useState("");
 
   return (
@@ -25,7 +30,7 @@ export default function DropdownStatus() {
           className="w-fit gap-x-4 flex justify-between"
         >
           <span className="min-w-max">
-            {status ? status : "Filter by status"}
+            {status ? status : `Filter by ${filter_by}`}
           </span>
           <span>
             <IoIosArrowDown />
@@ -35,23 +40,19 @@ export default function DropdownStatus() {
             hidden={true}
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            name="status"
+            name={filter_by}
           />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
+        <DropdownMenuLabel>Filter by {filter_by}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={status} onValueChange={setStatus}>
-          <DropdownMenuRadioItem value="open">OPEN</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="closed">CLOSED</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="re-opened">
-            RE-OPENED
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="expired">EXPIRED</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="resolved">
-            RESOLVED
-          </DropdownMenuRadioItem>
+          {items.map((item) => (
+            <DropdownMenuRadioItem value={item.toLowerCase()} key={item}>
+              {item}
+            </DropdownMenuRadioItem>
+          ))}
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

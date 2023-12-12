@@ -9,10 +9,12 @@ import { PHILIPPINE_TIME_ZONE } from "@/constants/variables";
 import { format } from "date-fns-tz";
 import Cookies from "js-cookie";
 import { FC, useState } from "react";
+import DropdownStatus from "../feed/dropdown-status";
 
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
+  module: string;
 };
 
 const getAllTickets = async (token: string) => {
@@ -31,7 +33,11 @@ const getAllTickets = async (token: string) => {
   return response["my-tickets"] as AssignedTickets[];
 };
 
-const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
+const FilterForm: FC<FilterFormProps> = ({
+  setData,
+  setIsFiltering,
+  module,
+}) => {
   const [date, setDate] = useState<Date | undefined>();
 
   const token = Cookies.get("token");
@@ -81,7 +87,14 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
 
     params = params.substring(0, params.length);
 
-    const data = await filterTableAssigned(params);
+    params = params + `&module=${module}`;
+
+    console.log(`params ::: ${params}`);
+
+    const param = new FormData();
+    param.append("params", params);
+
+    const data = await filterTableAssigned(param);
     setData(data);
     setIsFiltering(true);
   };
@@ -105,20 +118,29 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
       <form className="grid gap-2" action={handleFormAction}>
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="priority">Priority</Label>
-          <Input
+          {/* <Input
             id="priority"
             className="col-span-2 h-8"
             placeholder="Medium"
             name="priority"
+          /> */}
+
+          <DropdownStatus
+            filter_by="priority"
+            items={["LOW", "MEDIUM", "HIGH"]}
           />
         </div>
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="status">Status</Label>
-          <Input
+          {/* <Input
             id="status"
             className="col-span-2 h-8"
             placeholder="CLOSED"
             name="status"
+          /> */}
+          <DropdownStatus
+            filter_by="status"
+            items={["OPEN", "CLOSED", "RE-OPENED", "EXPIRED", "RESOLVED"]}
           />
         </div>
         <div className="w-full">

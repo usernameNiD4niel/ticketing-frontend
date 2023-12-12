@@ -12,9 +12,14 @@ import FilterForm from "./filter-form";
 type FilterPopoverProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
+  module: string;
 };
 
-const FilterPopover: FC<FilterPopoverProps> = ({ setData, setIsFiltering }) => {
+const FilterPopover: FC<FilterPopoverProps> = ({
+  setData,
+  setIsFiltering,
+  module,
+}) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -23,7 +28,11 @@ const FilterPopover: FC<FilterPopoverProps> = ({ setData, setIsFiltering }) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
-        <FilterForm setData={setData} setIsFiltering={setIsFiltering} />
+        <FilterForm
+          setData={setData}
+          setIsFiltering={setIsFiltering}
+          module={module}
+        />
       </PopoverContent>
     </Popover>
   );
