@@ -118,12 +118,6 @@ const FilterForm: FC<FilterFormProps> = ({
       <form className="grid gap-2" action={handleFormAction}>
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="priority">Priority</Label>
-          {/* <Input
-            id="priority"
-            className="col-span-2 h-8"
-            placeholder="Medium"
-            name="priority"
-          /> */}
 
           <DropdownStatus
             filter_by="priority"
@@ -132,12 +126,6 @@ const FilterForm: FC<FilterFormProps> = ({
         </div>
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="status">Status</Label>
-          {/* <Input
-            id="status"
-            className="col-span-2 h-8"
-            placeholder="CLOSED"
-            name="status"
-          /> */}
           <DropdownStatus
             filter_by="status"
             items={["OPEN", "CLOSED", "RE-OPENED", "EXPIRED", "RESOLVED"]}

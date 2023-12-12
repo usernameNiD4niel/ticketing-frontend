@@ -200,7 +200,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
               href="/department/it/overview"
               className={cn(
                 "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                activeTab === AvailableTabs["Overview"] &&
+                activeTab === AvailableTabs["Reports"] &&
                   "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                 !isDrawerOpen ? "justify-center items-center" : "justify-start"
               )}
@@ -208,7 +208,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
               <span>
                 <MdMonitorHeart />
               </span>
-              {isDrawerOpen && <span className="text-sm">Overview</span>}
+              {isDrawerOpen && <span className="text-sm">Reports</span>}
             </Link>
           )}
           <Link

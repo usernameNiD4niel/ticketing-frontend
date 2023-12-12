@@ -58,8 +58,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Create Ticket";
       case AvailableTabs["Departments Role"]:
         return "Department Role";
-      case AvailableTabs.Overview:
-        return "Overview";
+      case AvailableTabs.Reports:
+        return "Reports";
       case AvailableTabs["Unhandled Tickets"]:
         return "Unhandled Tickets";
       case AvailableTabs.Locations:
@@ -202,14 +202,14 @@ const LeftSheet: FC<LeftSheetProps> = ({
                       href="/department/it/overview"
                       className={cn(
                         "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
-                        activeTab === AvailableTabs["Overview"] &&
+                        activeTab === AvailableTabs["Reports"] &&
                           "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                       )}
                     >
                       <span>
                         <MdMonitorHeart />
                       </span>
-                      <span className="text-sm">Overview</span>
+                      <span className="text-sm">Reports</span>
                     </Link>
                   </SheetClose>
                 )}

@@ -4,7 +4,7 @@ export enum AvailableTabs {
   "Accounts",
   "Unhandled Tickets",
   "Departments Role",
-  "Overview",
+  "Reports",
   "Code",
   "Assigned Tickets",
   "Locations",

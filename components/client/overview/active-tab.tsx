@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 const ActiveTab = () => {
   const setActiveTab = useNavigationStore((state) => state.setActiveTab);
   useEffect(() => {
-    setActiveTab(AvailableTabs.Overview);
+    setActiveTab(AvailableTabs.Reports);
   }, []);
   return <div></div>;
 };

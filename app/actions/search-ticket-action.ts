@@ -12,9 +12,9 @@ export default async function searchTicketAction<T>(formData: FormData) {
   }
 
   const search = formData.get("search")!.toString();
-  const module = formData.get("module")?.toString();
+  const module_ = formData.get("module")?.toString();
 
-  const response = (await searchTickets(token, search, module || "")) as T[];
+  const response = (await searchTickets(token, search, module_ || "")) as T[];
 
   return response;
 }
