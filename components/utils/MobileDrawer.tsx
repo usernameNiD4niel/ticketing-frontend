@@ -7,7 +7,7 @@ import {
   MdMonitorHeart,
 } from "react-icons/md";
 import { BsTicketFill } from "react-icons/bs";
-import { IoIosCreate } from "react-icons/io";
+import { IoIosCreate, IoMdNotifications } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -264,6 +264,21 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
               </Link>
             </>
           )}
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs.Notification &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
+            )}
+            as={"/department/it/notification"}
+            href="/department/it/notification"
+          >
+            <span>
+              <IoMdNotifications />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Notification</span>}
+          </Link>
         </div>
         {isDrawerOpen && (
           <DialogBoxAlert isInTheMenu={true} key={"PCNavigationMenu"} />

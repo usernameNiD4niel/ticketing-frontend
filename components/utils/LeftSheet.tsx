@@ -12,7 +12,7 @@ import {
 } from "../ui/sheet";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { FaHome } from "react-icons/fa";
-import { IoIosCreate } from "react-icons/io";
+import { IoIosCreate, IoMdNotifications } from "react-icons/io";
 import { BsTicketFill } from "react-icons/bs";
 import {
   MdAccountBox,
@@ -64,6 +64,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Unhandled Tickets";
       case AvailableTabs.Locations:
         return "Locations";
+      case AvailableTabs.Notification:
+        return "Notification";
     }
   };
 
@@ -265,6 +267,22 @@ const LeftSheet: FC<LeftSheetProps> = ({
                     </SheetClose>
                   </>
                 )}
+                <SheetClose asChild>
+                  <Link
+                    className={cn(
+                      "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                      activeTab === AvailableTabs.Notification &&
+                        "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                    )}
+                    as={"/department/it/notification"}
+                    href="/department/it/notification"
+                  >
+                    <span>
+                      <IoMdNotifications />
+                    </span>
+                    <span className="text-sm">Notification</span>
+                  </Link>
+                </SheetClose>
               </section>
             </div>
             <DialogBoxAlert isInTheMenu={true} key={"Mobile"} />

@@ -8,6 +8,7 @@ export enum AvailableTabs {
   "Code",
   "Assigned Tickets",
   "Locations",
+  "Notification",
   "Logout",
 }
 
