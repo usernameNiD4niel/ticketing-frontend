@@ -17,7 +17,7 @@ export default async function NotificationPage() {
   const notifications = await getNotification(token, email);
 
   return (
-    <div className="w-full flex gap-2 justify-center">
+    <div className="w-full flex gap-2 justify-center px-2">
       <TabMutator availableTab={AvailableTabs.Notification} />
       <div className="w-full md:max-w-4xl space-y-2">
         <div className="w-full flex justify-between items-center">
