@@ -272,3 +272,10 @@ export type Locations = {
   created_at: string;
   updated_at: string;
 };
+
+export type Notifications = {
+  is_seen: boolean;
+  notification_type: string;
+  description: string;
+  created_at: string;
+};

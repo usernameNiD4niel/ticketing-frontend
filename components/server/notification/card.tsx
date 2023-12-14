@@ -1,21 +1,15 @@
+import { Notifications } from "@/constants/types";
 import { cn } from "@/lib/utils";
 import { FaComment } from "react-icons/fa6";
 import { GrUpdate } from "react-icons/gr";
 import { MdAssignmentAdd } from "react-icons/md";
 
-interface CardNotificationProps {
-  is_seen: boolean;
-  message: string;
-  notification_type: "ticket update" | "ticket assignment" | "ticket comment";
-  created_at: string;
-}
-
 export default function CardNotification({
   created_at,
   is_seen,
-  message,
+  description,
   notification_type,
-}: CardNotificationProps) {
+}: Notifications) {
   function getIcon() {
     switch (notification_type) {
       case "ticket comment":
@@ -37,7 +31,7 @@ export default function CardNotification({
     >
       <p>
         <span>{getIcon()}</span>
-        <span>{message}</span>
+        <span>{description}</span>
       </p>
       <p className="font-light">{created_at}</p>
     </div>
