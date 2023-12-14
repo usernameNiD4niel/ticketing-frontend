@@ -97,23 +97,22 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </span>
             {isDrawerOpen && <span className="text-sm">Feed</span>}
           </Link>
-          {isRequestor ? (
-            <Link
-              className={cn(
-                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                activeTab === AvailableTabs["Create Ticket"] &&
-                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                !isDrawerOpen ? "justify-center items-center" : "justify-start"
-              )}
-              as={"/department/it/create-ticket"}
-              href="/department/it/create-ticket"
-            >
-              <span>
-                <IoIosCreate />
-              </span>
-              {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
-            </Link>
-          ) : role?.toLowerCase() !== "champion" ? (
+          <Link
+            className={cn(
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              activeTab === AvailableTabs["Create Ticket"] &&
+                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+              !isDrawerOpen ? "justify-center items-center" : "justify-start"
+            )}
+            as={"/department/it/create-ticket"}
+            href="/department/it/create-ticket"
+          >
+            <span>
+              <IoIosCreate />
+            </span>
+            {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
+          </Link>
+          {!isRequestor && role?.toLowerCase() !== "champion" ? (
             <Link
               className={cn(
                 "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",

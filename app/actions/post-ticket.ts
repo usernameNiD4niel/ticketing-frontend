@@ -10,6 +10,7 @@ export default async function postTicket(formData: FormData) {
   const subject = formData.get("subject")!.toString();
   const contact = formData.get("contact")!.toString();
   const location = formData.get("location")!.toString();
+  const requestor = formData.get("requestor")?.toString();
 
   const request: PostTicketTypes = {
     description,
@@ -17,6 +18,10 @@ export default async function postTicket(formData: FormData) {
     contact,
     location,
   };
+
+  if (requestor) {
+    request.requestor = requestor;
+  }
 
   const { message, id } = await postTroubleTicket(token!, request);
 

@@ -7,8 +7,9 @@ import { redirect } from "next/navigation";
 
 const CreateTicket = async () => {
   const token = cookies().get("token")?.value;
+  const accessLevel = cookies().get("it_access_level")?.value;
 
-  if (!token) {
+  if (!token || !accessLevel) {
     redirect("/login");
   }
   const locations = (await getLocations(token, true)) as string[];
@@ -16,7 +17,10 @@ const CreateTicket = async () => {
   return (
     <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
       <TabMutator availableTab={AvailableTabs["Create Ticket"]} />
-      <CreateTicketForm locations={locations} />
+      <CreateTicketForm
+        locations={locations}
+        accessLevel={accessLevel.toLowerCase()}
+      />
     </div>
   );
 };

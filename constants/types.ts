@@ -211,6 +211,7 @@ export type PostTicketTypes = {
   description: string;
   location: string;
   contact: string;
+  requestor?: string;
 };
 
 export type UserProps = {

@@ -16,12 +16,8 @@ export default async function postTroubleTicket(
     }
   );
 
-  console.log(`location ::: ${data.location}`);
-  console.log(`contact ::: ${data.contact}`);
-
   if (response.ok) {
     const data_ = await response.json();
-    console.log(`the id is ::: ${data_.id}`);
 
     return { id: data_.id, message: data_.message as string };
   }

@@ -12,9 +12,13 @@ import CreateTicketCombo from "@/components/utils/CreateTicketCombo";
 
 interface CreateTicketFormProps {
   locations: string[];
+  accessLevel: string;
 }
 
-export default function CreateTicketForm({ locations }: CreateTicketFormProps) {
+export default function CreateTicketForm({
+  locations,
+  accessLevel,
+}: CreateTicketFormProps) {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const router = useRouter();
@@ -72,8 +76,19 @@ export default function CreateTicketForm({ locations }: CreateTicketFormProps) {
     >
       <h1 className="text-2xl font-bold">Create trouble ticket</h1>
 
+      {accessLevel !== "requestor" && accessLevel !== "unset" && (
+        <Label className="flex flex-col gap-y-2">
+          <span className="text-sm">Requestor</span>
+          <Input
+            placeholder="Enter your temporary name"
+            required
+            name="requestor"
+          />
+        </Label>
+      )}
+
       <Label className="flex flex-col gap-y-2">
-        <span className="text-base">Subject</span>
+        <span className="text-sm">Subject</span>
         <Input
           placeholder="What's your problem all about?"
           required
@@ -81,7 +96,7 @@ export default function CreateTicketForm({ locations }: CreateTicketFormProps) {
         />
       </Label>
 
-      <Label className="flex flex-col gap-y-3">
+      <Label className="flex flex-col gap-y-2">
         <span>Description</span>
         <Textarea
           placeholder="Explain what, when, how happen"
@@ -90,12 +105,10 @@ export default function CreateTicketForm({ locations }: CreateTicketFormProps) {
         />
       </Label>
 
-      <Label className="flex flex-col gap-y-3">
-        <span>Contact</span>
+      <Label className="flex flex-col gap-y-2">
+        <span className="text-sm">Contact</span>
         <Input
           placeholder="Enter your phone number"
-          //   required
-          //   type="number"
           name="contact"
           max={"11"}
           defaultValue={defaultContact}
@@ -105,13 +118,12 @@ export default function CreateTicketForm({ locations }: CreateTicketFormProps) {
           maxLength={11}
           minLength={11}
           title="Pakiusap naman mag enter ka ng tamang contact number mo, maraming salamat!"
-          //   placeholder="Enter 11 digits"
           required
         />
       </Label>
 
-      <Label className="flex flex-col gap-y-3">
-        <span>Location</span>
+      <Label className="flex flex-col gap-y-2">
+        <span className="text-sm">Location</span>
         <CreateTicketCombo items={locations} name="location" />
         {locationError && locationError.length > 0 && (
           <p className="text-red-500 text-sm">{locationError}</p>
