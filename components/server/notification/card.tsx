@@ -3,12 +3,14 @@ import { cn } from "@/lib/utils";
 import { FaComment } from "react-icons/fa6";
 import { GrUpdate } from "react-icons/gr";
 import { MdAssignmentAdd } from "react-icons/md";
+import Link from "next/link";
 
 export default function CardNotification({
   created_at,
   is_seen,
   description,
   notification_type,
+  ticket_id,
 }: Notifications) {
   function getIcon() {
     switch (notification_type) {
@@ -20,20 +22,22 @@ export default function CardNotification({
         return <GrUpdate />;
     }
   }
+
   return (
-    <div
+    <Link
       className={cn(
-        "w-full flex justify-between items-center p-3 rounded-md cursor-pointer",
+        "w-full flex justify-between items-center p-4 rounded-md cursor-pointer",
         is_seen
           ? "border border-[#F1F1F1] bg-white"
           : "bg-[#F0EEEE] border border-[#F1F1F1]"
       )}
+      href={`/department/it/${ticket_id}?tabName=Feed`}
     >
-      <p>
-        <span>{getIcon()}</span>
-        <span>{description}</span>
+      <p className="flex gap-1">
+        <span className="text-lg text-[#0964B9]">{getIcon()}</span>
+        <span className="text-sm">{description}</span>
       </p>
-      <p className="font-light">{created_at}</p>
-    </div>
+      <p className="font-light text-xs">{created_at}</p>
+    </Link>
   );
 }

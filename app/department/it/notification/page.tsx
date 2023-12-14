@@ -7,7 +7,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function NotificationPage() {
-  //! create an endpoint for pulling all of the notification for the user...
   const token = cookies().get("token")?.value;
   const email = cookies().get("email")?.value;
 
@@ -18,12 +17,16 @@ export default async function NotificationPage() {
   const notifications = await getNotification(token, email);
 
   return (
-    <>
+    <div className="w-full flex gap-2 justify-center">
       <TabMutator availableTab={AvailableTabs.Notification} />
-      <div className="w-full">
+      <div className="w-full md:max-w-4xl space-y-2">
         <div className="w-full flex justify-between items-center">
-          <h2>Notification</h2>
-          <Button variant={"link"}>Filter</Button>
+          <h2 className="font-bold text-lg">Notification</h2>
+          {notifications && notifications.length > 0 && (
+            <Button variant={"link"} className="p-0">
+              Filter
+            </Button>
+          )}
         </div>
 
         {notifications && notifications.length > 0 ? (
@@ -33,15 +36,16 @@ export default async function NotificationPage() {
               is_seen={notification.is_seen}
               description={notification.description}
               notification_type={notification.notification_type}
+              ticket_id={notification.ticket_id}
               key={notification.created_at}
             />
           ))
         ) : (
           <div className="h-[80vh] w-full flex items-center justify-center">
-            <p>No notification yet</p>
+            <p className="text-sm">No notification yet</p>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

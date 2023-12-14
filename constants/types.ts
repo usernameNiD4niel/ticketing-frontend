@@ -278,4 +278,5 @@ export type Notifications = {
   notification_type: string;
   description: string;
   created_at: string;
+  ticket_id: string;
 };
