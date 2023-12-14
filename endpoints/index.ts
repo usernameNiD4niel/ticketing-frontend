@@ -20,6 +20,8 @@ import getAccount from "./getAccount";
 import updateLocation from "./updateLocation";
 import myTickets from "./myTickets";
 import searchTickets from "./searchTickets";
+import getNotification from "./getNotification";
+import getNotificationCount from "./getNotificationCount";
 
 export {
   getChampions,
@@ -44,4 +46,6 @@ export {
   updateLocation,
   myTickets,
   searchTickets,
+  getNotification,
+  getNotificationCount,
 };

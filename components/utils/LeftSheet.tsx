@@ -33,12 +33,14 @@ type LeftSheetProps = {
   pendingRoleCount: number;
   role: string;
   myAssignedTickets: number;
+  count: number;
 };
 
 const LeftSheet: FC<LeftSheetProps> = ({
   pendingRoleCount,
   unhandledTicketsCount,
   myAssignedTickets,
+  count,
   role,
 }) => {
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
@@ -280,7 +282,12 @@ const LeftSheet: FC<LeftSheetProps> = ({
                     <span>
                       <IoMdNotifications />
                     </span>
-                    <span className="text-sm">Notification</span>
+                    <span className="text-sm">
+                      Notification{" "}
+                      <span className="text-xs ms-2 font-bold text-red-500">
+                        {count !== 0 && count}
+                      </span>
+                    </span>
                   </Link>
                 </SheetClose>
               </section>

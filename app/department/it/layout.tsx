@@ -1,7 +1,7 @@
 import React from "react";
 import HelperLayout from "./layout3";
 import { Metadata } from "next";
-import { getNavigationCount } from "@/endpoints";
+import { getNavigationCount, getNotificationCount } from "@/endpoints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -17,18 +17,21 @@ const RootLayoutDepartment = async ({
   children: React.ReactNode;
 }) => {
   const token = cookies().get("token")?.value;
-  const { unset_user_count, unset_priority_ticket_count, my_assigned_tickets } =
-    await getNavigationCount(token!);
 
   if (!token) {
     redirect("/login");
   }
+
+  const { unset_user_count, unset_priority_ticket_count, my_assigned_tickets } =
+    await getNavigationCount(token);
+  const count = await getNotificationCount(token);
 
   return (
     <HelperLayout
       unset_user_count={unset_user_count}
       user_priority_ticket_count={unset_priority_ticket_count}
       my_assigned_tickets={my_assigned_tickets}
+      count={count}
     >
       {children}
     </HelperLayout>

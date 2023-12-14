@@ -28,6 +28,7 @@ type MobileDrawerProps = {
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
   unhandledTicketsCount: number;
   pendingRoleCount: number;
+  count: number;
   my_assigned_tickets: number;
 };
 
@@ -37,6 +38,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   pendingRoleCount,
   unhandledTicketsCount,
   my_assigned_tickets,
+  count,
 }) => {
   const handleDrawerOpen = () => {
     setIsDrawerOpen((prevState) => !prevState);
@@ -266,7 +268,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           )}
           <Link
             className={cn(
-              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+              "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
               activeTab === AvailableTabs.Notification &&
                 "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
               !isDrawerOpen ? "justify-center items-center" : "justify-start"
@@ -277,7 +279,18 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             <span>
               <IoMdNotifications />
             </span>
-            {isDrawerOpen && <span className="text-sm">Notification</span>}
+            {isDrawerOpen ? (
+              <span className="text-sm">
+                Notification{" "}
+                <span className="text-xs ms-2 font-bold text-red-500">
+                  {count !== 0 && count}
+                </span>
+              </span>
+            ) : (
+              <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
+                {count !== 0 && count}
+              </span>
+            )}
           </Link>
         </div>
         {isDrawerOpen && (

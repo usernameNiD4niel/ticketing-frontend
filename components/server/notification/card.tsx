@@ -1,7 +1,6 @@
 import { Notifications } from "@/constants/types";
 import { cn } from "@/lib/utils";
 import { FaComment } from "react-icons/fa6";
-import { GrUpdate } from "react-icons/gr";
 import { MdAssignmentAdd, MdNotificationsActive } from "react-icons/md";
 import Link from "next/link";
 

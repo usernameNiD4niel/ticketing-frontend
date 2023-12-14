@@ -2,7 +2,7 @@ import TabMutator from "@/components/helper/tab-mutator";
 import CardNotification from "@/components/server/notification/card";
 import { Button } from "@/components/ui/button";
 import { AvailableTabs } from "@/constants/enums";
-import getNotification from "@/endpoints/getNotification";
+import { getNotification } from "@/endpoints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
