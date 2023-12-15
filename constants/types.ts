@@ -275,6 +275,7 @@ export type Locations = {
 };
 
 export type Notifications = {
+  id: string;
   is_seen: boolean;
   notification_type: string;
   description: string;

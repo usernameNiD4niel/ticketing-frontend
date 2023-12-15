@@ -22,6 +22,7 @@ import myTickets from "./myTickets";
 import searchTickets from "./searchTickets";
 import getNotification from "./getNotification";
 import getNotificationCount from "./getNotificationCount";
+import updateNotification from "./updateNotification";
 
 export {
   getChampions,
@@ -48,4 +49,5 @@ export {
   searchTickets,
   getNotification,
   getNotificationCount,
+  updateNotification,
 };

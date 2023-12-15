@@ -1,8 +1,10 @@
 import { Notifications } from "@/constants/types";
 import { cn } from "@/lib/utils";
 import { FaComment } from "react-icons/fa6";
+import { cookies } from "next/headers";
 import { MdAssignmentAdd, MdNotificationsActive } from "react-icons/md";
 import Link from "next/link";
+import { updateNotification } from "@/endpoints";
 
 export default function CardNotification({
   created_at,
@@ -10,6 +12,7 @@ export default function CardNotification({
   description,
   notification_type,
   ticket_id,
+  id,
 }: Notifications) {
   function getIcon() {
     switch (notification_type) {
@@ -22,6 +25,14 @@ export default function CardNotification({
     }
   }
 
+  async function handleNotificationClick() {
+    if (!is_seen) {
+      const token = cookies().get("token")!.value;
+
+      await updateNotification(token, id);
+    }
+  }
+
   return (
     <Link
       className={cn(
@@ -31,6 +42,7 @@ export default function CardNotification({
           : "bg-[#F0EEEE] border border-[#F1F1F1]"
       )}
       href={`/department/it/${ticket_id}?tabName=Notification`}
+      onClick={handleNotificationClick}
     >
       <p className="flex gap-2 flex-col md:flex-row">
         <span className="text-2xl text-[#0964B9]">{getIcon()}</span>

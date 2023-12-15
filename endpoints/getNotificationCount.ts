@@ -8,6 +8,7 @@ export default async function getNotificationCount(token: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      cache: "no-store",
       next: {
         revalidate: 60,
       },
