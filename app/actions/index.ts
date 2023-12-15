@@ -5,6 +5,7 @@ import createUserAction from "./create-user-action";
 import filterTableAssigned from "./filter-table-assigned";
 import searchTicketAction from "./search-ticket-action";
 import updateNotificationAction from "./update-notification-action";
+import updateLocationAction from "./update-location-action";
 
 export {
   postComment,
@@ -14,4 +15,5 @@ export {
   filterTableAssigned,
   searchTicketAction,
   updateNotificationAction,
+  updateLocationAction,
 };

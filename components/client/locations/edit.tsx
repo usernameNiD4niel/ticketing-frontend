@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Locations } from "@/constants/types";
-import updateLocationAction from "@/app/actions/update-location-action";
+import { updateLocationAction } from "@/app/actions";
 import { useToast } from "@/components/ui/use-toast";
 import ScalableDialogBox from "@/components/utils/ScalableDialogBox";
 import { cn } from "@/lib/utils";
@@ -39,6 +39,18 @@ export default function Edit({ locations }: EditProps) {
   });
 
   async function onSubmit(values: z.infer<typeof editSchema>) {
+    console.log(`selected location ::: ${selectedLocation}`);
+    console.log(`updated location ::: ${values.updatedLocation}`);
+
+    if (
+      !selectedLocation ||
+      selectedLocation.trim().length === 0 ||
+      !values.updatedLocation
+    ) {
+      form.setError("updatedLocation", { message: "All fields are required" });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("selectedLocation", selectedLocation);
     formData.append("updatedLocation", values.updatedLocation);
@@ -50,7 +62,8 @@ export default function Edit({ locations }: EditProps) {
         title: "Update Success",
         description: message,
       });
-      form.reset();
+      form.resetField("updatedLocation");
+      setSelectedLocation("");
     } else {
       toast({
         title: "Update Failed",
@@ -84,6 +97,7 @@ export default function Edit({ locations }: EditProps) {
                 negativeText="No"
                 positionText="Yes"
                 data={selectedLocation}
+                setData={setSelectedLocation}
                 key={"ScalableDialogBoxEditLocations"}
               />
             )}

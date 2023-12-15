@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import deleteLocationAction from "@/app/actions/delete-location-action";
 import {
   AlertDialog,
@@ -32,6 +32,7 @@ interface ScalableDialogBoxProps {
     | "link"
     | "noVariant";
   data?: string; // changes this if it's not accurate... but please align the existing caller!
+  setData: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function ScalableDialogBox({
@@ -44,6 +45,7 @@ export default function ScalableDialogBox({
   positionText,
   triggerVariant,
   data,
+  setData,
 }: ScalableDialogBoxProps) {
   const { toast } = useToast();
 
@@ -57,6 +59,7 @@ export default function ScalableDialogBox({
         const { message, success } = await deleteLocationAction(formData);
 
         if (success) {
+          setData("");
           toast({
             title: "Deletion Success",
             description: message,
