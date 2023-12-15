@@ -8,6 +8,9 @@ export default async function getNotification(token: string, email: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: ["get-notification"],
+      },
     }
   );
 

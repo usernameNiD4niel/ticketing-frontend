@@ -89,7 +89,8 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket, id }) => {
         </div>
         <hr className="my-4" />
         {role?.toLowerCase() === "champion" ||
-        role?.toLowerCase() === "catalyst" ? (
+        role?.toLowerCase() === "catalyst" ||
+        role?.toLowerCase() === "supreme" ? (
           <EditCard
             ticket={ticket}
             ticketNumber={`#${ticket.id}`}

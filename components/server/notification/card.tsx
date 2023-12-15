@@ -25,14 +25,6 @@ export default function CardNotification({
     }
   }
 
-  async function handleNotificationClick() {
-    if (!is_seen) {
-      const token = cookies().get("token")!.value;
-
-      await updateNotification(token, id);
-    }
-  }
-
   return (
     <Link
       className={cn(
@@ -41,8 +33,7 @@ export default function CardNotification({
           ? "border border-[#F1F1F1] bg-white"
           : "bg-[#F0EEEE] border border-[#F1F1F1]"
       )}
-      href={`/department/it/${ticket_id}?tabName=Notification`}
-      onClick={handleNotificationClick}
+      href={`/department/it/${ticket_id}?tabName=Notification&id=${id}&isSeen=${is_seen}`}
     >
       <p className="flex gap-2 flex-col md:flex-row">
         <span className="text-2xl text-[#0964B9]">{getIcon()}</span>

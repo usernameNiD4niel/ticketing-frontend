@@ -38,6 +38,7 @@ export default async function NotificationPage() {
               notification_type={notification.notification_type}
               ticket_id={notification.ticket_id}
               key={notification.created_at}
+              id={notification.id}
             />
           ))
         ) : (

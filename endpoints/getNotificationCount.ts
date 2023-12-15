@@ -10,7 +10,7 @@ export default async function getNotificationCount(token: string) {
       },
       cache: "no-store",
       next: {
-        revalidate: 60,
+        tags: ["get-notification-count"],
       },
     }
   );

@@ -4,6 +4,7 @@ import postTicket from "./post-ticket";
 import createUserAction from "./create-user-action";
 import filterTableAssigned from "./filter-table-assigned";
 import searchTicketAction from "./search-ticket-action";
+import updateNotificationAction from "./update-notification-action";
 
 export {
   postComment,
@@ -12,4 +13,5 @@ export {
   createUserAction,
   filterTableAssigned,
   searchTicketAction,
+  updateNotificationAction,
 };
