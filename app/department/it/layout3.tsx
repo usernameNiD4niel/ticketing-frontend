@@ -39,7 +39,8 @@ const HelperLayout = ({
           my_assigned_tickets={my_assigned_tickets}
           count={count}
         >
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          {children}
+          {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
         </MainContent>
       </main>
       <footer className="fixed bottom-0 left-0 p-4 z-10">

@@ -1,27 +1,21 @@
-"use client";
 import React, { FC, useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import {
-  MdAccountBox,
-  MdMarkEmailUnread,
-  MdMonitorHeart,
-} from "react-icons/md";
-import { BsTicketFill } from "react-icons/bs";
-import { IoIosCreate, IoMdNotifications } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
 import { AvailableTabs } from "@/constants/enums";
 import Cookies from "js-cookie";
-import {
-  AiFillFileExclamation,
-  AiOutlineDoubleLeft,
-  AiOutlineDoubleRight,
-} from "react-icons/ai";
-import { RiPassPendingFill } from "react-icons/ri";
-import { FaLocationDot } from "react-icons/fa6";
 import DialogBoxAlert from "../server/logout/DialogBoxAlert";
+import {
+  MdAccountBox,
+  MdMarkEmailUnread,
+  MdMonitorHeart,
+} from "react-icons/md";
+import { RiPassPendingFill } from "react-icons/ri";
+import { IoIosCreate, IoMdNotifications } from "react-icons/io";
+import { AiFillFileExclamation } from "react-icons/ai";
+import { FaLocationDot } from "react-icons/fa6";
 
 type MobileDrawerProps = {
   isDrawerOpen: boolean;
@@ -45,18 +39,19 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   };
 
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
-  const role = Cookies.get("it_access_level");
+  const role = Cookies.get("it_access_level")?.toLowerCase();
 
-  const [isRequestor, setIsRequestor] = useState(true);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    if (
-      role &&
-      (role.toLowerCase() === "requestor" || role.toLowerCase() === "unset")
-    ) {
-      setIsRequestor(true);
-    } else {
-      setIsRequestor(false);
+    if (role) {
+      if (role === "requestor" || role === "unset") {
+        setUserRole("requestor");
+      } else if (role === "supreme") {
+        setUserRole("supreme");
+      } else {
+        setUserRole(role);
+      }
     }
   }, []);
 
@@ -112,7 +107,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </span>
             {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
           </Link>
-          {!isRequestor && role?.toLowerCase() !== "champion" ? (
+          {userRole === "champion" || userRole === "supreme" ? (
             <Link
               className={cn(
                 "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
@@ -167,51 +162,56 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
               )}
             </Link>
           )}
-          {!isRequestor && (
-            <Link
-              as={"/department/it/unhandled-tickets"}
-              href="/department/it/unhandled-tickets"
-              className={cn(
-                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
-                activeTab === AvailableTabs["Unhandled Tickets"] &&
-                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                !isDrawerOpen ? "justify-center items-center" : "justify-start"
-              )}
-            >
-              <span>
-                <AiFillFileExclamation />
-              </span>
-              {isDrawerOpen ? (
-                <span className="text-sm">
-                  Unhandled Tickets
-                  <span className="text-xs ms-2 font-bold text-red-500">
+          {(userRole === "champion" || userRole === "supreme") && (
+            <>
+              <Link
+                as={"/department/it/unhandled-tickets"}
+                href="/department/it/unhandled-tickets"
+                className={cn(
+                  "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
+                  activeTab === AvailableTabs["Unhandled Tickets"] &&
+                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                  !isDrawerOpen
+                    ? "justify-center items-center"
+                    : "justify-start"
+                )}
+              >
+                <span>
+                  <AiFillFileExclamation />
+                </span>
+                {isDrawerOpen ? (
+                  <span className="text-sm">
+                    Unhandled Tickets
+                    <span className="text-xs ms-2 font-bold text-red-500">
+                      {unhandledTicketsCount !== 0 && unhandledTicketsCount}
+                    </span>
+                  </span>
+                ) : (
+                  <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
                     {unhandledTicketsCount !== 0 && unhandledTicketsCount}
                   </span>
+                )}
+              </Link>
+              <Link
+                as={"/department/it/overview"}
+                href="/department/it/overview"
+                className={cn(
+                  "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                  activeTab === AvailableTabs["Reports"] &&
+                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                  !isDrawerOpen
+                    ? "justify-center items-center"
+                    : "justify-start"
+                )}
+              >
+                <span>
+                  <MdMonitorHeart />
                 </span>
-              ) : (
-                <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
-                  {unhandledTicketsCount !== 0 && unhandledTicketsCount}
-                </span>
-              )}
-            </Link>
+                {isDrawerOpen && <span className="text-sm">Reports</span>}
+              </Link>
+            </>
           )}
-          {!isRequestor && (
-            <Link
-              as={"/department/it/overview"}
-              href="/department/it/overview"
-              className={cn(
-                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                activeTab === AvailableTabs["Reports"] &&
-                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                !isDrawerOpen ? "justify-center items-center" : "justify-start"
-              )}
-            >
-              <span>
-                <MdMonitorHeart />
-              </span>
-              {isDrawerOpen && <span className="text-sm">Reports</span>}
-            </Link>
-          )}
+
           <Link
             className={cn(
               "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
@@ -223,11 +223,12 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             href="/department/it/accounts/recent"
           >
             <span>
+              {" "}
               <MdAccountBox />
             </span>
             {isDrawerOpen && <span className="text-sm">Accounts</span>}
           </Link>
-          {role && role.toUpperCase() === "SUPREME" && (
+          {userRole === "supreme" && (
             <>
               <Link
                 className={cn(
@@ -301,7 +302,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         variant="outline"
         onClick={handleDrawerOpen}
       >
-        {isDrawerOpen ? <AiOutlineDoubleLeft /> : <AiOutlineDoubleRight />}
+        {/* {isDrawerOpen ? <AiOutlineDoubleLeft /> : <AiOutlineDoubleRight />} */}
       </Button>
     </aside>
   );

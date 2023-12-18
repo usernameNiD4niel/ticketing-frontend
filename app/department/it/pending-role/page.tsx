@@ -3,8 +3,10 @@ import { cookies } from "next/headers";
 import { AvailableTabs } from "@/constants/enums";
 import TabMutator from "@/components/helper/tab-mutator";
 import Content from "@/components/client/department-role/content";
+import TableData from "@/components/client/pending-overview/table-data";
+import column from "@/components/client/pending-overview/column";
 
-const PendingRole = async () => {
+export default async function PendingRole() {
   const token = cookies().get("token")?.value;
 
   const users = await getPendingDepartmentRole(token!);
@@ -39,13 +41,12 @@ const PendingRole = async () => {
 
   return (
     <>
-      <TabMutator
+      {/* <TabMutator
         availableTab={AvailableTabs["Departments Role"]}
         key={"PendingRolePage"}
-      />
+      /> */}
       {body()}
+      {/* <TableData columns={column} data={users} /> */}
     </>
   );
-};
-
-export default PendingRole;
+}
