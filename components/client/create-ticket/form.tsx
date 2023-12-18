@@ -26,6 +26,7 @@ export default function CreateTicketForm({
   const [locationError, setLocationError] = useState("");
 
   const defaultContact = localStorage.getItem("contact")?.toString() || "";
+  const defaultRequestor = localStorage.getItem("requestor")?.toString() || "";
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
@@ -45,6 +46,11 @@ export default function CreateTicketForm({
       localStorage.setItem(
         "contact",
         formData.get("contact")?.toString() || ""
+      );
+
+      localStorage.setItem(
+        "requestor",
+        formData.get("requestor")?.toString() || ""
       );
 
       toast({
@@ -81,6 +87,7 @@ export default function CreateTicketForm({
           <span className="text-sm">Requestor</span>
           <Input
             placeholder="Enter your temporary name"
+            defaultValue={defaultRequestor}
             required
             name="requestor"
           />
