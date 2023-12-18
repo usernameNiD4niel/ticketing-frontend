@@ -30,8 +30,8 @@ export default function CardNotification({
       className={cn(
         "w-full flex flex-col md:flex-row md:justify-between gap-y-2 md:items-center p-6 rounded-md cursor-pointer",
         is_seen
-          ? "border border-[#F1F1F1] bg-white"
-          : "bg-[#F0EEEE] border border-[#F1F1F1]"
+          ? "border border-[#F1F1F1] bg-white dark:bg-[#1A1919] dark:border-[#1A1919]"
+          : "bg-[#F0EEEE] border border-[#F1F1F1] dark:bg-[#12344F] dark:border-[#12344F]"
       )}
       href={`/department/it/${ticket_id}?tabName=Notification&id=${id}&isSeen=${is_seen}`}
     >
