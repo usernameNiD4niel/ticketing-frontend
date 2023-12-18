@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { CommentProps } from "@/constants/types";
 import { FC } from "react";
+import HoverName from "./hover-name";
 
 const Comment: FC<CommentProps> = ({
   comment,
@@ -40,9 +41,10 @@ const Comment: FC<CommentProps> = ({
           >
             {access_level.toLowerCase()}
           </Badge>
-          <h4 className="font-bold text-sm">
+          <HoverName name={`${name}✔ - ${department}`} />
+          {/* <h4 className="font-bold text-sm">
             {name} ✔ - ({department})
-          </h4>
+          </h4> */}
           <p className="text-sm">{comment}</p>
           <div className="flex items-center gap-x-2 mt-2">
             <p className="text-gray-400 text-xs">{date_commented}</p>

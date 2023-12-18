@@ -132,7 +132,9 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
       <CustomSelect
         label="Priority"
         selectItems={["LOW", "MEDIUM", "HIGH"]}
-        selectedState={priority.toUpperCase()}
+        selectedState={
+          priority.toUpperCase() === "UNSET" ? "LOW" : priority.toUpperCase()
+        }
         isFullWidth={true}
       />
 
