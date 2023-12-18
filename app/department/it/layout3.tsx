@@ -43,7 +43,7 @@ const HelperLayout = ({
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </MainContent>
       </main>
-      <footer className="fixed bottom-0 left-0 p-4 z-10">
+      <footer className="fixed bottom-0 md:bottom-12 left-0 p-4 z-10">
         <ModeToggle />
       </footer>
     </>
