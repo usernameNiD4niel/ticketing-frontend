@@ -41,12 +41,12 @@ export default async function PendingRole() {
 
   return (
     <>
-      {/* <TabMutator
+      <TabMutator
         availableTab={AvailableTabs["Departments Role"]}
         key={"PendingRolePage"}
-      /> */}
-      {body()}
-      {/* <TableData columns={column} data={users} /> */}
+      />
+      {/* {body()} */}
+      <TableData columns={column} data={users} />
     </>
   );
 }

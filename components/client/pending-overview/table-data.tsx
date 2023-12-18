@@ -21,9 +21,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import TableDataPagination from "./table-data-pagination";
+import { UserProps } from "@/constants/types";
+import SelectCustom from "@/components/utils/SelectCustom";
+import { useToast } from "@/components/ui/use-toast";
+import updateDepartmentRole from "@/app/actions/update-department-role";
 
 interface TableDataProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,6 +43,8 @@ export default function TableData<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [rowSelection, setRowSelection] = useState({});
+
+  const { toast } = useToast();
 
   const table = useReactTable({
     data,
@@ -57,9 +63,41 @@ export default function TableData<TData, TValue>({
     },
   });
 
+  async function handleFormAction(formData: FormData) {
+    const role = formData.get("role")?.toString();
+    if (!role) {
+      toast({
+        title: "Failed to assign",
+        description: "Role is a required field",
+      });
+      return;
+    }
+
+    const ids = [];
+
+    for (const selectedRows of table.getSelectedRowModel().rows) {
+      const original = selectedRows.original as UserProps;
+      ids.push(original.id);
+    }
+
+    const departmentRole = await updateDepartmentRole(ids, formData);
+
+    if (departmentRole.success) {
+      toast({
+        title: "Successfully Assigned",
+        description: "You have successfully assigned a role",
+      });
+    } else {
+      toast({
+        title: "Failed Assigned",
+        description: "Failed to assign a role, please try again",
+      });
+    }
+  }
+
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 justify-between">
         <Input
           placeholder="Filter name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -68,6 +106,28 @@ export default function TableData<TData, TValue>({
           }
           className="max-w-sm"
         />
+        {JSON.stringify(rowSelection) !== "{}" && (
+          //   <Button
+          //     type="button"
+          //     onClick={() => {
+          //       for (const selected of table.getSelectedRowModel().rows) {
+          //         const selects: UserProps = selected.original as UserProps;
+          //         console.log(selects.id);
+          //       }
+          //     }}
+          //   >
+          //     Assign
+          //   </Button>
+          <form action={handleFormAction} className="flex gap-2">
+            <SelectCustom
+              items={["Requestor", "Champion", "Catalyst"]}
+              name="role"
+              placeholder="Assign a role"
+              key={"pending-role-select-custome"}
+            />
+            <Button>Submit</Button>
+          </form>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -118,10 +178,6 @@ export default function TableData<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <TableDataPagination table={table} />
       <div className="flex items-center justify-end space-x-2 py-4">

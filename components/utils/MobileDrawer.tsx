@@ -14,7 +14,11 @@ import {
 } from "react-icons/md";
 import { RiPassPendingFill } from "react-icons/ri";
 import { IoIosCreate, IoMdNotifications } from "react-icons/io";
-import { AiFillFileExclamation } from "react-icons/ai";
+import {
+  AiFillFileExclamation,
+  AiOutlineDoubleLeft,
+  AiOutlineDoubleRight,
+} from "react-icons/ai";
 import { FaLocationDot } from "react-icons/fa6";
 
 type MobileDrawerProps = {
@@ -302,7 +306,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         variant="outline"
         onClick={handleDrawerOpen}
       >
-        {/* {isDrawerOpen ? <AiOutlineDoubleLeft /> : <AiOutlineDoubleRight />} */}
+        {isDrawerOpen ? <AiOutlineDoubleLeft /> : <AiOutlineDoubleRight />}
       </Button>
     </aside>
   );

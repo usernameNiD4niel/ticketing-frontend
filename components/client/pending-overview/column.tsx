@@ -37,11 +37,11 @@ const column: ColumnDef<UserProps>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           #
-          <ArrowUpDown className=" h-4 w-4" />
+          <ArrowUpDown className=" h-4 w-4 ml-2" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-2">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="ml-5">{row.getValue("id")}</div>,
   },
   {
     accessorKey: "department",
@@ -52,11 +52,11 @@ const column: ColumnDef<UserProps>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Department
-          <ArrowUpDown className="h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4 ml-2" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-2">{row.getValue("department")}</div>,
+    cell: ({ row }) => <div className="ml-5">{row.getValue("department")}</div>,
   },
   {
     accessorKey: "name",
@@ -67,11 +67,11 @@ const column: ColumnDef<UserProps>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          <ArrowUpDown className="h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4 ml-2" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-2">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="ml-5">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "created_at",
@@ -82,11 +82,11 @@ const column: ColumnDef<UserProps>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created Date
-          <ArrowUpDown className="h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4 ml-2" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-2">{row.getValue("created_at")}</div>,
+    cell: ({ row }) => <div className="ml-5">{row.getValue("created_at")}</div>,
   },
   {
     accessorKey: "created_time",
@@ -97,12 +97,12 @@ const column: ColumnDef<UserProps>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created Time
-          <ArrowUpDown className="h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4 ml-2" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="ml-2">{row.getValue("created_time")}</div>
+      <div className="ml-5">{row.getValue("created_time")}</div>
     ),
   },
 ];
