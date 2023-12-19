@@ -36,14 +36,16 @@ export default function CreateTicketForm({
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
-    if (!name) {
-      setIsLoadingButton(false);
-      toast({
-        title: "Validation Failed",
-        description: "Requestor field is a required field",
-        duration: 3000,
-      });
-      return;
+    if (accessLevel !== "requestor" && accessLevel !== "unset") {
+      if (!name) {
+        setIsLoadingButton(false);
+        toast({
+          title: "Validation Failed",
+          description: "Requestor field is a required field",
+          duration: 3000,
+        });
+        return;
+      }
     }
 
     const location = localStorage.getItem("location")?.toString();
@@ -65,7 +67,9 @@ export default function CreateTicketForm({
         formData.get("contact")?.toString() || ""
       );
 
-      localStorage.setItem("requestor", name || "");
+      if (accessLevel !== "requestor" && accessLevel !== "unset") {
+        localStorage.setItem("requestor", name || "");
+      }
 
       toast({
         title: "Ticket posting sucess",
