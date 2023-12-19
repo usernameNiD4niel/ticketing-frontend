@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { postTicket } from "@/app/actions";
 import { useRouter } from "next/navigation";
@@ -27,12 +27,18 @@ export default function CreateTicketForm({
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const router = useRouter();
 
-  const [name, setName] = useState("");
+  const defaultContact = localStorage.getItem("contact")?.toString() || "";
+  const defaultRequestor = localStorage.getItem("requestor")?.toString() || "";
+
+  const [name, setName] = useState(defaultRequestor);
 
   const [locationError, setLocationError] = useState("");
 
-  const defaultContact = localStorage.getItem("contact")?.toString() || "";
-  const defaultRequestor = localStorage.getItem("requestor")?.toString() || "";
+  useEffect(() => {
+    if (accessLevel !== "requestor" && accessLevel !== "unset") {
+      setName(defaultRequestor);
+    }
+  }, []);
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
