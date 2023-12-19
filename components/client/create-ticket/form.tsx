@@ -55,6 +55,7 @@ export default function CreateTicketForm({
     }
 
     formData.append("location", location);
+    formData.append("requestor", name);
 
     const { success, message, id } = await postTicket(formData);
 

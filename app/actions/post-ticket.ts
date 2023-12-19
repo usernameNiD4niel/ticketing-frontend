@@ -23,6 +23,8 @@ export default async function postTicket(formData: FormData) {
     request.requestor = requestor;
   }
 
+  console.log(JSON.stringify(request, null, 2));
+
   const { message, id } = await postTroubleTicket(token!, request);
 
   if (message) {
