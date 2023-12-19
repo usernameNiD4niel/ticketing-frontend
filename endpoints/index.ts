@@ -23,6 +23,7 @@ import searchTickets from "./searchTickets";
 import getNotification from "./getNotification";
 import getNotificationCount from "./getNotificationCount";
 import updateNotification from "./updateNotification";
+import getSortedTable from "./getSortedTable";
 
 export {
   getChampions,
@@ -50,4 +51,5 @@ export {
   getNotification,
   getNotificationCount,
   updateNotification,
+  getSortedTable,
 };
