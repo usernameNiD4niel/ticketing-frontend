@@ -1,7 +1,7 @@
 import CreateTicketForm from "@/components/client/create-ticket/form";
 import TabMutator from "@/components/helper/tab-mutator";
 import { AvailableTabs } from "@/constants/enums";
-import { getLocations } from "@/endpoints";
+import { getLocations, getUsersName } from "@/endpoints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -13,6 +13,7 @@ const CreateTicket = async () => {
     redirect("/login");
   }
   const locations = (await getLocations(token, true)) as string[];
+  const users = await getUsersName(token);
 
   return (
     <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
@@ -20,6 +21,7 @@ const CreateTicket = async () => {
       <CreateTicketForm
         locations={locations}
         accessLevel={accessLevel.toLowerCase()}
+        users={users}
       />
     </div>
   );

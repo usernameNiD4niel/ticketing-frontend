@@ -23,7 +23,7 @@ type FilterRequestHelper = {
 
 const getAllTickets = async (token: string) => {
   const response: FilterRequestHelper = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets?isViewing=true`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -99,6 +99,8 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
 
   const handleViewAll = async () => {
     const data_ = await getAllTickets(token!);
+
+    console.log(`tickets data ::: ${JSON.stringify(data_, null, 2)}`);
 
     setData(data_);
     setIsFiltering(true);

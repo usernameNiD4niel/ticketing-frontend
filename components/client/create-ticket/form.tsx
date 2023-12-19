@@ -9,19 +9,25 @@ import { LoadingButton } from "@/components/utils/LoadingButton";
 import { postTicket } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import CreateTicketCombo from "@/components/utils/CreateTicketCombo";
+import ScalableCombobox from "@/components/utils/NamesCombobox";
+import NamesCombobox from "@/components/utils/NamesCombobox";
 
 interface CreateTicketFormProps {
   locations: string[];
   accessLevel: string;
+  users: string[];
 }
 
 export default function CreateTicketForm({
   locations,
   accessLevel,
+  users,
 }: CreateTicketFormProps) {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const router = useRouter();
+
+  const [name, setName] = useState("");
 
   const [locationError, setLocationError] = useState("");
 
@@ -30,6 +36,16 @@ export default function CreateTicketForm({
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
+    if (!name) {
+      setIsLoadingButton(false);
+      toast({
+        title: "Validation Failed",
+        description: "Requestor field is a required field",
+        duration: 3000,
+      });
+      return;
+    }
+
     const location = localStorage.getItem("location")?.toString();
 
     if (!location) {
@@ -48,10 +64,7 @@ export default function CreateTicketForm({
         formData.get("contact")?.toString() || ""
       );
 
-      localStorage.setItem(
-        "requestor",
-        formData.get("requestor")?.toString() || ""
-      );
+      localStorage.setItem("requestor", name || "");
 
       toast({
         title: "Ticket posting sucess",
@@ -85,12 +98,7 @@ export default function CreateTicketForm({
       {accessLevel !== "requestor" && accessLevel !== "unset" && (
         <Label className="flex flex-col gap-y-2">
           <span className="text-sm">Requestor</span>
-          <Input
-            placeholder="Enter your temporary name"
-            defaultValue={defaultRequestor}
-            required
-            name="requestor"
-          />
+          <NamesCombobox setState={setName} state={name} users={users} />
         </Label>
       )}
 
