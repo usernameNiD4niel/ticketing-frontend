@@ -23,7 +23,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./data-table-pagination";
 import { useRouter } from "next/navigation";
 import { AssignedTickets } from "@/constants/types";

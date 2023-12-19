@@ -1,4 +1,4 @@
-import { AssignedPaginatedType, AssignedTickets } from "@/constants/types";
+import { AssignedPaginatedType } from "@/constants/types";
 
 export default async function getUnHandledTickets(token: string, page: number) {
   const response = await fetch(
@@ -7,6 +7,9 @@ export default async function getUnHandledTickets(token: string, page: number) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+      },
+      next: {
+        tags: ["dynamic-table-pagination"],
       },
     }
   );

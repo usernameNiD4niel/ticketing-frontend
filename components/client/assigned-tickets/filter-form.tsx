@@ -1,21 +1,39 @@
+"use client";
+
 import { filterTableAssigned } from "@/app/actions";
-import DatePicker from "@/components/helper/date-picker";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import SelectCustom from "@/components/utils/SelectCustom";
 import { AssignedTickets } from "@/constants/types";
 import { PHILIPPINE_TIME_ZONE } from "@/constants/variables";
 import { format } from "date-fns-tz";
 import Cookies from "js-cookie";
 import { FC, useState } from "react";
-import DropdownStatus from "../feed/dropdown-status";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "@/components/ui/use-toast";
 
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
   module: string;
 };
+
+const FormSchema = z.object({
+  sort_by: z.enum(["ticket_d", "status", "created_at", "subject", "priority"], {
+    required_error: "You need to select a column to sort.",
+  }),
+});
 
 const getAllTickets = async (token: string) => {
   const response = await fetch(
@@ -99,61 +117,87 @@ const FilterForm: FC<FilterFormProps> = ({
     setIsFiltering(true);
   };
 
-  const handleViewAll = async () => {
-    const data_ = await getAllTickets(token!);
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
 
-    setData(data_);
-    setIsFiltering(true);
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+  }
+
+  const handleViewAll = async () => {
+    //TODO revalidate the table pagination
+    // TODO set the filtering to false
+
+    // const data_ = await getAllTickets(token!);
+
+    console.log(`the module ::: ${module}`);
+
+    // setData(data_);
+    setIsFiltering(false);
   };
 
   return (
-    <div className="grid gap-4">
-      <div className="space-y-2">
-        <h4 className="font-medium leading-none">Filter Ticket</h4>
-        <p className="text-sm text-muted-foreground">
-          Press enter or click <span className="font-semibold">Filter</span> to
-          take effect your filtering
-        </p>
-      </div>
-      <form className="grid gap-2" action={handleFormAction}>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="priority">Priority</Label>
-
-          <DropdownStatus
-            filter_by="priority"
-            items={["LOW", "MEDIUM", "HIGH"]}
-          />
-        </div>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="status">Status</Label>
-          <DropdownStatus
-            filter_by="status"
-            items={["OPEN", "CLOSED", "RE-OPENED", "EXPIRED", "RESOLVED"]}
-          />
-        </div>
-        <div className="w-full">
-          <Label htmlFor="status">
-            Date <span className="text-gray-500">eg. 11-01-2023</span>
-          </Label>
-          <DatePicker setDate={setDate} date={date} />
-        </div>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="sort_by">Sort By</Label>
-          <SelectCustom
-            items={["Date Created", "Ticket Number", "Status", "Priority"]}
-            name="sort_by"
-            placeholder="Sort column"
-            key={"SelectCustomFilterFormAssignedTickets"}
-          />
-        </div>
-        <div className="w-full mt-8 flex flex-col gap-y-3">
-          <Button>Filter</Button>
-          <Button variant="ghost" type="button" onClick={handleViewAll}>
-            View All
-          </Button>
-        </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="sort_by"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>Sort table by...</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-col space-y-1"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="ticket_id" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Ticket ID</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="status" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Status</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="created_at" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Created Date</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="subject" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Subject</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="priority" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Priority</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
       </form>
-    </div>
+    </Form>
   );
 };
 

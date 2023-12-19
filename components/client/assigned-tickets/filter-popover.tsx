@@ -4,10 +4,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { AiFillFilter } from "react-icons/ai";
 import { FC } from "react";
 import { AssignedTickets } from "@/constants/types";
 import FilterForm from "./filter-form";
+import { MdOutlineSort } from "react-icons/md";
+import { CgSortAz } from "react-icons/cg";
 
 type FilterPopoverProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
@@ -23,11 +24,11 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" type="button">
-          <AiFillFilter />
+        <Button variant="outline" type="button" className="text-2xl">
+          <CgSortAz />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-[190px]">
         <FilterForm
           setData={setData}
           setIsFiltering={setIsFiltering}
