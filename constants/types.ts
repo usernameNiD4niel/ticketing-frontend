@@ -116,6 +116,7 @@ export type CommentProps = {
   date_commented: string;
   time_commented: string;
   department: string;
+  user_joined_on: string;
 };
 
 export type UsersType = {
@@ -153,6 +154,7 @@ export type CommentInfoProps = {
   comment: string;
   name: string;
   department: string;
+  user_joined_on: string;
 };
 
 export type ExcelHeaders = {

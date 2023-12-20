@@ -10,6 +10,7 @@ const Comment: FC<CommentProps> = ({
   name,
   access_level,
   time_commented,
+  user_joined_on,
 }) => {
   const getVariant = (
     role: string
@@ -35,13 +36,19 @@ const Comment: FC<CommentProps> = ({
       <hr />
       <div className="flex items-center justify-center">
         <div className="w-full">
-          <Badge
-            variant={getVariant(access_level.toLowerCase())}
-            className="text-xs font-light"
-          >
-            {access_level.toLowerCase()}
-          </Badge>
-          <HoverName name={`${name}✔ - ${department}`} />
+          <div>
+            <Badge
+              variant={getVariant(access_level.toLowerCase())}
+              className="text-xs font-light"
+            >
+              {access_level.toLowerCase()}
+            </Badge>
+          </div>
+          <HoverName
+            name={name}
+            department={department}
+            joinedOn={user_joined_on}
+          />
           {/* <h4 className="font-bold text-sm">
             {name} ✔ - ({department})
           </h4> */}
