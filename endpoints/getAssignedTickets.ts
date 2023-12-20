@@ -1,8 +1,9 @@
-import { AssignedPaginatedType } from "@/constants/types";
+import { AssignedPaginatedType, AssignedTickets } from "@/constants/types";
 
 export default async function getAssignedTickets(token: string, page: number) {
+  //api/all-tickets/conditional?isPreviewing=true&tab=assigned_tickets
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/assigned/page?page=${page}&sortedBy=created_at&ordering=desc`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/conditional?isPreviewing=true&tab=assigned_tickets&shouldPaginate=true&page=${page}`,
     {
       headers: {
         "Content-Type": "application/json",

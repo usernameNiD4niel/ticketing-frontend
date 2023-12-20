@@ -21,6 +21,7 @@ export default async function Page() {
           module="assigned_tickets"
           next_page_url={tickets.next_page_url}
           url="all-tickets/assigned"
+          tab="assigned_tickets"
           key={"AssignedTicketsDataTable"}
         />
       </section>

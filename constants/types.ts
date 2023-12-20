@@ -186,8 +186,8 @@ export type PaginatedType = {
 
 export type AssignedPaginatedType = {
   data: AssignedTickets[];
-  next_page_url: number | null;
-  prev_page_url: number | null;
+  next_page_url: string | null;
+  prev_page_url: string | null;
 };
 
 export type MenuTypes = {

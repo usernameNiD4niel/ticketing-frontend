@@ -7,20 +7,24 @@ import { useEffect, useState } from "react";
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
-  next_page_url: number | null;
+  next_page_url: string | null;
   isFiltering: boolean;
+  tab: string;
 }
 
 async function getData(
   token: string,
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>,
-  nextPageUrl: number | null,
-  setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-  setPreviousPageUrl: React.Dispatch<React.SetStateAction<number | null>>
+  nextPageUrl: string | null,
+  setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
+  setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
+  tab: string
 ) {
   // Fetch data from your API here.
   if (nextPageUrl) {
-    const url = `${nextPageUrl}&sortedBy=created_at&ordering=desc`;
+    const url = `${nextPageUrl}&isPreviewing=true&tab=${tab}&shouldPaginate=true`;
+
+    //api/all-tickets/conditional?isPreviewing=true&tab=assigned_tickets&shouldPaginate=true&page=${page}
     const data = await fetch(`${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,13 +49,15 @@ async function getData(
 async function getPrevious(
   token: string,
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>,
-  previousPageUrl: number | null,
-  setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-  setPreviousPageUrl: React.Dispatch<React.SetStateAction<number | null>>
+  previousPageUrl: string | null,
+  setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
+  setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
+  tab: string
 ) {
   // Fetch data from your API here.
   if (previousPageUrl) {
-    const url = `${previousPageUrl}&sortedBy=created_at&ordering=desc`;
+    //isPreviewing=true&tab=assigned_tickets&shouldPaginate=true&page=${page}
+    const url = `${previousPageUrl}&isPreviewing=true&tab=${tab}&shouldPaginate=true`;
     const data = await fetch(`${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -78,15 +84,17 @@ export function DataTablePagination<TData>({
   next_page_url,
   setData,
   isFiltering,
+  tab,
 }: DataTablePaginationProps<TData>) {
-  const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
-  const [previousPageUrl, setPreviousPageUrl] = useState<number | null>(null);
+  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+  const [previousPageUrl, setPreviousPageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (next_page_url) {
       setNextPageUrl(next_page_url);
     }
   }, [next_page_url]);
+
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <Button
@@ -99,7 +107,8 @@ export function DataTablePagination<TData>({
             setData,
             previousPageUrl,
             setNextPageUrl,
-            setPreviousPageUrl
+            setPreviousPageUrl,
+            tab
           );
           table.previousPage();
         }}
@@ -119,7 +128,8 @@ export function DataTablePagination<TData>({
               setData,
               nextPageUrl,
               setNextPageUrl,
-              setPreviousPageUrl
+              setPreviousPageUrl,
+              tab
             );
           }
           table.nextPage();

@@ -9,7 +9,7 @@ const UnhandledTickets = async () => {
   const token = cookies().get("token")?.value;
   const role = cookies().get("it_access_level")?.value;
 
-  const unhandledTickets = await getUnHandledTickets(token!, 1);
+  const unhandledTickets = await getUnHandledTickets(token!);
 
   return (
     <>
@@ -19,9 +19,10 @@ const UnhandledTickets = async () => {
           columns={columns}
           data_={unhandledTickets.data}
           module="unhandled_tickets"
-          next_page_url={unhandledTickets.next_page_url}
           isAssignedTickets={false}
           url="unhandled-tickets"
+          next_page_url={unhandledTickets.next_page_url}
+          tab="unhandled_tickets"
           key={"UnhandledTicketsDataTable"}
         />
       </section>

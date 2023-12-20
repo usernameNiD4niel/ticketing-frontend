@@ -111,7 +111,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </span>
             {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
           </Link>
-          {userRole === "champion" || userRole === "supreme" ? (
+          {userRole === "catalyst" || userRole === "supreme" ? (
             <Link
               className={cn(
                 "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",

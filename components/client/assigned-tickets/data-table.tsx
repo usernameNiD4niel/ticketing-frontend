@@ -35,10 +35,11 @@ import SearchTable from "@/app/department/it/table/search";
 interface DataTableProps<TValue> {
   columns: ColumnDef<AssignedTickets, TValue>[];
   data_: AssignedTickets[];
-  next_page_url: number | null;
+  next_page_url: string | null;
   isAssignedTickets: boolean;
   url: string;
   module: string;
+  tab: string;
 }
 
 export function DataTable<TValue>({
@@ -47,6 +48,7 @@ export function DataTable<TValue>({
   next_page_url,
   url,
   module,
+  tab,
   isAssignedTickets,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -207,6 +209,7 @@ export function DataTable<TValue>({
           table={table}
           next_page_url={next_page_url}
           isFiltering={isFiltering}
+          tab={tab}
         />
       )}
     </div>
