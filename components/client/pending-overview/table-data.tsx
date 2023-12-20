@@ -107,17 +107,6 @@ export default function TableData<TData, TValue>({
           className="max-w-sm"
         />
         {JSON.stringify(rowSelection) !== "{}" && (
-          //   <Button
-          //     type="button"
-          //     onClick={() => {
-          //       for (const selected of table.getSelectedRowModel().rows) {
-          //         const selects: UserProps = selected.original as UserProps;
-          //         console.log(selects.id);
-          //       }
-          //     }}
-          //   >
-          //     Assign
-          //   </Button>
           <form action={handleFormAction} className="flex gap-2">
             <SelectCustom
               items={["Requestor", "Champion", "Catalyst"]}
