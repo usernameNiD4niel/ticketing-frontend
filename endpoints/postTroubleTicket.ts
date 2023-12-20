@@ -4,6 +4,14 @@ export default async function postTroubleTicket(
   token: string,
   data: PostTicketTypes
 ) {
+  if (data.requestor) {
+    let requestor = "";
+    for (const name of data.requestor.split(" ")) {
+      requestor += `${name.substring(0, 1).toUpperCase()}${name.substring(1)} `;
+    }
+    data.requestor = requestor.trim();
+  }
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets`,
     {
