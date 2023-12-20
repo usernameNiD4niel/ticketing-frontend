@@ -7,7 +7,20 @@ type ResponseHelper = {
   hr_access_level: string;
 };
 
+function getFormattedName(name: string) {
+  const splittedName = name.split(" ");
+
+  let newString = "";
+  for (const name_ of splittedName) {
+    newString += name_.charAt(0).toUpperCase() + name_.substring(1) + " ";
+  }
+
+  return newString.trim();
+}
+
 export default async function createUser(data: CreateUserType) {
+  data.name = getFormattedName(data.name);
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/register`,
     {

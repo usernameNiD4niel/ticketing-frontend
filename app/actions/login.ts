@@ -4,7 +4,6 @@ import { Login } from "@/constants/types";
 import { loginUser } from "@/endpoints";
 import { cookies } from "next/headers";
 
-// ! use a signal condition for posting since we're using zod for validation
 export default async function login(formData: FormData) {
   const postData: Login = {
     email: formData.get("email")!.toString(),

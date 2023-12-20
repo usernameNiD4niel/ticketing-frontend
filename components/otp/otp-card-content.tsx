@@ -85,7 +85,7 @@ export default function OtpCardContent() {
           description: "You have successfully created your account!",
           duration: 3000,
         });
-        router.push("/");
+        router.push("http://10.10.1.120:3000");
       } else {
         setError(response.message);
         setIsLoadingButton(false);

@@ -3,6 +3,17 @@ import { PostTicketTypes } from "@/constants/types";
 import { postTroubleTicket } from "@/endpoints";
 import { cookies } from "next/headers";
 
+function getFormattedName(name: string) {
+  const splittedName = name.split(" ");
+
+  let newString = "";
+  for (const name_ of splittedName) {
+    newString += name_.charAt(0).toUpperCase() + name_.substring(1) + " ";
+  }
+
+  return newString.trim();
+}
+
 export default async function postTicket(formData: FormData) {
   const token = cookies().get("token")?.value;
 
@@ -20,7 +31,7 @@ export default async function postTicket(formData: FormData) {
   };
 
   if (requestor) {
-    request.requestor = requestor;
+    request.requestor = getFormattedName(requestor);
   }
 
   console.log(JSON.stringify(request, null, 2));
