@@ -284,3 +284,8 @@ export type Notifications = {
   created_at: string;
   ticket_id: string;
 };
+
+export type UpdateNotification = {
+  operation: string;
+  unseenNotifIds: string[];
+};

@@ -15,13 +15,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IoIosOptions } from "react-icons/io";
 import { Notifications } from "@/constants/types";
-import { notificationFilterAction } from "@/app/actions";
+import {
+  notificationFilterAction,
+  updateNotificationSeenAction,
+} from "@/app/actions";
 
 interface FilterDropdownProps {
+  notif: Notifications[];
   setNotif: React.Dispatch<React.SetStateAction<Notifications[]>>;
 }
 
-export default function FilterDropdown({ setNotif }: FilterDropdownProps) {
+export default function FilterDropdown({
+  setNotif,
+  notif,
+}: FilterDropdownProps) {
   async function handleFiltering(
     operation: "filter today" | "filter this week" | "filter this month"
   ) {
@@ -29,8 +36,12 @@ export default function FilterDropdown({ setNotif }: FilterDropdownProps) {
     setNotif(data);
   }
 
-  function handleClick(operation: "mark all read" | "mark all unread") {
-    console.log(`you click ${operation}`);
+  async function handleClick(operation: "mark all read" | "mark all unread") {
+    const unseenNotifIds = notif
+      .filter((item) => item.is_seen)
+      .map((item) => item.id);
+
+    await updateNotificationSeenAction(operation, unseenNotifIds);
   }
 
   return (
