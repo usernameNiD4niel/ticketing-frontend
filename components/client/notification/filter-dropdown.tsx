@@ -1,23 +1,4 @@
-import {
-  BellDot,
-  BellMinus,
-  Cloud,
-  CreditCard,
-  Filter,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  Trash2,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
+import { BellDot, BellMinus, Filter, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,17 +6,33 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IoIosOptions } from "react-icons/io";
-export default function FilterDropdown() {
+import { Notifications } from "@/constants/types";
+import { notificationFilterAction } from "@/app/actions";
+
+interface FilterDropdownProps {
+  setNotif: React.Dispatch<React.SetStateAction<Notifications[]>>;
+}
+
+export default function FilterDropdown({ setNotif }: FilterDropdownProps) {
+  async function handleFiltering(
+    operation: "filter today" | "filter this week" | "filter this month"
+  ) {
+    const data = await notificationFilterAction(operation);
+    setNotif(data);
+  }
+
+  function handleClick(operation: "mark all read" | "mark all unread") {
+    console.log(`you click ${operation}`);
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,11 +42,11 @@ export default function FilterDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleClick("mark all unread")}>
             <BellDot className="mr-2 h-4 w-4" />
             <span>Mark all unread</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleClick("mark all read")}>
             <BellMinus className="mr-2 h-4 w-4" />
             <span>Mark all read</span>
           </DropdownMenuItem>
@@ -60,16 +57,19 @@ export default function FilterDropdown() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleFiltering("filter today")}
+                >
                   <span>Today</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Yesterday</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleFiltering("filter this week")}
+                >
                   <span>This week</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleFiltering("filter this month")}
+                >
                   <span>This month</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>

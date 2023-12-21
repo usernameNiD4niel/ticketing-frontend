@@ -6,6 +6,7 @@ import filterTableAssigned from "./filter-table-assigned";
 import searchTicketAction from "./search-ticket-action";
 import updateNotificationAction from "./update-notification-action";
 import updateLocationAction from "./update-location-action";
+import notificationFilterAction from "./notification-filter-action";
 
 export {
   postComment,
@@ -16,4 +17,5 @@ export {
   searchTicketAction,
   updateNotificationAction,
   updateLocationAction,
+  notificationFilterAction,
 };
