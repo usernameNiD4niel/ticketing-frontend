@@ -1,3 +1,4 @@
+import FilterDropdown from "@/components/client/notification/filter-dropdown";
 import TabMutator from "@/components/helper/tab-mutator";
 import CardNotification from "@/components/server/notification/card";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,8 @@ import { AvailableTabs } from "@/constants/enums";
 import { getNotification } from "@/endpoints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { IoIosOptions } from "react-icons/io";
+import { SlOptions, SlOptionsVertical } from "react-icons/sl";
 
 export default async function NotificationPage() {
   const token = cookies().get("token")?.value;
@@ -17,16 +20,12 @@ export default async function NotificationPage() {
   const notifications = await getNotification(token, email);
 
   return (
-    <div className="w-full flex gap-2 justify-center px-2">
+    <div className="w-full flex gap-2 justify-center px-2 pb-10">
       <TabMutator availableTab={AvailableTabs.Notification} />
       <div className="w-full md:max-w-4xl space-y-2">
         <div className="w-full flex justify-between items-center">
           <h2 className="font-bold text-lg">Notification</h2>
-          {notifications && notifications.length > 0 && (
-            <Button variant={"link"} className="p-0">
-              Filter
-            </Button>
-          )}
+          {notifications && notifications.length > 0 && <FilterDropdown />}
         </div>
 
         {notifications && notifications.length > 0 ? (
