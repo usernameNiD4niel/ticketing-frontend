@@ -166,7 +166,9 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
               )}
             </Link>
           )}
-          {(userRole === "champion" || userRole === "supreme") && (
+          {(userRole === "champion" ||
+            userRole === "supreme" ||
+            userRole === "catalyst") && (
             <>
               <Link
                 as={"/department/it/unhandled-tickets"}
