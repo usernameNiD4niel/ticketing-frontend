@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname; // get the pathname of the page
   const access_level = request.cookies.get("it_access_level")?.value; // get the access_level of the current user
 
-  if (pathname === "/login" || pathname === "register") {
+  if (pathname === "/login" || pathname === "/register") {
     if (token && token.length > 10) {
       return NextResponse.redirect(new URL("/", request.url));
     } else {

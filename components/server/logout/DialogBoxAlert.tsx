@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import Cookies from "js-cookie";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
 
 interface DialogBoxAlertProps {
@@ -19,12 +19,15 @@ interface DialogBoxAlertProps {
 }
 
 const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
+  const router = useRouter();
+
   function handleLogout() {
     Cookies.remove("email");
     Cookies.remove("token");
     Cookies.remove("it_access_level");
     Cookies.remove("hr_access_level");
     Cookies.remove("name");
+    router.push("/login");
   }
 
   return (
@@ -59,9 +62,7 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>No</AlertDialogCancel>
-          <Link href="/login" onClick={handleLogout} as={"/login"}>
-            <Button className="w-full md:w-fit">Yes</Button>
-          </Link>
+          <Button onClick={handleLogout}>Yes</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
