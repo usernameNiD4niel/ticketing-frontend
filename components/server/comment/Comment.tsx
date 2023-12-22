@@ -31,6 +31,12 @@ const Comment: FC<CommentProps> = ({
     }
   };
 
+  const convertTextToHTML = (text: string) => {
+    const formattedText = text.replace(/\r\n|\n|\r/g, "<br />"); // Replace newline characters with <br />
+
+    return { __html: formattedText };
+  };
+
   return (
     <>
       <hr />
@@ -52,7 +58,10 @@ const Comment: FC<CommentProps> = ({
           {/* <h4 className="font-bold text-sm">
             {name} ✔ - ({department})
           </h4> */}
-          <p className="text-sm">{comment}</p>
+          <p
+            className="text-sm"
+            dangerouslySetInnerHTML={convertTextToHTML(comment)}
+          />
           <div className="flex items-center gap-x-2 mt-2">
             <p className="text-gray-400 text-xs">{date_commented}</p>
             <p className="text-gray-400 text-xs">|</p>
