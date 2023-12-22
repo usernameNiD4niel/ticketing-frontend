@@ -19,6 +19,8 @@ import {
   notificationFilterAction,
   updateNotificationSeenAction,
 } from "@/app/actions";
+import { deleteAllNotificationAction } from "@/app/actions";
+import { toast } from "@/components/ui/use-toast";
 
 interface FilterDropdownProps {
   notif: Notifications[];
@@ -51,6 +53,26 @@ export default function FilterDropdown({
       .map((item) => item.id);
 
     await updateNotificationSeenAction(operation, ids);
+  }
+
+  async function handleDeleteAll() {
+    if (notif.length === 0) {
+      return;
+    }
+
+    const { message, success } = await deleteAllNotificationAction();
+
+    if (success) {
+      toast({
+        title: "Deleted Successfully",
+        description: message,
+      });
+    } else {
+      toast({
+        title: "Deletion Failed",
+        description: message,
+      });
+    }
   }
 
   return (
@@ -98,7 +120,7 @@ export default function FilterDropdown({
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDeleteAll}>
           <Trash2 className="mr-2 h-4 w-4" />
           <span>Delete all</span>
         </DropdownMenuItem>

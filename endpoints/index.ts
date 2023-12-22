@@ -27,6 +27,7 @@ import getSortedTable from "./getSortedTable";
 import getUsersName from "./getUsersName";
 import getNotificationFilter from "./getNotificationFilter";
 import updateNotificationSeen from "./updateNotifcationSeen";
+import deleteNotification from "./deleteNotification";
 
 export {
   getChampions,
@@ -58,4 +59,5 @@ export {
   getUsersName,
   getNotificationFilter,
   updateNotificationSeen,
+  deleteNotification,
 };
