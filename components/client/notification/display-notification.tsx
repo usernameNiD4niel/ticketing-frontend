@@ -2,7 +2,7 @@
 import CardNotification from "@/components/server/notification/card";
 import { Notifications } from "@/constants/types";
 import FilterDropdown from "./filter-dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface DisplayNotificationProps {
   notifications: Notifications[];
@@ -11,17 +11,16 @@ interface DisplayNotificationProps {
 export default function DisplayNotification({
   notifications,
 }: DisplayNotificationProps) {
-  const [notif, setNotif] = useState(notifications);
+  const [notif, setNotif] = useState<Notifications[]>([]);
+
+  useEffect(() => setNotif(notifications), [notifications]);
 
   return (
     <>
       <div className="w-full flex justify-between items-center">
         <h2 className="font-bold text-lg">Notification</h2>
-        {notif && notif.length > 0 && (
-          <FilterDropdown setNotif={setNotif} notif={notif} />
-        )}
+        <FilterDropdown setNotif={setNotif} notif={notif} />
       </div>
-
       {notif && notif.length > 0 ? (
         notif.map((notification, index) => (
           <CardNotification

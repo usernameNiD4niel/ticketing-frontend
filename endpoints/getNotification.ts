@@ -15,6 +15,8 @@ export default async function getNotification(token: string, email: string) {
   );
 
   if (response.ok) {
+    console.log("revalidate");
+
     const data = await response.json();
     return data.notifications as Notifications[];
   }

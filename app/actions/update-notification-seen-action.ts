@@ -1,7 +1,7 @@
 "use server";
 
 import { updateNotificationSeen } from "@/endpoints";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -20,11 +20,12 @@ export default async function updateNotificationSeenAction(
     unseenNotifIds,
   });
 
-  console.log(`is success ::: ${isSuccess}`);
+  console.log(`is success ::: ${JSON.stringify(unseenNotifIds, null, 2)}`);
 
   if (isSuccess) {
-    revalidateTag("get-notification-count");
     revalidateTag("get-notification");
+    revalidatePath("/department/it/notification");
+    revalidateTag("get-notification-count");
   }
   return isSuccess;
 }

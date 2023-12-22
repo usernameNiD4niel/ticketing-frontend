@@ -37,11 +37,20 @@ export default function FilterDropdown({
   }
 
   async function handleClick(operation: "mark all read" | "mark all unread") {
-    const unseenNotifIds = notif
-      .filter((item) => item.is_seen)
+    if (notif.length === 0) {
+      return;
+    }
+
+    const ids = notif
+      .filter((item) => {
+        if (operation === "mark all read") {
+          return !item.is_seen;
+        }
+        return item.is_seen;
+      })
       .map((item) => item.id);
 
-    await updateNotificationSeenAction(operation, unseenNotifIds);
+    await updateNotificationSeenAction(operation, ids);
   }
 
   return (
