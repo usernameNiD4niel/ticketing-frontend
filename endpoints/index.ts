@@ -28,6 +28,7 @@ import getUsersName from "./getUsersName";
 import getNotificationFilter from "./getNotificationFilter";
 import updateNotificationSeen from "./updateNotifcationSeen";
 import deleteNotification from "./deleteNotification";
+import getChampionPerformance from "./getChampionPerformance";
 
 export {
   getChampions,
@@ -60,4 +61,5 @@ export {
   getNotificationFilter,
   updateNotificationSeen,
   deleteNotification,
+  getChampionPerformance,
 };
