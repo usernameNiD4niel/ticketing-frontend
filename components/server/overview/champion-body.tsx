@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import ChampionCarousel from "./champion-carousel";
 import { getChampionPerformance } from "@/endpoints";
 import { cookies } from "next/headers";
+import TrackProgressForm from "./track-progress-form";
+import { DatePickerDemo } from "./date-range-picker";
 
 export default async function ChampionBody() {
   const token = cookies().get("token")?.value;
@@ -12,7 +14,8 @@ export default async function ChampionBody() {
         <h2 className="text-lg font-bold">Champion Performance</h2>
         <div className="flex items-center gap-2">
           <Button variant={"link"}>View All</Button>
-          <Button>Filter</Button>
+
+          <TrackProgressForm />
         </div>
       </div>
       <div className="w-full">

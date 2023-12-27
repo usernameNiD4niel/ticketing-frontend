@@ -18,5 +18,11 @@ export const otpValidationSchema = z.object({
   }),
 });
 
+export const reportsFilterSchema = z.object({
+  championName: z.string().min(2).max(50),
+  start: z.string().min(6).max(50),
+  end: z.string().min(6).max(50),
+});
+
 // ! Export table as CSV file
 // ! https://medium.com/how-to-react/how-to-add-export-to-csv-button-in-react-table-7e77ce93838b
