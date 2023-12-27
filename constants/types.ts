@@ -289,3 +289,19 @@ export type UpdateNotification = {
   operation: string;
   unseenNotifIds: string[];
 };
+
+export type ChampionCarouselItem = {
+  champion_name: string;
+  date_covered: string;
+  no_of_tickets: string;
+  closed: string;
+  open: string;
+  re_opened: string;
+  resolution_rate: string;
+};
+
+export type ChampionCarousel = {
+  id: string;
+  champion_name: string;
+  resolution_rate: string;
+};
