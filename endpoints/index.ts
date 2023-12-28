@@ -29,6 +29,7 @@ import getNotificationFilter from "./getNotificationFilter";
 import updateNotificationSeen from "./updateNotifcationSeen";
 import deleteNotification from "./deleteNotification";
 import getChampionPerformance from "./getChampionPerformance";
+import filterPerformance from "./filterPerformance";
 
 export {
   getChampions,
@@ -62,4 +63,5 @@ export {
   updateNotificationSeen,
   deleteNotification,
   getChampionPerformance,
+  filterPerformance,
 };

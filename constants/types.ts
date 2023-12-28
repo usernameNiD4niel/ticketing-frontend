@@ -305,3 +305,11 @@ export type ChampionCarousel = {
   champion_name: string;
   resolution_rate: string;
 };
+
+export type FilterProgress = {
+  ticket_count: number;
+  closed_ticket_count: number;
+  open_ticket_count: number;
+  cancelled_ticket_count: number;
+  resolution_rate: number;
+};
