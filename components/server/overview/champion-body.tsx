@@ -11,10 +11,9 @@ export default async function ChampionBody() {
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="w-full flex justify-between p-2 items-center">
-        <h2 className="text-lg font-bold">Champion Performance</h2>
+        <h2 className="text-lg font-bold">Overall Performance</h2>
         <div className="flex items-center gap-2">
-          <Button variant={"link"}>View All</Button>
-
+          {champions.length > 3 && <Button variant={"link"}>View All</Button>}
           <TrackProgressForm />
         </div>
       </div>

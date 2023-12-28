@@ -30,6 +30,7 @@ import updateNotificationSeen from "./updateNotifcationSeen";
 import deleteNotification from "./deleteNotification";
 import getChampionPerformance from "./getChampionPerformance";
 import filterPerformance from "./filterPerformance";
+import getChampionPerformanceItem from "./getChampionPerformanceItem";
 
 export {
   getChampions,
@@ -64,4 +65,5 @@ export {
   deleteNotification,
   getChampionPerformance,
   filterPerformance,
+  getChampionPerformanceItem,
 };

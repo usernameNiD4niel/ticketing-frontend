@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/carousel";
 import { ChampionCarousel } from "@/constants/types";
 import { cn } from "@/lib/utils";
+import ProgressFilteredData from "./progress-filtered-data";
+import Link from "next/link";
 
 interface ChampionCarouselProps {
   champions: ChampionCarousel[];
@@ -30,32 +32,39 @@ export default function ChampionCarousel({ champions }: ChampionCarouselProps) {
   }
 
   return (
-    <Carousel>
-      <CarouselContent className="drop-shadow-md rounded-md py-2 px-8 space-x-5 w-full">
-        {champions.map((champion) => (
-          <CarouselItem
-            className={cn(
-              "flex p-10 md:basis-1/2 items-center rounded-md lg:basis-1/3 justify-between min-h-[80px]",
-              getCardColor(champion.resolution_rate, true)
-            )}
-            key={champion.id}
-          >
-            <span className="text-lg">{champion.champion_name}</span>
-            <span
+    <>
+      <Carousel>
+        <CarouselContent className="drop-shadow-md rounded-md py-2 px-8 space-x-5 w-full">
+          {champions.map((champion) => (
+            <CarouselItem
               className={cn(
-                "text-4xl",
-                getCardColor(champion.resolution_rate, false)
+                "md:basis-1/2 rounded-md lg:basis-1/3",
+                getCardColor(champion.resolution_rate, true)
               )}
+              key={champion.id}
             >
-              {champion.resolution_rate}%
-            </span>
-          </CarouselItem>
-        ))}
-        {/* <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
+              <Link
+                href={`/department/it/overview/${champion.champion_name}`}
+                className="flex p-10 items-center justify-between min-h-[80px] cursor-pointer"
+              >
+                <span className="text-lg">{champion.champion_name}</span>
+                <span
+                  className={cn(
+                    "text-4xl",
+                    getCardColor(champion.resolution_rate, false)
+                  )}
+                >
+                  {champion.resolution_rate}%
+                </span>
+              </Link>
+            </CarouselItem>
+          ))}
+          {/* <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
         <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem> */}
-      </CarouselContent>
-      {/* <CarouselPrevious />
+        </CarouselContent>
+        {/* <CarouselPrevious />
       <CarouselNext /> */}
-    </Carousel>
+      </Carousel>
+    </>
   );
 }
