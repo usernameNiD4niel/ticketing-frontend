@@ -1,3 +1,4 @@
+import BreadCrumbs from "@/components/client/overview/bread-crumbs";
 import { getChampionPerformanceItem } from "@/endpoints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -14,9 +15,32 @@ export default async function DynamicOverviewPage({
   }
 
   const champions = await getChampionPerformanceItem(token, params.slug);
+
   return (
-    <div>
-      <pre>{JSON.stringify(champions, null, 2)}</pre>
+    <div className="md:container">
+      <BreadCrumbs />
+      <div className="w-full flex justify-end">
+        <h2 className="text-4xl font-bold">{champions.resolution_rate}%</h2>
+      </div>
+      <p>
+        Date Covered: <span>ALL</span>
+      </p>
+      <p>
+        No of Tickets Assigned: <span>{champions.ticket_count}</span>
+      </p>
+      <p>
+        Open: <span>{champions.open_ticket_count}</span>
+      </p>
+      <p>
+        Closed: <span>{champions.closed_ticket_count}</span>
+      </p>
+      <p>
+        Cancelled: <span>{champions.cancelled_ticket_count}</span>
+      </p>
+      <hr />
+      <div className="w-full flex items-center">
+        <p>Resolution Rate: {champions}</p>
+      </div>
     </div>
   );
 }
