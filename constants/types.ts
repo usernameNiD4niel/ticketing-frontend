@@ -50,14 +50,13 @@ export type FeedTicketProps = {
   priority: string;
   department: string;
   updated_at: string;
-  resolved_date: string;
   description: string;
   assigned_to: string;
   name: string;
   is_ticket_owner: boolean;
   closed_date: string;
   due_date: string;
-  re_opened_date: string;
+  cancelled_date: string;
   location: string;
   contact: string;
 };

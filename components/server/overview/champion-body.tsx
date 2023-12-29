@@ -3,7 +3,6 @@ import ChampionCarousel from "./champion-carousel";
 import { getChampionPerformance } from "@/endpoints";
 import { cookies } from "next/headers";
 import TrackProgressForm from "./track-progress-form";
-import { DatePickerDemo } from "./date-range-picker";
 
 export default async function ChampionBody() {
   const token = cookies().get("token")?.value;

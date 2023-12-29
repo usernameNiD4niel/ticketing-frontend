@@ -25,23 +25,7 @@ const DisplayForm: FC<DisplayFormProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const role = Cookies.get("it_access_level")?.toLowerCase();
-
-  const status = ticket?.status.toUpperCase();
-
-  const selectableItems = ["EXPIRED"];
-
-  if (role === "requestor" || role === "unset") {
-    selectableItems.push("CLOSED");
-  } else {
-    selectableItems.push("RESOLVED");
-  }
-
-  if (status === "open") {
-    selectableItems.push("OPEN");
-  } else {
-    selectableItems.push("RE-OPENED");
-  }
+  const selectableItems = ["CLOSED", "OPEN", "CANCELLED"];
 
   const { toast } = useToast();
 

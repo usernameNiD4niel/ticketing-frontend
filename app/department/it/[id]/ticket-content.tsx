@@ -70,15 +70,11 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket, id }) => {
             <p>Posted Date: {ticket.created_at}</p>
             <p>Updated Date: {ticket.updated_at}</p>
             <p>
-              Resolution Date:{" "}
-              {ticket.resolved_date ? ticket.resolved_date : <>N/A</>}
-            </p>
-            <p>
               Closed Date: {ticket.closed_date ? ticket.closed_date : <>N/A</>}
             </p>
             <p>
-              Re-Opened:{" "}
-              {ticket.re_opened_date ? ticket.re_opened_date : <>N/A</>}
+              Cancelled:{" "}
+              {ticket.cancelled_date ? ticket.cancelled_date : <>N/A</>}
             </p>
           </div>
         </div>
