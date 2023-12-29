@@ -5,8 +5,6 @@ import { useSearchParams } from "next/navigation";
 import React, { FC, useEffect } from "react";
 import { BsChevronRight } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
-import Cookies from "js-cookie";
-import { updateNotification } from "@/endpoints";
 import { updateNotificationAction } from "@/app/actions";
 
 type BreadCrumbsProps = {
