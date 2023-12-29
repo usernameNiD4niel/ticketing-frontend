@@ -111,65 +111,67 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </span>
             {isDrawerOpen && <span className="text-sm">Create Ticket</span>}
           </Link>
-          {userRole === "catalyst" || userRole === "supreme" ? (
-            <Link
-              className={cn(
-                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
-                activeTab === AvailableTabs["Departments Role"] &&
-                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                !isDrawerOpen ? "justify-center items-center" : "justify-start"
-              )}
-              as={"/department/it/pending-role"}
-              href="/department/it/pending-role"
-            >
-              <span>
-                <RiPassPendingFill />
-              </span>
-              {isDrawerOpen ? (
-                <span className="text-sm">
-                  Departments Role{" "}
-                  <span className="text-xs ms-2 font-bold text-red-500">
-                    {pendingRoleCount !== 0 && pendingRoleCount}
-                  </span>
-                </span>
-              ) : (
-                <span className="text-xs ms-2 font-bold text-red-500 absolute right-1 top-2">
-                  {pendingRoleCount !== 0 && pendingRoleCount}
-                </span>
-              )}
-            </Link>
-          ) : (
-            userRole === "champion" && (
+          {userRole === "catalyst" ||
+            (userRole === "supreme" && (
               <Link
                 className={cn(
                   "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
-                  activeTab === AvailableTabs["Assigned Tickets"] &&
+                  activeTab === AvailableTabs["Departments Role"] &&
                     "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
                   !isDrawerOpen
                     ? "justify-center items-center"
                     : "justify-start"
                 )}
-                as={"/department/it/assigned-tickets"}
-                href="/department/it/assigned-tickets"
+                as={"/department/it/pending-role"}
+                href="/department/it/pending-role"
               >
                 <span>
-                  <IoIosCreate />
+                  <RiPassPendingFill />
                 </span>
                 {isDrawerOpen ? (
                   <span className="text-sm">
-                    Assigned Tickets
+                    Departments Role{" "}
                     <span className="text-xs ms-2 font-bold text-red-500">
-                      {my_assigned_tickets !== 0 && my_assigned_tickets}
+                      {pendingRoleCount !== 0 && pendingRoleCount}
                     </span>
                   </span>
                 ) : (
-                  <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
-                    {my_assigned_tickets !== 0 && my_assigned_tickets}
+                  <span className="text-xs ms-2 font-bold text-red-500 absolute right-1 top-2">
+                    {pendingRoleCount !== 0 && pendingRoleCount}
                   </span>
                 )}
               </Link>
-            )
+            ))}
+
+          {(userRole === "champion" || userRole === "catalyst") && (
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9] relative",
+                activeTab === AvailableTabs["Assigned Tickets"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              as={"/department/it/assigned-tickets"}
+              href="/department/it/assigned-tickets"
+            >
+              <span>
+                <IoIosCreate />
+              </span>
+              {isDrawerOpen ? (
+                <span className="text-sm">
+                  Assigned Tickets
+                  <span className="text-xs ms-2 font-bold text-red-500">
+                    {my_assigned_tickets !== 0 && my_assigned_tickets}
+                  </span>
+                </span>
+              ) : (
+                <span className="text-xs ms-2 font-bold text-red-500 absolute top-2 right-1">
+                  {my_assigned_tickets !== 0 && my_assigned_tickets}
+                </span>
+              )}
+            </Link>
           )}
+
           {(userRole === "champion" ||
             userRole === "supreme" ||
             userRole === "catalyst") && (
@@ -202,24 +204,24 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                   </span>
                 )}
               </Link>
-              <Link
-                as={"/department/it/overview"}
-                href="/department/it/overview"
-                className={cn(
-                  "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
-                  activeTab === AvailableTabs["Reports"] &&
-                    "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
-                  !isDrawerOpen
-                    ? "justify-center items-center"
-                    : "justify-start"
-                )}
-              >
-                <span>
-                  <MdMonitorHeart />
-                </span>
-                {isDrawerOpen && <span className="text-sm">Reports</span>}
-              </Link>
             </>
+          )}
+          {(userRole === "catalyst" || userRole === "supreme") && (
+            <Link
+              as={"/department/it/overview"}
+              href="/department/it/overview"
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs["Reports"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+            >
+              <span>
+                <MdMonitorHeart />
+              </span>
+              {isDrawerOpen && <span className="text-sm">Reports</span>}
+            </Link>
           )}
 
           <Link

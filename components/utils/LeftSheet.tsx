@@ -45,8 +45,10 @@ const LeftSheet: FC<LeftSheetProps> = ({
 }) => {
   const [activeTab] = useNavigationStore((state) => [state.activeTab]);
 
-  let isRequestor =
+  const isRequestor =
     role.toUpperCase() === "REQUESTOR" || role.toUpperCase() === "UNSET";
+
+  const isChampion = role.toUpperCase() === "CHAMPION";
 
   const getCurrentTab = () => {
     switch (activeTab) {
@@ -199,7 +201,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                     </Link>
                   </SheetClose>
                 )}
-                {!isRequestor && (
+                {!isRequestor && !isChampion && (
                   <SheetClose asChild>
                     <Link
                       as={"/department/it/overview"}

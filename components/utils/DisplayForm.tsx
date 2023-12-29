@@ -122,9 +122,13 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
 }) => {
   const name = Cookies.get("name");
 
-  const champs =
-    Cookies.get("it_access_level")?.toLowerCase() === "champion"
+  const role = Cookies.get("it_access_level")?.toLowerCase();
+
+  let champs =
+    role === "champion"
       ? [name!]
+      : role === "catalyst"
+      ? [...champions, name!]
       : champions;
 
   return (
