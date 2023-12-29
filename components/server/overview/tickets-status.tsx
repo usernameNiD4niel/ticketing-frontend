@@ -22,13 +22,7 @@ const getStatusCount = async (token: string) => {
 const TicketsStatus = async () => {
   const token = getCookies().get("token");
 
-  const {
-    open,
-    closed,
-    expired,
-    resolved,
-    "re-opened": reOpened,
-  } = await getStatusCount(token!);
+  const { open, closed, cancelled } = await getStatusCount(token!);
 
   return (
     <div className="w-full px-2">
@@ -40,24 +34,14 @@ const TicketsStatus = async () => {
           className="border-s-blue-400 bg-blue-300/20 hover:bg-blue-300/30"
         />
         <TicketsStatusCard
-          ticketLabel="CLOSED"
-          ticketNumber={closed}
+          ticketLabel="CANCELLED"
+          ticketNumber={cancelled}
           className="border-s-orange-400 bg-orange-300/20 hover:bg-orange-300/30"
         />
         <TicketsStatusCard
-          ticketLabel="EXPIRED"
-          ticketNumber={expired}
+          ticketLabel="CLOSED"
+          ticketNumber={closed}
           className="border-s-red-400 bg-red-300/20 hover:bg-red-300/30"
-        />
-        <TicketsStatusCard
-          ticketLabel="RESOLVED"
-          ticketNumber={resolved}
-          className="border-s-green-400 bg-green-300/20 hover:bg-green-300/30"
-        />
-        <TicketsStatusCard
-          ticketLabel="RE-OPENED"
-          ticketNumber={reOpened}
-          className="border-s-violet-400 bg-violet-300/20 hover:bg-violet-300/30"
         />
       </div>
     </div>

@@ -168,9 +168,7 @@ export type ExcelHeaders = {
 export type StatusCount = {
   open: number;
   closed: number;
-  expired: number;
-  resolved: number;
-  "re-opened": number;
+  cancelled: number;
 };
 
 export type CodeTableProps = {
