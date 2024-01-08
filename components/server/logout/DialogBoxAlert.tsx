@@ -64,8 +64,8 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
       ) : (
         <AlertDialogTrigger
           className={cn(
-            " rounded-full space-x-2 py-2",
-            "bg-red-500 text-stone-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-stone-50 dark:hover:bg-red-900/90 rounded-md"
+            "flex rounded-full p-3 items-center justify-center gap-2 text-sm",
+            "bg-red-500 text-stone-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-stone-50 dark:hover:bg-red-900/90"
           )}
         >
           <FiLogOut /> <span>Logout</span>
