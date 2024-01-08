@@ -4,7 +4,6 @@ import { getChampionPerformanceItem } from "@/endpoints";
 import { cn } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { CSVLink } from "react-csv";
 
 export default async function DynamicOverviewPage({
   params,
@@ -17,7 +16,10 @@ export default async function DynamicOverviewPage({
     redirect("/login");
   }
 
-  const champions = await getChampionPerformanceItem(token, params.slug);
+  const champions = await getChampionPerformanceItem(
+    token,
+    decodeURIComponent(params.slug)
+  );
 
   if (!champions) {
     return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { FilterProgress } from "@/constants/types";
+import { cn } from "@/lib/utils";
 import { CSVLink } from "react-csv";
 
 interface CSVDownloaderProps {
@@ -37,7 +38,7 @@ export default function CSVDownloader({
     <CSVLink
       data={getDownloadableData()}
       filename={`${championName}-Overall`}
-      className={`${color} text-white py-3 px-4 rounded-sm`}
+      className={cn(`text-white py-3 px-4 rounded-sm`, color)}
     >
       Download CSV
     </CSVLink>

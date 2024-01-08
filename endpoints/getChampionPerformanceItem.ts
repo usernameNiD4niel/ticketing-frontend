@@ -1,9 +1,11 @@
-import { ChampionCarousel, FilterProgress } from "@/constants/types";
+import { FilterProgress } from "@/constants/types";
 
 export default async function getChampionPerformanceItem(
   token: string,
   championName: string
 ) {
+  console.log(`champion name: ${championName}`);
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/performance?championName=${championName}`,
     {
