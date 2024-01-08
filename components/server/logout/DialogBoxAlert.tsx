@@ -10,6 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
@@ -32,12 +33,19 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        {isInTheMenu ? (
-          <Button
-            variant={"destructive"}
-            className="w-full text-xl flex py-3 px-3 space-x-2 text-white"
-          >
+      {isInTheMenu ? (
+        <AlertDialogTrigger
+          className={cn(
+            "w-full text-xl flex py-3 px-3 space-x-2 text-white justify-center",
+            "bg-red-500 text-stone-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-stone-50 dark:hover:bg-red-900/90 rounded-md"
+          )}
+        >
+          <span>
+            <FiLogOut />
+          </span>
+          <span className="text-sm">Logout</span>
+          {/* {isInTheMenu ? (
+          <Button variant={"destructive"}>
             <span>
               <FiLogOut />
             </span>
@@ -50,8 +58,19 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
           >
             <FiLogOut /> <span>Logout</span>
           </Button>
-        )}
-      </AlertDialogTrigger>
+        )
+        } */}
+        </AlertDialogTrigger>
+      ) : (
+        <AlertDialogTrigger
+          className={cn(
+            " rounded-full space-x-2 py-2",
+            "bg-red-500 text-stone-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-stone-50 dark:hover:bg-red-900/90 rounded-md"
+          )}
+        >
+          <FiLogOut /> <span>Logout</span>
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Do you really want to logout?</AlertDialogTitle>
