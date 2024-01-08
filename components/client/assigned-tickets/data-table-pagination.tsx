@@ -10,6 +10,7 @@ interface DataTablePaginationProps<TData> {
   next_page_url: string | null;
   isFiltering: boolean;
   tab: string;
+  isClosed?: boolean;
 }
 
 async function getData(
@@ -18,11 +19,12 @@ async function getData(
   nextPageUrl: string | null,
   setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
   setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
-  tab: string
+  tab: string,
+  isClosed?: boolean
 ) {
   // Fetch data from your API here.
   if (nextPageUrl) {
-    const url = `${nextPageUrl}&isPreviewing=true&tab=${tab}&shouldPaginate=true`;
+    const url = `${nextPageUrl}&isPreviewing=true&tab=${tab}&shouldPaginate=true&isClosed=${isClosed}`;
 
     //api/all-tickets/conditional?isPreviewing=true&tab=assigned_tickets&shouldPaginate=true&page=${page}
     const data = await fetch(`${url}`, {
@@ -52,12 +54,13 @@ async function getPrevious(
   previousPageUrl: string | null,
   setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
   setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
-  tab: string
+  tab: string,
+  isClosed?: boolean
 ) {
   // Fetch data from your API here.
   if (previousPageUrl) {
     //isPreviewing=true&tab=assigned_tickets&shouldPaginate=true&page=${page}
-    const url = `${previousPageUrl}&isPreviewing=true&tab=${tab}&shouldPaginate=true`;
+    const url = `${previousPageUrl}&isPreviewing=true&tab=${tab}&shouldPaginate=true&isClosed=${isClosed}`;
     const data = await fetch(`${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -85,6 +88,7 @@ export function DataTablePagination<TData>({
   setData,
   isFiltering,
   tab,
+  isClosed,
 }: DataTablePaginationProps<TData>) {
   const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
   const [previousPageUrl, setPreviousPageUrl] = useState<string | null>(null);
@@ -108,7 +112,8 @@ export function DataTablePagination<TData>({
             previousPageUrl,
             setNextPageUrl,
             setPreviousPageUrl,
-            tab
+            tab,
+            isClosed
           );
           table.previousPage();
         }}
@@ -129,7 +134,8 @@ export function DataTablePagination<TData>({
               nextPageUrl,
               setNextPageUrl,
               setPreviousPageUrl,
-              tab
+              tab,
+              isClosed
             );
           }
           table.nextPage();

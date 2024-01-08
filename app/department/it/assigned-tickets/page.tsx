@@ -29,6 +29,7 @@ export default async function Page() {
             url="all-tickets/assigned"
             tab="assigned_tickets"
             key={"AssignedTicketsDataTable1"}
+            isClosed={false}
           />
         </div>
         <hr className="my-10" />
@@ -39,6 +40,7 @@ export default async function Page() {
             data_={closedTickets.data}
             isAssignedTickets={true}
             module="assigned_tickets"
+            isClosed={true}
             next_page_url={closedTickets.next_page_url}
             url="all-tickets/assigned"
             tab="assigned_tickets"

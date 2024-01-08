@@ -40,6 +40,7 @@ interface DataTableProps<TValue> {
   url: string;
   module: string;
   tab: string;
+  isClosed?: boolean;
 }
 
 export function DataTable<TValue>({
@@ -50,6 +51,7 @@ export function DataTable<TValue>({
   module,
   tab,
   isAssignedTickets,
+  isClosed,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -127,7 +129,7 @@ export function DataTable<TValue>({
           <FilterPopover
             setData={setData}
             setIsFiltering={setIsFiltering}
-            module={module}
+            isClosed={isClosed}
           />
         </div>
         {data && data.length > 0 && (
@@ -209,6 +211,7 @@ export function DataTable<TValue>({
           table={table}
           next_page_url={next_page_url}
           isFiltering={isFiltering}
+          isClosed={isClosed}
           tab={tab}
         />
       )}

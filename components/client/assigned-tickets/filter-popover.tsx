@@ -7,19 +7,18 @@ import {
 import { FC } from "react";
 import { AssignedTickets } from "@/constants/types";
 import FilterForm from "./filter-form";
-import { MdOutlineSort } from "react-icons/md";
 import { CgSortAz } from "react-icons/cg";
 
 type FilterPopoverProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
-  module: string;
+  isClosed?: boolean;
 };
 
 const FilterPopover: FC<FilterPopoverProps> = ({
   setData,
   setIsFiltering,
-  module,
+  isClosed,
 }) => {
   return (
     <Popover>
@@ -32,7 +31,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
         <FilterForm
           setData={setData}
           setIsFiltering={setIsFiltering}
-          module={module}
+          isClosed={isClosed}
         />
       </PopoverContent>
     </Popover>

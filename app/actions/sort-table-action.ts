@@ -7,17 +7,17 @@ import { redirect } from "next/navigation";
 export default async function getSortedTableAction(formData: FormData) {
   const sort = formData.get("sort")!.toString();
   const order_by = formData.get("order_by")!.toString();
-
-  console.log(`form log ::: ${sort}`);
-  console.log(`form log ::: ${order_by}`);
+  const isClosed = formData.get("isClosed")?.toString();
 
   const token = cookies().get("token")?.value;
+
+  console.log(`is closed ::: ${isClosed}`);
 
   if (!token) {
     redirect("/login");
   }
 
-  const response = await getSortedTable(sort, order_by, token);
+  const response = await getSortedTable(sort, order_by, token, isClosed);
 
   return response;
 }

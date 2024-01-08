@@ -3,10 +3,12 @@ import { AssignedTickets } from "@/constants/types";
 export default async function getSortedTable(
   sort: string,
   order_by: string,
-  token: string
+  token: string,
+  isClosed?: string
 ) {
+  console.log(`is closed 2 ::: ${isClosed}`);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets/sort?sort=${sort}&order_by=${order_by}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets/sort?sort=${sort}&order_by=${order_by}&isClosed=${isClosed}`,
     {
       headers: {
         "Content-Type": "application/json",

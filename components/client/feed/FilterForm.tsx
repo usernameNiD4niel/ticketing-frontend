@@ -48,17 +48,12 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
     const sort_by = formData.get("sort_by")?.toString();
     let date_ = null;
 
-    console.log(`the status ::: ${status}`);
-
     if (date) {
       const formattedDate = format(date, "MM-dd-yyyy", {
         timeZone: PHILIPPINE_TIME_ZONE,
       });
       date_ = formattedDate;
     }
-
-    console.log(`the formatted date ::: ${date_}`);
-    console.log(`the date ::: ${date}`);
 
     let params = "";
 
@@ -99,8 +94,6 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
 
   const handleViewAll = async () => {
     const data_ = await getAllTickets(token!);
-
-    console.log(`tickets data ::: ${JSON.stringify(data_, null, 2)}`);
 
     setData(data_);
     setIsFiltering(true);
