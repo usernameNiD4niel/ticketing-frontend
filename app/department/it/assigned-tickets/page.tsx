@@ -4,15 +4,21 @@ import TabMutator from "@/components/helper/tab-mutator";
 import { AvailableTabs } from "@/constants/enums";
 import { getAssignedTickets } from "@/endpoints";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const token = cookies().get("token")?.value;
+  const name = cookies().get("name")?.value;
+
+  if (!token || !name) {
+    redirect("/login");
+  }
 
   // ? Assigned Tickets
-  const tickets = await getAssignedTickets(token!, 1, false);
+  const tickets = await getAssignedTickets(token, 1, false);
 
   // ? Closed Tickets
-  const closedTickets = await getAssignedTickets(token!, 1, true);
+  const closedTickets = await getAssignedTickets(token, 1, true);
 
   return (
     <>
@@ -26,7 +32,7 @@ export default async function Page() {
             isAssignedTickets={true}
             module="assigned_tickets"
             next_page_url={tickets.next_page_url}
-            url="all-tickets/assigned"
+            url={`all-tickets/export?champion=${name}&status=open`}
             tab="assigned_tickets"
             key={"AssignedTicketsDataTable1"}
             isClosed={false}
@@ -42,7 +48,7 @@ export default async function Page() {
             module="assigned_tickets"
             isClosed={true}
             next_page_url={closedTickets.next_page_url}
-            url="all-tickets/assigned"
+            url={`all-tickets/export?champion=${name}&status=closed`}
             tab="assigned_tickets"
             key={"AssignedTicketsDataTable2"}
           />
