@@ -47,7 +47,7 @@ export default function CreateTicketForm({
         setIsLoadingButton(false);
         toast({
           title: "Validation Failed",
-          description: "Requestor field is a required field",
+          description: "Please try to re-login and try again",
           duration: 3000,
         });
         return;
@@ -63,7 +63,10 @@ export default function CreateTicketForm({
     }
 
     formData.append("location", location);
-    formData.append("requestor", name);
+
+    if (accessLevel !== "requestor" && accessLevel !== "unset") {
+      formData.append("requestor", name);
+    }
 
     const { success, message, id } = await postTicket(formData);
 
