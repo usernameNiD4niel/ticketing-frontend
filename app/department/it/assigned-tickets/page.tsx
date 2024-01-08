@@ -8,22 +8,43 @@ import { cookies } from "next/headers";
 export default async function Page() {
   const token = cookies().get("token")?.value;
 
-  const tickets = await getAssignedTickets(token!, 1);
+  // ? Assigned Tickets
+  const tickets = await getAssignedTickets(token!, 1, false);
+
+  // ? Closed Tickets
+  const closedTickets = await getAssignedTickets(token!, 1, true);
 
   return (
     <>
       <TabMutator availableTab={AvailableTabs["Assigned Tickets"]} />
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
-        <DataTable
-          columns={columns}
-          data_={tickets.data}
-          isAssignedTickets={true}
-          module="assigned_tickets"
-          next_page_url={tickets.next_page_url}
-          url="all-tickets/assigned"
-          tab="assigned_tickets"
-          key={"AssignedTicketsDataTable"}
-        />
+        <div>
+          <h3 className="w-full font-bold">Assigned Tickets</h3>
+          <DataTable
+            columns={columns}
+            data_={tickets.data}
+            isAssignedTickets={true}
+            module="assigned_tickets"
+            next_page_url={tickets.next_page_url}
+            url="all-tickets/assigned"
+            tab="assigned_tickets"
+            key={"AssignedTicketsDataTable1"}
+          />
+        </div>
+        <hr className="my-10" />
+        <div>
+          <h3 className="w-full font-bold">Resolved Tickets</h3>
+          <DataTable
+            columns={columns}
+            data_={closedTickets.data}
+            isAssignedTickets={true}
+            module="assigned_tickets"
+            next_page_url={closedTickets.next_page_url}
+            url="all-tickets/assigned"
+            tab="assigned_tickets"
+            key={"AssignedTicketsDataTable2"}
+          />
+        </div>
       </section>
     </>
   );
