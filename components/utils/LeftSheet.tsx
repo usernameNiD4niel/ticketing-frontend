@@ -70,6 +70,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Locations";
       case AvailableTabs.Notification:
         return "Notification";
+      case AvailableTabs["Ticket Types"]:
+        return "Ticket Types";
     }
   };
 
@@ -132,27 +134,45 @@ const LeftSheet: FC<LeftSheetProps> = ({
                 ) : (
                   <>
                     {role.toLowerCase() !== "champion" ? (
-                      <SheetClose asChild>
-                        <Link
-                          className={cn(
-                            "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
-                            activeTab === AvailableTabs["Departments Role"] &&
-                              "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
-                          )}
-                          as={"/department/it/pending-role"}
-                          href="/department/it/pending-role"
-                        >
-                          <span>
-                            <RiPassPendingFill />
-                          </span>
-                          <span className="text-sm">
-                            Departments Role{" "}
-                            <span className="text-xs ms-2 font-bold text-red-500">
-                              {pendingRoleCount !== 0 && pendingRoleCount}
+                      <>
+                        <SheetClose asChild>
+                          <Link
+                            className={cn(
+                              "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                              activeTab === AvailableTabs["Departments Role"] &&
+                                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                            )}
+                            as={"/department/it/pending-role"}
+                            href="/department/it/pending-role"
+                          >
+                            <span>
+                              <RiPassPendingFill />
                             </span>
-                          </span>
-                        </Link>
-                      </SheetClose>
+                            <span className="text-sm">
+                              Departments Role{" "}
+                              <span className="text-xs ms-2 font-bold text-red-500">
+                                {pendingRoleCount !== 0 && pendingRoleCount}
+                              </span>
+                            </span>
+                          </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Link
+                            className={cn(
+                              "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9] relative",
+                              activeTab === AvailableTabs["Ticket Types"] &&
+                                "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                            )}
+                            as={"/department/it/ticket-types"}
+                            href="/department/it/ticket-types"
+                          >
+                            <span>
+                              <RiPassPendingFill />
+                            </span>
+                            <span className="text-sm">Ticket Types</span>
+                          </Link>
+                        </SheetClose>
+                      </>
                     ) : (
                       <SheetClose asChild>
                         <Link

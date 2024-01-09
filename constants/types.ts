@@ -325,3 +325,10 @@ export type FilterProgress = {
   cancelled_ticket_count: number;
   resolution_rate: number;
 };
+
+export type TicketTypeColumns = {
+  ticket_type: string;
+  duration: string;
+  created_at: string;
+  updated_at: string;
+};
