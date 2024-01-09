@@ -1,6 +1,7 @@
 import { CommentInfoProps } from "@/constants/types";
 import React, { FC } from "react";
 import Comment from "./Comment";
+import TicketActivity from "./ticket-activity";
 
 type ContentBodyProps = {
   comments: CommentInfoProps[];
@@ -19,7 +20,14 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
     }
 
     if (comments && comments.length > 0) {
-      return comments.map((com, index) => <Comment {...com} key={index} />);
+      return comments.map((com, index) => {
+        if (com.is_comment) {
+          return <Comment {...com} key={index} />;
+        }
+
+        // * show activity
+        return <TicketActivity {...com} />;
+      });
     } else {
       return (
         <div className="h-full w-full flex items-center justify-center">

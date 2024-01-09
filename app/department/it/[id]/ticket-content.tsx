@@ -103,8 +103,8 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket, id }) => {
             )}
           </>
         )}
-        <RightSheet activities={activities} />
-        <hr className="my-4" />
+        {/* <RightSheet activities={activities} /> */}
+        {/* <hr className="my-4" /> */}
         <BottomSheet ticket_id={ticket.id} />
       </div>
     </div>

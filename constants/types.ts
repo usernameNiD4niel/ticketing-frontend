@@ -109,13 +109,16 @@ export type TicketContent = {
 };
 
 export type CommentProps = {
-  access_level: string;
-  name: string;
-  comment: string;
-  date_commented: string;
-  time_commented: string;
-  department: string;
-  user_joined_on: string;
+  // * comment
+  name?: string;
+  access_level?: string;
+  comment?: string;
+  department?: string;
+  user_joined_on?: string;
+
+  created_time: string;
+  created_at: string;
+  is_comment: boolean;
 };
 
 export type UsersType = {
@@ -147,13 +150,25 @@ export type CommentsProps = {
 };
 
 export type CommentInfoProps = {
-  date_commented: string;
-  time_commented: string;
-  access_level: string;
-  comment: string;
-  name: string;
-  department: string;
-  user_joined_on: string;
+  //* ticket activity
+  id?: string;
+  ticket_id?: string;
+  activity_type?: string;
+  user_id?: string;
+  details?: string;
+  updated_at?: string;
+  updated_time?: string;
+
+  // * comment
+  name?: string;
+  access_level?: string;
+  comment?: string;
+  department?: string;
+  user_joined_on?: string;
+
+  created_time: string;
+  created_at: string;
+  is_comment: boolean;
 };
 
 export type ExcelHeaders = {

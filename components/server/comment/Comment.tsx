@@ -4,12 +4,12 @@ import { FC } from "react";
 import HoverName from "./hover-name";
 
 const Comment: FC<CommentProps> = ({
+  created_at,
+  created_time,
+  access_level,
   comment,
-  date_commented,
   department,
   name,
-  access_level,
-  time_commented,
   user_joined_on,
 }) => {
   const getVariant = (
@@ -44,28 +44,28 @@ const Comment: FC<CommentProps> = ({
         <div className="w-full">
           <div>
             <Badge
-              variant={getVariant(access_level.toLowerCase())}
+              variant={getVariant(access_level!.toLowerCase())}
               className="text-xs font-light"
             >
-              {access_level.toLowerCase()}
+              {access_level!.toLowerCase()}
             </Badge>
           </div>
           <HoverName
-            name={name}
-            department={department}
-            joinedOn={user_joined_on}
+            name={name!}
+            department={department!}
+            joinedOn={user_joined_on!}
           />
           {/* <h4 className="font-bold text-sm">
             {name} ✔ - ({department})
           </h4> */}
           <p
             className="text-sm"
-            dangerouslySetInnerHTML={convertTextToHTML(comment)}
+            dangerouslySetInnerHTML={convertTextToHTML(comment!)}
           />
           <div className="flex items-center gap-x-2 mt-2">
-            <p className="text-gray-400 text-xs">{date_commented}</p>
+            <p className="text-gray-400 text-xs">{created_at}</p>
             <p className="text-gray-400 text-xs">|</p>
-            <p className="text-gray-400 text-xs">{time_commented}</p>
+            <p className="text-gray-400 text-xs">{created_time}</p>
           </div>
         </div>
       </div>
