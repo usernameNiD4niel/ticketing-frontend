@@ -58,7 +58,7 @@ const TicketPage = async ({ params }: { params: { id: string } }) => {
     }
 
     if (ticketData && ticketData.ticket) {
-      return <TicketContentViewer ticket={ticketData.ticket} id={id} />;
+      return <TicketContentViewer ticket={ticketData.ticket} />;
     }
 
     return (

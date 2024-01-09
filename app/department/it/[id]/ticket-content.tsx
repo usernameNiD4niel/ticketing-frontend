@@ -1,43 +1,19 @@
 import { Badge } from "@/components/ui/badge";
 import BottomSheet from "@/components/utils/BottomSheet";
 import EditCard from "@/components/utils/EditCard";
-import RightSheet from "@/components/utils/RightSheet";
-import { ActivitiesProps, Activity, FeedTicketProps } from "@/constants/types";
+import { FeedTicketProps } from "@/constants/types";
 import { getCookies } from "next-client-cookies/server";
 import React, { FC } from "react";
 
 type TicketContentProps = {
   ticket: FeedTicketProps;
-  id: string;
 };
 
-const getSpecifiedActivities = async (id: string, token: string) => {
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/activities/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      next: {
-        tags: ["it-activities"],
-      },
-    }
-  );
-
-  if (data.ok) {
-    const activities: ActivitiesProps = await data.json();
-    return activities.activities;
-  } else {
-    throw new Error("Error fetching activities");
-  }
-};
-
-const TicketContent: FC<TicketContentProps> = async ({ ticket, id }) => {
+const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
   const role = getCookies().get("it_access_level");
-  const token = getCookies().get("token");
+  // const token = getCookies().get("token");
 
-  const activities: Activity[] = await getSpecifiedActivities(id, token!);
+  // const activities: Activity[] = await getSpecifiedActivities(id, token!);
 
   const { is_ticket_owner } = ticket;
 
