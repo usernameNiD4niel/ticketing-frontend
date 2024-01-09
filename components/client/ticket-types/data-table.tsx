@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import Add from "./add";
+import Delete from "./delete";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -75,7 +76,8 @@ export function DataTable<TData, TValue>({
         <div className="flex gap-2 items-center">
           <Add />
           {table.getFilteredSelectedRowModel().rows.length > 0 && (
-            <Button variant={"destructive"}>Delete</Button>
+            // <Button variant={"destructive"}>Delete</Button>
+            <Delete />
           )}
         </div>
       </div>
