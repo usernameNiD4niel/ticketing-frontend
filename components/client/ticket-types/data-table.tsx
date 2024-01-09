@@ -55,6 +55,10 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  //  * for (const data_ of table.getSelectedRowModel().rows) {
+  //  *   console.log(`data ::: ${data_.getValue("ticket_type")}`);
+  //  * }
+
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
@@ -70,7 +74,9 @@ export function DataTable<TData, TValue>({
         />
         <div className="flex gap-2 items-center">
           <Add />
-          <Button variant={"destructive"}>Delete</Button>
+          {table.getFilteredSelectedRowModel().rows.length > 0 && (
+            <Button variant={"destructive"}>Delete</Button>
+          )}
         </div>
       </div>
       <div className="rounded-md border">
