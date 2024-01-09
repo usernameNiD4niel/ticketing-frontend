@@ -9,8 +9,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { IoIosTrash } from "react-icons/io";
 
-export default function Delete() {
+interface DeleteProps<TData> {
+  ticketTypes: TData[];
+}
+
+export default function Delete<TData>({ ticketTypes }: DeleteProps<TData>) {
   return (
     <AlertDialog>
       {/* bg-blue-500 dark:bg-blue-800 dark:text-white py-2 px-5 rounded-md */}
@@ -21,9 +26,20 @@ export default function Delete() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            All of the selected ticket types will be delete. Are you still want
+            to delete all of them?
           </AlertDialogDescription>
+          <div>
+            {ticketTypes.map((ticketType) => (
+              <p
+                className="text-red-500 dark:text-red-700"
+                key={ticketType as string}
+              >
+                <IoIosTrash />
+                {ticketType as string}
+              </p>
+            ))}
+          </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>

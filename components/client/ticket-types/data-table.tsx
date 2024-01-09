@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import Add from "./add";
 import Delete from "./delete";
@@ -38,6 +38,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+  const [selectedRow, setSelectedRow] = useState<string[]>([]);
 
   const table = useReactTable({
     data,
@@ -60,6 +61,10 @@ export function DataTable<TData, TValue>({
   //  *   console.log(`data ::: ${data_.getValue("ticket_type")}`);
   //  * }
 
+  useEffect(() => {
+    // ! add data to selectedRow to update the delete and display the deleted item data.
+  }, [table.getSelectedRowModel().rows]);
+
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
@@ -77,7 +82,7 @@ export function DataTable<TData, TValue>({
           <Add />
           {table.getFilteredSelectedRowModel().rows.length > 0 && (
             // <Button variant={"destructive"}>Delete</Button>
-            <Delete />
+            <Delete ticketTypes={table.getSelectedRowModel().rows} />
           )}
         </div>
       </div>
