@@ -9,6 +9,7 @@ import updateLocationAction from "./update-location-action";
 import notificationFilterAction from "./notification-filter-action";
 import updateNotificationSeenAction from "./update-notification-seen-action";
 import deleteAllNotificationAction from "./delete-all-notification-action";
+import deleteTicketTypesAction from "./delete-ticket-types-action";
 
 export {
   postComment,
@@ -22,4 +23,5 @@ export {
   notificationFilterAction,
   updateNotificationSeenAction,
   deleteAllNotificationAction,
+  deleteTicketTypesAction,
 };

@@ -63,6 +63,16 @@ export function DataTable<TData, TValue>({
 
   useEffect(() => {
     // ! add data to selectedRow to update the delete and display the deleted item data.
+    const len = table.getSelectedRowModel().rows.length;
+
+    if (len > 0) {
+      let row = selectedRow;
+      row.push(
+        table.getSelectedRowModel().rows[len - 1].getValue("ticket_type")
+      );
+      setSelectedRow(row);
+      row = [];
+    }
   }, [table.getSelectedRowModel().rows]);
 
   return (
@@ -82,7 +92,7 @@ export function DataTable<TData, TValue>({
           <Add />
           {table.getFilteredSelectedRowModel().rows.length > 0 && (
             // <Button variant={"destructive"}>Delete</Button>
-            <Delete ticketTypes={table.getSelectedRowModel().rows} />
+            <Delete ticketTypes={selectedRow} />
           )}
         </div>
       </div>

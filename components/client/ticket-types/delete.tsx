@@ -1,3 +1,4 @@
+import { deleteTicketTypesAction } from "@/app/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,13 +10,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { IoIosTrash } from "react-icons/io";
+import { toast } from "@/components/ui/use-toast";
 
 interface DeleteProps<TData> {
   ticketTypes: TData[];
 }
 
 export default function Delete<TData>({ ticketTypes }: DeleteProps<TData>) {
+  async function handleDelete() {
+    const { message, success } = await deleteTicketTypesAction(ticketTypes);
+
+    if (success) {
+      toast({
+        title: "Successfully Deleted",
+        description: message,
+      });
+    } else {
+      toast({
+        title: "Failed to Delete",
+        description: message,
+      });
+    }
+  }
+
   return (
     <AlertDialog>
       {/* bg-blue-500 dark:bg-blue-800 dark:text-white py-2 px-5 rounded-md */}
@@ -29,21 +46,10 @@ export default function Delete<TData>({ ticketTypes }: DeleteProps<TData>) {
             All of the selected ticket types will be delete. Are you still want
             to delete all of them?
           </AlertDialogDescription>
-          <div>
-            {ticketTypes.map((ticketType) => (
-              <p
-                className="text-red-500 dark:text-red-700"
-                key={ticketType as string}
-              >
-                <IoIosTrash />
-                {ticketType as string}
-              </p>
-            ))}
-          </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction formAction={handleDelete}>Okay</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
