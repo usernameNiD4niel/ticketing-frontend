@@ -10,6 +10,7 @@ import notificationFilterAction from "./notification-filter-action";
 import updateNotificationSeenAction from "./update-notification-seen-action";
 import deleteAllNotificationAction from "./delete-all-notification-action";
 import deleteTicketTypesAction from "./delete-ticket-types-action";
+import createTicketTypesAction from "./create-ticket-types-action";
 
 export {
   postComment,
@@ -24,4 +25,5 @@ export {
   updateNotificationSeenAction,
   deleteAllNotificationAction,
   deleteTicketTypesAction,
+  createTicketTypesAction,
 };

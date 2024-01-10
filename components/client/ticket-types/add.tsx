@@ -13,8 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import SelectCustom from "@/components/utils/SelectCustom";
 
 export default function Add() {
+  function addAction() {}
+
   return (
     <AlertDialog>
       <AlertDialogTrigger className="bg-blue-500 dark:bg-blue-800 dark:text-white py-2 px-5 rounded-md">
@@ -28,7 +31,7 @@ export default function Add() {
             ticket type from the table.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <form action="" className="w-full">
+        <form action={addAction} className="w-full">
           <div className="w-full flex justify-between items-center">
             <Label htmlFor="ticketType">Ticket Type</Label>
             <Input
@@ -42,7 +45,14 @@ export default function Add() {
           <div className="space-y-2">
             <div className="w-full flex justify-between items-center">
               <Label htmlFor="type">Type</Label>
-              <Input id="type" className="w-[330px]" required name="type" />
+              {/* <Input id="type" className="w-[330px]" required name="type" /> */}
+              <SelectCustom
+                items={["Days"]}
+                name="type"
+                placeholder="Select a type"
+                key={"Add-Ticket-Types"}
+                width="w-[330px]"
+              />
             </div>
             <div className="w-full flex justify-between relative items-center">
               <Label htmlFor="howLong">How Long</Label>

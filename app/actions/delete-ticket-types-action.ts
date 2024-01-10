@@ -1,4 +1,6 @@
-import deleteTicketTypes from "@/endpoints/deleteTicketTypes";
+"use server";
+
+import { deleteTicketTypes } from "@/endpoints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

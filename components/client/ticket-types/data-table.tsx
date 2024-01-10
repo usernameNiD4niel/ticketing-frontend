@@ -62,7 +62,6 @@ export function DataTable<TData, TValue>({
   //  * }
 
   useEffect(() => {
-    // ! add data to selectedRow to update the delete and display the deleted item data.
     const len = table.getSelectedRowModel().rows.length;
 
     if (len > 0) {

@@ -31,6 +31,8 @@ import deleteNotification from "./deleteNotification";
 import getChampionPerformance from "./getChampionPerformance";
 import filterPerformance from "./filterPerformance";
 import getChampionPerformanceItem from "./getChampionPerformanceItem";
+import deleteTicketTypes from "./deleteTicketTypes";
+import createTicketTypes from "./createTicketTypes";
 
 export {
   getChampions,
@@ -66,4 +68,6 @@ export {
   getChampionPerformance,
   filterPerformance,
   getChampionPerformanceItem,
+  deleteTicketTypes,
+  createTicketTypes,
 };
