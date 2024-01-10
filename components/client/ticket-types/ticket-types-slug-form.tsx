@@ -11,8 +11,6 @@ export default function TicketTypesSlugForm() {
 
   const ticket_type = searchParams.get("ticket_type");
   const duration = searchParams.get("duration");
-  const created_at = searchParams.get("created_at");
-  const updated_at = searchParams.get("updated_at");
 
   return (
     <form className="w-full space-y-3 max-w-4xl">
@@ -36,7 +34,7 @@ export default function TicketTypesSlugForm() {
             name="type"
             isRequired={true}
             placeholder="Select a type"
-            defaultValue="Days"
+            defaultValue={duration?.split(" ")[1].trim()}
             key={"Add-Ticket-Types"}
             width="w-[780px]"
           />
