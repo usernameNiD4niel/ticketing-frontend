@@ -1,4 +1,6 @@
+"use server";
 import { createTicketTypes } from "@/endpoints";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -19,7 +21,7 @@ export default async function createTicketTypesAction(formData: FormData) {
   );
 
   if (response.success) {
-    // Todo: Create a revalidation here to the get endpoint of ticket types
+    revalidateTag("get-ticket-type");
   }
 
   return response;

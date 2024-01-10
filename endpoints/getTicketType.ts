@@ -8,6 +8,9 @@ export default async function getTicketType(token: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: ["get-ticket-type"],
+      },
     }
   );
 
