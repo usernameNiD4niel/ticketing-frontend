@@ -1,7 +1,7 @@
 type CreateTicketTypesProps = {
-  ticket_type: string;
-  type: string;
-  howLong: string;
+  ticket_type?: string;
+  type?: string;
+  howLong?: string;
 };
 
 export default async function createTicketTypes(

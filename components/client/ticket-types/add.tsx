@@ -1,3 +1,4 @@
+import { createTicketTypesAction } from "@/app/actions";
 import "./ticket-types.css";
 import {
   AlertDialog,
@@ -16,8 +17,6 @@ import { Label } from "@/components/ui/label";
 import SelectCustom from "@/components/utils/SelectCustom";
 
 export default function Add() {
-  function addAction() {}
-
   return (
     <AlertDialog>
       <AlertDialogTrigger className="bg-blue-500 dark:bg-blue-800 dark:text-white py-2 px-5 rounded-md">
@@ -31,7 +30,7 @@ export default function Add() {
             ticket type from the table.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <form action={addAction} className="w-full">
+        <form action={createTicketTypesAction} className="w-full">
           <div className="w-full flex justify-between items-center">
             <Label htmlFor="ticketType">Ticket Type</Label>
             <Input
