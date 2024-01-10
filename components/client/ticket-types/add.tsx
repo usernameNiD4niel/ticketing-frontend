@@ -44,7 +44,7 @@ export default function Add() {
 
   return (
     <AlertDialog open={open} onOpenChange={handleOpenChange}>
-      <AlertDialogTrigger className="bg-blue-500 dark:bg-blue-800 dark:text-white py-2 px-5 rounded-md">
+      <AlertDialogTrigger className="bg-blue-500 dark:bg-blue-800 text-white py-2 px-5 rounded-md">
         Add
       </AlertDialogTrigger>
       <AlertDialogContent>

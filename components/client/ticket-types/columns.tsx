@@ -2,9 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { TicketTypeColumns } from "@/constants/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 
 export const columns: ColumnDef<TicketTypeColumns>[] = [
   {
@@ -84,5 +91,37 @@ export const columns: ColumnDef<TicketTypeColumns>[] = [
     cell: ({ row }) => (
       <div className="md:ml-6 font-medium">{row.getValue("updated_at")}</div>
     ),
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const payment = row.original;
+
+      return (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                <Link
+                  href={{
+                    pathname: `/department/it/ticket-types/${payment.ticket_type}`,
+                    query: payment,
+                  }}
+                  className="w-full"
+                >
+                  Edit
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+      );
+    },
   },
 ];
