@@ -57,10 +57,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  //  * for (const data_ of table.getSelectedRowModel().rows) {
-  //  *   console.log(`data ::: ${data_.getValue("ticket_type")}`);
-  //  * }
-
   useEffect(() => {
     const len = table.getSelectedRowModel().rows.length;
 

@@ -11,6 +11,7 @@ interface SelectCustomProps {
   name: string;
   placeholder: string;
   width?: string;
+  isRequired?: boolean;
 }
 
 export default function SelectCustom({
@@ -18,9 +19,10 @@ export default function SelectCustom({
   name,
   placeholder,
   width,
+  isRequired = false,
 }: SelectCustomProps) {
   return (
-    <Select name={name}>
+    <Select name={name} required={isRequired}>
       <SelectTrigger className={`${width ? width : "w-[180px]"}`}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

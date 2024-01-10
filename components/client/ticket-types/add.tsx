@@ -15,10 +15,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SelectCustom from "@/components/utils/SelectCustom";
+import { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 export default function Add() {
+  const [open, setOpen] = useState(false);
+
+  async function handleFormAction(formData: FormData) {
+    const { message, success } = await createTicketTypesAction(formData);
+
+    if (success) {
+      toast({
+        title: "Successfully Created",
+        description: message,
+      });
+      setOpen(false);
+    } else {
+      toast({
+        title: "Failed to Create",
+        description: message,
+      });
+    }
+  }
+
+  function handleOpenChange(isOpen: boolean) {
+    setOpen(isOpen);
+  }
+
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={handleOpenChange}>
       <AlertDialogTrigger className="bg-blue-500 dark:bg-blue-800 dark:text-white py-2 px-5 rounded-md">
         Add
       </AlertDialogTrigger>
@@ -30,7 +55,7 @@ export default function Add() {
             ticket type from the table.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <form action={createTicketTypesAction} className="w-full">
+        <form action={handleFormAction} className="w-full">
           <div className="w-full flex justify-between items-center">
             <Label htmlFor="ticketType">Ticket Type</Label>
             <Input
@@ -48,6 +73,7 @@ export default function Add() {
               <SelectCustom
                 items={["Days"]}
                 name="type"
+                isRequired={true}
                 placeholder="Select a type"
                 key={"Add-Ticket-Types"}
                 width="w-[330px]"
@@ -65,7 +91,9 @@ export default function Add() {
             </div>
           </div>
           <AlertDialogFooter className="mt-4">
-            <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
+            <AlertDialogCancel type="button" onClick={() => setOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
             <Button type="submit">Continue</Button>
           </AlertDialogFooter>
         </form>

@@ -8,6 +8,7 @@ export default async function createTicketTypes(
   ticketType: CreateTicketTypesProps,
   token: string
 ) {
+  console.log(`ticket type ::: ${JSON.stringify(ticketType, null, 2)}`);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ticket-types`,
     {
@@ -23,12 +24,15 @@ export default async function createTicketTypes(
   const data = await response.json();
 
   if (response.ok) {
+    console.log("is it ok");
+
     return {
       success: true,
       message: data.message as string,
     };
   }
 
+  console.log("or not");
   return {
     success: false,
     message:
