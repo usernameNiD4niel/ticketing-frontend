@@ -11,14 +11,31 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/use-toast";
+import { TicketTypeColumns } from "@/constants/types";
+import { Table } from "@tanstack/react-table";
 
 interface DeleteProps<TData> {
-  ticketTypes: TData[];
+  table: Table<TData>;
 }
 
-export default function Delete<TData>({ ticketTypes }: DeleteProps<TData>) {
+export default function Delete<TData>({ table }: DeleteProps<TData>) {
   async function handleDelete() {
-    const { message, success } = await deleteTicketTypesAction(ticketTypes);
+    const ticket_types = [];
+
+    for (const selectedRows of table.getSelectedRowModel().rows) {
+      const original = selectedRows.original as TicketTypeColumns;
+      ticket_types.push(original.ticket_type);
+    }
+
+    if (ticket_types.length === 0) {
+      toast({
+        title: "Failed to Delete",
+        description: "Please select an item you want to be deleted",
+      });
+      return;
+    }
+
+    const { message, success } = await deleteTicketTypesAction(ticket_types);
 
     if (success) {
       toast({
@@ -49,7 +66,7 @@ export default function Delete<TData>({ ticketTypes }: DeleteProps<TData>) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction formAction={handleDelete}>Okay</AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete}>Okay</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
