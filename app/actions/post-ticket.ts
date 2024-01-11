@@ -1,6 +1,7 @@
 "use server";
 import { PostTicketTypes } from "@/constants/types";
 import { postTroubleTicket } from "@/endpoints";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 function getFormattedName(name: string) {
@@ -42,6 +43,7 @@ export default async function postTicket(formData: FormData) {
   const { message, id } = await postTroubleTicket(token!, request);
 
   if (message) {
+    revalidateTag("feed-table-get-data");
     return {
       message,
       success: true,

@@ -14,6 +14,9 @@ export default async function getPaginatedData(page: number, token: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: ["feed-table-get-data"],
+      },
     }
   );
 

@@ -16,8 +16,6 @@ export default async function postTroubleTicket(
     }
   );
 
-  console.log(`dataaa ::: ${JSON.stringify(data, null, 2)}`);
-
   if (response.ok) {
     const data_ = await response.json();
 
