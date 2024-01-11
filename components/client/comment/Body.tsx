@@ -30,6 +30,9 @@ const getComments = async (id: number, token: string) => {
     const { comments } = data;
     return comments;
   }
+
+  console.log("log", response);
+
   throw new Error(
     "Cannot fetch the comment for this ticket, pleas try again😥"
   );
