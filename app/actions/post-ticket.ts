@@ -22,6 +22,7 @@ export default async function postTicket(formData: FormData) {
   const contact = formData.get("contact")!.toString();
   const location = formData.get("location")!.toString();
   const requestor = formData.get("requestor")?.toString();
+  const ticket_type = formData.get("ticket_type")?.toString();
 
   const request: PostTicketTypes = {
     description,
@@ -32,6 +33,10 @@ export default async function postTicket(formData: FormData) {
 
   if (requestor) {
     request.requestor = getFormattedName(requestor);
+  }
+
+  if (ticket_type) {
+    request.ticket_type = ticket_type.split("-")[0].trim();
   }
 
   const { message, id } = await postTroubleTicket(token!, request);

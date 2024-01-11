@@ -4,12 +4,6 @@ import TicketTypesSlugForm from "@/components/client/ticket-types/ticket-types-s
 export default function TicketTypesSlug() {
   return (
     <div className="md:container">
-      {/* <div className="flex items-center justify-center w-full h-[80vh]">
-        <p className="text-center mx-4">
-          Please refresh your browser or reset your internet{" "}
-          <span className="text-xl">😪</span>
-        </p>
-      </div> */}
       <div className="mt-4 flex items-center justify-center md:mx-0">
         <div className="w-full relative mx-2 md:mx-0">
           <SlugBack />

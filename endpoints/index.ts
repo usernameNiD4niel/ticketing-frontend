@@ -35,6 +35,7 @@ import deleteTicketTypes from "./deleteTicketTypes";
 import createTicketTypes from "./createTicketTypes";
 import getTicketType from "./getTicketType";
 import updateTicketType from "./updateTicketType";
+import getCreateTicketType from "./getCreateTicketType";
 
 export {
   getChampions,
@@ -74,4 +75,5 @@ export {
   createTicketTypes,
   getTicketType,
   updateTicketType,
+  getCreateTicketType,
 };

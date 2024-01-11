@@ -9,19 +9,21 @@ import { LoadingButton } from "@/components/utils/LoadingButton";
 import { postTicket } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import CreateTicketCombo from "@/components/utils/CreateTicketCombo";
-import ScalableCombobox from "@/components/utils/NamesCombobox";
 import NamesCombobox from "@/components/utils/NamesCombobox";
+import SelectCustom from "@/components/utils/SelectCustom";
 
 interface CreateTicketFormProps {
   locations: string[];
   accessLevel: string;
   users: string[];
+  ticket_types: string[];
 }
 
 export default function CreateTicketForm({
   locations,
   accessLevel,
   users,
+  ticket_types,
 }: CreateTicketFormProps) {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
@@ -110,10 +112,23 @@ export default function CreateTicketForm({
       <h1 className="text-2xl font-bold">Create trouble ticket</h1>
 
       {accessLevel !== "requestor" && accessLevel !== "unset" && (
-        <Label className="flex flex-col gap-y-2">
-          <span className="text-sm">Requestor</span>
-          <NamesCombobox setState={setName} state={name} users={users} />
-        </Label>
+        <>
+          <Label className="flex flex-col gap-y-2">
+            <span className="text-sm">Requestor</span>
+            <NamesCombobox setState={setName} state={name} users={users} />
+          </Label>
+          <Label className="flex flex-col gap-y-2">
+            Ticket Type
+            <SelectCustom
+              items={ticket_types}
+              name="ticket_type"
+              placeholder="Select ticket type"
+              isRequired
+              width="w-full"
+              key={"CreateTicketForm"}
+            />
+          </Label>
+        </>
       )}
 
       <Label className="flex flex-col gap-y-2">
