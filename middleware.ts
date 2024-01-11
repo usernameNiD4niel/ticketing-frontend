@@ -42,6 +42,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
+  if (
+    access_level?.toLowerCase() === "requestor" ||
+    access_level?.toLowerCase() === "unset" ||
+    access_level?.toLowerCase() === "champion"
+  ) {
+    if (pathname === "/department/it/ticket-types") {
+      console.log(`access level ::: ${access_level}`);
+      return NextResponse.redirect(new URL("/department/it", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 
@@ -55,5 +66,6 @@ export const config = {
     "/department/it/pending-role",
     "/department/it/unhandled-tickets",
     "/department/it/code",
+    "/department/it/ticket-types",
   ],
 };

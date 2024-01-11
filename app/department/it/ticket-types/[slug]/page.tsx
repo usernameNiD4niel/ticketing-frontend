@@ -1,7 +1,7 @@
 import SlugBack from "@/components/client/ticket-types/slug-back";
 import TicketTypesSlugForm from "@/components/client/ticket-types/ticket-types-slug-form";
 
-export default function TicketTypesSlug(params: { slug: string }) {
+export default function TicketTypesSlug() {
   return (
     <div className="md:container">
       {/* <div className="flex items-center justify-center w-full h-[80vh]">

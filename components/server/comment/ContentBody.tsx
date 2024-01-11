@@ -26,7 +26,7 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
         }
 
         // * show activity
-        return <TicketActivity {...com} />;
+        return <TicketActivity {...com} key={index} />;
       });
     } else {
       return (
