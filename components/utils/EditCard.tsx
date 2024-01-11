@@ -11,7 +11,7 @@ import { FeedTicketProps } from "@/constants/types";
 import { FC } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import DisplayForm from "./DisplayForm";
-import { getChampions } from "@/endpoints";
+import { getChampions, getCreateTicketType } from "@/endpoints";
 import { cookies } from "next/headers";
 import { Toaster } from "../ui/toaster";
 
@@ -27,8 +27,13 @@ const EditCard: FC<EditCardProps> = async ({
   isTicketOwner,
 }) => {
   const token = cookies().get("token")?.value;
+  const isCatalyst =
+    cookies().get("it_access_level")?.value.toLowerCase() === "catalyst"
+      ? true
+      : false;
 
   const champions = await getChampions(token!);
+  const ticket_type = await getCreateTicketType(token!);
 
   return (
     <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center">
@@ -55,6 +60,8 @@ const EditCard: FC<EditCardProps> = async ({
                 ticket={ticket}
                 isTicketOwner={isTicketOwner}
                 champions={champions}
+                ticket_type={ticket_type}
+                isCatalyst={isCatalyst}
               />
               <Toaster />
             </AlertDialogHeader>

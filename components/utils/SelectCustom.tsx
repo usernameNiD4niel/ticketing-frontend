@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
 
 interface SelectCustomProps {
   items: string[];
@@ -23,8 +24,19 @@ export default function SelectCustom({
   isRequired = false,
   defaultValue,
 }: SelectCustomProps) {
+  const [selected, setSelected] = useState(defaultValue);
+
+  function handleOpen(selectedItem: string) {
+    setSelected(selectedItem);
+  }
+
   return (
-    <Select name={name} required={isRequired} value={defaultValue}>
+    <Select
+      name={name}
+      required={isRequired}
+      value={selected}
+      onValueChange={handleOpen}
+    >
       <SelectTrigger className={`${width ? width : "w-[180px]"}`}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

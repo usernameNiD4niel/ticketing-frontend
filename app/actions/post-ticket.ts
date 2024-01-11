@@ -37,7 +37,7 @@ export default async function postTicket(formData: FormData) {
   }
 
   if (ticket_type) {
-    request.ticket_type = ticket_type.split("-")[0].trim();
+    request.ticket_type = ticket_type;
   }
 
   const { message, id } = await postTroubleTicket(token!, request);

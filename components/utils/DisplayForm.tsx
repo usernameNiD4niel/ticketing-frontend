@@ -9,17 +9,22 @@ import { AlertDialogAction, AlertDialogCancel } from "../ui/alert-dialog";
 import { updateActivities } from "@/app/actions";
 import { useToast } from "../ui/use-toast";
 import Cookies from "js-cookie";
+import SelectCustom from "./SelectCustom";
 
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
   isTicketOwner: boolean;
   champions: string[];
+  ticket_type: string[];
+  isCatalyst: boolean;
 };
 
 const DisplayForm: FC<DisplayFormProps> = ({
   ticket,
   isTicketOwner,
   champions,
+  ticket_type,
+  isCatalyst,
 }) => {
   const updateAction = updateActivities.bind(null, ticket!.id.toString());
 
@@ -28,6 +33,8 @@ const DisplayForm: FC<DisplayFormProps> = ({
   const selectableItems = ["CLOSED", "OPEN", "CANCELLED"];
 
   const { toast } = useToast();
+
+  console.log(JSON.stringify(ticket_type, null, 2));
 
   const handleSubmitServerAction = async (formData: FormData) => {
     const message = await updateAction(formData);
@@ -80,6 +87,30 @@ const DisplayForm: FC<DisplayFormProps> = ({
         selectedState={ticket?.status.toUpperCase() ?? "Set status here"}
         isFullWidth={true}
       />
+
+      {ticket && isCatalyst && (
+        <Label className="space-y-2">
+          <span>Ticket Type</span>
+          <SelectCustom
+            items={ticket_type}
+            name="ticket_type"
+            placeholder="Select a ticket type"
+            defaultValue={ticket.ticket_type?.trim() ?? ""}
+            isRequired={false}
+            width="w-full"
+            key={"UtilsDisplayFormLabelSelectCustomTicketType"}
+          />
+          {/* 
+          <SelectCustom
+              items={ticket_types}
+              name="ticket_type"
+              placeholder="Select ticket type"
+              isRequired
+              width="w-full"
+              key={"CreateTicketForm"}
+            /> */}
+        </Label>
+      )}
 
       <div className="w-full flex justify-end items-center gap-x-3 mt-3">
         <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
