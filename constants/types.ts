@@ -59,6 +59,7 @@ export type FeedTicketProps = {
   cancelled_date: string;
   location: string;
   contact: string;
+  ticket_type?: string;
 };
 
 export type AccountProps = {

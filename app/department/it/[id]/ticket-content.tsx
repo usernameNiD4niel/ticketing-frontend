@@ -22,6 +22,11 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
       <div className="w-full relative mx-2 md:mx-0">
         <div className="flex flex-col md:flex-row justify-between">
           <div className="space-y-1">
+            {ticket.ticket_type && (
+              <div className="text-sm bg-gradient-to-r from-[#99CC68] dark:from-indigo-900 p-1 pl-2 font-bold">
+                {ticket.ticket_type}
+              </div>
+            )}
             <h1 className="text-3xl font-bold my-2">#{ticket.id}</h1>
             <div className="space-x-1">
               <Badge>{ticket.priority.toUpperCase()}</Badge>
