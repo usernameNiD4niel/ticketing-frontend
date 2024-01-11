@@ -1,7 +1,7 @@
 interface TicketTypeProps {
   type: string;
   howLong: string;
-  ticketType: string;
+  ticket_type: string;
 }
 
 export default async function updateTicketType(
@@ -9,6 +9,16 @@ export default async function updateTicketType(
   ticketType: string,
   data: TicketTypeProps
 ) {
+  const _data: {
+    type: string;
+    howLong: string;
+    ticket_type: string | null;
+  } = data;
+
+  if (ticketType === data.ticket_type) {
+    _data.ticket_type = null;
+  }
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ticket-types/${ticketType}`,
     {
@@ -36,4 +46,3 @@ export default async function updateTicketType(
       "Cannot update the " + ticketType + " please try again",
   };
 }
-// ! use this tom!

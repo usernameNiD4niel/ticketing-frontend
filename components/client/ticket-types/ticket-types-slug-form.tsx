@@ -1,10 +1,12 @@
 "use client";
 
+import { updateTicketTypeAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 import SelectCustom from "@/components/utils/SelectCustom";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function TicketTypesSlugForm() {
   const searchParams = useSearchParams();
@@ -12,8 +14,36 @@ export default function TicketTypesSlugForm() {
   const ticket_type = searchParams.get("ticket_type");
   const duration = searchParams.get("duration");
 
+  const router = useRouter();
+
+  async function formAction(formData: FormData) {
+    if (ticket_type) {
+      formData.append("ticketType_", ticket_type);
+
+      const { message, success } = await updateTicketTypeAction(formData);
+
+      if (success) {
+        router.push("/department/it/ticket-types");
+        toast({
+          title: "Update Success",
+          description: message,
+        });
+      } else {
+        toast({
+          title: "Update Failed",
+          description: message,
+        });
+      }
+    } else {
+      toast({
+        title: "Update Failed",
+        description: "Please try to re-login and try again",
+      });
+    }
+  }
+
   return (
-    <form className="w-full space-y-3 max-w-4xl">
+    <form className="w-full space-y-3 max-w-4xl" action={formAction}>
       <div className="flex w-full justify-between items-center">
         <Label htmlFor="ticketType">Ticket Type</Label>
         <Input
