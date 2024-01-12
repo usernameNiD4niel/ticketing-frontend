@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import BottomSheet from "@/components/utils/BottomSheet";
 import EditCard from "@/components/utils/EditCard";
 import { FeedTicketProps } from "@/constants/types";
@@ -16,6 +17,47 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
   // const activities: Activity[] = await getSpecifiedActivities(id, token!);
 
   const { is_ticket_owner } = ticket;
+
+  function ownerEditCard() {
+    if (is_ticket_owner) {
+      if (ticket.status.toLowerCase() === "open") {
+        return (
+          <div>
+            <Button>Cancel Ticket</Button>
+            <Button>Close Ticket</Button>
+          </div>
+        );
+      } else {
+        // * If ticket is cancelled or closed
+        return (
+          <div>
+            <Button>Open Ticket</Button>
+          </div>
+        );
+      }
+    }
+  }
+
+  function highRankUser() {
+    if (role?.toLowerCase() === "champion") {
+      // * if champion, disable assigned to dropdown
+      return (
+        <EditCard
+          ticket={ticket}
+          ticketNumber={`#${ticket.id}`}
+          isChampion={true}
+        />
+      );
+    }
+    // * else, allow the current user to update the assigned to dropdown
+    return (
+      <EditCard
+        ticket={ticket}
+        ticketNumber={`#${ticket.id}`}
+        isChampion={false}
+      />
+    );
+  }
 
   return (
     <div className="mt-4 flex items-center justify-center md:mx-0">
@@ -69,23 +111,9 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
         <hr className="my-4" />
         {role?.toLowerCase() === "champion" ||
         role?.toLowerCase() === "catalyst" ||
-        role?.toLowerCase() === "supreme" ? (
-          <EditCard
-            ticket={ticket}
-            ticketNumber={`#${ticket.id}`}
-            isTicketOwner={false}
-          />
-        ) : (
-          <>
-            {is_ticket_owner && (
-              <EditCard
-                ticket={ticket}
-                ticketNumber={`#${ticket.id}`}
-                isTicketOwner={is_ticket_owner}
-              />
-            )}
-          </>
-        )}
+        role?.toLowerCase() === "supreme"
+          ? highRankUser()
+          : ownerEditCard()}
         {/* <RightSheet activities={activities} /> */}
         {/* <hr className="my-4" /> */}
         <BottomSheet ticket_id={ticket.id} />

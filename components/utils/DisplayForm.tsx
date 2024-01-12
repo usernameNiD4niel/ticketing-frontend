@@ -10,21 +10,20 @@ import { updateActivities } from "@/app/actions";
 import { useToast } from "../ui/use-toast";
 import Cookies from "js-cookie";
 import SelectCustom from "./SelectCustom";
+import TicketTypeFields from "../client/feed/ticket-type-fields";
 
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
-  isTicketOwner: boolean;
+  isChampion: boolean;
   champions: string[];
   ticket_type: string[];
-  isCatalyst: boolean;
 };
 
 const DisplayForm: FC<DisplayFormProps> = ({
   ticket,
-  isTicketOwner,
+  isChampion,
   champions,
   ticket_type,
-  isCatalyst,
 }) => {
   const updateAction = updateActivities.bind(null, ticket!.id.toString());
 
@@ -66,29 +65,33 @@ const DisplayForm: FC<DisplayFormProps> = ({
       action={handleSubmitServerAction}
       onSubmit={handleFormSubmit}
     >
-      <Label className="space-y-2">
+      {/* <Label className="space-y-2">
         <span>Subject</span>
         <Input value={ticket?.subject} disabled name="subject" />
       </Label>
       <Label className="space-y-2">
         <span>Description</span>
         <Input value={ticket?.description} disabled name="description" />
-      </Label>
-      {!isTicketOwner && (
-        <HighProfileInmate
-          champions={champions}
-          assignTo={ticket?.assigned_to ?? "Choose here"}
-          priority={ticket?.priority ?? "Set priority here"}
-        />
-      )}
-      <CustomSelect
+      </Label> */}
+
+      <HighProfileInmate
+        champions={champions}
+        assignTo={ticket?.assigned_to ?? "Choose here"}
+        isChampion={isChampion}
+      />
+
+      <TicketTypeFields
+        default_tt={ticket?.ticket_type || ""}
+        ticket_type={ticket_type}
+      />
+
+      {/* <CustomSelect
         label="Status"
         selectItems={selectableItems} // we remove the open here because we added it manually inside
         selectedState={ticket?.status.toUpperCase() ?? "Set status here"}
         isFullWidth={true}
       />
 
-      {ticket && isCatalyst && (
         <Label className="space-y-2">
           <span>Ticket Type</span>
           <SelectCustom
@@ -100,17 +103,7 @@ const DisplayForm: FC<DisplayFormProps> = ({
             width="w-full"
             key={"UtilsDisplayFormLabelSelectCustomTicketType"}
           />
-          {/* 
-          <SelectCustom
-              items={ticket_types}
-              name="ticket_type"
-              placeholder="Select ticket type"
-              isRequired
-              width="w-full"
-              key={"CreateTicketForm"}
-            /> */}
-        </Label>
-      )}
+        </Label> */}
 
       <div className="w-full flex justify-end items-center gap-x-3 mt-3">
         <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
@@ -126,18 +119,38 @@ const DisplayForm: FC<DisplayFormProps> = ({
 
 type HighProfileInmateProps = {
   champions: string[];
-  priority: string;
   assignTo: string;
+  isChampion: boolean;
 };
 
 const HighProfileInmate: FC<HighProfileInmateProps> = ({
   champions,
   assignTo,
-  priority,
+  isChampion,
 }) => {
   const name = Cookies.get("name");
 
   const role = Cookies.get("it_access_level")?.toLowerCase();
+
+  function displayAssignedTo() {
+    if (isChampion) {
+      return (
+        <Label className="space-y-2">
+          <span>Assign To</span>
+          <Input disabled defaultValue={name} />
+        </Label>
+      );
+    }
+
+    return (
+      <CustomSelect
+        label="Assign To"
+        selectItems={champs}
+        selectedState={assignTo}
+        isFullWidth={true}
+      />
+    );
+  }
 
   let champs =
     role === "champion"
@@ -146,28 +159,10 @@ const HighProfileInmate: FC<HighProfileInmateProps> = ({
       ? [...champions, name!]
       : champions;
 
-  return (
-    <React.Fragment>
-      <CustomSelect
-        label="Priority"
-        selectItems={["LOW", "MEDIUM", "HIGH"]}
-        selectedState={
-          priority.toUpperCase() === "UNSET" ? "LOW" : priority.toUpperCase()
-        }
-        isFullWidth={true}
-      />
-
-      {champions.length === 0 ? (
-        <div>Getting champions...</div>
-      ) : (
-        <CustomSelect
-          label="Assign To"
-          selectItems={champs}
-          selectedState={assignTo}
-          isFullWidth={true}
-        />
-      )}
-    </React.Fragment>
+  return champions.length === 0 ? (
+    <div>Getting champions...</div>
+  ) : (
+    displayAssignedTo()
   );
 };
 

@@ -36,6 +36,7 @@ import createTicketTypes from "./createTicketTypes";
 import getTicketType from "./getTicketType";
 import updateTicketType from "./updateTicketType";
 import getCreateTicketType from "./getCreateTicketType";
+import getSpecificTicketType from "./getSpecificTicketType";
 
 export {
   getChampions,
@@ -76,4 +77,5 @@ export {
   getTicketType,
   updateTicketType,
   getCreateTicketType,
+  getSpecificTicketType,
 };

@@ -334,3 +334,8 @@ export type TicketTypeColumns = {
   created_at: string;
   updated_at: string;
 };
+
+export type TicketType = {
+  duration: string;
+  priority: string;
+};

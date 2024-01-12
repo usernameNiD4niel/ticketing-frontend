@@ -18,19 +18,15 @@ import { Toaster } from "../ui/toaster";
 type EditCardProps = {
   ticketNumber: string;
   ticket: FeedTicketProps | null;
-  isTicketOwner: boolean;
+  isChampion: boolean;
 };
 
 const EditCard: FC<EditCardProps> = async ({
   ticketNumber,
   ticket,
-  isTicketOwner,
+  isChampion,
 }) => {
   const token = cookies().get("token")?.value;
-  const isCatalyst =
-    cookies().get("it_access_level")?.value.toLowerCase() === "catalyst"
-      ? true
-      : false;
 
   const champions = await getChampions(token!);
   const ticket_type = await getCreateTicketType(token!);
@@ -46,7 +42,7 @@ const EditCard: FC<EditCardProps> = async ({
             <span className="text-xl">
               <AiOutlineEdit />
             </span>
-            <span>Edit</span>
+            <span>Assign Ticket</span>
           </Button>
         </AlertDialogTrigger>
         <div className="overflow-y-auto">
@@ -58,10 +54,9 @@ const EditCard: FC<EditCardProps> = async ({
               </AlertDialogDescription>
               <DisplayForm
                 ticket={ticket}
-                isTicketOwner={isTicketOwner}
+                isChampion={isChampion}
                 champions={champions}
                 ticket_type={ticket_type}
-                isCatalyst={isCatalyst}
               />
               <Toaster />
             </AlertDialogHeader>
