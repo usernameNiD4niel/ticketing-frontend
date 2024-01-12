@@ -205,14 +205,12 @@ export function DataTable<TValue>({
           </TableBody>
         </Table>
       </div>
-      {data && data.length > 0 && (
-        <DataTablePagination
-          setData={setData}
-          table={table}
-          next_page_url={next_page_url}
-          isFiltering={isFiltering}
-        />
-      )}
+      <DataTablePagination
+        setData={setData}
+        table={table}
+        next_page_url={next_page_url}
+        isFiltering={isFiltering}
+      />
     </div>
   );
 }

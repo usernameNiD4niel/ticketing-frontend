@@ -111,25 +111,26 @@ export default function CreateTicketForm({
     >
       <h1 className="text-2xl font-bold">Create trouble ticket</h1>
 
-      {accessLevel !== "requestor" && accessLevel !== "unset" && (
-        <>
-          <Label className="flex flex-col gap-y-2">
-            <span className="text-sm">Requestor</span>
-            <NamesCombobox setState={setName} state={name} users={users} />
-          </Label>
-          <Label className="flex flex-col gap-y-2">
-            Ticket Type
-            <SelectCustom
-              items={ticket_types}
-              name="ticket_type"
-              placeholder="Select ticket type"
-              isRequired
-              width="w-full"
-              key={"CreateTicketForm"}
-            />
-          </Label>
-        </>
-      )}
+      {accessLevel === "catalyst" ||
+        (accessLevel === "supreme" && (
+          <>
+            <Label className="flex flex-col gap-y-2">
+              <span className="text-sm">Requestor</span>
+              <NamesCombobox setState={setName} state={name} users={users} />
+            </Label>
+            <Label className="flex flex-col gap-y-2">
+              Ticket Type
+              <SelectCustom
+                items={ticket_types}
+                name="ticket_type"
+                placeholder="Select ticket type"
+                isRequired
+                width="w-full"
+                key={"CreateTicketForm"}
+              />
+            </Label>
+          </>
+        ))}
 
       <Label className="flex flex-col gap-y-2">
         <span className="text-sm">Subject</span>

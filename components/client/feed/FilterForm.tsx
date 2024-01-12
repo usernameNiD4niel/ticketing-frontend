@@ -127,7 +127,7 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
           /> */}
           <DropdownStatus
             filter_by="status"
-            items={["OPEN", "CLOSED", "RE-OPENED", "EXPIRED", "RESOLVED"]}
+            items={["OPEN", "CLOSED", "CANCEL"]}
             key={"dropdownstatusfilterform"}
           />
         </div>
