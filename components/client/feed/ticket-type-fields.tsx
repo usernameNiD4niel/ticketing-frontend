@@ -1,7 +1,6 @@
 import { getSpecificTicketTypeAction } from "@/app/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import SelectCustom from "@/components/utils/SelectCustom";
 import { useEffect, useState } from "react";
 import SelectTT from "./select-tt";
 
@@ -19,10 +18,7 @@ export default function TicketTypeFields({
   const [duration, setDuration] = useState("");
 
   async function getSpecifiedTT() {
-    console.log(`selected tt ::: ${selectedTT}`);
-
     const response = await getSpecificTicketTypeAction(selectedTT);
-    console.log(`the response ::: ${JSON.stringify(response, null, 2)}`);
     setPriority(response.priority);
     setDuration(response.duration);
   }
@@ -38,7 +34,7 @@ export default function TicketTypeFields({
   }, [selectedTT]);
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-2">
       <Label className="flex flex-col gap-2">
         <span>Ticket Type</span>
         <SelectTT
@@ -46,17 +42,8 @@ export default function TicketTypeFields({
           setSelected={setSelectedTT}
           ticketType={ticket_type}
         />
-        {/* <SelectCustom
-          items={ticket_type}
-          name="Ticket Type"
-          placeholder="Select ticket type"
-          defaultValue={default_tt}
-          isRequired
-          width="w-full"
-          key={"ComponentClientFeedTicketTypeFieldTicketTypeFieldTicketType"}
-        /> */}
       </Label>
-      <Label className="flex flex-col gap-2">
+      <Label className="flex flex-col gap-2 mt-2">
         <span>Priority</span>
         <Input
           value={priority}
