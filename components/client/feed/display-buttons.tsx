@@ -1,23 +1,46 @@
 "use client";
+import updateTicketStatusAction from "@/app/actions/update-ticket-status-action";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { IoClose, IoFolderOpenOutline } from "react-icons/io5";
 import { TbMessageCancel } from "react-icons/tb";
 
 interface DispalyButtonsProps {
   status: string;
+  id: number;
 }
 
-export default function DispalyButtons({ status }: DispalyButtonsProps) {
-  function handleOpenClick() {
-    console.log("the ticket is now open");
+export default function DispalyButtons({ status, id }: DispalyButtonsProps) {
+  function displayFeedback(message: string, success: boolean) {
+    if (success) {
+      toast({
+        title: "Update Success",
+        description: message,
+      });
+    } else {
+      toast({
+        title: "Update Failed",
+        description: message,
+      });
+    }
   }
 
-  function handleCloseClick() {
-    console.log("The ticket is now closed");
+  async function handleOpenClick() {
+    const { message, success } = await updateTicketStatusAction("open", id);
+    displayFeedback(message, success);
   }
 
-  function handleCancelClick() {
-    console.log("The ticket is now cancelled");
+  async function handleCloseClick() {
+    const { message, success } = await updateTicketStatusAction("closed", id);
+    displayFeedback(message, success);
+  }
+
+  async function handleCancelClick() {
+    const { message, success } = await updateTicketStatusAction(
+      "cancelled",
+      id
+    );
+    displayFeedback(message, success);
   }
 
   function content() {

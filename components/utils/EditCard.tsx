@@ -69,7 +69,10 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
         </div>
       </AlertDialog>
       {(isCatalyst || isChampion || ticket?.is_ticket_owner) && (
-        <DispalyButtons status={ticket?.status.toLowerCase() ?? "low"} />
+        <DispalyButtons
+          status={ticket?.status.toLowerCase() ?? "low"}
+          id={ticket!.id}
+        />
       )}
     </div>
   );
