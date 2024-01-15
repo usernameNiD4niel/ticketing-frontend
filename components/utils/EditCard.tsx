@@ -14,6 +14,7 @@ import DisplayForm from "./DisplayForm";
 import { getChampions, getCreateTicketType } from "@/endpoints";
 import { cookies } from "next/headers";
 import { Toaster } from "../ui/toaster";
+import DispalyButtons from "../client/feed/display-buttons";
 
 type EditCardProps = {
   ticketNumber: string;
@@ -24,6 +25,11 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
   const token = cookies().get("token")?.value;
   const isChampion =
     cookies().get("it_access_level")?.value.toLowerCase() === "champion"
+      ? true
+      : false;
+
+  const isCatalyst =
+    cookies().get("it_access_level")?.value.toLowerCase() === "catalyst"
       ? true
       : false;
 
@@ -62,6 +68,9 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
           </AlertDialogContent>
         </div>
       </AlertDialog>
+      {(isCatalyst || isChampion || ticket?.is_ticket_owner) && (
+        <DispalyButtons status={ticket?.status.toLowerCase() ?? "low"} />
+      )}
     </div>
   );
 };
