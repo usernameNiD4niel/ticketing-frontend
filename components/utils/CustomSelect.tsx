@@ -25,6 +25,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 }) => {
   const [value, setValue] = React.useState(selectedState);
 
+  React.useEffect(() => {
+    if (selectedState && selectedState.length > 0) {
+      setValue(selectedState);
+    }
+  }, [selectedState]);
   const handleOnSelectedRole = (value: string) => {
     setValue(value);
   };
@@ -33,6 +38,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     <Label className="space-y-2">
       <span>{label}</span>
       <Select
+        value={value}
         onValueChange={handleOnSelectedRole}
         name={label.toLowerCase().split(" ").join("_")}
       >

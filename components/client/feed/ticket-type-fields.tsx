@@ -39,7 +39,8 @@ export default function TicketTypeFields({
         isFullWidth={true}
         label="Ticket Type"
         selectItems={ticket_type}
-        selectedState={selectedTT.length > 0 ? selectedTT : "Choose here"}
+        selectedState={selectedTT.toUpperCase()}
+        key={"TicketTypeFieldsFeedClientComponent"}
       />
       <Label className="flex flex-col gap-2 mt-2">
         <span>Priority</span>

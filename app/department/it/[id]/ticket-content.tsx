@@ -39,24 +39,7 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
   }
 
   function highRankUser() {
-    if (role?.toLowerCase() === "champion") {
-      // * if champion, disable assigned to dropdown
-      return (
-        <EditCard
-          ticket={ticket}
-          ticketNumber={`#${ticket.id}`}
-          isChampion={true}
-        />
-      );
-    }
-    // * else, allow the current user to update the assigned to dropdown
-    return (
-      <EditCard
-        ticket={ticket}
-        ticketNumber={`#${ticket.id}`}
-        isChampion={false}
-      />
-    );
+    return <EditCard ticket={ticket} ticketNumber={`#${ticket.id}`} />;
   }
 
   return (

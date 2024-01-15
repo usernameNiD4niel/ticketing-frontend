@@ -31,7 +31,7 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
   const ticket_type = await getCreateTicketType(token!);
 
   return (
-    <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center">
+    <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center flex-col">
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button
