@@ -20,6 +20,9 @@ export default async function updateTicketStatusAction(
   if (response.success) {
     // TODO revalidate the tag of ticket
     revalidateTag(`it-tickets-item-${id}`);
+    revalidateTag(`assigned-tickets-tag`);
+    revalidateTag(`navigation-count-tag`);
+    revalidateTag(`get-notification`);
   }
 
   return response;

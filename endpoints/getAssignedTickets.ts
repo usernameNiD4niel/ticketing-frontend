@@ -13,6 +13,9 @@ export default async function getAssignedTickets(
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: ["assigned-tickets-tag"],
+      },
     }
   );
 
