@@ -11,6 +11,7 @@ import { useToast } from "../ui/use-toast";
 import Cookies from "js-cookie";
 import SelectCustom from "./SelectCustom";
 import TicketTypeFields from "../client/feed/ticket-type-fields";
+import HighProfileInmate from "../client/feed/high-profile-inmate";
 
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
@@ -75,10 +76,15 @@ const DisplayForm: FC<DisplayFormProps> = ({
       </Label> */}
 
       <HighProfileInmate
+        assignTo={ticket?.assigned_to ?? "Choose here"}
+        champions={champions}
+        isChampion={isChampion}
+      />
+      {/* <HighProfileInmate
         champions={champions}
         assignTo={ticket?.assigned_to ?? "Choose here"}
         isChampion={isChampion}
-      />
+      /> */}
 
       <TicketTypeFields
         default_tt={ticket?.ticket_type || ""}
@@ -117,53 +123,53 @@ const DisplayForm: FC<DisplayFormProps> = ({
   );
 };
 
-type HighProfileInmateProps = {
-  champions: string[];
-  assignTo: string;
-  isChampion: boolean;
-};
+// type HighProfileInmateProps = {
+//   champions: string[];
+//   assignTo: string;
+//   isChampion: boolean;
+// };
 
-const HighProfileInmate: FC<HighProfileInmateProps> = ({
-  champions,
-  assignTo,
-  isChampion,
-}) => {
-  const name = Cookies.get("name");
+// const HighProfileInmate: FC<HighProfileInmateProps> = ({
+//   champions,
+//   assignTo,
+//   isChampion,
+// }) => {
+//   const name = Cookies.get("name");
 
-  const role = Cookies.get("it_access_level")?.toLowerCase();
+//   const role = Cookies.get("it_access_level")?.toLowerCase();
 
-  function displayAssignedTo() {
-    if (isChampion) {
-      return (
-        <Label className="space-y-2">
-          <span>Assign To</span>
-          <Input disabled defaultValue={name} />
-        </Label>
-      );
-    }
+//   function displayAssignedTo() {
+//     if (isChampion) {
+//       return (
+//         <Label className="space-y-2">
+//           <span>Assign To</span>
+//           <Input disabled defaultValue={name} />
+//         </Label>
+//       );
+//     }
 
-    return (
-      <CustomSelect
-        label="Assign To"
-        selectItems={champs}
-        selectedState={assignTo}
-        isFullWidth={true}
-      />
-    );
-  }
+//     const champs =
+//       role === "champion"
+//         ? [name!]
+//         : role === "catalyst"
+//         ? [...champions, name!]
+//         : champions;
 
-  let champs =
-    role === "champion"
-      ? [name!]
-      : role === "catalyst"
-      ? [...champions, name!]
-      : champions;
+//     return (
+//       <CustomSelect
+//         label="Assign To"
+//         selectItems={champs}
+//         selectedState={assignTo}
+//         isFullWidth={true}
+//       />
+//     );
+//   }
 
-  return champions.length === 0 ? (
-    <div>Getting champions...</div>
-  ) : (
-    displayAssignedTo()
-  );
-};
+//   return champions.length === 0 ? (
+//     <div>Getting champions...</div>
+//   ) : (
+//     displayAssignedTo()
+//   );
+// };
 
 export default DisplayForm;

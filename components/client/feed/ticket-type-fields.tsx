@@ -2,7 +2,7 @@ import { getSpecificTicketTypeAction } from "@/app/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
-import SelectTT from "./select-tt";
+import CustomSelect from "@/components/utils/CustomSelect";
 
 interface TicketTypeFieldsProps {
   ticket_type: string[];
@@ -35,14 +35,12 @@ export default function TicketTypeFields({
 
   return (
     <div className="w-full space-y-2">
-      <Label className="flex flex-col gap-2">
-        <span>Ticket Type</span>
-        <SelectTT
-          selected={selectedTT}
-          setSelected={setSelectedTT}
-          ticketType={ticket_type}
-        />
-      </Label>
+      <CustomSelect
+        isFullWidth={true}
+        label="Ticket Type"
+        selectItems={ticket_type}
+        selectedState={selectedTT.length > 0 ? selectedTT : "Choose here"}
+      />
       <Label className="flex flex-col gap-2 mt-2">
         <span>Priority</span>
         <Input

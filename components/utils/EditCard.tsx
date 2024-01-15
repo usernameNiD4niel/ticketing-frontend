@@ -18,15 +18,14 @@ import { Toaster } from "../ui/toaster";
 type EditCardProps = {
   ticketNumber: string;
   ticket: FeedTicketProps | null;
-  isChampion: boolean;
 };
 
-const EditCard: FC<EditCardProps> = async ({
-  ticketNumber,
-  ticket,
-  isChampion,
-}) => {
+const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
   const token = cookies().get("token")?.value;
+  const isChampion =
+    cookies().get("it_access_level")?.value.toLowerCase() === "champion"
+      ? true
+      : false;
 
   const champions = await getChampions(token!);
   const ticket_type = await getCreateTicketType(token!);
