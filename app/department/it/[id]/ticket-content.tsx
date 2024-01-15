@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import BottomSheet from "@/components/utils/BottomSheet";
 import EditCard from "@/components/utils/EditCard";
 import { FeedTicketProps } from "@/constants/types";
@@ -10,38 +9,8 @@ type TicketContentProps = {
   ticket: FeedTicketProps;
 };
 
-const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
+const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
   const role = getCookies().get("it_access_level");
-  // const token = getCookies().get("token");
-
-  // const activities: Activity[] = await getSpecifiedActivities(id, token!);
-
-  const { is_ticket_owner } = ticket;
-
-  function ownerEditCard() {
-    if (is_ticket_owner) {
-      if (ticket.status.toLowerCase() === "open") {
-        return (
-          <div>
-            <Button>Cancel Ticket</Button>
-            <Button>Close Ticket</Button>
-          </div>
-        );
-      } else {
-        // * If ticket is cancelled or closed
-        return (
-          <div>
-            <Button>Open Ticket</Button>
-          </div>
-        );
-      }
-    }
-  }
-
-  function highRankUser() {
-    return <EditCard ticket={ticket} ticketNumber={`#${ticket.id}`} />;
-  }
-
   return (
     <div className="mt-4 flex items-center justify-center md:mx-0">
       <div className="w-full relative mx-2 md:mx-0">
@@ -86,20 +55,12 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
             </p>
           </div>
         </div>
-        {/* Body of the Ticket */}
         <div className="my-8">
           <h2 className="text-2xl font-bold my-2">{ticket.subject}</h2>
           <p className="text-sm text-justify">{ticket.description}</p>
         </div>
         <hr className="my-4" />
-        {/* {role?.toLowerCase() === "champion" ||
-        role?.toLowerCase() === "catalyst" ||
-        role?.toLowerCase() === "supreme"
-          ? highRankUser()
-          : ownerEditCard()} */}
         <EditCard ticket={ticket} ticketNumber={`#${ticket.id}`} />
-        {/* <RightSheet activities={activities} /> */}
-        {/* <hr className="my-4" /> */}
         <BottomSheet ticket_id={ticket.id} />
       </div>
     </div>

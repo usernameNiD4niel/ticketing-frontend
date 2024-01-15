@@ -13,6 +13,7 @@ type Props = {
 };
 
 const getComments = async (id: number, token: string) => {
+  //it-comments/156
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/it-comments/${id}`,
     {
@@ -21,14 +22,15 @@ const getComments = async (id: number, token: string) => {
         Authorization: `Bearer ${token}`,
       },
       next: {
-        tags: ["it-comment"],
+        tags: [`it-comment-${id}`],
       },
     }
   );
   if (response.ok) {
-    const data: Props = await response.json();
-    const { comments } = data;
-    return comments;
+    const data = await response.json();
+    console.log(JSON.stringify(data, null, 2));
+
+    return data.comments as CommentInfoProps[];
   }
 
   console.log("log", response);
