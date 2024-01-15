@@ -92,11 +92,12 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket /*id*/ }) => {
           <p className="text-sm text-justify">{ticket.description}</p>
         </div>
         <hr className="my-4" />
-        {role?.toLowerCase() === "champion" ||
+        {/* {role?.toLowerCase() === "champion" ||
         role?.toLowerCase() === "catalyst" ||
         role?.toLowerCase() === "supreme"
           ? highRankUser()
-          : ownerEditCard()}
+          : ownerEditCard()} */}
+        <EditCard ticket={ticket} ticketNumber={`#${ticket.id}`} />
         {/* <RightSheet activities={activities} /> */}
         {/* <hr className="my-4" /> */}
         <BottomSheet ticket_id={ticket.id} />
