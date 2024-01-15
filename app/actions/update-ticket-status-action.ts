@@ -15,7 +15,7 @@ export default async function updateTicketStatusAction(
     redirect("/login");
   }
 
-  const response = await updateTicketStatus(token, status);
+  const response = await updateTicketStatus(token, status, id);
 
   if (response.success) {
     // TODO revalidate the tag of ticket

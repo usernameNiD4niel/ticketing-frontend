@@ -1,9 +1,10 @@
 export default async function updateTicketStatus(
   token: string,
-  status: string
+  status: string,
+  id: number
 ) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets?status=${status}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets?status=${status}&id=${id}`,
     {
       method: "PATCH",
       headers: {
