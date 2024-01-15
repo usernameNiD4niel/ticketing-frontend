@@ -13,6 +13,14 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // * The current user is accessing other page beside login and register route
+
+  if (access_level?.toLowerCase() === "unset") {
+    return NextResponse.redirect(
+      new URL("/department/pending-user", request.url)
+    );
+  }
+
   if (!token) {
     return NextResponse.redirect(new URL("/login", request.url)); // redirect user that is not authenticated
   }
