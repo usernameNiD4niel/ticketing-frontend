@@ -44,40 +44,41 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
   if (ticket?.is_ticket_owner || isCatalyst || isChampion || isSupreme) {
     return (
       <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center flex-col">
-        {!ticket?.is_ticket_owner && (
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                className="text-center flex items-center justify-center gap-1 p-6 rounded-full hover:cursor-pointer bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
-                variant="noVariant"
-              >
-                <span className="text-xl">
-                  <AiOutlineEdit />
-                </span>
-                <span>Assign Ticket</span>
-              </Button>
-            </AlertDialogTrigger>
-            <div className="overflow-y-auto">
-              <AlertDialogContent className="overflow-y-auto">
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Edit Ticket {ticketNumber}
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This will be publicly edit the ticket information.
-                  </AlertDialogDescription>
-                  <DisplayForm
-                    ticket={ticket}
-                    isChampion={isChampion}
-                    champions={champions}
-                    ticket_type={ticket_type}
-                  />
-                  <Toaster />
-                </AlertDialogHeader>
-              </AlertDialogContent>
-            </div>
-          </AlertDialog>
-        )}
+        {!ticket?.is_ticket_owner &&
+          ticket?.status.toLowerCase() === "open" && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  className="text-center flex items-center justify-center gap-1 p-6 rounded-full hover:cursor-pointer bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
+                  variant="noVariant"
+                >
+                  <span className="text-xl">
+                    <AiOutlineEdit />
+                  </span>
+                  <span>Assign Ticket</span>
+                </Button>
+              </AlertDialogTrigger>
+              <div className="overflow-y-auto">
+                <AlertDialogContent className="overflow-y-auto">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Edit Ticket {ticketNumber}
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will be publicly edit the ticket information.
+                    </AlertDialogDescription>
+                    <DisplayForm
+                      ticket={ticket}
+                      isChampion={isChampion}
+                      champions={champions}
+                      ticket_type={ticket_type}
+                    />
+                    <Toaster />
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </div>
+            </AlertDialog>
+          )}
         {(isCatalyst || isChampion || ticket?.is_ticket_owner) && (
           <DispalyButtons
             status={ticket?.status.toLowerCase() ?? "low"}

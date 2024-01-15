@@ -79,7 +79,7 @@ export default function DispalyButtons({ status, id }: DispalyButtonsProps) {
         <span className="text-xl">
           <IoFolderOpenOutline />
         </span>
-        Open
+        Open Ticket
       </Button>
     );
   }
