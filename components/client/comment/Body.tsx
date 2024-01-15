@@ -8,10 +8,6 @@ type CommentBodyProps = {
   token: string;
 };
 
-type Props = {
-  comments: CommentInfoProps[];
-};
-
 const getComments = async (id: number, token: string) => {
   //it-comments/156
   const response = await fetch(
