@@ -26,9 +26,6 @@ const DisplayForm: FC<DisplayFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
-
-  console.log(JSON.stringify(ticket_type, null, 2));
-
   const handleSubmitServerAction = async (formData: FormData) => {
     const message = await updateAction(formData);
 

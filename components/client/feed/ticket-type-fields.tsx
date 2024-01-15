@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import CustomSelect from "@/components/utils/CustomSelect";
+import SelectTT from "./select-tt";
 
 interface TicketTypeFieldsProps {
   ticket_type: string[];
@@ -35,12 +36,11 @@ export default function TicketTypeFields({
 
   return (
     <div className="w-full space-y-2">
-      <CustomSelect
-        isFullWidth={true}
-        label="Ticket Type"
-        selectItems={ticket_type}
-        selectedState={selectedTT.toUpperCase()}
-        key={"TicketTypeFieldsFeedClientComponent"}
+      <SelectTT
+        items={ticket_type}
+        setValue={setSelectedTT}
+        value={selectedTT}
+        key={"TicketTypeFieldsFeedClientComponents"}
       />
       <Label className="flex flex-col gap-2 mt-2">
         <span>Priority</span>
