@@ -60,9 +60,6 @@ export default function OtpCardContent() {
   const handleFormAction = async (formData: FormData) => {
     const otp_ = formData.get("otp");
 
-    console.log(`the otp_ ::: ${otp_}`);
-    console.log(`the otp ::: ${otp}`);
-
     if (otp_?.toString() === otp.toString()) {
       setError("");
       setIsLoadingButton(true);
@@ -85,7 +82,9 @@ export default function OtpCardContent() {
           description: "You have successfully created your account!",
           duration: 3000,
         });
-        router.push("http://10.10.1.120:3000");
+        router.push(
+          `/department/pending-role?user=${user.name}&email=${user.email}`
+        );
       } else {
         setError(response.message);
         setIsLoadingButton(false);

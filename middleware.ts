@@ -9,8 +9,12 @@ export function middleware(request: NextRequest) {
 
   if (access_level?.toLowerCase() === "unset") {
     const name = request.cookies.get("name")?.value;
+    const email = request.cookies.get("email")?.value;
     return NextResponse.redirect(
-      new URL(`/department/pending-user?user=${name}`, request.url)
+      new URL(
+        `/department/pending-user?user=${name}&email=${email}`,
+        request.url
+      )
     );
   }
 

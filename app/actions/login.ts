@@ -3,6 +3,7 @@
 import { Login } from "@/constants/types";
 import { loginUser } from "@/endpoints";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function login(formData: FormData) {
   const postData: Login = {
@@ -16,9 +17,11 @@ export default async function login(formData: FormData) {
     message,
   } = await loginUser(postData);
 
-  console.log(`login action > it_access_level ::: ${it_access_level}`);
-
   if (success) {
+    if (it_access_level.toLowerCase() === "unset") {
+      redirect(`/department/pending-user?user=${name}&email=${email}`);
+    }
+
     const sevenDaysFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     cookies().set("email", email, { expires: sevenDaysFromNow });
     cookies().set("hr_access_level", hr_access_level, {
