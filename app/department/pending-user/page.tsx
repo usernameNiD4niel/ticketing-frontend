@@ -5,6 +5,7 @@ import Link from "next/link";
 
 type SearchParams = {
   user?: string;
+  email?: string;
 };
 
 type PendingUserPageProps = {
@@ -14,8 +15,6 @@ type PendingUserPageProps = {
 export default async function PendingUserPage({
   searchParams,
 }: PendingUserPageProps) {
-  const email = cookies().get("email");
-
   return (
     <div className="w-full h-[80vh] flex items-center justify-center">
       <div className="flex flex-col items-center gap-4 p-4">
@@ -28,7 +27,7 @@ export default async function PendingUserPage({
           Hello {searchParams.user ?? "user"}, currently the IT Department is
           validating your request. We will notify you via email at{" "}
           <span className="underline underline-offset-1 text-[#0B64B9]">
-            {email?.value}
+            {searchParams.email}
           </span>{" "}
           for the update. Thank you!
         </p>

@@ -36,7 +36,9 @@ export default function LoginForm() {
 
     const isAuthorized = await login(formData);
 
-    if (isAuthorized.success) {
+    if (!isAuthorized) {
+      return;
+    } else if (isAuthorized.success) {
       setError("");
       router.push("/");
     } else {
