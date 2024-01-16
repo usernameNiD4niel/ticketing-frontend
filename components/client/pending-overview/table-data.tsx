@@ -21,13 +21,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import TableDataPagination from "./table-data-pagination";
 import { UserProps } from "@/constants/types";
 import SelectCustom from "@/components/utils/SelectCustom";
 import { useToast } from "@/components/ui/use-toast";
 import updateDepartmentRole from "@/app/actions/update-department-role";
+import { deleteUserAction } from "@/app/actions";
 
 interface TableDataProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -87,10 +88,35 @@ export default function TableData<TData, TValue>({
         title: "Successfully Assigned",
         description: "You have successfully assigned a role",
       });
+      table.resetRowSelection();
     } else {
       toast({
         title: "Failed Assigned",
         description: "Failed to assign a role, please try again",
+      });
+    }
+  }
+
+  async function handleDeleteUser() {
+    const names = [];
+
+    for (const selectedRows of table.getSelectedRowModel().rows) {
+      const original = selectedRows.original as UserProps;
+      names.push(original.name);
+    }
+
+    const { success, message } = await deleteUserAction(names);
+
+    if (success) {
+      toast({
+        title: "Successfully Deleted",
+        description: message,
+      });
+      table.resetRowSelection();
+    } else {
+      toast({
+        title: "Failed to Delete",
+        description: message,
       });
     }
   }
@@ -107,15 +133,20 @@ export default function TableData<TData, TValue>({
           className="max-w-sm"
         />
         {JSON.stringify(rowSelection) !== "{}" && (
-          <form action={handleFormAction} className="flex gap-2">
-            <SelectCustom
-              items={["Requestor", "Champion", "Catalyst"]}
-              name="role"
-              placeholder="Assign a role"
-              key={"pending-role-select-custome"}
-            />
-            <Button>Submit</Button>
-          </form>
+          <div className="flex items-center gap-2">
+            <form action={handleFormAction} className="flex gap-1">
+              <SelectCustom
+                items={["Requestor", "Champion", "Catalyst"]}
+                name="role"
+                placeholder="Assign a role"
+                key={"pending-role-select-custome"}
+              />
+              <Button>Submit</Button>
+            </form>
+            <Button variant={"destructive"} onClick={handleDeleteUser}>
+              Decline
+            </Button>
+          </div>
         )}
       </div>
       <div className="rounded-md border">

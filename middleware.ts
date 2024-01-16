@@ -31,10 +31,7 @@ export function middleware(request: NextRequest) {
   }
 
   // if regular user access the restricted page --- redirect them
-  if (
-    access_level?.toLowerCase() === "unset" ||
-    access_level?.toLowerCase() === "requestor"
-  ) {
+  if (access_level?.toLowerCase() === "requestor") {
     if (pathname === "/department/it/overview") {
       return NextResponse.redirect(new URL("/", request.url));
     }
