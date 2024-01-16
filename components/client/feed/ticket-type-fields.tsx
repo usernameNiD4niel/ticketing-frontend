@@ -25,10 +25,13 @@ export default function TicketTypeFields({
   }
 
   useEffect(() => {
-    if (!selectedTT) {
+    if (default_tt) {
+      console.log(`tt ::: ${default_tt}`);
       setSelectedTT(default_tt);
     }
+  }, []);
 
+  useEffect(() => {
     if (selectedTT) {
       getSpecifiedTT();
     }
@@ -36,12 +39,16 @@ export default function TicketTypeFields({
 
   return (
     <div className="w-full space-y-2">
-      <SelectTT
-        items={ticket_type}
-        setValue={setSelectedTT}
-        value={selectedTT}
-        key={"TicketTypeFieldsFeedClientComponents"}
-      />
+      <Label className="space-y-2">
+        <span>Ticket Type</span>
+        <SelectTT
+          items={["SELECT A TYPE", ...ticket_type]}
+          setValue={setSelectedTT}
+          value={selectedTT}
+          key={"TicketTypeFieldsFeedClientComponents"}
+        />
+      </Label>
+
       <Label className="flex flex-col gap-2 mt-2">
         <span>Priority</span>
         <Input

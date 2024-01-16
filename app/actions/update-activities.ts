@@ -13,6 +13,8 @@ export default async function updateActivities(id: string, formData: FormData) {
     ticket_type: formData.get("ticket_type")?.toString() ?? null,
   };
 
+  console.log(`request update ::: ${JSON.stringify(requestUpdate, null, 2)}`);
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/${id}`,
     {

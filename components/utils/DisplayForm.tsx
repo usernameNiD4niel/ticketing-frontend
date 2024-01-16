@@ -26,7 +26,45 @@ const DisplayForm: FC<DisplayFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
+
   const handleSubmitServerAction = async (formData: FormData) => {
+    const assign_to = formData.get("assign_to")?.toString();
+    const ticket_type = formData.get("ticket_type")?.toString();
+
+    if (assign_to && assign_to === "CHOOSE HERE") {
+      toast({
+        title: "Update failed",
+        description: "Assigned to is required",
+        duration: 3000,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (ticket_type && ticket_type === "SELECT A TYPE") {
+      toast({
+        title: "Update failed",
+        description: "Ticket type is required",
+        duration: 3000,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (
+      ticket?.assigned_to &&
+      assign_to?.toLowerCase() === ticket?.assigned_to.toLowerCase()
+    ) {
+      formData.set("assign_to", "");
+    }
+
+    if (
+      ticket?.ticket_type?.toLowerCase() ===
+      formData.get("ticket_type")?.toString().toLowerCase()
+    ) {
+      formData.set("ticket_type", "");
+    }
+
     const message = await updateAction(formData);
 
     if (message) {
@@ -57,7 +95,7 @@ const DisplayForm: FC<DisplayFormProps> = ({
       onSubmit={handleFormSubmit}
     >
       <HighProfileInmate
-        assignTo={ticket?.assigned_to ?? "Choose here"}
+        assignTo={ticket?.assigned_to ?? ""}
         champions={champions}
         isChampion={isChampion}
       />

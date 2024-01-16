@@ -33,7 +33,7 @@ export default function HighProfileInmate({
     <CustomSelect
       isFullWidth={true}
       label="Assign To"
-      selectItems={[...champions, name!]}
+      selectItems={["Choose here", ...champions, name!]}
       selectedState={assignTo}
     />
   );

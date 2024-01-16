@@ -1,4 +1,3 @@
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -7,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect } from "react";
 
 interface SelectTTProps {
   value: string;
@@ -16,26 +16,35 @@ interface SelectTTProps {
 
 export default function SelectTT({ items, setValue, value }: SelectTTProps) {
   function handleOnSelectedRole(item: string) {
-    setValue(item);
+    if (item) {
+      setValue(item.toUpperCase());
+    }
   }
 
+  useEffect(() => {
+    if (!value) {
+      setValue(items[0].toUpperCase());
+    }
+  }, []);
+
   return (
-    <Label className="space-y-2">
-      <span>Ticket Type</span>
-      <Select value={value} onValueChange={handleOnSelectedRole}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={value} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {items.map((item, index) => (
-              <SelectItem value={item.toUpperCase()} key={index}>
-                {item.toUpperCase()}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </Label>
+    <Select
+      value={value.toUpperCase()}
+      onValueChange={handleOnSelectedRole}
+      name={"ticket_type"}
+    >
+      <SelectTrigger className="w-full">
+        <SelectValue placeholder={"Select ticket type"} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {items.map((item, index) => (
+            <SelectItem value={item.toUpperCase()} key={index}>
+              {item.toUpperCase()}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }

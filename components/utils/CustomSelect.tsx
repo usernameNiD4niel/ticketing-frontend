@@ -23,20 +23,27 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   selectItems,
   isFullWidth,
 }) => {
-  const [value, setValue] = React.useState(selectedState);
+  const [value, setValue] = React.useState("");
 
   React.useEffect(() => {
-    if (selectedState && selectedState.length > 0) {
-      setValue(selectedState);
+    if (!selectedState || selectedState.length === 0) {
+      setValue(selectItems[0].toUpperCase());
+    } else {
+      setValue(selectedState.toUpperCase());
     }
-  }, [selectedState]);
-  const handleOnSelectedRole = (value: string) => {
-    setValue(value);
+  }, []);
+
+  const handleOnSelectedRole = (value_: string) => {
+    if (value_ && value_.length > 0) {
+      setValue(value_);
+    }
   };
 
   return (
     <Label className="space-y-2">
-      <span>{label}</span>
+      <span>
+        {label} {selectedState}
+      </span>
       <Select
         value={value}
         onValueChange={handleOnSelectedRole}
