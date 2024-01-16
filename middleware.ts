@@ -5,20 +5,21 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname; // get the pathname of the page
   const access_level = request.cookies.get("it_access_level")?.value; // get the access_level of the current user
 
+  // * The current user is accessing other page beside login and register route
+
+  if (access_level?.toLowerCase() === "unset") {
+    const name = request.cookies.get("name")?.value;
+    return NextResponse.redirect(
+      new URL(`/department/pending-user?user=${name}`, request.url)
+    );
+  }
+
   if (pathname === "/login" || pathname === "/register") {
     if (token && token.length > 10) {
       return NextResponse.redirect(new URL("/", request.url));
     } else {
       return NextResponse.next();
     }
-  }
-
-  // * The current user is accessing other page beside login and register route
-
-  if (access_level?.toLowerCase() === "unset") {
-    return NextResponse.redirect(
-      new URL("/department/pending-user", request.url)
-    );
   }
 
   if (!token) {
@@ -56,7 +57,6 @@ export function middleware(request: NextRequest) {
     access_level?.toLowerCase() === "champion"
   ) {
     if (pathname === "/department/it/ticket-types") {
-      console.log(`access level ::: ${access_level}`);
       return NextResponse.redirect(new URL("/department/it", request.url));
     }
   }

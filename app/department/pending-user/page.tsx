@@ -6,7 +6,7 @@ type PendingUserPageProps = {
   searchParams: SearchParams;
 };
 
-export default function PendingUserPage({
+export default async function PendingUserPage({
   searchParams,
 }: PendingUserPageProps) {
   return <div>Hello {searchParams.user ?? "user"}</div>;

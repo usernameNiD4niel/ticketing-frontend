@@ -13,6 +13,7 @@ import deleteTicketTypesAction from "./delete-ticket-types-action";
 import createTicketTypesAction from "./create-ticket-types-action";
 import updateTicketTypeAction from "./update-ticket-type-action";
 import getSpecificTicketTypeAction from "./get-specific-ticket-type-action";
+import deleteCookiesAction from "./delete-cookies-action";
 
 export {
   postComment,
@@ -30,4 +31,5 @@ export {
   createTicketTypesAction,
   updateTicketTypeAction,
   getSpecificTicketTypeAction,
+  deleteCookiesAction,
 };
