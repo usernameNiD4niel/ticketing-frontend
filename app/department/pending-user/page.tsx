@@ -18,9 +18,13 @@ export default async function PendingUserPage({
 
   return (
     <div className="w-full h-[80vh] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <Image src={DevexLogo} alt="Devex logo" className="w-[300px] h-auto" />
-        <p className="max-w-xl text-center">
+      <div className="flex flex-col items-center gap-4 p-4">
+        <Image
+          src={DevexLogo}
+          alt="Devex logo"
+          className="w-[160px] md:w-[250px] h-auto"
+        />
+        <p className="max-w-xl text-center text-sm md:text-base">
           Hello {searchParams.user ?? "user"}, currently the IT Department is
           validating your request. We will notify you via email at{" "}
           <span className="underline underline-offset-1 text-[#0B64B9]">
