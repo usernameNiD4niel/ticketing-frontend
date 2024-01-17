@@ -55,7 +55,7 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
             </p>
           </div>
         </div>
-        <div className="my-8">
+        <div className="my-8 max-w-5xl">
           <h2 className="text-2xl font-bold my-2">{ticket.subject}</h2>
           <p className="text-sm text-justify">{ticket.description}</p>
         </div>

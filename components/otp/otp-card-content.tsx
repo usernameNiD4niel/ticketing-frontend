@@ -83,7 +83,7 @@ export default function OtpCardContent() {
           duration: 3000,
         });
         router.push(
-          `/department/pending-role?user=${user.name}&email=${user.email}`
+          `/department/pending-user?user=${user.name}&email=${user.email}`
         );
       } else {
         setError(response.message);
