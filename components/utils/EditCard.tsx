@@ -48,7 +48,6 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
       <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center flex-col">
         {!ticket?.is_ticket_owner &&
           ticket?.status.toLowerCase() === "open" &&
-          !isChampion &&
           name !== ticket?.assigned_to && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -83,10 +82,11 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
               </div>
             </AlertDialog>
           )}
-        {(isCatalyst || isChampion || ticket?.is_ticket_owner) && (
+        {(isCatalyst || isChampion || ticket?.is_ticket_owner || isSupreme) && (
           <DispalyButtons
             status={ticket?.status.toLowerCase() ?? "low"}
             id={ticket!.id}
+            isNoChampion={ticket && ticket.assigned_to ? true : false}
           />
         )}
       </div>

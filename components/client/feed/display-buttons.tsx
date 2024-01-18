@@ -8,9 +8,14 @@ import { TbMessageCancel } from "react-icons/tb";
 interface DispalyButtonsProps {
   status: string;
   id: number;
+  isNoChampion: boolean;
 }
 
-export default function DispalyButtons({ status, id }: DispalyButtonsProps) {
+export default function DispalyButtons({
+  status,
+  id,
+  isNoChampion,
+}: DispalyButtonsProps) {
   function displayFeedback(message: string, success: boolean) {
     if (success) {
       toast({
@@ -57,16 +62,18 @@ export default function DispalyButtons({ status, id }: DispalyButtonsProps) {
             </span>
             Cancel Ticket
           </Button>
-          <Button
-            onClick={handleCloseClick}
-            variant={"noVariant"}
-            className="text-center flex items-center justify-center gap-1 p-6 rounded-full hover:cursor-pointer bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
-          >
-            <span className="text-xl">
-              <IoClose />
-            </span>
-            Close Ticket
-          </Button>
+          {isNoChampion && (
+            <Button
+              onClick={handleCloseClick}
+              variant={"noVariant"}
+              className="text-center flex items-center justify-center gap-1 p-6 rounded-full hover:cursor-pointer bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
+            >
+              <span className="text-xl">
+                <IoClose />
+              </span>
+              Close Ticket
+            </Button>
+          )}
         </>
       );
     }
