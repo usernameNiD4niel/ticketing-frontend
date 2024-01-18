@@ -16,8 +16,6 @@ const CreateTicket = async () => {
   const users = await getUsersName(token);
   const ticket_types = await getCreateTicketType(token);
 
-  console.log(`the ticket types ::: ${JSON.stringify(ticket_types, null, 2)}`);
-
   return (
     <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
       <TabMutator availableTab={AvailableTabs["Create Ticket"]} />

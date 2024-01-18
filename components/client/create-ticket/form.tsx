@@ -111,7 +111,9 @@ export default function CreateTicketForm({
     >
       <h1 className="text-2xl font-bold">Create trouble ticket</h1>
 
-      {(accessLevel === "catalyst" || accessLevel === "supreme") && (
+      {(accessLevel === "catalyst" ||
+        accessLevel === "supreme" ||
+        accessLevel === "champion") && (
         <>
           <Label className="flex flex-col gap-y-2">
             <span className="text-sm">Requestor</span>
