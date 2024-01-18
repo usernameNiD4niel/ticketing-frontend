@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import CreateTicketCombo from "@/components/utils/CreateTicketCombo";
 import NamesCombobox from "@/components/utils/NamesCombobox";
 import SelectCustom from "@/components/utils/SelectCustom";
-
 interface CreateTicketFormProps {
   locations: string[];
   accessLevel: string;
