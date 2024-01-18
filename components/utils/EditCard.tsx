@@ -41,11 +41,15 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
   const champions = await getChampions(token!);
   const ticket_type = await getCreateTicketType(token!);
 
+  const name = cookies().get("name")?.value;
+
   if (ticket?.is_ticket_owner || isCatalyst || isChampion || isSupreme) {
     return (
       <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center flex-col">
         {!ticket?.is_ticket_owner &&
-          ticket?.status.toLowerCase() === "open" && (
+          ticket?.status.toLowerCase() === "open" &&
+          !isChampion &&
+          name !== ticket?.assigned_to && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button

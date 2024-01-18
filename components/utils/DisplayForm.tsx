@@ -7,6 +7,8 @@ import { updateActivities } from "@/app/actions";
 import { useToast } from "../ui/use-toast";
 import TicketTypeFields from "../client/feed/ticket-type-fields";
 import HighProfileInmate from "../client/feed/high-profile-inmate";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
@@ -26,6 +28,8 @@ const DisplayForm: FC<DisplayFormProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
+
+  const router = useRouter();
 
   const handleSubmitServerAction = async (formData: FormData) => {
     const assign_to = formData.get("assign_to")?.toString();
@@ -51,7 +55,11 @@ const DisplayForm: FC<DisplayFormProps> = ({
       return;
     }
 
-    if (
+    if (isChampion) {
+      const name = Cookies.get("name")!.toString();
+
+      formData.set("assign_to", name);
+    } else if (
       ticket?.assigned_to &&
       assign_to?.toLowerCase() === ticket?.assigned_to.toLowerCase()
     ) {
@@ -68,6 +76,9 @@ const DisplayForm: FC<DisplayFormProps> = ({
     const message = await updateAction(formData);
 
     if (message) {
+      if (isChampion) {
+        router.back();
+      }
       toast({
         title: "Update success",
         description: message,

@@ -24,7 +24,7 @@ export default function HighProfileInmate({
     return (
       <Label>
         <span>Assign To</span>
-        <Input disabled defaultValue={name} />
+        <Input disabled defaultValue={name} name="assign_to" />
       </Label>
     );
   }

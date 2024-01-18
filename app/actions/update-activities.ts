@@ -6,11 +6,14 @@ import { cookies } from "next/headers";
 export default async function updateActivities(id: string, formData: FormData) {
   const token = cookies().get("token")?.value;
 
+  const assigned_to = formData.get("assign_to")?.toString();
+  const ticket_type = formData.get("ticket_type")?.toString();
+
   const requestUpdate = {
     priority: formData.get("priority")?.toString().toLowerCase() ?? null,
-    assigned_to: formData.get("assign_to")?.toString().toUpperCase() ?? null,
+    assigned_to: assigned_to && assigned_to.length > 0 ? assigned_to : null,
     status: formData.get("status")?.toString().toLowerCase() ?? null,
-    ticket_type: formData.get("ticket_type")?.toString() ?? null,
+    ticket_type: ticket_type && ticket_type.length > 0 ? ticket_type : null,
   };
 
   console.log(`request update ::: ${JSON.stringify(requestUpdate, null, 2)}`);
