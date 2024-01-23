@@ -47,6 +47,7 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
     return (
       <div className="absolute top-[135px] py-4 mb-2 right-0 text-2xl flex rounded-full  items-center justify-center flex-col">
         {!ticket?.is_ticket_champion &&
+          !ticket?.is_ticket_owner &&
           ticket?.status.toLowerCase() === "open" &&
           name !== ticket?.assigned_to && (
             <AlertDialog>
