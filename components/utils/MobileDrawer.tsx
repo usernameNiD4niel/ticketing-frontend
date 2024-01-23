@@ -97,7 +97,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         as={"/department/it/accounts/recent"}
         href="/department/it/accounts/recent"
         className={cn(
-          "font-bold text-4xl my-24 flex flex-col items-center justify-center gap-2",
+          "font-bold text-4xl my-12 flex flex-col items-center justify-center gap-2",
           !isDrawerOpen && "hidden"
         )}
         // className="flex items-center flex-col justify-center gap-2"

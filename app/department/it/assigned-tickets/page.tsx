@@ -25,7 +25,7 @@ export default async function Page() {
       <TabMutator availableTab={AvailableTabs["Assigned Tickets"]} />
       <section className="p-2 w-full flex justify-center flex-col gap-y-2">
         <div>
-          <h3 className="w-full font-bold">Assigned Tickets</h3>
+          <h3 className="w-full font-bold">Open Tickets</h3>
           <DataTable
             columns={columns}
             data_={tickets.data}
@@ -40,7 +40,7 @@ export default async function Page() {
         </div>
         <hr className="my-10" />
         <div>
-          <h3 className="w-full font-bold">Resolved Tickets</h3>
+          <h3 className="w-full font-bold">Closed Tickets</h3>
           <DataTable
             columns={columns}
             data_={closedTickets.data}
