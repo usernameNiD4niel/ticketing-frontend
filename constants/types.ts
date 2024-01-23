@@ -54,6 +54,7 @@ export type FeedTicketProps = {
   assigned_to: string;
   name: string;
   is_ticket_owner: boolean;
+  is_ticket_champion: boolean;
   closed_date: string;
   due_date: string;
   cancelled_date: string;

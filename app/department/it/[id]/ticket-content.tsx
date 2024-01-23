@@ -10,6 +10,7 @@ type TicketContentProps = {
 };
 
 const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
+  console.log(`the ticket ::: ${JSON.stringify(ticket, null, 2)}`);
   const role = getCookies().get("it_access_level");
   return (
     <div className="mt-4 flex items-center justify-center md:mx-0">
