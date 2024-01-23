@@ -2,6 +2,8 @@
 import updateTicketStatusAction from "@/app/actions/update-ticket-status-action";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { IoClose, IoFolderOpenOutline } from "react-icons/io5";
 import { TbMessageCancel } from "react-icons/tb";
 
@@ -16,6 +18,9 @@ export default function DispalyButtons({
   id,
   isNoChampion,
 }: DispalyButtonsProps) {
+  const router = useRouter();
+  const role = Cookies.get("it_access_level")?.toLowerCase();
+
   function displayFeedback(message: string, success: boolean) {
     if (success) {
       toast({
@@ -38,6 +43,9 @@ export default function DispalyButtons({
   async function handleCloseClick() {
     const { message, success } = await updateTicketStatusAction("closed", id);
     displayFeedback(message, success);
+    if (success && role !== "requestor") {
+      router.back();
+    }
   }
 
   async function handleCancelClick() {
@@ -46,6 +54,9 @@ export default function DispalyButtons({
       id
     );
     displayFeedback(message, success);
+    if (success && role !== "requestor") {
+      router.back();
+    }
   }
 
   function content() {
