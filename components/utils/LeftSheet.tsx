@@ -26,6 +26,8 @@ import { AiFillFileExclamation } from "react-icons/ai";
 import { RiPassPendingFill } from "react-icons/ri";
 import useNavigationStore from "@/hooks/states/useNavigationStore";
 import DialogBoxAlert from "../server/logout/DialogBoxAlert";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import Cookies from "js-cookie";
 
 type LeftSheetProps = {
   unhandledTicketsCount: number;
@@ -46,6 +48,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
 
   const isRequestor =
     role.toUpperCase() === "REQUESTOR" || role.toUpperCase() === "UNSET";
+
+  const name = Cookies.get("name")?.toString();
 
   const getCurrentTab = () => {
     switch (activeTab) {
@@ -72,6 +76,30 @@ const LeftSheet: FC<LeftSheetProps> = ({
     }
   };
 
+  function formatName() {
+    if (name) {
+      const choppedName = name.split(" ");
+
+      if (choppedName.length > 3) {
+        return (
+          choppedName[0].charAt(0).toUpperCase() +
+          choppedName[choppedName.length - 1].charAt(0).toUpperCase()
+        );
+      }
+
+      let temp = "";
+
+      for (const name_ of choppedName) {
+        temp += name_.charAt(0);
+      }
+
+      temp = temp.toUpperCase();
+
+      return temp;
+    }
+    return "Anonymous User";
+  }
+
   return (
     <>
       <div className="grid grid-cols-2 gap-2">
@@ -88,9 +116,21 @@ const LeftSheet: FC<LeftSheetProps> = ({
             <div>
               <SheetHeader>
                 <SheetTitle className="font-bold text-4xl mt-20">
-                  <Link href="/" as={"/"}>
+                  {/* <Link href="/" as={"/"}>
                     <span className="text-[#0B64B9]">OP</span>
                     <span className="text-[#99CC68]">PA</span>
+                  </Link> */}
+                  <Link
+                    href="/department/it/accounts/recent"
+                    as={"/department/it/accounts/recent"}
+                    className="flex items-center flex-col justify-center gap-2"
+                  >
+                    <Avatar className="text-2xl font-bold text-white p-12 bg-[#0964B9]">
+                      <AvatarFallback>
+                        {formatName().toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-base font-medium">{name}</span>
                   </Link>
                 </SheetTitle>
               </SheetHeader>

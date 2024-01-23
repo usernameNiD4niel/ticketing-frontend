@@ -38,7 +38,6 @@ const AccountRecent: FC<AccountRecentProps> = async ({ token, email }) => {
             recentActivityDescription={activity.description}
             recentActivityTitle={activity.title}
             date={activity.created_date}
-            time={activity.created_time}
             key={activity.id}
           />
         ))

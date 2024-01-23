@@ -4,14 +4,12 @@ type CardACcountProps = {
   recentActivityTitle: string;
   recentActivityDescription: string;
   date: string;
-  time: string;
 };
 
 const CardAccount: FC<CardACcountProps> = ({
   recentActivityDescription,
   recentActivityTitle,
   date,
-  time,
 }) => {
   return (
     <div className="p-3 border-primary border-opacity-10 border-[1px] rounded-md w-full hover:cursor-pointer md:w-[300px] h-[150px] flex flex-col justify-between items-center">

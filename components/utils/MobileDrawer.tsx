@@ -20,6 +20,7 @@ import {
   AiOutlineDoubleRight,
 } from "react-icons/ai";
 import { FaLocationDot } from "react-icons/fa6";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 type MobileDrawerProps = {
   isDrawerOpen: boolean;
@@ -47,6 +48,32 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
 
   const [userRole, setUserRole] = useState("");
 
+  const name = Cookies.get("name")?.toString();
+
+  function formatName() {
+    if (name) {
+      const choppedName = name.split(" ");
+
+      if (choppedName.length > 3) {
+        return (
+          choppedName[0].charAt(0).toUpperCase() +
+          choppedName[choppedName.length - 1].charAt(0).toUpperCase()
+        );
+      }
+
+      let temp = "";
+
+      for (const name_ of choppedName) {
+        temp += name_.charAt(0);
+      }
+
+      temp = temp.toUpperCase();
+
+      return temp;
+    }
+    return "Anonymous User";
+  }
+
   useEffect(() => {
     if (role) {
       if (role === "requestor" || role === "unset") {
@@ -67,12 +94,20 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
       )}
     >
       <Link
-        as={"/"}
-        href="/"
-        className={cn("font-bold text-4xl my-24", !isDrawerOpen && "hidden")}
+        as={"/department/it/accounts/recent"}
+        href="/department/it/accounts/recent"
+        className={cn(
+          "font-bold text-4xl my-24 flex flex-col items-center justify-center gap-2",
+          !isDrawerOpen && "hidden"
+        )}
+        // className="flex items-center flex-col justify-center gap-2"
       >
-        <span className="text-[#0B64B9]">OP</span>
-        <span className="text-[#99CC68]">PA</span>
+        {/* <span className="text-[#0B64B9]">OP</span>
+        <span className="text-[#99CC68]">PA</span> */}
+        <Avatar className="text-2xl font-bold text-white p-12 bg-[#0964B9]">
+          <AvatarFallback>{formatName().toUpperCase()}</AvatarFallback>
+        </Avatar>
+        <span className="text-base font-medium text-center">{name}</span>
       </Link>
       <div
         className={cn(
