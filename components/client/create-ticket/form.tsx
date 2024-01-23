@@ -118,19 +118,17 @@ export default function CreateTicketForm({
             <span className="text-sm">Requestor</span>
             <NamesCombobox setState={setName} state={name} users={users} />
           </Label>
-          {accessLevel !== "champion" && (
-            <Label className="flex flex-col gap-y-2">
-              Ticket Type
-              <SelectCustom
-                items={ticket_types}
-                name="ticket_type"
-                placeholder="Select ticket type"
-                isRequired
-                width="w-full"
-                key={"CreateTicketForm"}
-              />
-            </Label>
-          )}
+          <Label className="flex flex-col gap-y-2">
+            Ticket Type
+            <SelectCustom
+              items={ticket_types}
+              name="ticket_type"
+              placeholder="Select ticket type"
+              isRequired
+              width="w-full"
+              key={"CreateTicketForm"}
+            />
+          </Label>
         </>
       )}
 
