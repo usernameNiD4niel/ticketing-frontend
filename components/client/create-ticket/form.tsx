@@ -104,12 +104,10 @@ export default function CreateTicketForm({
 
   return (
     <form
-      className="w-full md:max-w-2xl space-y-4 flex flex-col px-4"
+      className="flex flex-col gap-y-4 w-full"
       action={formActionSubmit}
       onSubmit={handleFormSubmit}
     >
-      <h1 className="text-2xl font-bold">Create trouble ticket</h1>
-
       {(accessLevel === "catalyst" ||
         accessLevel === "supreme" ||
         accessLevel === "champion") && (
