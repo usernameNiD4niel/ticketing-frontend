@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 type DisplayFormProps = {
   ticket: FeedTicketProps | null;
   isChampion: boolean;
+  isCatalyst: boolean;
+  isSupreme: boolean;
   champions: string[];
   ticket_type: string[];
 };
@@ -22,6 +24,8 @@ const DisplayForm: FC<DisplayFormProps> = ({
   isChampion,
   champions,
   ticket_type,
+  isCatalyst,
+  isSupreme,
 }) => {
   const updateAction = updateActivities.bind(null, ticket!.id.toString());
 
@@ -76,7 +80,7 @@ const DisplayForm: FC<DisplayFormProps> = ({
     const message = await updateAction(formData);
 
     if (message) {
-      if (isChampion) {
+      if (isChampion || isCatalyst || isSupreme) {
         router.back();
       }
       toast({

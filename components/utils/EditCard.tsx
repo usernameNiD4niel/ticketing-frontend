@@ -74,6 +74,8 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
                     <DisplayForm
                       ticket={ticket}
                       isChampion={isChampion}
+                      isCatalyst={isCatalyst}
+                      isSupreme={isSupreme}
                       champions={champions}
                       ticket_type={ticket_type}
                     />
