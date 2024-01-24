@@ -2,6 +2,8 @@ import CreateTicketForm from "@/components/client/create-ticket/form";
 import TabMutator from "@/components/helper/tab-mutator";
 import { AvailableTabs } from "@/constants/enums";
 import { getCreateTicketType, getLocations, getUsersName } from "@/endpoints";
+import { getTicketTodayCount } from "@/endpoints";
+import { cn } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -15,6 +17,7 @@ const CreateTicket = async () => {
   const locations = (await getLocations(token, true)) as string[];
   const users = await getUsersName(token);
   const ticket_types = await getCreateTicketType(token);
+  const ticket_count = await getTicketTodayCount(token);
 
   return (
     <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
@@ -22,11 +25,20 @@ const CreateTicket = async () => {
       <div className="w-full md:max-w-2xl px-4">
         <h1 className="text-2xl font-bold">Create trouble ticket</h1>
         {accessLevel.toLowerCase() === "requestor" && (
-          <div className="w-full rounded-md bg-yellow-500 p-5 text-sm my-2 text-black">
+          <div
+            className={cn(
+              "w-full rounded-md p-5 text-sm my-2",
+              ticket_count.ticket_count >= 3
+                ? "bg-red-500 text-white"
+                : "bg-yellow-500 text-black"
+            )}
+          >
             <p>
               Hi, to limit the number of ticket posted per day. Everyday you can
               only post 3 tickets per day. Status:{" "}
-              <span className="font-bold">1 of 3</span>
+              <span className="font-bold">
+                {ticket_count.ticket_count} of 3
+              </span>
             </p>
           </div>
         )}
@@ -35,6 +47,7 @@ const CreateTicket = async () => {
           accessLevel={accessLevel.toLowerCase()}
           users={users}
           ticket_types={ticket_types}
+          ticket_count={ticket_count.ticket_count}
         />
       </div>
     </div>

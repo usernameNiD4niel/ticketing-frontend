@@ -39,6 +39,7 @@ import getCreateTicketType from "./getCreateTicketType";
 import getSpecificTicketType from "./getSpecificTicketType";
 import updateTicketStatus from "./updateTicketStatus";
 import deleteUser from "./deleteUser";
+import getTicketTodayCount from "./getTIcketTodayCount";
 
 export {
   getChampions,
@@ -82,4 +83,5 @@ export {
   getSpecificTicketType,
   updateTicketStatus,
   deleteUser,
+  getTicketTodayCount,
 };

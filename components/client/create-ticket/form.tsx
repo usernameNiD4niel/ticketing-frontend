@@ -16,6 +16,7 @@ interface CreateTicketFormProps {
   accessLevel: string;
   users: string[];
   ticket_types: string[];
+  ticket_count: number;
 }
 
 export default function CreateTicketForm({
@@ -23,6 +24,7 @@ export default function CreateTicketForm({
   accessLevel,
   users,
   ticket_types,
+  ticket_count,
 }: CreateTicketFormProps) {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
@@ -43,6 +45,14 @@ export default function CreateTicketForm({
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
+    if (ticket_count >= 3) {
+      toast({
+        title: "Validation Failed",
+        description: "You reached the limit of posting ticket today",
+        duration: 3000,
+      });
+      return;
+    }
     if (accessLevel !== "requestor" && accessLevel !== "unset") {
       if (!name) {
         setIsLoadingButton(false);
@@ -182,7 +192,11 @@ export default function CreateTicketForm({
             <LoadingButton isFullWidth={true} />
           </div>
         ) : (
-          <Button type="submit" className="w-full md:w-44">
+          <Button
+            type="submit"
+            className="w-full md:w-44"
+            disabled={ticket_count >= 3 ? true : false}
+          >
             Create
           </Button>
         )}
