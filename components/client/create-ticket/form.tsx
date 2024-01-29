@@ -172,7 +172,7 @@ export default function CreateTicketForm({
           <Button
             type="submit"
             className="w-full md:w-44"
-            // disabled={ticket_count >= 3 ? true : false}
+            disabled={ticket_count >= 3 ? true : false}
           >
             Create
           </Button>
