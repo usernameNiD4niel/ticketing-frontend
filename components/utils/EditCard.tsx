@@ -59,7 +59,7 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
                   <span className="text-xl">
                     <AiOutlineEdit />
                   </span>
-                  <span>Assign Ticket</span>
+                  <span>Edit</span>
                 </Button>
               </AlertDialogTrigger>
               <div className="overflow-y-auto">
