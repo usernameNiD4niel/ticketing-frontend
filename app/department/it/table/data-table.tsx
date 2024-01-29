@@ -34,6 +34,7 @@ import { myTickets } from "@/endpoints";
 import Cookies from "js-cookie";
 import SearchTable from "./search";
 import { cn } from "@/lib/utils";
+import { getCookies } from "next-client-cookies/server";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -59,7 +60,8 @@ export function DataTable<TValue>({
   const [data, setData] = React.useState(data_);
 
   const [activeTab, setActiveTab] = React.useState(1);
-  const [nextPageUrl, setNextPageUrl] = React.useState(next_page_url);
+
+  const role = getCookies().get("it_access_level");
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -140,27 +142,28 @@ export function DataTable<TValue>({
         </div>
         {data && data.length > 0 && (
           <div className="space-x-2">
-            {}
-            <>
-              <Button
-                variant={"link"}
-                className={cn(
-                  activeTab === 1 ? "border-slate-500 border" : "border-none"
-                )}
-                onClick={getMyDepartmentTickets}
-              >
-                My Department Tickets
-              </Button>
-              <Button
-                variant={"link"}
-                className={cn(
-                  activeTab !== 1 ? "border-slate-500 border" : "border-none"
-                )}
-                onClick={getMyTickets}
-              >
-                My Tickets
-              </Button>
-            </>
+            {role?.toLowerCase() === "requestor" && (
+              <>
+                <Button
+                  variant={"link"}
+                  className={cn(
+                    activeTab === 1 ? "border-slate-500 border" : "border-none"
+                  )}
+                  onClick={getMyDepartmentTickets}
+                >
+                  My Department Tickets
+                </Button>
+                <Button
+                  variant={"link"}
+                  className={cn(
+                    activeTab !== 1 ? "border-slate-500 border" : "border-none"
+                  )}
+                  onClick={getMyTickets}
+                >
+                  My Tickets
+                </Button>
+              </>
+            )}
             <ExportDialog url="all-tickets" />
           </div>
         )}
@@ -239,7 +242,7 @@ export function DataTable<TValue>({
       <DataTablePagination
         setData={setData}
         table={table}
-        next_page_url={nextPageUrl}
+        next_page_url={next_page_url}
         isFiltering={isFiltering}
       />
     </div>
