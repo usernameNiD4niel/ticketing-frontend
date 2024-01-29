@@ -7,21 +7,21 @@ import { useEffect, useState } from "react";
 
 export default function ManageTab() {
   const ProfileTabs: ProfileTabProps[] = [
-    {
-      displayText: "Recent",
-      isActive: true,
-      route: "recent",
-      onClick: () => handleTabClick("recent"),
-    },
-    {
-      displayText: "Edit Profile",
-      isActive: false,
-      route: "edit-profile",
-      onClick: () => handleTabClick("edit-profile"),
-    },
+    // {
+    //   displayText: "Recent",
+    //   isActive: true,
+    //   route: "recent",
+    //   onClick: () => handleTabClick("recent"),
+    // },
+    // {
+    //   displayText: "Edit Profile",
+    //   isActive: false,
+    //   route: "edit-profile",
+    //   onClick: () => handleTabClick("edit-profile"),
+    // },
     {
       displayText: "Update Password",
-      isActive: false,
+      isActive: true,
       route: "update-password",
       onClick: () => handleTabClick("update-password"),
     },

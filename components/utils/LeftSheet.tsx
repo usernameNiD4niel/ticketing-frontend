@@ -338,8 +338,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
                       activeTab === AvailableTabs.Accounts &&
                         "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                     )}
-                    as={"/department/it/accounts/recent"}
-                    href="/department/it/accounts/recent"
+                    as={"/department/it/accounts/update-password"}
+                    href="/department/it/accounts/update-password"
                   >
                     <span>
                       <MdAccountBox />

@@ -1,30 +1,20 @@
-import React, { FC } from "react";
-import AccountRecent from "@/components/utils/AccountRecent";
 import UpdatePassword from "@/components/utils/UpdatePassword";
-import EditProfile from "@/components/server/accounts/EditProfile";
-import { getCookies } from "next-client-cookies/server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-type AccountTabProps = {
-  params: { slug: string };
-};
-
-const AccountTab: FC<AccountTabProps> = ({ params }) => {
-  let contentTab = null;
-
-  const token = getCookies().get("token");
-  const email = getCookies().get("email");
+const AccountTab = () => {
+  const token = cookies().get("token")?.value;
+  const email = cookies().get("email")?.value;
 
   if (!token || !email) {
-    contentTab = <div>Please withdraw your self!</div>;
-  } else if (params.slug === "recent") {
-    contentTab = <AccountRecent token={token} email={email} />;
-  } else if (params.slug === "edit-profile") {
-    contentTab = <EditProfile />;
-  } else {
-    contentTab = <UpdatePassword token={token} email={email} />;
+    redirect("/login");
   }
 
-  return <div className="my-5 mx-3 text-xs md:text-sm">{contentTab}</div>;
+  return (
+    <div className="my-5 mx-3 text-xs md:text-sm">
+      <UpdatePassword token={token} email={email} />
+    </div>
+  );
 };
 
 export default AccountTab;

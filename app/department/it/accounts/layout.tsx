@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { AvailableTabs } from "@/constants/enums";
-import DialogBoxAlert from "@/components/server/logout/DialogBoxAlert";
+// import DialogBoxAlert from "@/components/server/logout/DialogBoxAlert";
 import TabMutator from "@/components/helper/tab-mutator";
 import { getAccount } from "@/endpoints";
 import { cookies } from "next/headers";
@@ -69,21 +69,18 @@ const AccountLayout: FC<AccountLayoutProps> = async ({ children }) => {
             <h2 className="text-2xl font-bold">{account.name}</h2>
             <p>{account.department}</p>
             <p className="text-sm underline underline-offset-1">
-              @{account.email}
+              {account.email}
             </p>
-            <p className="text-sm">
-              Joined On: {account.created_at} - {account.created_time}
-            </p>
+            <p className="text-sm">Joined On: {account.created_at}</p>
           </div>
         </section>
-        <ul className="flex gap-x-2 items-center border-b-[1px] justify-center border-b-[#ccc] py-3 mt-10 dark:border-b-[#ccc]/20 flex-wrap">
-          <ManageTab />
+        <ul className="w-full flex items-center justify-center py-3">
+          <div className="w-full md:w-[70%] flex gap-x-2 border-b-[1px] border-b-[#ccc] py-3 mt-10 dark:border-b-[#ccc]/20 flex-wrap">
+            <ManageTab />
+          </div>
         </ul>
         <section>{children}</section>
       </main>
-      <footer className="fixed bottom-4 right-4 md:top-8 md:right-10">
-        <DialogBoxAlert isInTheMenu={false} key={"AccountLogout"} />
-      </footer>
     </>
   );
 };
