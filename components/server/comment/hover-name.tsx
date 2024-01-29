@@ -39,7 +39,10 @@ export default function HoverName({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button variant="link" className="p-0 text-sm m-0 h-fit text-blue-900">
+        <Button
+          variant="link"
+          className="p-0 text-sm m-0 h-fit text-blue-900 font-bold"
+        >
           {name}:{" "}
         </Button>
       </HoverCardTrigger>

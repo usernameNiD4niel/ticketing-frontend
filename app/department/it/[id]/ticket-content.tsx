@@ -3,6 +3,7 @@ import BottomSheet from "@/components/utils/BottomSheet";
 import EditCard from "@/components/utils/EditCard";
 import { FeedTicketProps } from "@/constants/types";
 import { getCookies } from "next-client-cookies/server";
+import { cookies } from "next/headers";
 import React, { FC } from "react";
 
 type TicketContentProps = {
@@ -10,8 +11,8 @@ type TicketContentProps = {
 };
 
 const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
-  console.log(`the ticket ::: ${JSON.stringify(ticket, null, 2)}`);
-  const role = getCookies().get("it_access_level");
+  const role = cookies().get("it_access_level")?.value;
+
   return (
     <div className="mt-4 flex items-center justify-center md:mx-0">
       <div className="w-full relative mx-2 md:mx-0">
@@ -26,11 +27,13 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
               )}
             <h1 className="text-3xl font-bold my-2">#{ticket.id}</h1>
             <div className="space-x-1">
-              <Badge>{ticket.priority.toUpperCase()}</Badge>
+              {role?.toLowerCase() !== "requestor" && (
+                <Badge>{ticket.priority.toUpperCase()}</Badge>
+              )}
               <Badge>{ticket.status.toUpperCase()}</Badge>
             </div>
-            <h3>Requestor: {ticket.name}</h3>
-            <h3>Department: {ticket.department}</h3>
+            <h3 className="text-sm">Requestor: {ticket.name}</h3>
+            <h3 className="text-sm">Department: {ticket.department}</h3>
             <p className="text-sm">
               <span className="mr-2">Champion:</span>
               {ticket.assigned_to ? ticket.assigned_to : "No champion assign"}
