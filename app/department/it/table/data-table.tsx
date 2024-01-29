@@ -61,7 +61,7 @@ export function DataTable<TValue>({
 
   const [activeTab, setActiveTab] = React.useState(1);
 
-  const role = getCookies().get("it_access_level");
+  const role = Cookies.get("it_access_level");
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
