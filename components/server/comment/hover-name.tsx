@@ -39,8 +39,8 @@ export default function HoverName({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button variant="link" className="p-0">
-          {name}
+        <Button variant="link" className="p-0 text-sm m-0 h-fit text-blue-900">
+          {name}:{" "}
         </Button>
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
@@ -49,7 +49,7 @@ export default function HoverName({
             {/* <AvatarImage src="/origdevexlogo.svg" /> */}
             <AvatarFallback>{getFormattedName()}</AvatarFallback>
           </Avatar>
-          <div className="space-y-1">
+          <div className="space-y-1 text-sm">
             <h4 className="text-sm font-semibold">@{name}</h4>
             <p className="text-sm">
               {name} is from {department} department. If you found this comment

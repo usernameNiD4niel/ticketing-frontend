@@ -41,10 +41,10 @@ const CommentBody: FC<CommentBodyProps> = async ({ id, token }) => {
 
   return (
     <>
+      <Forms id={id} />
       <div className="flex flex-col gap-y-3 my-4">
         <ContentBody comments={comments} />
       </div>
-      <Forms id={id} />
     </>
   );
 };

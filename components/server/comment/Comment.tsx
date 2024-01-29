@@ -1,36 +1,17 @@
-import { Badge } from "@/components/ui/badge";
-import { CommentProps } from "@/constants/types";
+import { CommentInfoProps, CommentProps } from "@/constants/types";
 import { FC } from "react";
 import HoverName from "./hover-name";
 
-const Comment: FC<CommentProps> = ({
+const Comment: FC<CommentInfoProps> = ({
   created_at,
   created_time,
-  access_level,
   comment,
   department,
   name,
   user_joined_on,
+  is_comment,
+  details,
 }) => {
-  const getVariant = (
-    role: string
-  ): "catalyst" | "champion" | "requestor" | "supreme" => {
-    switch (role) {
-      case "requestor":
-        return "requestor";
-      case "unset":
-        return "requestor";
-      case "catalyst":
-        return "catalyst";
-      case "champion":
-        return "champion";
-      case "supreme":
-        return "supreme";
-      default:
-        return "requestor";
-    }
-  };
-
   const convertTextToHTML = (text: string) => {
     const formattedText = text.replace(/\r\n|\n|\r/g, "<br />"); // Replace newline characters with <br />
 
@@ -39,34 +20,27 @@ const Comment: FC<CommentProps> = ({
 
   return (
     <>
-      <hr />
-      <div className="flex items-center justify-center">
-        <div className="w-full">
-          <div>
-            <Badge
-              variant={getVariant(access_level!.toLowerCase())}
-              className="text-xs font-light"
-            >
-              {access_level!.toLowerCase()}
-            </Badge>
-          </div>
-          <HoverName
-            name={name!}
-            department={department!}
-            joinedOn={user_joined_on!}
-          />
-          {/* <h4 className="font-bold text-sm">
-            {name} ✔ - ({department})
-          </h4> */}
+      <div className="w-full flex flex-col">
+        <div className="flex gap-x-2">
+          {is_comment ? (
+            <HoverName
+              name={name!}
+              department={department!}
+              joinedOn={user_joined_on!}
+            />
+          ) : (
+            <h6 className="text-indigo-500">SYSTEM: </h6>
+          )}
           <p
-            className="text-sm"
-            dangerouslySetInnerHTML={convertTextToHTML(comment!)}
+            className="text-sm text-justify"
+            dangerouslySetInnerHTML={convertTextToHTML(
+              is_comment ? comment! : details!
+            )}
           />
-          <div className="flex items-center gap-x-2 mt-2">
-            <p className="text-gray-400 text-xs">{created_at}</p>
-            <p className="text-gray-400 text-xs">|</p>
-            <p className="text-gray-400 text-xs">{created_time}</p>
-          </div>
+        </div>
+        <div className="flex items-center gap-x-2">
+          <p className="text-gray-400 text-xs">{created_at},</p>
+          <p className="text-gray-400 text-xs">{created_time}</p>
         </div>
       </div>
     </>

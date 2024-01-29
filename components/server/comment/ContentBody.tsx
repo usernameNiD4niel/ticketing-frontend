@@ -21,12 +21,12 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
 
     if (comments && comments.length > 0) {
       return comments.map((com, index) => {
-        if (com.is_comment) {
-          return <Comment {...com} key={index} />;
-        }
+        return <Comment {...com} key={index} />;
+        // if (com.is_comment) {
+        // }
 
-        // * show activity
-        return <TicketActivity {...com} key={index} />;
+        // // * show activity
+        // return <TicketActivity {...com} key={index} />;
       });
     } else {
       return (
@@ -38,7 +38,7 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
   };
 
   return (
-    <div className="flex flex-col gap-y-3 my-4 ">
+    <div className="flex flex-col gap-y-4 my-4 ">
       <Element />
     </div>
   );

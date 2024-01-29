@@ -113,7 +113,7 @@ export type TicketContent = {
 export type CommentProps = {
   // * comment
   name?: string;
-  access_level?: string;
+  // access_level?: string;
   comment?: string;
   department?: string;
   user_joined_on?: string;
