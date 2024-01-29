@@ -33,6 +33,7 @@ import { Button } from "@/components/ui/button";
 import { myTickets } from "@/endpoints";
 import Cookies from "js-cookie";
 import SearchTable from "./search";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -56,6 +57,9 @@ export function DataTable<TValue>({
   const width = useScreenSize();
 
   const [data, setData] = React.useState(data_);
+
+  const [activeTab, setActiveTab] = React.useState(1);
+  const [nextPageUrl, setNextPageUrl] = React.useState(next_page_url);
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -111,6 +115,15 @@ export function DataTable<TValue>({
 
     setIsFiltering(true);
     setData(response);
+    setActiveTab(2);
+  }
+
+  async function getMyDepartmentTickets() {
+    // set the default data
+    setData(data_);
+    setIsFiltering(false);
+    setActiveTab(1);
+    table.resetPagination();
   }
 
   return (
@@ -127,9 +140,27 @@ export function DataTable<TValue>({
         </div>
         {data && data.length > 0 && (
           <div className="space-x-2">
-            <Button variant={"link"} onClick={getMyTickets}>
-              My Tickets
-            </Button>
+            {}
+            <>
+              <Button
+                variant={"link"}
+                className={cn(
+                  activeTab === 1 ? "border-slate-500 border" : "border-none"
+                )}
+                onClick={getMyDepartmentTickets}
+              >
+                My Department Tickets
+              </Button>
+              <Button
+                variant={"link"}
+                className={cn(
+                  activeTab !== 1 ? "border-slate-500 border" : "border-none"
+                )}
+                onClick={getMyTickets}
+              >
+                My Tickets
+              </Button>
+            </>
             <ExportDialog url="all-tickets" />
           </div>
         )}
@@ -208,7 +239,7 @@ export function DataTable<TValue>({
       <DataTablePagination
         setData={setData}
         table={table}
-        next_page_url={next_page_url}
+        next_page_url={nextPageUrl}
         isFiltering={isFiltering}
       />
     </div>
