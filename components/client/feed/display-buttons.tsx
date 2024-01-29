@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { IoClose, IoFolderOpenOutline } from "react-icons/io5";
 import { TbMessageCancel } from "react-icons/tb";
+import ConfirmationBox from "./ConfirmationBox";
 
 interface DispalyButtonsProps {
   status: string;
@@ -63,27 +65,21 @@ export default function DispalyButtons({
     if (status === "open") {
       return (
         <>
-          <Button
-            variant={"noVariant"}
-            onClick={handleCancelClick}
-            className="text-center flex items-center justify-center gap-1 p-6 rounded-full hover:cursor-pointer bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
-          >
-            <span className="text-xl">
-              <TbMessageCancel />
-            </span>
-            Cancel Ticket
-          </Button>
+          <ConfirmationBox
+            buttonText="Cancel Ticket"
+            Icon={TbMessageCancel}
+            description="If you proceed, the ticket you created will be treated like it wont exists. Are you still going to cancel the ticket?"
+            handleButtonClick={handleCancelClick}
+            title="Are you sure you want to cancel the ticket?"
+          />
           {isNoChampion && (
-            <Button
-              onClick={handleCloseClick}
-              variant={"noVariant"}
-              className="text-center flex items-center justify-center gap-1 p-6 rounded-full hover:cursor-pointer bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90"
-            >
-              <span className="text-xl">
-                <IoClose />
-              </span>
-              Close Ticket
-            </Button>
+            <ConfirmationBox
+              buttonText="Close Ticket"
+              Icon={IoClose}
+              description="If you proceed, the ticket you created will be be closed and no one else could able to comment to it. Are you still going to close the ticket?"
+              handleButtonClick={handleCloseClick}
+              title="Are you sure you want to close the ticket?"
+            />
           )}
         </>
       );
@@ -102,5 +98,9 @@ export default function DispalyButtons({
     );
   }
 
-  return <div className="w-full flex flex-col gap-2 py-3">{content()}</div>;
+  return (
+    <>
+      <div className="w-full flex flex-col gap-2 py-3">{content()}</div>
+    </>
+  );
 }
