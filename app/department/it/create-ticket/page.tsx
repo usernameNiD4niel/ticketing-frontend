@@ -34,8 +34,7 @@ const CreateTicket = async () => {
             )}
           >
             <p>
-              Hi, to limit the number of ticket posted per day. Everyday you can
-              only post 3 tickets per day. Status:{" "}
+              Hi, to limit the number of ticket posted. You can only create a ticket if you have existing 3 open tickets. Status:{" "}
               <span className="font-bold">
                 {ticket_count.ticket_count} of 3
               </span>

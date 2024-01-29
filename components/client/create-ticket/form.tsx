@@ -45,7 +45,7 @@ export default function CreateTicketForm({
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
-    if (ticket_count >= 3) {
+    if (ticket_count >= 3 && accessLevel === "requestor") {
       toast({
         title: "Validation Failed",
         description: "You reached the limit of posting ticket today",
