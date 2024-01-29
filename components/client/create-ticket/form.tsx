@@ -30,18 +30,10 @@ export default function CreateTicketForm({
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const router = useRouter();
 
-  const defaultContact = localStorage.getItem("contact")?.toString() || "";
-  const defaultRequestor = localStorage.getItem("requestor")?.toString() || "";
-
-  const [name, setName] = useState(defaultRequestor);
+  const [name, setName] = useState("");
 
   const [locationError, setLocationError] = useState("");
-
-  useEffect(() => {
-    if (accessLevel !== "requestor" && accessLevel !== "unset") {
-      setName(defaultRequestor);
-    }
-  }, []);
+  const [location, setLocation] = useState("");
 
   // Server action, posting a ticket to a server
   const formActionSubmit = async (formData: FormData) => {
@@ -53,19 +45,18 @@ export default function CreateTicketForm({
       });
       return;
     }
+
     if (accessLevel !== "requestor" && accessLevel !== "unset") {
       if (!name) {
         setIsLoadingButton(false);
         toast({
           title: "Validation Failed",
-          description: "Please try to re-login and try again",
+          description: "Name of the requestor is required",
           duration: 3000,
         });
         return;
       }
     }
-
-    const location = localStorage.getItem("location")?.toString();
 
     if (!location) {
       setIsLoadingButton(false);
@@ -82,15 +73,6 @@ export default function CreateTicketForm({
     const { success, message, id } = await postTicket(formData);
 
     if (success) {
-      localStorage.setItem(
-        "contact",
-        formData.get("contact")?.toString() || ""
-      );
-
-      if (accessLevel !== "requestor" && accessLevel !== "unset") {
-        localStorage.setItem("requestor", name || "");
-      }
-
       toast({
         title: "Ticket posting sucess",
         description: message,
@@ -131,10 +113,10 @@ export default function CreateTicketForm({
             <SelectCustom
               items={ticket_types}
               name="ticket_type"
-              placeholder="Select ticket type"
               isRequired
               width="w-full"
               key={"CreateTicketForm"}
+              placeholder=""
             />
           </Label>
         </>
@@ -142,29 +124,19 @@ export default function CreateTicketForm({
 
       <Label className="flex flex-col gap-y-2">
         <span className="text-sm">Subject</span>
-        <Input
-          placeholder="What's your problem all about?"
-          required
-          name="subject"
-        />
+        <Input required name="subject" />
       </Label>
 
       <Label className="flex flex-col gap-y-2">
         <span>Description</span>
-        <Textarea
-          placeholder="Explain what, when, how happen"
-          required
-          name="description"
-        />
+        <Textarea required name="description" />
       </Label>
 
       <Label className="flex flex-col gap-y-2">
         <span className="text-sm">Contact</span>
         <Input
-          placeholder="Enter your phone number"
           name="contact"
           max={"11"}
-          defaultValue={defaultContact}
           type="text"
           pattern="09[0-9]{9}"
           inputMode="numeric"
@@ -177,7 +149,12 @@ export default function CreateTicketForm({
 
       <Label className="flex flex-col gap-y-2">
         <span className="text-sm">Location</span>
-        <CreateTicketCombo items={locations} name="location" />
+        <CreateTicketCombo
+          items={locations}
+          name="location"
+          setValue={setLocation}
+          value={location}
+        />
         {locationError && locationError.length > 0 && (
           <p className="text-red-500 text-sm">{locationError}</p>
         )}
@@ -195,7 +172,7 @@ export default function CreateTicketForm({
           <Button
             type="submit"
             className="w-full md:w-44"
-            disabled={ticket_count >= 3 ? true : false}
+            // disabled={ticket_count >= 3 ? true : false}
           >
             Create
           </Button>

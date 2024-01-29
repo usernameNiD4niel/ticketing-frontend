@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
@@ -21,16 +19,17 @@ import {
 interface CreateTicketComboProps {
   name: string;
   items: string[];
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function CreateTicketCombo({
   name,
   items,
+  setValue,
+  value,
 }: CreateTicketComboProps) {
-  const location = localStorage.getItem("location")?.toString() || "";
-
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(location);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -57,7 +56,6 @@ export default function CreateTicketCombo({
                 onSelect={() => {
                   setValue(item);
                   setOpen(false);
-                  localStorage.setItem(name, item);
                 }}
               >
                 <Check

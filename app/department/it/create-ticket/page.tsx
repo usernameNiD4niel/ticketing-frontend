@@ -34,7 +34,8 @@ const CreateTicket = async () => {
             )}
           >
             <p>
-              Hi, to limit the number of ticket posted. You can only create a ticket if you have existing 3 open tickets. Status:{" "}
+              Hi, to limit the number of ticket posted. You can only create a
+              ticket if you have less than 3 open tickets. Opened tickets{" "}
               <span className="font-bold">
                 {ticket_count.ticket_count} of 3
               </span>
