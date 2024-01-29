@@ -39,7 +39,6 @@ export default function SearchTable<TData>({
         setIsFiltering(false);
         setIsSearched(false);
         setData(clonedData);
-        console.log("reset search and create default table data");
       }
     }
   }, [searchDebounce]);
