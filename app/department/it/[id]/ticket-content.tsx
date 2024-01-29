@@ -65,7 +65,10 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
         </div>
         <hr className="my-4" />
         <EditCard ticket={ticket} ticketNumber={`#${ticket.id}`} />
-        <BottomSheet ticket_id={ticket.id} />
+        <BottomSheet
+          ticket_id={ticket.id}
+          isOpen={ticket.status.toLowerCase() === "open"}
+        />
       </div>
     </div>
   );

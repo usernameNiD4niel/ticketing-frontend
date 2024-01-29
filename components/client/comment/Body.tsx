@@ -6,6 +6,7 @@ import React, { FC } from "react";
 type CommentBodyProps = {
   id: number;
   token: string;
+  isOpen: boolean;
 };
 
 const getComments = async (id: number, token: string) => {
@@ -36,12 +37,12 @@ const getComments = async (id: number, token: string) => {
   );
 };
 
-const CommentBody: FC<CommentBodyProps> = async ({ id, token }) => {
+const CommentBody: FC<CommentBodyProps> = async ({ id, token, isOpen }) => {
   const comments = await getComments(id, token);
 
   return (
     <>
-      <Forms id={id} />
+      <Forms id={id} isOpen={isOpen} />
       <div className="flex flex-col gap-y-3 my-4">
         <ContentBody comments={comments} />
       </div>

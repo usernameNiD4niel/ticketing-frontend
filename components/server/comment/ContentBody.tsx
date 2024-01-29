@@ -1,7 +1,6 @@
 import { CommentInfoProps } from "@/constants/types";
 import React, { FC } from "react";
 import Comment from "./Comment";
-import TicketActivity from "./ticket-activity";
 
 type ContentBodyProps = {
   comments: CommentInfoProps[];
@@ -20,18 +19,13 @@ const ContentBody: FC<ContentBodyProps> = ({ comments }) => {
     }
 
     if (comments && comments.length > 0) {
-      return comments.map((com, index) => {
-        return <Comment {...com} key={index} />;
-        // if (com.is_comment) {
-        // }
-
-        // // * show activity
-        // return <TicketActivity {...com} key={index} />;
-      });
+      return comments.map((com, index) => <Comment {...com} key={index} />);
     } else {
       return (
         <div className="h-full w-full flex items-center justify-center">
-          <h3 className="md:text-sm text-xs">No comments found🍔</h3>
+          <h3 className="md:text-sm text-xs">
+            No comments or update of ticket happen here
+          </h3>
         </div>
       );
     }
