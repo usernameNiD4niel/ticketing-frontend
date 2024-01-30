@@ -34,18 +34,21 @@ import { myTickets } from "@/endpoints";
 import Cookies from "js-cookie";
 import SearchTable from "./search";
 import { cn } from "@/lib/utils";
-import { getCookies } from "next-client-cookies/server";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data_: Payment[];
   next_page_url: number | null;
+  pageCount: number;
+  currentPage: number;
 }
 
 export function DataTable<TValue>({
   columns,
   data_,
   next_page_url,
+  pageCount,
+  currentPage,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -244,6 +247,8 @@ export function DataTable<TValue>({
         table={table}
         next_page_url={next_page_url}
         isFiltering={isFiltering}
+        current_page={currentPage}
+        page_count={pageCount}
       />
     </div>
   );

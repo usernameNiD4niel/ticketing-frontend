@@ -15,6 +15,8 @@ export default async function DemoPage() {
         columns={columns}
         data_={data.data}
         next_page_url={data.next_page_url}
+        pageCount={data.pageCount}
+        currentPage={data.currentPage}
       />
       <ActiveTabFeed />
     </div>

@@ -3,6 +3,8 @@ import { Payment } from "@/constants/types";
 interface HelperResponseType {
   next_page_url: number | null;
   data: Payment[];
+  pageCount: number;
+  currentPage: number;
 }
 
 export default async function getPaginatedData(page: number, token: string) {

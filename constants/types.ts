@@ -198,6 +198,8 @@ export type PaginatedType = {
   data: Payment[];
   next_page_url: number | null;
   prev_page_url: number | null;
+  currentPage: number;
+  pageCount: number;
 };
 
 export type AssignedPaginatedType = {

@@ -25,7 +25,7 @@ export default function LearnMore() {
           <p className="text-justify">
             When the system detected the ticket is not active meaning cancelled
             or closed the comment section will automatically be deactivated. If
-            happen you want to comment this ticket or your desired ticket but
+            happen you want to comment to this ticket or your desired ticket but
             don&apos;t have the authority to do that please request to the
             champion, catalyst or ticket owner to open the ticket.
           </p>
