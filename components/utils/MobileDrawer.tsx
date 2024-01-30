@@ -263,7 +263,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
                 </span>
                 {isDrawerOpen ? (
                   <span className="text-sm">
-                    User Registrants{" "}
+                    Users for Approval{" "}
                     <span className="text-xs ms-2 font-bold text-red-500">
                       {pendingRoleCount !== 0 && pendingRoleCount}
                     </span>

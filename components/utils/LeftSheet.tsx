@@ -62,7 +62,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
       case AvailableTabs["Create Ticket"]:
         return "Create Ticket";
       case AvailableTabs["Departments Role"]:
-        return "User Registrants";
+        return "Users for Approval";
       case AvailableTabs.Reports:
         return "Reports";
       case AvailableTabs["Unhandled Tickets"]:
@@ -265,7 +265,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                           <RiPassPendingFill />
                         </span>
                         <span className="text-sm">
-                          User Registrants{" "}
+                          Users for Approval{" "}
                           <span className="text-xs ms-2 font-bold text-red-500">
                             {pendingRoleCount !== 0 && pendingRoleCount}
                           </span>
