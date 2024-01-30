@@ -10,6 +10,7 @@ export enum AvailableTabs {
   "Locations",
   "Notification",
   "Ticket Types",
+  "Manage User",
   "Logout",
 }
 

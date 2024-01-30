@@ -342,3 +342,13 @@ export type TicketType = {
   duration: string;
   priority: string;
 };
+
+export type ManageUser = {
+  id: string;
+  name: string;
+  department: string;
+  joined_on: string;
+  access_level: string;
+  system_status: string;
+  it_status: string;
+};

@@ -17,7 +17,7 @@ import deleteCookiesAction from "./delete-cookies-action";
 import deleteUserAction from "./delete-user-action";
 import getLocationsAction from "./get-locations-action";
 import getCreateTicket from "./get-create-ticket";
-
+import updateUserStatusAction from "./update-user-status-action";
 export {
   postComment,
   updateActivities,
@@ -38,4 +38,5 @@ export {
   deleteUserAction,
   getLocationsAction,
   getCreateTicket,
+  updateUserStatusAction,
 };

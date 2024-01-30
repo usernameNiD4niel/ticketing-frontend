@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import DialogBoxAlert from "../server/logout/DialogBoxAlert";
 import {
   MdAccountBox,
+  MdManageAccounts,
   MdMarkEmailUnread,
   MdMonitorHeart,
 } from "react-icons/md";
@@ -97,7 +98,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         as={"/department/it/accounts/recent"}
         href="/department/it/accounts/recent"
         className={cn(
-          "font-bold text-4xl my-12 flex flex-col items-center justify-center gap-2",
+          "font-bold text-4xl mt-5 flex flex-col items-center justify-center gap-2",
           !isDrawerOpen && "hidden"
         )}
         // className="flex items-center flex-col justify-center gap-2"
@@ -359,6 +360,26 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
             </span>
             {isDrawerOpen && <span className="text-sm">Profile</span>}
           </Link>
+
+          {(role?.toLowerCase() === "catalyst" ||
+            role?.toLowerCase() === "supreme") && (
+            <Link
+              className={cn(
+                "w-full text-xl flex py-3 px-6 space-x-2 text-[#0B64B9]",
+                activeTab === AvailableTabs["Manage User"] &&
+                  "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold",
+                !isDrawerOpen ? "justify-center items-center" : "justify-start"
+              )}
+              as={"/department/it/manage-user"}
+              href="/department/it/manage-user"
+            >
+              <span>
+                {" "}
+                <MdManageAccounts />
+              </span>
+              {isDrawerOpen && <span className="text-sm">Manage User</span>}
+            </Link>
+          )}
         </div>
         {isDrawerOpen && (
           <DialogBoxAlert isInTheMenu={true} key={"PCNavigationMenu"} />

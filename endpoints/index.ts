@@ -40,7 +40,8 @@ import getSpecificTicketType from "./getSpecificTicketType";
 import updateTicketStatus from "./updateTicketStatus";
 import deleteUser from "./deleteUser";
 import getTicketTodayCount from "./getTIcketTodayCount";
-
+import updateUserStatus from "./updateUserStatus";
+import getManageUser from "./getManageUser";
 export {
   getChampions,
   getNavigationCount,
@@ -84,4 +85,6 @@ export {
   updateTicketStatus,
   deleteUser,
   getTicketTodayCount,
+  updateUserStatus,
+  getManageUser,
 };

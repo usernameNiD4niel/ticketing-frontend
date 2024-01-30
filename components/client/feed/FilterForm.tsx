@@ -51,6 +51,10 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
     const champion = formData.get("champion")?.toString();
     const status = formData.get("status")?.toString();
     const sort_by = formData.get("sort_by")?.toString();
+    const location = formData.get("location")?.toString();
+    const ticket_type = formData.get("ticket_type")?.toString();
+    const priority = formData.get("priority")?.toString();
+
     let date_ = null;
 
     if (date) {
@@ -72,6 +76,18 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
 
     if (date_ && date_ !== null) {
       params += `date=${date_}&`;
+    }
+
+    if (location) {
+      params += `location=${location}&`;
+    }
+
+    if (ticket_type) {
+      params += `ticket_type=${ticket_type}&`;
+    }
+
+    if (priority) {
+      params += `priority=${priority}&`;
     }
 
     if (sort_by && sort_by !== null) {

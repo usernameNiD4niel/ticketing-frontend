@@ -15,6 +15,7 @@ import { FaHome } from "react-icons/fa";
 import { IoIosCreate, IoMdNotifications } from "react-icons/io";
 import {
   MdAccountBox,
+  MdManageAccounts,
   MdMarkEmailUnread,
   MdMonitorHeart,
 } from "react-icons/md";
@@ -73,6 +74,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Notification";
       case AvailableTabs["Ticket Types"]:
         return "Ticket Types";
+      case AvailableTabs["Manage User"]:
+        return "Manage User";
     }
   };
 
@@ -115,7 +118,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
           >
             <div>
               <SheetHeader>
-                <SheetTitle className="font-bold text-4xl mt-20">
+                <SheetTitle className="font-bold text-4xl">
                   {/* <Link href="/" as={"/"}>
                     <span className="text-[#0B64B9]">OP</span>
                     <span className="text-[#99CC68]">PA</span>
@@ -134,7 +137,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
                   </Link>
                 </SheetTitle>
               </SheetHeader>
-              <section className="w-full items-start flex flex-col gap-y-3 mt-16">
+              <section className="w-full items-start flex flex-col gap-y-3 mt-10">
                 <SheetClose asChild>
                   <Link
                     className={cn(
@@ -347,6 +350,25 @@ const LeftSheet: FC<LeftSheetProps> = ({
                     <span className="text-sm">Profile</span>
                   </Link>
                 </SheetClose>
+                {(role.toLowerCase() === "catalyst" ||
+                  role.toLowerCase() === "supreme") && (
+                  <SheetClose asChild>
+                    <Link
+                      className={cn(
+                        "w-full text-xl flex py-3 px-3 space-x-2 text-[#0B64B9]",
+                        activeTab === AvailableTabs["Manage User"] &&
+                          "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
+                      )}
+                      as={"department/it/manage-user"}
+                      href="department/it/manage-user"
+                    >
+                      <span>
+                        <MdManageAccounts />
+                      </span>
+                      <span className="text-sm">Manage User</span>
+                    </Link>
+                  </SheetClose>
+                )}
               </section>
             </div>
             <DialogBoxAlert isInTheMenu={true} key={"Mobile"} />
