@@ -9,8 +9,9 @@ import { Payment } from "@/constants/types";
 import { PHILIPPINE_TIME_ZONE } from "@/constants/variables";
 import { format } from "date-fns-tz";
 import Cookies from "js-cookie";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import DropdownStatus from "./dropdown-status";
+import { getCreateTicket, getLocationsAction } from "@/app/actions";
 
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
@@ -41,6 +42,10 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
   const [date, setDate] = useState<Date | undefined>();
 
   const token = Cookies.get("token");
+  const role = Cookies.get("it_access_level")?.toString();
+
+  const [locations, setLocations] = useState<string[]>([]);
+  const [ticketTypes, setTicketTypes] = useState<string[]>([]);
 
   const handleFormAction = async (formData: FormData) => {
     const champion = formData.get("champion")?.toString();
@@ -99,6 +104,23 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
     setIsFiltering(true);
   };
 
+  async function fetchLocation() {
+    const locations_ = await getLocationsAction();
+    setLocations(locations_);
+  }
+
+  async function fetchTicketTypes() {
+    const ticket_types_ = await getCreateTicket();
+    setTicketTypes(ticket_types_);
+  }
+
+  useEffect(() => {
+    if (role?.toLowerCase() === "catalyst") {
+      fetchLocation();
+      fetchTicketTypes();
+    }
+  }, []);
+
   return (
     <div className="grid gap-4">
       <div className="space-y-2">
@@ -107,46 +129,76 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
           Press enter to take effect your filtering
         </p>
       </div>
-      <form className="grid gap-2" action={handleFormAction}>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="champion">Champion</Label>
-          <Input
-            id="champion"
-            className="col-span-2 h-8"
-            placeholder="Jose Rizal"
-            name="champion"
-          />
+      <form
+        className="flex items-center gap-x-2 justify-center p-2 flex-col"
+        action={handleFormAction}
+      >
+        <div className="grid gap-2">
+          <div className="grid grid-cols-3 items-center gap-4">
+            <Label htmlFor="champion">Champion</Label>
+            <Input
+              id="champion"
+              className="col-span-2 h-8"
+              placeholder="Jose Rizal"
+              name="champion"
+            />
+          </div>
+          <div className="grid grid-cols-3 items-center gap-4">
+            <Label htmlFor="status">Status</Label>
+            <DropdownStatus
+              filter_by="status"
+              items={["OPEN", "CLOSED", "CANCELLED"]}
+              key={"dropdownstatusfilterform"}
+            />
+          </div>
+          <div className="w-full">
+            <Label htmlFor="status">
+              Date <span className="text-gray-500">eg. 11-01-2023</span>
+            </Label>
+            <DatePicker setDate={setDate} date={date} />
+          </div>
+          <div className="grid grid-cols-3 items-center gap-4">
+            <Label htmlFor="sort_by">Sort By</Label>
+            <SelectCustom
+              items={["Date Created", "Ticket Number", "Requestor"]}
+              name="sort_by"
+              placeholder="Sort column"
+              key={"SelectCustomFilterFormSortBy"}
+            />
+          </div>
+          {role?.toLowerCase() === "catalyst" && (
+            <>
+              <div className="grid grid-cols-3 items-center gap-4">
+                <Label htmlFor="location">Location</Label>
+                <SelectCustom
+                  items={locations}
+                  name="location"
+                  placeholder="Select location"
+                  key={"SelectCustomFilterFormLocation"}
+                />
+              </div>
+              <div className="grid grid-cols-3 items-center gap-4">
+                <Label htmlFor="ticket_type">Ticket Type</Label>
+                <SelectCustom
+                  items={ticketTypes}
+                  name="ticket_type"
+                  placeholder="Select ticket type"
+                  key={"SelectCustomFilterFormTicketType"}
+                />
+              </div>
+              <div className="grid grid-cols-3 items-center gap-4">
+                <Label htmlFor="priority">Priority</Label>
+                <SelectCustom
+                  items={["LOW", "MEDIUM", "HIGH"]}
+                  name="priority"
+                  placeholder="Select priority"
+                  key={"SelectCustomFilterFormPriority"}
+                />
+              </div>
+            </>
+          )}
         </div>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="status">Status</Label>
-          {/* <Input
-            id="status"
-            className="col-span-2 h-8"
-            placeholder="CLOSED"
-            name="status"
-          /> */}
-          <DropdownStatus
-            filter_by="status"
-            items={["OPEN", "CLOSED", "CANCELLED"]}
-            key={"dropdownstatusfilterform"}
-          />
-        </div>
-        <div className="w-full">
-          <Label htmlFor="status">
-            Date <span className="text-gray-500">eg. 11-01-2023</span>
-          </Label>
-          <DatePicker setDate={setDate} date={date} />
-        </div>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="sort_by">Sort By</Label>
-          <SelectCustom
-            items={["Date Created", "Ticket Number", "Requestor"]}
-            name="sort_by"
-            placeholder="Sort column"
-            key={"SelectCustomFilterForm"}
-          />
-        </div>
-        <div className="w-full mt-8 flex flex-col gap-y-3">
+        <div className="w-full mt-4 flex flex-col gap-y-3">
           <Button>Filter</Button>
           <Button variant="ghost" type="button" onClick={handleViewAll}>
             View All

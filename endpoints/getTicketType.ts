@@ -1,8 +1,11 @@
 import { TicketTypeColumns } from "@/constants/types";
 
-export default async function getTicketType(token: string) {
+export default async function getTicketType(
+  token: string,
+  isCreateTicketType?: boolean
+) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ticket-types`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ticket-types?isCreateTicket=${isCreateTicketType}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -16,9 +19,11 @@ export default async function getTicketType(token: string) {
 
   if (response.ok) {
     const data = await response.json();
-    return data.ticket_types as TicketTypeColumns[];
+    if (isCreateTicketType && isCreateTicketType === true) {
+      return data.ticket_types as string[];
+    } else {
+      return data.ticket_types as TicketTypeColumns[];
+    }
   }
-
-  console.log(`get ticket type < endpoint`);
   return [];
 }
