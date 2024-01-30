@@ -3,10 +3,6 @@
 import { Payment } from "@/constants/types";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { ArrowUpDown } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "id",
@@ -29,6 +25,17 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <div className="text-left ml-4 font-medium">
           {row.getValue("created_at")}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "updated_at",
+    header: () => <div className="ml-4">Last Update</div>,
+    cell: ({ row }) => {
+      return (
+        <div className="text-left ml-4 font-medium">
+          {row.getValue("updated_at")}
         </div>
       );
     },

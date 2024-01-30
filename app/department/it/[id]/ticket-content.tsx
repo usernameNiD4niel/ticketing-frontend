@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import BottomSheet from "@/components/utils/BottomSheet";
 import EditCard from "@/components/utils/EditCard";
 import { FeedTicketProps } from "@/constants/types";
-import { getCookies } from "next-client-cookies/server";
 import { cookies } from "next/headers";
 import React, { FC } from "react";
 

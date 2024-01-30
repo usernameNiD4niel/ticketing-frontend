@@ -92,11 +92,13 @@ export function DataTable<TValue>({
     if (width < 768) {
       table.getColumn("name")?.toggleVisibility(false);
       table.getColumn("created_at")?.toggleVisibility(false);
+      table.getColumn("updated_at")?.toggleVisibility(false);
       table.getColumn("subject")?.toggleVisibility(false);
       table.getColumn("assigned_to")?.toggleVisibility(false);
     } else {
       table.getColumn("name")?.toggleVisibility(true);
       table.getColumn("created_at")?.toggleVisibility(true);
+      table.getColumn("updated_at")?.toggleVisibility(true);
       table.getColumn("subject")?.toggleVisibility(true);
       table.getColumn("assigned_to")?.toggleVisibility(true);
     }
@@ -216,6 +218,9 @@ export function DataTable<TValue>({
                           </span>
                           <span className="md:hidden">
                             {row.getValue("created_at")}
+                          </span>
+                          <span className="md:hidden">
+                            {row.getValue("updated_at")}
                           </span>
                           <span className="md:hidden">
                             {row.getValue("subject")}
