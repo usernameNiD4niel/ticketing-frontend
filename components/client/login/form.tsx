@@ -30,7 +30,6 @@ export default function LoginForm() {
 
   const handleSubmitForm: SubmitHandler<FormLoginSchema> = async (data) => {
     setIsValid(true);
-
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
@@ -41,12 +40,14 @@ export default function LoginForm() {
       return;
     } else if (isAuthorized.success) {
       if (isAuthorized.is_deactivated) {
+        setIsValid(false);
         toast({
           title: "Login Failed",
           description:
             "The super admin deactivated your account, you cannot login to the system unless your account set back to activated again",
           duration: 6000,
         });
+        return;
       } else {
         setError("");
         router.push("/");

@@ -18,6 +18,14 @@ export function middleware(request: NextRequest) {
     );
   }
 
+  const it_status = request.cookies.get("it_status")?.value;
+
+  if (pathname.startsWith("/department/it") && it_status === "deactivate") {
+    return NextResponse.redirect(
+      new URL("/?disable=true&module=IT", request.url)
+    );
+  }
+
   if (pathname === "/login" || pathname === "/register") {
     if (token && token.length > 10) {
       return NextResponse.redirect(new URL("/", request.url));
