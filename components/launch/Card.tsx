@@ -26,13 +26,13 @@ export const CardLaunch: React.FC<CardProps> = ({
   const is_disabled = searchParams.get("disable")
     ? Boolean(searchParams.get("disable"))
     : false;
-  const module = searchParams.get("module");
+  const module_ = searchParams.get("module");
 
   function handleClickEvents() {
     if (is_disabled) {
       toast({
         title: "Unable to enter",
-        description: "You have been disabled to enter " + module + " module",
+        description: "You have been disabled to enter " + module_ + " module",
         duration: 6000,
       });
     }
