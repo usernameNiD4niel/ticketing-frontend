@@ -4,10 +4,6 @@ export default async function updateUserStatus(
   status: string,
   column: string
 ) {
-  console.log(`user id ::: ${userIds}`);
-  console.log(`status ::: ${status}`);
-  console.log(`column ::: ${column}`);
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/accounts/status`,
     {
@@ -21,8 +17,6 @@ export default async function updateUserStatus(
   );
 
   const data = await response.json();
-
-  console.log(`dataaa ::: ${JSON.stringify(data, null, 2)}`);
 
   if (response.ok) {
     return {

@@ -5,6 +5,7 @@ import login from "@/app/actions/login";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 import { DialogBox } from "@/components/utils/DialogBox";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { FormLoginSchema } from "@/constants/types";
@@ -39,8 +40,17 @@ export default function LoginForm() {
     if (!isAuthorized) {
       return;
     } else if (isAuthorized.success) {
-      setError("");
-      router.push("/");
+      if (isAuthorized.is_deactivated) {
+        toast({
+          title: "Login Failed",
+          description:
+            "The super admin deactivated your account, you cannot login to the system unless your account set back to activated again",
+          duration: 6000,
+        });
+      } else {
+        setError("");
+        router.push("/");
+      }
     } else {
       setError(isAuthorized.message);
       setIsValid(false);
