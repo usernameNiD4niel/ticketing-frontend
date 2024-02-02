@@ -141,6 +141,7 @@ export type Payment = {
   id: string;
   name: string;
   created_at: string;
+  updated_at: string;
   subject: string;
   assigned_to: string;
   status: "open" | "close" | "resolved" | "expired" | "re-opened";
