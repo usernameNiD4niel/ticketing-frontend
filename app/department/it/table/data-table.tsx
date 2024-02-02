@@ -145,33 +145,31 @@ export function DataTable<TValue>({
           />
           <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
         </div>
-        {data && data.length > 0 && (
-          <div className="space-x-2">
-            {role?.toLowerCase() === "requestor" && (
-              <>
-                <Button
-                  variant={"link"}
-                  className={cn(
-                    activeTab === 1 ? "border-slate-500 border" : "border-none"
-                  )}
-                  onClick={getMyDepartmentTickets}
-                >
-                  My Department Tickets
-                </Button>
-                <Button
-                  variant={"link"}
-                  className={cn(
-                    activeTab !== 1 ? "border-slate-500 border" : "border-none"
-                  )}
-                  onClick={getMyTickets}
-                >
-                  My Tickets
-                </Button>
-              </>
-            )}
-            <ExportDialog url="all-tickets" />
-          </div>
-        )}
+        <div className="space-x-2">
+          {role?.toLowerCase() === "requestor" && (
+            <>
+              <Button
+                variant={"link"}
+                className={cn(
+                  activeTab === 1 ? "border-slate-500 border" : "border-none"
+                )}
+                onClick={getMyDepartmentTickets}
+              >
+                My Department Tickets
+              </Button>
+              <Button
+                variant={"link"}
+                className={cn(
+                  activeTab !== 1 ? "border-slate-500 border" : "border-none"
+                )}
+                onClick={getMyTickets}
+              >
+                My Tickets
+              </Button>
+            </>
+          )}
+          <ExportDialog url="all-tickets" />
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>

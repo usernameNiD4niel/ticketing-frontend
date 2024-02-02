@@ -29,6 +29,7 @@ import SelectCustom from "@/components/utils/SelectCustom";
 import { useToast } from "@/components/ui/use-toast";
 import updateDepartmentRole from "@/app/actions/update-department-role";
 import { deleteUserAction } from "@/app/actions";
+import { LoadingButton } from "@/components/utils/LoadingButton";
 
 interface TableDataProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,6 +45,8 @@ export default function TableData<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [rowSelection, setRowSelection] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
 
@@ -141,11 +144,17 @@ export default function TableData<TData, TValue>({
                 placeholder="Assign a role"
                 key={"pending-role-select-custome"}
               />
-              <Button>Submit</Button>
+              {isLoading ? (
+                <LoadingButton isFullWidth={false} />
+              ) : (
+                <>
+                  <Button>Submit</Button>
+                  <Button variant={"destructive"} onClick={handleDeleteUser}>
+                    Decline
+                  </Button>
+                </>
+              )}
             </form>
-            <Button variant={"destructive"} onClick={handleDeleteUser}>
-              Decline
-            </Button>
           </div>
         )}
       </div>
