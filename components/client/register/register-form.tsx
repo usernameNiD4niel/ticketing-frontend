@@ -53,7 +53,7 @@ export default function RegisterForm() {
         `/department/pending-user?user=${data.name}&email=${data.email}`
       );
 
-      router.push(`/register/otp`);
+      // router.push(`/register/otp`);
     } else {
       toast({
         title: "OTP Generation Failed",

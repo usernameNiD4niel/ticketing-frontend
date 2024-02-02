@@ -28,6 +28,15 @@ const PendingRoleAssign: FC<PendingRoleAssignProps> = ({ selectedUserIds }) => {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
 
   const handleFormAction = async (formData: FormData) => {
+    const role = formData.get("role")?.toString();
+    if (!role) {
+      toast({
+        title: "Validation Error",
+        description: "Role is as required field",
+      });
+      return;
+    }
+
     const formAction = await updateDepartmentRole(selectedUserIds, formData);
 
     if (formAction.success) {

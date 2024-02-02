@@ -26,7 +26,6 @@ import { Input } from "@/components/ui/input";
 import { ManageUser, UserProps } from "@/constants/types";
 import SelectCustom from "@/components/utils/SelectCustom";
 import { useToast } from "@/components/ui/use-toast";
-import updateDepartmentRole from "@/app/actions/update-department-role";
 import { deleteUserAction, updateUserStatusAction } from "@/app/actions";
 import TableDataPagination from "../pending-overview/table-data-pagination";
 import Cookies from "js-cookie";
@@ -90,10 +89,6 @@ export default function TableData<TData, TValue>({
     } else {
       column = "it_status";
     }
-
-    console.log(`status ::: ${status}`);
-    console.log(`column ::: ${column}`);
-    console.log(`ids ::: ${ids}`);
 
     const { message, success } = await updateUserStatusAction(
       ids,

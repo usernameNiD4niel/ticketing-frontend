@@ -12,10 +12,11 @@ export default async function updateDepartmentRole(
   const token = cookies().get("token")?.value;
 
   const data: DepartmentRolePatch = {
-    role: formData.get("role")?.toString()!,
-    user_ids: id,
+    role: formData.get("role")?.toString()!.toUpperCase()!,
+    users_ids: id,
   };
 
+  console.log(`dataaa ::: ${JSON.stringify(data, null, 2)}`);
   const request = await patchPendingDepartmentRole(token!, data);
 
   revalidateTag("users-pending-department-role");

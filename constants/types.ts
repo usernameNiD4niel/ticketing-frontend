@@ -243,7 +243,7 @@ export type UserProps = {
 
 export type DepartmentRolePatch = {
   role: string;
-  user_ids: number[];
+  users_ids: number[];
 };
 
 export type Login = {

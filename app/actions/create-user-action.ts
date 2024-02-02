@@ -15,21 +15,21 @@ export default async function createUserAction(formData: FormData) {
     password,
   });
 
-  if (response.success) {
-    const sevenDaysFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  // if (response.success) {
+  //   const sevenDaysFromNow = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-    cookies().set("token", response.data.token, { expires: sevenDaysFromNow });
-    cookies().set("email", email, { expires: sevenDaysFromNow });
-    cookies().set("it_access_level", response.data.it_access_level, {
-      expires: sevenDaysFromNow,
-    });
-    cookies().set("hr_access_level", response.data.hr_access_level, {
-      expires: sevenDaysFromNow,
-    });
-    cookies().set("name", response.data.name, {
-      expires: sevenDaysFromNow,
-    });
-  }
+  //   cookies().set("token", response.data.token, { expires: sevenDaysFromNow });
+  //   cookies().set("email", email, { expires: sevenDaysFromNow });
+  //   cookies().set("it_access_level", response.data.it_access_level, {
+  //     expires: sevenDaysFromNow,
+  //   });
+  //   cookies().set("hr_access_level", response.data.hr_access_level, {
+  //     expires: sevenDaysFromNow,
+  //   });
+  //   cookies().set("name", response.data.name, {
+  //     expires: sevenDaysFromNow,
+  //   });
+  // }
 
   return { success: response.success, message: response.message };
 }
