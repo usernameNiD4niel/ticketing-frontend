@@ -6,15 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ComboboxDemo } from "@/components/utils/ComboBox";
 import { LoadingButton } from "@/components/utils/LoadingButton";
-import { FormRegisterSchema, UserObject } from "@/constants/types";
+import { FormRegisterSchema } from "@/constants/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { getOtpGenerated } from "@/endpoints";
 import { useToast } from "@/components/ui/use-toast";
-import Cookies from "js-cookie";
+import { createUserAction } from "@/app/actions";
 
 export default function RegisterForm() {
   const [department, setDepartment] = useState("");
@@ -36,25 +35,23 @@ export default function RegisterForm() {
   const createRequest: SubmitHandler<FormRegisterSchema> = async (data) => {
     setIsLoadingButton(true);
 
-    const { message, otp, success } = await getOtpGenerated(data.email);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("department", department);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    const { message, success } = await createUserAction(formData);
 
     if (success) {
       toast({
-        title: "OTP Generation Success",
-        description: message,
+        title: "Congratulations " + data.name,
+        description: "You have successfully created your account!",
+        duration: 6000,
       });
-
-      const userObject: UserObject = {
-        name: data.name,
-        department,
-        email: data.email,
-        password: data.password,
-        otp,
-      };
-
-      Cookies.set("user", JSON.stringify(userObject));
-
-      // sessionStorage.setItem("user", JSON.stringify(userObject));
+      router.push(
+        `/department/pending-user?user=${data.name}&email=${data.email}`
+      );
 
       router.push(`/register/otp`);
     } else {
