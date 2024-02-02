@@ -114,12 +114,12 @@ export function DataTablePagination<TData>({
         Page{" "}
         {!isFiltering ? (
           <>
-            {currentPage} of {pageCount}
+            {currentPage} of {pageCount === 0 ? 1 : pageCount}
           </>
         ) : (
           <>
             {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
+            {table.getPageCount() === 0 ? 1 : table.getPageCount()}
           </>
         )}
       </div>

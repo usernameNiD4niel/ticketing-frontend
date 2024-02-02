@@ -127,10 +127,10 @@ export function DataTable<TValue>({
 
   async function getMyDepartmentTickets() {
     // set the default data
+    table.resetPagination();
     setData(data_);
     setIsFiltering(false);
     setActiveTab(1);
-    table.resetPagination();
   }
 
   return (
