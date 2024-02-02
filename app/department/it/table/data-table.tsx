@@ -149,7 +149,7 @@ export function DataTable<TValue>({
           {role?.toLowerCase() === "requestor" && (
             <>
               <Button
-                variant={"link"}
+                variant={"ghost"}
                 className={cn(
                   activeTab === 1 ? "border-slate-500 border" : "border-none"
                 )}
@@ -158,7 +158,7 @@ export function DataTable<TValue>({
                 My Department Tickets
               </Button>
               <Button
-                variant={"link"}
+                variant={"ghost"}
                 className={cn(
                   activeTab !== 1 ? "border-slate-500 border" : "border-none"
                 )}
