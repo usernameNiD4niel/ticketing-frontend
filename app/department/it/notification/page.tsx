@@ -7,13 +7,12 @@ import { redirect } from "next/navigation";
 
 export default async function NotificationPage() {
   const token = cookies().get("token")?.value;
-  const email = cookies().get("email")?.value;
 
-  if (!token || !email) {
+  if (!token) {
     redirect("/login");
   }
 
-  const notifications = await getNotification(token, email);
+  const notifications = await getNotification(token);
 
   return (
     <div className="w-full flex gap-2 justify-center px-2 pb-10">

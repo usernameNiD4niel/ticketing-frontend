@@ -62,7 +62,7 @@ export function DataTable<TValue>({
 
   const [data, setData] = React.useState(data_);
 
-  const [activeTab, setActiveTab] = React.useState(1);
+  const [activeTab, setActiveTab] = React.useState(2);
 
   const role = Cookies.get("it_access_level");
 

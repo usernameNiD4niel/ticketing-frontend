@@ -1,6 +1,6 @@
 import { Notifications } from "@/constants/types";
 
-export default async function getNotification(token: string, email: string) {
+export default async function getNotification(token: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notifications?is_default=true`,
     {
