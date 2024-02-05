@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { IoClose, IoFolderOpenOutline } from "react-icons/io5";
 import { TbMessageCancel } from "react-icons/tb";
 import ConfirmationBox from "./ConfirmationBox";
