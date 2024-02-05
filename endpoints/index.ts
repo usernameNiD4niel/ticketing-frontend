@@ -43,6 +43,7 @@ import getTicketTodayCount from "./getTIcketTodayCount";
 import updateUserStatus from "./updateUserStatus";
 import getManageUser from "./getManageUser";
 import getSpecificUser from "./getSpecificUser";
+import updateSpecificUser from "./updateSpecificUser";
 export {
   getChampions,
   getNavigationCount,
@@ -89,4 +90,5 @@ export {
   updateUserStatus,
   getManageUser,
   getSpecificUser,
+  updateSpecificUser,
 };

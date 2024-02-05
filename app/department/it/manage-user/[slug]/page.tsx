@@ -10,7 +10,6 @@ export default async function ManageUserSlugPage({
 }: {
   params: { slug: string };
 }) {
-  console.log(`the slug ${slug}`);
   const token = cookies().get("token")?.value;
 
   if (!token) {
@@ -47,6 +46,7 @@ export default async function ManageUserSlugPage({
           department={department}
           email={email}
           role={role.toUpperCase()}
+          id={slug}
         />
       </div>
     </div>

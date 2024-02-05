@@ -366,3 +366,9 @@ export type ManageUserProps = {
   system_status: string; // * active or deactivate in the entire system
   it_status: string; // * active or deactivate in the entire it ticketing system
 };
+
+export type UpdateUserType = {
+  department: string | undefined;
+  role: string | undefined;
+  email: string | undefined;
+};
