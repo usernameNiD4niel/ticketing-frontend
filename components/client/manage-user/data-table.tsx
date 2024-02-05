@@ -29,6 +29,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { deleteUserAction, updateUserStatusAction } from "@/app/actions";
 import TableDataPagination from "../pending-overview/table-data-pagination";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface TableDataProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,6 +46,8 @@ export default function TableData<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [rowSelection, setRowSelection] = useState({});
+
+  const router = useRouter();
 
   const { toast } = useToast();
 
@@ -134,6 +138,10 @@ export default function TableData<TData, TValue>({
     }
   }
 
+  function handleRedirect(id: string) {
+    router.push(`/department/it/manage-user/${id}?id=${id}`);
+  }
+
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
@@ -188,6 +196,8 @@ export default function TableData<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => handleRedirect(row.getValue("id"))}
+                  className="cursor-pointer"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

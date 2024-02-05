@@ -355,3 +355,14 @@ export type ManageUser = {
   system_status: string;
   it_status: string;
 };
+
+export type ManageUserProps = {
+  id: string;
+  name: string;
+  email: string;
+  created_at: string;
+  department: string;
+  role: string;
+  system_status: string; // * active or deactivate in the entire system
+  it_status: string; // * active or deactivate in the entire it ticketing system
+};
