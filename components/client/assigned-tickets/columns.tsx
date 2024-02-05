@@ -12,10 +12,12 @@ export const columns: ColumnDef<AssignedTickets>[] = [
     ),
   },
   {
-    accessorKey: "status",
-    header: () => <div className="ml-4">Status</div>,
+    accessorKey: "requestor",
+    header: () => <div className="ml-4">Requestor</div>,
     cell: ({ row }) => (
-      <div className="text-left ml-4 font-medium">{row.getValue("status")}</div>
+      <div className="text-left ml-4 font-medium">
+        {row.getValue("requestor")}
+      </div>
     ),
   },
   {
@@ -41,12 +43,12 @@ export const columns: ColumnDef<AssignedTickets>[] = [
     },
   },
   {
-    accessorKey: "priority",
-    header: () => <div className="ml-4">Priority</div>,
+    accessorKey: "ticket_type",
+    header: () => <div className="ml-4">Ticket Type</div>,
     cell: ({ row }) => {
       return (
         <div className="text-left ml-4 font-medium">
-          {row.getValue("priority")}
+          {row.getValue("ticket_type")}
         </div>
       );
     },

@@ -91,11 +91,11 @@ export function DataTable<TValue>({
     if (width < 1024) {
       table.getColumn("subject")?.toggleVisibility(false);
       table.getColumn("created_at")?.toggleVisibility(false);
-      table.getColumn("status")?.toggleVisibility(false);
+      table.getColumn("requestor")?.toggleVisibility(false);
     } else {
       table.getColumn("subject")?.toggleVisibility(true);
       table.getColumn("created_at")?.toggleVisibility(true);
-      table.getColumn("status")?.toggleVisibility(true);
+      table.getColumn("requestor")?.toggleVisibility(true);
     }
   };
 
@@ -173,16 +173,16 @@ export function DataTable<TValue>({
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                        {cell.column.id !== "priority" && (
+                        {cell.column.id !== "ticket_type" && (
                           <div className="flex flex-col ml-4">
                             <span className="lg:hidden">
-                              {row.getValue("status")}
-                            </span>
-                            <span className="lg:hidden">
-                              {row.getValue("subject")}
+                              {row.getValue("requestor")}
                             </span>
                             <span className="lg:hidden">
                               {row.getValue("created_at")}
+                            </span>
+                            <span className="lg:hidden">
+                              {row.getValue("subject")}
                             </span>
                           </div>
                         )}
