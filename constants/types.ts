@@ -363,6 +363,7 @@ export type ManageUserProps = {
   created_at: string;
   department: string;
   role: string;
+  account_status: string; // * This is matic
   system_status: string; // * active or deactivate in the entire system
   it_status: string; // * active or deactivate in the entire it ticketing system
 };
