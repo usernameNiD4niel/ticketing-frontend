@@ -43,7 +43,11 @@ export default async function ManageUserSlugPage({
         <h1 className="capitalize text-2xl">{name}</h1>
       </div>
       <div className="w-full flex items-center justify-center h-[35vh]">
-        <FormManageUserItem department={department} email={email} role={role} />
+        <FormManageUserItem
+          department={department}
+          email={email}
+          role={role.toUpperCase()}
+        />
       </div>
     </div>
   );
