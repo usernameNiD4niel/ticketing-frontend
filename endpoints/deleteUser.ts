@@ -1,4 +1,4 @@
-export default async function deleteUser(name: string, token: string) {
+export default async function deleteUser(names: string[], token: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/accounts`,
     {
@@ -7,7 +7,7 @@ export default async function deleteUser(name: string, token: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ names }),
     }
   );
 

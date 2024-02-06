@@ -21,7 +21,8 @@ interface ShowDeleteProps {
 
 export default function ShowDelete({ name }: ShowDeleteProps) {
   async function handleDeleteUser() {
-    const { success, message } = await deleteUserAction(name);
+    const names = [name];
+    const { success, message } = await deleteUserAction(names);
 
     if (success) {
       toast({
