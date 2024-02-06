@@ -24,7 +24,8 @@ async function getData(
 ) {
   // Fetch data from your API here.
   if (nextPageUrl) {
-    const url = `${nextPageUrl}&sortedBy=created_at&ordering=desc`;
+    // ?page=${page}&sortedBy=created_at&ordering=desc&is_default=true
+    const url = `${nextPageUrl}&sortedBy=created_at&ordering=desc&is_default=true`;
     const data = await fetch(`${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,8 +61,9 @@ async function getPrevious(
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 ) {
   // Fetch data from your API here.
+  // ?page=${page}&sortedBy=created_at&ordering=desc&is_default=true
   if (previousPageUrl) {
-    const url = `${previousPageUrl}&sortedBy=created_at&ordering=desc`;
+    const url = `${previousPageUrl}&sortedBy=created_at&ordering=desc&is_default=true`;
     const data = await fetch(`${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
