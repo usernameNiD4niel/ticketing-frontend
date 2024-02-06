@@ -8,6 +8,9 @@ export default async function getSpecificUser(token: string, id: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      next: {
+        tags: [`accounts-manage-user-${id}`],
+      },
     }
   );
 

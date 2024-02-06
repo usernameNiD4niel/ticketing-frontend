@@ -19,6 +19,7 @@ import getLocationsAction from "./get-locations-action";
 import getCreateTicket from "./get-create-ticket";
 import updateUserStatusAction from "./update-user-status-action";
 import updateSpecificUserAction from "./update-specific-user-action";
+import updateSpecificUserStatusAction from "./update-specific-user-status-action";
 export {
   postComment,
   updateActivities,
@@ -41,4 +42,5 @@ export {
   getCreateTicket,
   updateUserStatusAction,
   updateSpecificUserAction,
+  updateSpecificUserStatusAction,
 };

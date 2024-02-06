@@ -5,14 +5,14 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function deleteUserAction(names: string[]) {
+export default async function deleteUserAction(name: string) {
   const token = cookies().get("token")?.value;
 
   if (!token) {
     redirect("/login");
   }
 
-  const response = await deleteUser(names, token);
+  const response = await deleteUser(name, token);
 
   if (response.success) {
     revalidateTag("users-pending-department-role");

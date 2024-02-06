@@ -1,5 +1,6 @@
-import DisplayButton from "@/components/client/manage-user/display-button";
 import FormManageUserItem from "@/components/client/manage-user/form-manage-user-item";
+import ShowAlert from "@/components/client/manage-user/show-alert";
+import ShowDelete from "@/components/client/manage-user/show-delete";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import RedirectBack from "@/components/utils/RedirectBack";
 import { getSpecificUser } from "@/endpoints";
@@ -20,7 +21,7 @@ export default async function ManageUserSlugPage({
   const { name, department, email, role, account_status } =
     await getSpecificUser(token, slug);
 
-  console.log(`name ${name}`);
+  console.log(`accunt status ${account_status}`);
   function formatName(): string {
     const splittedName = name.split(" ");
     const length = splittedName.length;
@@ -43,12 +44,14 @@ export default async function ManageUserSlugPage({
         </Avatar>
         <h1 className="capitalize text-2xl">{name}</h1>
       </div>
-      <div className="fixed top-4 right-2">
-        <DisplayButton
+      <div className="fixed top-[10%] right-[20%] flex flex-col gap-3">
+        <ShowAlert
           isDeactivated={
             account_status.toLowerCase() === "active" ? false : true
           }
+          id={slug}
         />
+        <ShowDelete name={name} />
       </div>
       <div className="w-full flex items-center justify-center h-[35vh]">
         <FormManageUserItem

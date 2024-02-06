@@ -44,6 +44,7 @@ import updateUserStatus from "./updateUserStatus";
 import getManageUser from "./getManageUser";
 import getSpecificUser from "./getSpecificUser";
 import updateSpecificUser from "./updateSpecificUser";
+import updateSpecificUserStatus from "./updateSpecificUserStatus";
 export {
   getChampions,
   getNavigationCount,
@@ -91,4 +92,5 @@ export {
   getManageUser,
   getSpecificUser,
   updateSpecificUser,
+  updateSpecificUserStatus,
 };
