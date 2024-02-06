@@ -63,13 +63,7 @@ export function DataTable<TValue>({
 
   const [data, setData] = React.useState(data_);
 
-  const [nextPahina, setNextPahina] = React.useState<number | null>(null);
-
   const [activeTab, setActiveTab] = React.useState(2);
-
-  React.useEffect(() => {
-    setNextPahina(next_page_url);
-  }, [next_page_url]);
 
   const role = Cookies.get("it_access_level");
 
@@ -123,12 +117,11 @@ export function DataTable<TValue>({
   };
 
   async function getMyTickets() {
-    const { data, next_page_url } = await getPaginatedFeedAction(true, 1);
+    const newData = await getPaginatedFeedAction(true, 1);
     // const response = await myTickets(token!);
 
-    setIsFiltering(false);
-    setData(data);
-    setNextPahina(next_page_url);
+    setIsFiltering(true);
+    setData(newData);
     setActiveTab(2);
   }
 
@@ -139,11 +132,10 @@ export function DataTable<TValue>({
     // setIsFiltering(false);
     // setActiveTab(1);
 
-    const { data, next_page_url } = await getPaginatedFeedAction(false, 1);
+    const newData = await getPaginatedFeedAction(false, 1);
 
-    setIsFiltering(false);
-    setData(data);
-    setNextPahina(next_page_url);
+    setIsFiltering(true);
+    setData(newData);
     setActiveTab(1);
   }
 
@@ -262,7 +254,7 @@ export function DataTable<TValue>({
       <DataTablePagination
         setData={setData}
         table={table}
-        next_page_url={nextPahina}
+        next_page_url={next_page_url}
         isFiltering={isFiltering}
         current_page={currentPage}
         page_count={pageCount}

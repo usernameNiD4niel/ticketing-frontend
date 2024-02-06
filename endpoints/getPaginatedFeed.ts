@@ -1,12 +1,5 @@
 import { Payment } from "@/constants/types";
 
-interface HelperResponseType {
-  next_page_url: number | null;
-  data: Payment[];
-  pageCount: number;
-  currentPage: number;
-}
-
 export default async function getPaginatedFeed(
   token: string,
   is_default: boolean,
@@ -24,9 +17,8 @@ export default async function getPaginatedFeed(
 
   if (response.ok) {
     const data = await response.json();
-
-    return data as HelperResponseType;
+    return data.tickets as Payment[];
   }
 
-  return {} as HelperResponseType;
+  return [] as Payment[];
 }
