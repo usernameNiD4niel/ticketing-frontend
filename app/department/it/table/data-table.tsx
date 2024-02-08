@@ -30,7 +30,6 @@ import FilterPopover from "@/components/client/feed/FilterPopover";
 import useScreenSize from "@/hooks/helper/useScreenSize";
 import ExportDialog from "@/components/server/feed/ExportDialog";
 import { Button } from "@/components/ui/button";
-import { myTickets } from "@/endpoints";
 import Cookies from "js-cookie";
 import SearchTable from "./search";
 import { cn } from "@/lib/utils";
@@ -174,7 +173,9 @@ export function DataTable<TValue>({
               </Button>
             </>
           )}
-          <ExportDialog url="all-tickets" />
+          <ExportDialog
+            url={`all-tickets?is_my_tickets=${activeTab === 1 ? false : true}`}
+          />
         </div>
       </div>
       <div className="rounded-md border">

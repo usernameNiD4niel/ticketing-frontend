@@ -90,6 +90,7 @@ const EditCard: FC<EditCardProps> = async ({ ticketNumber, ticket }) => {
             status={ticket?.status.toLowerCase() ?? "low"}
             id={ticket!.id}
             isNoChampion={ticket && ticket.assigned_to ? true : false}
+            hasClosedDate={ticket && ticket.closed_date ? true : false}
           />
         )}
       </div>

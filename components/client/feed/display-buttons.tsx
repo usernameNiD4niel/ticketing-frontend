@@ -12,12 +12,14 @@ interface DispalyButtonsProps {
   status: string;
   id: number;
   isNoChampion: boolean;
+  hasClosedDate: boolean;
 }
 
 export default function DispalyButtons({
   status,
   id,
   isNoChampion,
+  hasClosedDate,
 }: DispalyButtonsProps) {
   const router = useRouter();
   const role = Cookies.get("it_access_level")?.toLowerCase();
@@ -64,13 +66,15 @@ export default function DispalyButtons({
     if (status === "open") {
       return (
         <>
-          <ConfirmationBox
-            buttonText="Cancel Ticket"
-            Icon={TbMessageCancel}
-            description="If you proceed, the ticket you created will be treated like it wont exists. Are you still going to cancel the ticket?"
-            handleButtonClick={handleCancelClick}
-            title="Are you sure you want to cancel the ticket?"
-          />
+          {!hasClosedDate && (
+            <ConfirmationBox
+              buttonText="Cancel Ticket"
+              Icon={TbMessageCancel}
+              description="If you proceed, the ticket you created will be treated like it wont exists. Are you still going to cancel the ticket?"
+              handleButtonClick={handleCancelClick}
+              title="Are you sure you want to cancel the ticket?"
+            />
+          )}
           {isNoChampion && (
             <ConfirmationBox
               buttonText="Close Ticket"

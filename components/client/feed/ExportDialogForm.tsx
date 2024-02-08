@@ -27,8 +27,6 @@ function getCurrentDateFormatted(): string {
 const ExportDialogForm: FC<ExportDialogFormProps> = ({ setIsOpen, data }) => {
   const [fileName, setFileName] = useState(getCurrentDateFormatted());
 
-  console.log(`data:::${JSON.stringify(data, null, 2)}`);
-
   const handleDialogClose = () => setIsOpen(false);
 
   return (
