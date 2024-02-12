@@ -34,6 +34,7 @@ import Cookies from "js-cookie";
 import SearchTable from "./search";
 import { cn } from "@/lib/utils";
 import { getPaginatedFeedAction } from "@/app/actions";
+import TableOptions from "./table-options";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -150,7 +151,8 @@ export function DataTable<TValue>({
           />
           <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
         </div>
-        <div className="space-x-2">
+        {/* This will show only when web view and the options is not visible */}
+        <div className="space-x-2 hidden md:block">
           {role?.toLowerCase() === "requestor" && (
             <>
               <Button
@@ -175,6 +177,13 @@ export function DataTable<TValue>({
           )}
           <ExportDialog
             url={`all-tickets?is_my_tickets=${activeTab === 1 ? false : true}`}
+          />
+        </div>
+        {/* This will show on mobile when the tabs are not visible */}
+        <div className="md:hidden">
+          <TableOptions
+            handleMyDepartments={getMyDepartmentTickets}
+            handleMyTickets={getMyTickets}
           />
         </div>
       </div>
