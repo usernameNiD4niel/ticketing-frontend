@@ -44,14 +44,29 @@ const AccountLayout: FC<AccountLayoutProps> = async ({ children }) => {
     return "supreme";
   };
 
-  const formatName = () => {
-    const splitName = account.name.split(" ");
-    if (splitName.length > 1) {
-      return `${splitName[0].substring(0, 1)}${splitName[1].substring(0, 1)}`;
-    }
+  function formatName() {
+    if (account) {
+      const choppedName = account.name.split(" ");
 
-    return splitName[0].substring(0, 1);
-  };
+      if (choppedName.length > 3) {
+        return (
+          choppedName[0].charAt(0).toUpperCase() +
+          choppedName[choppedName.length - 1].charAt(0).toUpperCase()
+        );
+      }
+
+      let temp = "";
+
+      for (const name_ of choppedName) {
+        temp += name_.charAt(0);
+      }
+
+      temp = temp.toUpperCase();
+
+      return temp;
+    }
+    return "DVX";
+  }
 
   return (
     <>

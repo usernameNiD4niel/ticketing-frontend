@@ -100,7 +100,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
 
       return temp;
     }
-    return "Anonymous User";
+    return "DVX";
   }
 
   return (
@@ -119,10 +119,6 @@ const LeftSheet: FC<LeftSheetProps> = ({
             <div>
               <SheetHeader>
                 <SheetTitle className="font-bold text-4xl">
-                  {/* <Link href="/" as={"/"}>
-                    <span className="text-[#0B64B9]">OP</span>
-                    <span className="text-[#99CC68]">PA</span>
-                  </Link> */}
                   <Link
                     href="/department/it/accounts/recent"
                     as={"/department/it/accounts/recent"}
