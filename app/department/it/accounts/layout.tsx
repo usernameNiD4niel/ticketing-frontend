@@ -86,7 +86,9 @@ const AccountLayout: FC<AccountLayoutProps> = async ({ children }) => {
             <p className="text-sm underline underline-offset-1">
               {account.email}
             </p>
-            <p className="text-sm">Joined On: {account.created_at}</p>
+            <p className="text-sm">
+              Joined On: {account.created_at}, {account.created_time}
+            </p>
           </div>
         </section>
         <ul className="w-full flex items-center justify-center py-3">
