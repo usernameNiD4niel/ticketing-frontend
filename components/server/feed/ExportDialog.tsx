@@ -15,9 +15,10 @@ import { FC, useState } from "react";
 
 type ExportDialogProps = {
   url: string;
+  isFullWidth?: boolean;
 };
 
-const ExportDialog: FC<ExportDialogProps> = ({ url }) => {
+const ExportDialog: FC<ExportDialogProps> = ({ url, isFullWidth }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,7 +62,9 @@ const ExportDialog: FC<ExportDialogProps> = ({ url }) => {
           <LoadingButton isFullWidth={false} />
         ) : (
           <Button onClick={handleOnExport}>
-            <span className="text-sm">Export As CSV</span>
+            <span className={`text-sm ${isFullWidth && "w-full"}`}>
+              Export As CSV
+            </span>
           </Button>
         )}
       </DialogTrigger>

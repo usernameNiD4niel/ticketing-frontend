@@ -184,6 +184,7 @@ export function DataTable<TValue>({
           <TableOptions
             handleMyDepartments={getMyDepartmentTickets}
             handleMyTickets={getMyTickets}
+            activeTab={activeTab}
           />
         </div>
       </div>

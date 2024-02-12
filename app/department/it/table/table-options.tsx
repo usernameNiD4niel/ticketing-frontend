@@ -1,3 +1,4 @@
+import ExportDialog from "@/components/server/feed/ExportDialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,11 +12,13 @@ import { SlOptionsVertical } from "react-icons/sl";
 interface TableOptionsProps {
   handleMyTickets: () => void;
   handleMyDepartments: () => void;
+  activeTab: number;
 }
 
 export default async function TableOptions({
   handleMyDepartments,
   handleMyTickets,
+  activeTab,
 }: TableOptionsProps) {
   return (
     <DropdownMenu>
@@ -24,7 +27,7 @@ export default async function TableOptions({
           <SlOptionsVertical />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="px-4 py-2">
         <DropdownMenuItem onClick={handleMyDepartments}>
           My Department Tickets
         </DropdownMenuItem>
@@ -32,7 +35,12 @@ export default async function TableOptions({
           My Tickets
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Export as CSV</DropdownMenuItem>
+        <ExportDialog
+          url={`all-tickets?is_my_tickets=${activeTab === 1 ? false : true}`}
+          isFullWidth={true}
+        />
+        {/* <DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

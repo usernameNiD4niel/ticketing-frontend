@@ -58,7 +58,7 @@ export default function Home() {
               Welcome to <span className="text-[#0B64B9]">OP</span>
               <span className="text-[#99CC68]">PA</span>
             </h1>
-            <p>
+            <p className="text-justify">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum
               nobis voluptatibus ut quos sint ex. Quibusdam, ut alias, explicabo
               laudantium quos ipsa recusandae vel ad facilis maiores voluptatem

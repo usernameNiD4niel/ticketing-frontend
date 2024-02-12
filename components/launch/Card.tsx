@@ -39,7 +39,7 @@ export const CardLaunch: React.FC<CardProps> = ({
   }
 
   return (
-    <Card className="w-full md:max-w-[350px] group hover:cursor-pointer">
+    <Card className="w-full md:max-w-[350px] group cursor-pointer">
       {url === "hr/dashboard" ? (
         <AbsoluteRedirect cardTitle={cardTitle} catalyst={catalyst} />
       ) : (
