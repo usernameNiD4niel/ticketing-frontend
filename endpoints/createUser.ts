@@ -46,6 +46,8 @@ export default async function createUser(data: CreateUserType) {
   return {
     success: false,
     data: {} as ResponseHelper,
-    message: data_.message as string,
+    message:
+      (data_.message as string) ||
+      "You cannot create your account right now please try again later",
   };
 }

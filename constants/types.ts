@@ -232,6 +232,7 @@ export type PostTicketTypes = {
   contact: string;
   requestor?: string;
   ticket_type?: string;
+  assign_to?: string;
 };
 
 export type UserProps = {

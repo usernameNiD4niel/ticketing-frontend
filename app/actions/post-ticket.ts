@@ -24,6 +24,7 @@ export default async function postTicket(formData: FormData) {
   const location = formData.get("location")!.toString();
   const requestor = formData.get("requestor")?.toString();
   const ticket_type = formData.get("ticket_type")?.toString();
+  const assign_to = formData.get("assign_to")?.toString();
 
   const request: PostTicketTypes = {
     description,
@@ -38,6 +39,10 @@ export default async function postTicket(formData: FormData) {
 
   if (ticket_type) {
     request.ticket_type = ticket_type;
+  }
+
+  if (assign_to) {
+    request.assign_to = assign_to;
   }
 
   const { message, id } = await postTroubleTicket(token!, request);

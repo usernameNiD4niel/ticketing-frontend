@@ -1,7 +1,12 @@
 import CreateTicketForm from "@/components/client/create-ticket/form";
 import TabMutator from "@/components/helper/tab-mutator";
 import { AvailableTabs } from "@/constants/enums";
-import { getCreateTicketType, getLocations, getUsersName } from "@/endpoints";
+import {
+  getChampions,
+  getCreateTicketType,
+  getLocations,
+  getUsersName,
+} from "@/endpoints";
 import { getTicketTodayCount } from "@/endpoints";
 import { cn } from "@/lib/utils";
 import { cookies } from "next/headers";
@@ -18,6 +23,7 @@ const CreateTicket = async () => {
   const users = await getUsersName(token);
   const ticket_types = await getCreateTicketType(token);
   const ticket_count = await getTicketTodayCount(token);
+  const champions = await getChampions(token);
 
   return (
     <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
@@ -48,6 +54,7 @@ const CreateTicket = async () => {
           users={users}
           ticket_types={ticket_types}
           ticket_count={ticket_count.ticket_count}
+          champions={champions}
         />
       </div>
     </div>

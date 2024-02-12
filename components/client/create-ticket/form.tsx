@@ -17,6 +17,7 @@ interface CreateTicketFormProps {
   users: string[];
   ticket_types: string[];
   ticket_count: number;
+  champions: string[];
 }
 
 export default function CreateTicketForm({
@@ -25,6 +26,7 @@ export default function CreateTicketForm({
   users,
   ticket_types,
   ticket_count,
+  champions,
 }: CreateTicketFormProps) {
   const { toast } = useToast();
   const [isLoadingButton, setIsLoadingButton] = useState(false);
@@ -53,6 +55,18 @@ export default function CreateTicketForm({
           title: "Validation Failed",
           description: "Name of the requestor is required",
           duration: 3000,
+        });
+        return;
+      }
+    }
+
+    if (accessLevel === "catalyst" || accessLevel === "supreme") {
+      const assign_to = formData.get("assign_to")?.toString();
+      if (!assign_to) {
+        // * Means the catalyst or supreme doesn't assign the current ticket
+        toast({
+          title: "Validation Error",
+          description: "Assign to field is a required field",
         });
         return;
       }
@@ -120,6 +134,20 @@ export default function CreateTicketForm({
             />
           </Label>
         </>
+      )}
+
+      {(accessLevel === "catalyst" || accessLevel === "supreme") && (
+        <Label className="flex flex-col gap-y-2">
+          Assign To
+          <SelectCustom
+            items={champions}
+            name="assign_to"
+            isRequired
+            width="w-full"
+            key={"CreateTicketFormAssignTo"}
+            placeholder=""
+          />
+        </Label>
       )}
 
       <Label className="flex flex-col gap-y-2">
