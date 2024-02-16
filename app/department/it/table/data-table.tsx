@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-
+import { VscOrganization } from "react-icons/vsc";
 import {
   ColumnDef,
   flexRender,
@@ -35,6 +35,7 @@ import SearchTable from "./search";
 import { cn } from "@/lib/utils";
 import { getPaginatedFeedAction } from "@/app/actions";
 import TableOptions from "./table-options";
+import { LiaTicketAltSolid } from "react-icons/lia";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
@@ -125,19 +126,13 @@ export function DataTable<TValue>({
     setActiveTab(2);
   }
 
-  async function getMyDepartmentTickets() {
-    // set the default data
-    // table.resetPagination();
-    // setData(data_);
-    // setIsFiltering(false);
-    // setActiveTab(1);
-
+  const myDept = React.useCallback(async () => {
     const newData = await getPaginatedFeedAction(false, 1);
 
     setIsFiltering(true);
     setData(newData);
     setActiveTab(1);
-  }
+  }, []);
 
   return (
     <div>
@@ -152,7 +147,7 @@ export function DataTable<TValue>({
           <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
         </div>
         {/* This will show only when web view and the options is not visible */}
-        <div className="space-x-2 hidden md:block">
+        <div className="space-x-2">
           {role?.toLowerCase() === "requestor" && (
             <>
               <Button
@@ -160,9 +155,11 @@ export function DataTable<TValue>({
                 className={cn(
                   activeTab === 1 ? "border-slate-500 border" : "border-none"
                 )}
-                onClick={getMyDepartmentTickets}
+                onClick={myDept}
               >
-                My Department Tickets
+                {/* <span className="md:hidden"></span> */}
+                <VscOrganization className="md:hidden text-base" />
+                <span className="hidden md:block">My Department Tickets</span>
               </Button>
               <Button
                 variant={"ghost"}
@@ -171,20 +168,13 @@ export function DataTable<TValue>({
                 )}
                 onClick={getMyTickets}
               >
-                My Tickets
+                <LiaTicketAltSolid className="md:hidden text-base" />
+                <span className="hidden md:block">My Tickets</span>
               </Button>
             </>
           )}
           <ExportDialog
             url={`all-tickets?is_my_tickets=${activeTab === 1 ? false : true}`}
-          />
-        </div>
-        {/* This will show on mobile when the tabs are not visible */}
-        <div className="md:hidden">
-          <TableOptions
-            handleMyDepartments={getMyDepartmentTickets}
-            handleMyTickets={getMyTickets}
-            activeTab={activeTab}
           />
         </div>
       </div>

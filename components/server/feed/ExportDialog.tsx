@@ -12,6 +12,7 @@ import {
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import Cookies from "js-cookie";
 import { FC, useState } from "react";
+import { CiExport } from "react-icons/ci";
 
 type ExportDialogProps = {
   url: string;
@@ -63,7 +64,8 @@ const ExportDialog: FC<ExportDialogProps> = ({ url, isFullWidth }) => {
         ) : (
           <Button onClick={handleOnExport}>
             <span className={`text-sm ${isFullWidth && "w-full"}`}>
-              Export As CSV
+              <CiExport className="md:hidden text-base" />
+              <span className="hidden md:block">Export As CSV</span>
             </span>
           </Button>
         )}
