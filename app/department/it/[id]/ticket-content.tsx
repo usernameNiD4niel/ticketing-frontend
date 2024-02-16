@@ -35,7 +35,7 @@ const TicketContent: FC<TicketContentProps> = async ({ ticket }) => {
             <h3 className="text-sm">Department: {ticket.department}</h3>
             <p className="text-sm">
               <span className="mr-2">Champion:</span>
-              {ticket.assigned_to ? ticket.assigned_to : "No champion assign"}
+              {ticket.assigned_to ? ticket.assigned_to : ""}
             </p>
             <p className="text-sm">
               <span className="mr-2">Location:</span>
