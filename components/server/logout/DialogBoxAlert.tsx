@@ -6,7 +6,6 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -73,9 +72,8 @@ const DialogBoxAlert = ({ isInTheMenu }: DialogBoxAlertProps) => {
       )}
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Do you really want to logout?</AlertDialogTitle>
           <AlertDialogDescription>
-            If you want to logout click continue and you will be redirected to
+            If you really want to logout click yes and you will be redirected to
             the login page.
           </AlertDialogDescription>
         </AlertDialogHeader>
