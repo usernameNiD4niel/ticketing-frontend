@@ -222,25 +222,45 @@ export function DataTable<TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
+                      <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
+                        <span className="md:hidden">
+                          {cell.column.id === "id" && "ID: "}
+                        </span>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      <p className="hidden md:flex">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      {/* {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
-                      )}
+                      )} */}
                       {cell.column.id !== "status" && (
                         <div className="flex flex-col ml-4">
                           <span className="md:hidden">
+                            Requestor:
                             {row.getValue("name")}
                           </span>
                           <span className="md:hidden">
+                            Creator:
                             {row.getValue("created_at")}
                           </span>
                           <span className="md:hidden">
+                            Updated:
                             {row.getValue("updated_at")}
                           </span>
                           <span className="md:hidden">
+                            Subject:
                             {row.getValue("subject")}
                           </span>
                           <span className="md:hidden">
+                            Champion:
                             {row.getValue("assigned_to")}
                           </span>
                         </div>

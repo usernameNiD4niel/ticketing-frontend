@@ -38,6 +38,10 @@ const BreadCrumbs: FC<BreadCrumbsProps> = ({ tabRole, id }) => {
     updateNotificationSeen();
   }, []);
 
+  if (currentTab?.toLowerCase() === "create ticket") {
+    return null;
+  }
+
   return (
     <ul className="flex gap-x-2 items-center text-xs">
       <li>
