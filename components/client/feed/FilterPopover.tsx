@@ -12,9 +12,14 @@ import { Payment } from "@/constants/types";
 type FilterPopoverProps = {
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
+  activeTab: number;
 };
 
-const FilterPopover: FC<FilterPopoverProps> = ({ setData, setIsFiltering }) => {
+const FilterPopover: FC<FilterPopoverProps> = ({
+  setData,
+  setIsFiltering,
+  activeTab,
+}) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -23,7 +28,11 @@ const FilterPopover: FC<FilterPopoverProps> = ({ setData, setIsFiltering }) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
-        <FilterForm setData={setData} setIsFiltering={setIsFiltering} />
+        <FilterForm
+          setData={setData}
+          setIsFiltering={setIsFiltering}
+          activeTab={activeTab}
+        />
       </PopoverContent>
     </Popover>
   );

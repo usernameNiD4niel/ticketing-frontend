@@ -144,7 +144,11 @@ export function DataTable<TValue>({
             clonedData={data_}
             setIsFiltering={setIsFiltering}
           />
-          <FilterPopover setData={setData} setIsFiltering={setIsFiltering} />
+          <FilterPopover
+            setData={setData}
+            setIsFiltering={setIsFiltering}
+            activeTab={activeTab}
+          />
         </div>
         {/* This will show only when web view and the options is not visible */}
         <div className="space-x-2">

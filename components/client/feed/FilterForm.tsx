@@ -16,6 +16,7 @@ import { getCreateTicket, getLocationsAction } from "@/app/actions";
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
+  activeTab: number;
 };
 
 type FilterRequestHelper = {
@@ -38,7 +39,11 @@ const getAllTickets = async (token: string) => {
   return response.tickets;
 };
 
-const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
+const FilterForm: FC<FilterFormProps> = ({
+  setData,
+  setIsFiltering,
+  activeTab,
+}) => {
   const [date, setDate] = useState<Date | undefined>();
 
   const token = Cookies.get("token");
@@ -103,10 +108,19 @@ const FilterForm: FC<FilterFormProps> = ({ setData, setIsFiltering }) => {
         sort = "name";
       }
 
-      params += `sort_by=${sort}`;
+      params += `sort_by=${sort}&`;
     }
 
     params = params.substring(0, params.length);
+
+    if (role?.toLowerCase() === "requestor") {
+      // Means the active tab is "My Department"
+      if (activeTab === 1) {
+        params = params + "active_tab=My Department Ticket";
+      } else {
+        params = params + "active_tab=My Ticket";
+      }
+    }
 
     const data = await filterTable(params);
     setData(data);
