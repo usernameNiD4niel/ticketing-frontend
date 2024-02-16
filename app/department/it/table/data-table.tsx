@@ -134,6 +134,12 @@ export function DataTable<TValue>({
     setActiveTab(1);
   }, []);
 
+  React.useEffect(() => {
+    if (isFiltering && activeTab !== 1) {
+      setActiveTab(1);
+    }
+  }, [isFiltering]);
+
   return (
     <div>
       <div className="w-full flex justify-between py-3 items-center">
@@ -143,6 +149,7 @@ export function DataTable<TValue>({
             key={"SearchDataTable"}
             clonedData={data_}
             setIsFiltering={setIsFiltering}
+            specific_status=""
           />
           <FilterPopover
             setData={setData}

@@ -13,8 +13,14 @@ export default async function searchTicketAction<T>(formData: FormData) {
 
   const search = formData.get("search")!.toString();
   const module_ = formData.get("module")?.toString();
+  const specific_status = formData.get("specific_status")?.toString();
 
-  const response = (await searchTickets(token, search, module_ || "")) as T[];
+  const response = (await searchTickets(
+    token,
+    search,
+    module_ || "",
+    specific_status || ""
+  )) as T[];
 
   return response;
 }

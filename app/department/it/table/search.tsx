@@ -8,6 +8,7 @@ interface SearchTableProps<TData> {
   clonedData: TData[];
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
   module?: string;
+  specific_status: string;
 }
 
 export default function SearchTable<TData>({
@@ -15,6 +16,7 @@ export default function SearchTable<TData>({
   module,
   setIsFiltering,
   clonedData,
+  specific_status,
 }: SearchTableProps<TData>) {
   const [search, setSearch] = useState("");
   const searchDebounce = useDebounce(search);
@@ -24,6 +26,7 @@ export default function SearchTable<TData>({
     const formData = new FormData();
     formData.append("search", search);
     formData.append("module", module || "");
+    formData.append("specific_status", specific_status);
     const data = (await searchTicketAction(formData)) as TData[];
     setData(data);
   }

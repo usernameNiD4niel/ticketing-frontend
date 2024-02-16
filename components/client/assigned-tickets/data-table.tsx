@@ -41,6 +41,7 @@ interface DataTableProps<TValue> {
   module: string;
   tab: string;
   isClosed?: boolean;
+  specific_status: string;
 }
 
 export function DataTable<TValue>({
@@ -52,6 +53,7 @@ export function DataTable<TValue>({
   tab,
   isAssignedTickets,
   isClosed,
+  specific_status,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -123,6 +125,7 @@ export function DataTable<TValue>({
           <SearchTable
             setData={setData}
             module={module}
+            specific_status={specific_status}
             clonedData={data_}
             setIsFiltering={setIsFiltering}
           />

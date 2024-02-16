@@ -36,6 +36,7 @@ export default async function Page() {
             tab="assigned_tickets"
             key={"AssignedTicketsDataTable1"}
             isClosed={false}
+            specific_status="open"
           />
         </div>
         <hr className="my-10" />
@@ -50,6 +51,7 @@ export default async function Page() {
             next_page_url={closedTickets.next_page_url}
             url={`all-tickets/export?champion=${name}&status=closed`}
             tab="assigned_tickets"
+            specific_status="closed"
             key={"AssignedTicketsDataTable2"}
           />
         </div>

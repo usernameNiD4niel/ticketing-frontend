@@ -22,6 +22,7 @@ const UnhandledTickets = async () => {
           isAssignedTickets={false}
           url="unhandled-tickets"
           next_page_url={unhandledTickets.next_page_url}
+          specific_status=""
           tab="unhandled_tickets"
           key={"UnhandledTicketsDataTable"}
         />

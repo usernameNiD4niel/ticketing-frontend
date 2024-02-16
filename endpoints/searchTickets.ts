@@ -1,14 +1,15 @@
 export default async function searchTickets<T>(
   token: string,
   search: string,
-  module: string
+  module: string,
+  specific_status: string
 ) {
   const response = await fetch(
     `${
       process.env.NEXT_PUBLIC_BACKEND_URL
     }/api/all-tickets/search?query=${search}${
       module && module.length > 0 ? `&module=${module}` : ""
-    }`,
+    }&specific_status=${specific_status}`,
     {
       headers: {
         "Content-Type": "application/json",
