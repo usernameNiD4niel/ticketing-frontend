@@ -135,8 +135,10 @@ export function DataTable<TValue>({
   }, []);
 
   React.useEffect(() => {
-    if (isFiltering && activeTab !== 1) {
+    if (isFiltering) {
       setActiveTab(1);
+    } else {
+      setActiveTab(2);
     }
   }, [isFiltering]);
 
