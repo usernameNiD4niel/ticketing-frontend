@@ -4,11 +4,11 @@ export default async function getSortedTable(
   sort: string,
   order_by: string,
   token: string,
-  isClosed?: string
+  isClosed?: string,
+  module?: string
 ) {
-  console.log(`is closed 2 ::: ${isClosed}`);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets/sort?sort=${sort}&order_by=${order_by}&isClosed=${isClosed}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets/sort?sort=${sort}&order_by=${order_by}&isClosed=${isClosed}&module=${module}`,
     {
       headers: {
         "Content-Type": "application/json",

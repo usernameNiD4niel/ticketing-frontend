@@ -8,16 +8,21 @@ export default async function getSortedTableAction(formData: FormData) {
   const sort = formData.get("sort")!.toString();
   const order_by = formData.get("order_by")!.toString();
   const isClosed = formData.get("isClosed")?.toString();
+  const module_ = formData.get("module")?.toString() || "Unhandled Tickets";
 
   const token = cookies().get("token")?.value;
-
-  console.log(`is closed ::: ${isClosed}`);
 
   if (!token) {
     redirect("/login");
   }
 
-  const response = await getSortedTable(sort, order_by, token, isClosed);
+  const response = await getSortedTable(
+    sort,
+    order_by,
+    token,
+    isClosed,
+    module_
+  );
 
   return response;
 }

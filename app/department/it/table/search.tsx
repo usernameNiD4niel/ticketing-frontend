@@ -24,7 +24,6 @@ export default function SearchTable<TData>({
     const formData = new FormData();
     formData.append("search", search);
     formData.append("module", module || "");
-    console.log(`the module ::: ${module}`);
     const data = (await searchTicketAction(formData)) as TData[];
     setData(data);
   }

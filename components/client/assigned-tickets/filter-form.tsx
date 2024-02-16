@@ -23,6 +23,7 @@ type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
   isClosed?: boolean;
+  module: string;
 };
 
 const FormSchema = z.object({
@@ -38,6 +39,7 @@ const FilterForm: FC<FilterFormProps> = ({
   setData,
   setIsFiltering,
   isClosed,
+  module,
 }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -52,8 +54,7 @@ const FilterForm: FC<FilterFormProps> = ({
     formData.append("sort", data.sort);
     formData.append("order_by", data.order_by);
     formData.append("isClosed", String(isClosed));
-
-    console.log(`data ${JSON.stringify(data, null, 2)}`);
+    formData.append("module", module);
 
     const response = await getSortedTableAction(formData);
     setData(response);

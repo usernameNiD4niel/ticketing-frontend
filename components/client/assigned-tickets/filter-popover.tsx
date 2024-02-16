@@ -13,12 +13,14 @@ type FilterPopoverProps = {
   setData: React.Dispatch<React.SetStateAction<AssignedTickets[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
   isClosed?: boolean;
+  module: string;
 };
 
 const FilterPopover: FC<FilterPopoverProps> = ({
   setData,
   setIsFiltering,
   isClosed,
+  module,
 }) => {
   return (
     <Popover>
@@ -32,6 +34,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
           setData={setData}
           setIsFiltering={setIsFiltering}
           isClosed={isClosed}
+          module={module}
         />
       </PopoverContent>
     </Popover>

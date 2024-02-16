@@ -130,6 +130,7 @@ export function DataTable<TValue>({
             setData={setData}
             setIsFiltering={setIsFiltering}
             isClosed={isClosed}
+            module={module}
           />
         </div>
         {data && data.length > 0 && (
