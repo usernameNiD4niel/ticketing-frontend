@@ -88,15 +88,13 @@ export default function CreateTicketForm({
 
     if (success) {
       toast({
-        title: "Ticket posting sucess",
-        description: message,
+        title: message,
         duration: 3000,
       });
       router.push(`/department/it/${id}?tabName=Create+Ticket`);
     } else {
       toast({
-        title: "Ticket posting failed",
-        description: "Cannot create a post, please try again",
+        title: message,
         duration: 3000,
       });
     }
@@ -161,16 +159,16 @@ export default function CreateTicketForm({
       </Label>
 
       <Label className="flex flex-col gap-y-2">
-        <span className="text-sm">Contact</span>
+        <span className="text-sm">Contact Number</span>
         <Input
           name="contact"
           max={"11"}
           type="text"
-          pattern="09[0-9]{9}"
-          inputMode="numeric"
-          maxLength={11}
-          minLength={11}
-          title="Pakiusap naman mag enter ka ng tamang contact number mo, maraming salamat!"
+          // pattern="09[0-9]{9}"
+          // inputMode="numeric"
+          // maxLength={11}
+          // minLength={11}
+          // title="Pakiusap naman mag enter ka ng tamang contact number mo, maraming salamat!"
           required
         />
       </Label>
@@ -189,7 +187,12 @@ export default function CreateTicketForm({
       </Label>
 
       <div className="w-full flex flex-col-reverse md:flex-row md:justify-end items-center py-5 gap-4">
-        <Button type="reset" variant="ghost" className="w-full md:w-44">
+        <Button
+          type="reset"
+          variant="ghost"
+          className="w-full md:w-44"
+          onClick={() => setLocation("")}
+        >
           Reset
         </Button>
         {isLoadingButton ? (
