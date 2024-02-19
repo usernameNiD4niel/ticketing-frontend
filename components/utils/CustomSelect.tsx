@@ -27,9 +27,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
   React.useEffect(() => {
     if (!selectedState || selectedState.length === 0) {
-      setValue(selectItems[0].toUpperCase());
+      setValue(selectItems[0]);
     } else {
-      setValue(selectedState.toUpperCase());
+      setValue(selectedState);
     }
   }, []);
 
@@ -55,7 +55,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         <SelectContent>
           <SelectGroup>
             {selectItems.map((selectItem, index) => (
-              <SelectItem value={selectItem.toUpperCase()} key={index}>
+              <SelectItem value={selectItem} key={index}>
                 {selectItem.toUpperCase()}
               </SelectItem>
             ))}
