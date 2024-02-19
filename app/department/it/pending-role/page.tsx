@@ -10,6 +10,7 @@ export default async function PendingRole() {
 
   const users = await getPendingDepartmentRole(token!);
 
+  console.log(`users :: ${JSON.stringify(users, null, 2)}`);
   return (
     <>
       <TabMutator
