@@ -14,7 +14,7 @@ import { redirect } from "next/navigation";
 
 const CreateTicket = async () => {
   const token = cookies().get("token")?.value;
-  const accessLevel = cookies().get("it_access_level")?.value;
+  const accessLevel = cookies().get("it_access_level")?.value.toLowerCase();
 
   if (!token || !accessLevel) {
     redirect("/login");
@@ -28,7 +28,7 @@ const CreateTicket = async () => {
   return (
     <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
       <TabMutator availableTab={AvailableTabs["Create Ticket"]} />
-      {ticket_count.ticket_count >= 3 ? (
+      {ticket_count.ticket_count >= 3 && accessLevel !== "champion" && accessLevel !== "supreme" && accessLevel !== "catalyst" ? (
         <div className="w-full md:max-w-2xl px-4">
           <h1 className="text-2xl font-bold">Ticket limit has reached</h1>
           <p className="bg-red-500 text-white w-full rounded-md p-5 text-sm my-2">
@@ -40,7 +40,7 @@ const CreateTicket = async () => {
       ) : (
         <div className="w-full md:max-w-2xl px-4">
           <h1 className="text-2xl font-bold">Create trouble ticket</h1>
-          {accessLevel.toLowerCase() === "requestor" && (
+          {accessLevel === "requestor" && (
             <div
               className={cn(
                 "w-full rounded-md p-5 text-sm my-2",
@@ -58,16 +58,14 @@ const CreateTicket = async () => {
               </p>
             </div>
           )}
-          {accessLevel.toLowerCase() === "requestor" && (
-            <CreateTicketForm
-              locations={locations}
-              accessLevel={accessLevel.toLowerCase()}
-              users={users}
-              ticket_types={ticket_types}
-              ticket_count={ticket_count.ticket_count}
-              champions={champions}
-            />
-          )}
+          <CreateTicketForm
+            locations={locations}
+            accessLevel={accessLevel.toLowerCase()}
+            users={users}
+            ticket_types={ticket_types}
+            ticket_count={ticket_count.ticket_count}
+            champions={champions}
+          />
         </div>
       )}
     </div>
