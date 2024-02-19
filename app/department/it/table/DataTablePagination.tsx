@@ -1,90 +1,44 @@
+import { getPaginatedTicketsAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
-import { PaginatedType, Payment } from "@/constants/types";
+import { toast } from "@/components/ui/use-toast";
+import { Payment } from "@/constants/types";
 import { Table } from "@tanstack/react-table";
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
-  next_page_url: number | null;
+  next_page_url: string | null;
   isFiltering: boolean;
   page_count: number;
   current_page: number;
 }
 
 async function getData(
-  token: string,
   setData: React.Dispatch<React.SetStateAction<Payment[]>>,
-  nextPageUrl: number | null,
-  setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-  setPreviousPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
+  requestUrl: string | null,
+  setNextPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
+  setPreviousPageUrl: React.Dispatch<React.SetStateAction<string | null>>,
   setPageCount: React.Dispatch<React.SetStateAction<number>>,
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 ) {
   // Fetch data from your API here.
-  if (nextPageUrl) {
+  if (requestUrl) {
     // ?page=${page}&sortedBy=created_at&ordering=desc&is_default=true
-    const url = `${nextPageUrl}&sortedBy=created_at&ordering=desc&is_default=true`;
-    const data = await fetch(`${url}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const url = `${requestUrl}&sortedBy=created_at&ordering=desc&is_default=true`;
+    const { data: { currentPage, data, next_page_url, pageCount, prev_page_url }, success } = await getPaginatedTicketsAction(url);
 
-    if (data.ok) {
-      const response: Promise<PaginatedType> = await data.json();
-      const tickets: Payment[] = (await response).data;
-      const nextPage = (await response).next_page_url;
-      const pageCount = (await response).pageCount;
-      const currentPage = (await response).currentPage;
-
-      setData(tickets);
-      setNextPageUrl(nextPage);
-      setPreviousPageUrl((await response).prev_page_url);
+    if (success) {
+      setData(data);
+      setNextPageUrl(next_page_url);
+      setPreviousPageUrl(prev_page_url);
       setPageCount(pageCount);
       setCurrentPage(currentPage);
     } else {
-      throw new Error("Cannot fetch all the tickets, sorry😪");
-    }
-  }
-}
-
-async function getPrevious(
-  token: string,
-  setData: React.Dispatch<React.SetStateAction<Payment[]>>,
-  previousPageUrl: number | null,
-  setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-  setPreviousPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-  setPageCount: React.Dispatch<React.SetStateAction<number>>,
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-) {
-  // Fetch data from your API here.
-  // ?page=${page}&sortedBy=created_at&ordering=desc&is_default=true
-  if (previousPageUrl) {
-    const url = `${previousPageUrl}&sortedBy=created_at&ordering=desc&is_default=true`;
-    const data = await fetch(`${url}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (data.ok) {
-      const response: Promise<PaginatedType> = await data.json();
-      const tickets: Payment[] = (await response).data;
-      const nextPage = (await response).next_page_url;
-      const pageCount = (await response).pageCount;
-      const currentPage = (await response).currentPage;
-
-      setData(tickets);
-      setNextPageUrl(nextPage);
-      setPreviousPageUrl((await response).prev_page_url);
-      setPageCount(pageCount);
-      setCurrentPage(currentPage);
-    } else {
-      throw new Error("Cannot fetch all the tickets, sorry😪");
+      toast({
+        title: "Cannot get the tickets, please try again",
+        duration: 5000
+      })
     }
   }
 }
@@ -97,8 +51,8 @@ export function DataTablePagination<TData>({
   page_count,
   current_page,
 }: DataTablePaginationProps<TData>) {
-  const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
-  const [previousPageUrl, setPreviousPageUrl] = useState<number | null>(null);
+  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+  const [previousPageUrl, setPreviousPageUrl] = useState<string | null>(null);
   const [pageCount, setPageCount] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -130,9 +84,7 @@ export function DataTablePagination<TData>({
           variant="outline"
           size="lg"
           onClick={() => {
-            const token = Cookies.get("token");
-            getPrevious(
-              token!,
+            getData(
               setData,
               previousPageUrl,
               setNextPageUrl,
@@ -154,9 +106,7 @@ export function DataTablePagination<TData>({
           variant={"outline"}
           onClick={() => {
             if (!isFiltering) {
-              const token = Cookies.get("token");
               getData(
-                token!,
                 setData,
                 nextPageUrl,
                 setNextPageUrl,
@@ -168,6 +118,7 @@ export function DataTablePagination<TData>({
             table.nextPage();
           }}
           disabled={isFiltering ? !table.getCanNextPage() : !nextPageUrl}
+        // disabled={isFiltering ? !table.getCanNextPage() : !nextPageUrl}
         >
           Next
         </Button>

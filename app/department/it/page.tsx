@@ -17,7 +17,7 @@ export default async function DemoPage() {
         <DataTable
           columns={columns}
           data_={newData}
-          next_page_url={0}
+          next_page_url={null}
           pageCount={0}
           currentPage={1}
         />

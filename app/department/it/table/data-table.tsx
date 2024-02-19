@@ -40,7 +40,7 @@ import { LiaTicketAltSolid } from "react-icons/lia";
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data_: Payment[];
-  next_page_url: number | null;
+  next_page_url: string | null;
   pageCount: number;
   currentPage: number;
 }

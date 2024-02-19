@@ -1,7 +1,7 @@
 import { Payment } from "@/constants/types";
 
 interface HelperResponseType {
-  next_page_url: number | null;
+  next_page_url: string | null;
   data: Payment[];
   pageCount: number;
   currentPage: number;
