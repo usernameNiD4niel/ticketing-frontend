@@ -1,4 +1,5 @@
 "use client";
+import { getExportedTicketsAction } from "@/app/actions";
 import ExportDialogForm from "@/components/client/feed/ExportDialogForm";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import Cookies from "js-cookie";
 import { FC, useState } from "react";
@@ -23,9 +25,26 @@ const ExportDialog: FC<ExportDialogProps> = ({ url, isFullWidth }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any[]>();
 
   const getFetchedData = async () => {
+
+    const { success, tickets } = await getExportedTicketsAction(url);
+
+    if (success) {
+      setData(tickets);
+      setIsLoading(false);
+      return;
+    }
+
+    toast({
+      title: "Cannot export the ticket, please try again",
+      duration: 5000
+    })
+
+    setData([]);
+    setIsLoading(false);
+
     const token = Cookies.get("token");
 
     const response = await fetch(
@@ -70,7 +89,7 @@ const ExportDialog: FC<ExportDialogProps> = ({ url, isFullWidth }) => {
           </Button>
         )}
       </DialogTrigger>
-      {!isLoading && (
+      {!isLoading && data && data.length > 0 && (
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Export as CSV</DialogTitle>

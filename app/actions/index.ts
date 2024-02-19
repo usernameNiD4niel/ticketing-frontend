@@ -22,6 +22,7 @@ import updateSpecificUserAction from "./update-specific-user-action";
 import updateSpecificUserStatusAction from "./update-specific-user-status-action";
 import getPaginatedFeedAction from "./get-paginated-feed-action";
 import getPaginatedTicketsAction from "./get-paginated-tickets-action";
+import getExportedTicketsAction from "./get-exported-tickets-action";
 export {
   postComment,
   updateActivities,
@@ -46,5 +47,6 @@ export {
   updateSpecificUserAction,
   updateSpecificUserStatusAction,
   getPaginatedFeedAction,
-  getPaginatedTicketsAction
+  getPaginatedTicketsAction,
+  getExportedTicketsAction
 };
