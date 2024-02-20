@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
 import { TicketTypeColumns } from "@/constants/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
@@ -17,14 +18,17 @@ export const columns: ColumnDef<TicketTypeColumns>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
+      <div className="w-full flex items-center gap-x-2 ms-3">
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+        <Label className="">Type Details</Label>
+      </div>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -43,7 +47,9 @@ export const columns: ColumnDef<TicketTypeColumns>[] = [
         variant={"ghost"}
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Ticket Type <ArrowUpDown className="ml-2 h-4 w-4" />
+        <span className="hidden md:flex">Ticket Type</span>
+        <span className="md:hidden">Type Details</span>
+        <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
@@ -56,6 +62,7 @@ export const columns: ColumnDef<TicketTypeColumns>[] = [
       <Button
         variant={"ghost"}
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className=""
       >
         Duration <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>

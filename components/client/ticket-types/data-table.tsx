@@ -21,10 +21,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import Add from "./add";
 import Delete from "./delete";
+import useScreenSize from "@/hooks/helper/useScreenSize";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,6 +39,8 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+
+  const { width } = useScreenSize();
 
   const table = useReactTable({
     data,
@@ -55,6 +58,24 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  const handleWidth = (width: number) => {
+    if (width < 1024) {
+      table.getColumn("ticket_type")?.toggleVisibility(false);
+      table.getColumn("duration")?.toggleVisibility(false);
+      table.getColumn("created_at")?.toggleVisibility(false);
+      table.getColumn("updated_at")?.toggleVisibility(false);
+    } else {
+      table.getColumn("ticket_type")?.toggleVisibility(true);
+      table.getColumn("duration")?.toggleVisibility(true);
+      table.getColumn("created_at")?.toggleVisibility(true);
+      table.getColumn("updated_at")?.toggleVisibility(true);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => handleWidth(width), 200);
+  }, [width]);
 
   return (
     <div>
@@ -88,9 +109,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -104,11 +125,54 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {/* {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
+                      )}
+                    </TableCell>
+                  ))} */}
+
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
+                        <span>
+                          {cell.column.id === "ticket_type" && "Ticket Type: "}
+                        </span>
+                        <span className="block">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </span>
+                      </p>
+                      <p className="hidden md:flex">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      
+                      {cell.column.id !== "actions" && (
+                        <div className="flex flex-col ml-4">
+                          <span className="md:hidden">
+                            Ticket Type:{" "}
+                            {row.getValue("ticket_type")}
+                          </span>
+                          <span className="md:hidden">
+                            Duration:{" "}
+                            {row.getValue("duration")}
+                          </span>
+                          <span className="md:hidden">
+                            Created:{" "}
+                            {row.getValue("created_at")}
+                          </span>
+                          <span className="md:hidden">
+                            Updated:{" "}
+                            {row.getValue("updated_at")}
+                          </span>
+                        </div>
                       )}
                     </TableCell>
                   ))}
