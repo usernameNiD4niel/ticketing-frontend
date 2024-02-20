@@ -357,8 +357,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
                         activeTab === AvailableTabs["Manage User"] &&
                           "border-s-4 border-s-[#0B64B9] bg-white dark:bg-zinc-900 font-bold"
                       )}
-                      as={"department/it/manage-user"}
-                      href="department/it/manage-user"
+                      as={"/department/it/manage-user"}
+                      href="/department/it/manage-user"
                     >
                       <span>
                         <MdManageAccounts />
