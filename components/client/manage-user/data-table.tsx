@@ -21,10 +21,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import TableDataPagination from "../pending-overview/table-data-pagination";
 import { useRouter } from "next/navigation";
+import useScreenSize from "@/hooks/helper/useScreenSize";
 
 interface TableDataProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,6 +42,8 @@ export default function TableData<TData, TValue>({
 
   const router = useRouter();
 
+  const { width } = useScreenSize();
+
   const table = useReactTable({
     data,
     columns,
@@ -55,6 +58,26 @@ export default function TableData<TData, TValue>({
       columnFilters,
     },
   });
+
+  const handleWidth = (width: number) => {
+    if (width <= 1024) {
+      table.getColumn("name")?.toggleVisibility(false);
+      table.getColumn("department")?.toggleVisibility(false);
+      table.getColumn("joined_on")?.toggleVisibility(false);
+      table.getColumn("access_level")?.toggleVisibility(false);
+      table.getColumn("system_status")?.toggleVisibility(false);
+    } else {
+      table.getColumn("name")?.toggleVisibility(true);
+      table.getColumn("department")?.toggleVisibility(true);
+      table.getColumn("joined_on")?.toggleVisibility(true);
+      table.getColumn("access_level")?.toggleVisibility(true);
+      table.getColumn("system_status")?.toggleVisibility(true);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => handleWidth(width), 200);
+  }, [width]);
 
   function handleRedirect(id: string) {
     router.push(`/department/it/manage-user/${id}?id=${id}`);
@@ -83,9 +106,9 @@ export default function TableData<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -103,12 +126,56 @@ export default function TableData<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
+
+                      {/* {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
+                      )} */}
+
+                      <p className="ms-4 lg:ms-3 flex space-x-0 lg:hidden">
+                        <span className="lg:hidden">
+                          {cell.column.id === "id" && "ID: "}
+                        </span>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      <p className="hidden lg:flex max-w-[190px]">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      {cell.column.id !== "it_status" && (
+                        <div className="flex flex-col ml-4 max-w-[190px]">
+                          <span className="lg:hidden">
+                            Name:
+                            {row.getValue("name")}
+                          </span>
+                          <span className="lg:hidden">
+                            Department:
+                            {row.getValue("department")}
+                          </span>
+                          <span className="lg:hidden">
+                            Joined On:
+                            {row.getValue("joined_on")}
+                          </span>
+                          <span className="lg:hidden">
+                            Access Level:
+                            {row.getValue("access_level")}
+                          </span>
+                          <span className="lg:hidden">
+                            System Status:
+                            {row.getValue("system_status")}
+                          </span>
+                        </div>
                       )}
+
                     </TableCell>
                   ))}
+
+
                 </TableRow>
               ))
             ) : (

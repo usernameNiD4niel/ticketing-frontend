@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { ManageUser } from "@/constants/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
@@ -10,13 +11,17 @@ const column: ColumnDef<ManageUser>[] = [
     accessorKey: "id",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          User ID
-          <ArrowUpDown className=" h-4 w-4 ml-2" />
-        </Button>
+        <>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className="hidden lg:flex"
+          >
+            User ID
+            <ArrowUpDown className=" h-4 w-4 ml-2" />
+          </Button>
+          <Label className="md:hidden">User Details</Label>
+        </>
       );
     },
     cell: ({ row }) => <div className="ml-5">{row.getValue("id")}</div>,
