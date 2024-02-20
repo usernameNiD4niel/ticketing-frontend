@@ -209,29 +209,8 @@ export default function TableData<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {/* {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))} */}
-
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {/* <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
-                        <span>
-                          {cell.column.id === "ticket_type" && "Ticket Type: "}
-                        </span>
-                        <span>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </span>
-                      </p> */}
-
                       <p className="ms-4 lg:ms-3 flex space-x-0 lg:hidden">
                         <span className="lg:hidden">
                           {cell.column.id === "id" && "ID: "}

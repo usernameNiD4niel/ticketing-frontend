@@ -107,7 +107,7 @@ export function DataTable<TValue>({
 
   const [isFiltering, setIsFiltering] = React.useState(false);
   const router = useRouter();
- 
+
   const handleNavigation = (destination: string) => {
     let tabName = "Assigned Tickets";
 
@@ -153,9 +153,9 @@ export function DataTable<TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -172,41 +172,41 @@ export function DataTable<TValue>({
                     onClick={() => handleNavigation(row.getValue("id"))}
                   >
                     {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
-                        <span className="md:hidden">
-                          {cell.column.id === "id" && "ID: "}
-                        </span>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
+                      <TableCell key={cell.id}>
+                        <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
+                          <span className="md:hidden">
+                            {cell.column.id === "id" && "ID: "}
+                          </span>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </p>
+                        <p className="hidden md:flex">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </p>
+                        {cell.column.id !== "ticket_type" && (
+                          <div className="flex flex-col ml-4">
+                            <span className="md:hidden">
+                              Requestor:
+                              {row.getValue("requestor")}
+                            </span>
+                            <span className="md:hidden">
+                              Created:
+                              {row.getValue("created_at")}
+                            </span>
+                            <span className="md:hidden">
+                              Subject:
+                              {row.getValue("subject")}
+                            </span>
+                          </div>
                         )}
-                      </p>
-                      <p className="hidden md:flex">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </p>
-                      {cell.column.id !== "ticket_type" && (
-                        <div className="flex flex-col ml-4">
-                          <span className="md:hidden">
-                            Requestor:
-                            {row.getValue("requestor")}
-                          </span>
-                          <span className="md:hidden">
-                            Created:
-                            {row.getValue("created_at")}
-                          </span>
-                          <span className="md:hidden">
-                            Subject:
-                            {row.getValue("subject")}
-                          </span>
-                        </div>
-                      )}
-                    </TableCell>
-                  ))}
-                    
+                      </TableCell>
+                    ))}
+
                   </TableRow>
                 ))
               ) : (

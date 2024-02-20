@@ -126,12 +126,6 @@ export default function TableData<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-
-                      {/* {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )} */}
-
                       <p className="ms-4 lg:ms-3 flex space-x-0 lg:hidden">
                         <span className="lg:hidden">
                           {cell.column.id === "id" && "ID: "}
