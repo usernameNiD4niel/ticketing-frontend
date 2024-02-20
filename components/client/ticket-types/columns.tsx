@@ -18,7 +18,7 @@ export const columns: ColumnDef<TicketTypeColumns>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="w-full flex items-center gap-x-2 ms-3">
+      <div className="w-full flex items-center gap-x-2 ms-3 md:ms-0">
         <Checkbox
           checked={
             table.getIsAllPageRowsSelected() ||
@@ -27,7 +27,7 @@ export const columns: ColumnDef<TicketTypeColumns>[] = [
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
         />
-        <Label className="">Type Details</Label>
+        <Label className="md:hidden">Type Details</Label>
       </div>
     ),
     cell: ({ row }) => (

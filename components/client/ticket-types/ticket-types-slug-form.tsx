@@ -53,30 +53,32 @@ export default function TicketTypesSlugForm() {
           defaultValue={ticket_type ?? ""}
         />
       </div>
-      <div className="w-full flex flex-col gap-3">
+      <div className="w-full flex flex-col mt-2">
         <Label className="font-bold text-base" htmlFor="type">
           Duration
         </Label>
-        <div className="flex w-full justify-between items-center">
-          <Label htmlFor="type">Type</Label>
-          <SelectCustom
-            items={["Days"]}
-            name="type"
-            isRequired={true}
-            placeholder="Select a type"
-            defaultValue={duration?.split(" ")[1].trim()}
-            key={"Add-Ticket-Types"}
-            width="w-[780px]"
-          />
-        </div>
-        <div className="flex w-full justify-between items-center">
-          <Label htmlFor="howLong">How Long</Label>
-          <Input
-            className="w-full md:w-[780px]"
-            id="howLong"
-            name="howLong"
-            defaultValue={duration?.split(" ")[0]}
-          />
+        <div className="space-y-2">
+          <div className="flex w-full justify-between items-center gap-x-2">
+            <Label htmlFor="type">Type</Label>
+            <SelectCustom
+              items={["Days"]}
+              name="type"
+              isRequired={true}
+              placeholder="Select a type"
+              defaultValue={duration?.split(" ")[1].trim()}
+              key={"Add-Ticket-Types"}
+              width="w-full md:w-[780px]"
+            />
+          </div>
+          <div className="flex w-full justify-between items-center">
+            <Label htmlFor="howLong">How Long</Label>
+            <Input
+              className="w-full md:w-[780px]"
+              id="howLong"
+              name="howLong"
+              defaultValue={duration?.split(" ")[0]}
+            />
+          </div>
         </div>
       </div>
       <div className="w-full flex justify-end gap-2">
