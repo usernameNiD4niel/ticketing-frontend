@@ -41,7 +41,7 @@ export default function ChampionCarousel({ champions }: ChampionCarouselProps) {
               key={champion.id}
             >
               <Link
-                href={`/department/it/overview/${champion.champion_name}`}
+                href={`/department/it/overview/${champion.champion_name}?champion_name=${champion.champion_name}`}
                 className="flex p-10 items-center justify-between min-h-[80px] cursor-pointer"
               >
                 <span className="text-lg">{champion.champion_name}</span>

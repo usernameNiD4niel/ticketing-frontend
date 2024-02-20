@@ -16,10 +16,14 @@ export default async function DynamicOverviewPage({
     redirect("/login");
   }
 
+  const championName = decodeURIComponent(params.slug);
+
   const champions = await getChampionPerformanceItem(
     token,
-    decodeURIComponent(params.slug)
+    championName
   );
+
+  console.log(`champion name ${championName}`);
 
   if (!champions) {
     return (
@@ -59,7 +63,7 @@ export default async function DynamicOverviewPage({
           {champions.resolution_rate}%
         </h2>
       </div>
-      <p className="px-6 text-4xl font-medium">{params.slug.toUpperCase()}</p>
+      <p className="px-6 text-4xl font-medium">{championName.toUpperCase()}</p>
       <p className="px-6">
         Date Covered: <span>ALL</span>
       </p>
