@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import TableDataPagination from "./table-data-pagination";
 import { UserProps } from "@/constants/types";
@@ -30,6 +30,7 @@ import { useToast } from "@/components/ui/use-toast";
 import updateDepartmentRole from "@/app/actions/update-department-role";
 import { deleteUserAction } from "@/app/actions";
 import { LoadingButton } from "@/components/utils/LoadingButton";
+import useScreenSize from "@/hooks/helper/useScreenSize";
 
 interface TableDataProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,6 +51,8 @@ export default function TableData<TData, TValue>({
 
   const { toast } = useToast();
 
+  const { width } = useScreenSize();
+
   const table = useReactTable({
     data,
     columns,
@@ -67,6 +70,22 @@ export default function TableData<TData, TValue>({
     },
   });
 
+  const handleWidth = (width: number) => {
+    if (width <= 1024) {
+      table.getColumn("department")?.toggleVisibility(false);
+      table.getColumn("name")?.toggleVisibility(false);
+      table.getColumn("created_at")?.toggleVisibility(false);
+    } else {
+      table.getColumn("department")?.toggleVisibility(true);
+      table.getColumn("name")?.toggleVisibility(true);
+      table.getColumn("created_at")?.toggleVisibility(true);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => handleWidth(width), 200);
+  }, [width]);
+
   async function handleFormAction(formData: FormData) {
     const role = formData.get("role")?.toString();
     if (!role) {
@@ -76,6 +95,8 @@ export default function TableData<TData, TValue>({
       });
       return;
     }
+
+    setIsLoading(true);
 
     const ids = [];
 
@@ -98,9 +119,11 @@ export default function TableData<TData, TValue>({
         description: "Failed to assign a role, please try again",
       });
     }
+    setIsLoading(false);
   }
 
   async function handleDeleteUser() {
+    setIsLoading(true);
     const names = [];
 
     for (const selectedRows of table.getSelectedRowModel().rows) {
@@ -122,6 +145,7 @@ export default function TableData<TData, TValue>({
         description: message,
       });
     }
+    setIsLoading(false);
   }
 
   return (
@@ -169,9 +193,9 @@ export default function TableData<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -185,12 +209,62 @@ export default function TableData<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {/* {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
+                    </TableCell>
+                  ))} */}
+
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {/* <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
+                        <span>
+                          {cell.column.id === "ticket_type" && "Ticket Type: "}
+                        </span>
+                        <span>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </span>
+                      </p> */}
+
+                      <p className="ms-4 lg:ms-3 flex space-x-0 lg:hidden">
+                        <span className="lg:hidden">
+                          {cell.column.id === "id" && "ID: "}
+                        </span>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      <p className="hidden lg:flex">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </p>
+                      {cell.column.id !== "created_time" && cell.column.id !== "select" && (
+                        <div className="flex flex-col ml-4 max-w-[190px]">
+                          <span className="lg:hidden">
+                            Department:
+                            {row.getValue("department")}
+                          </span>
+                          <span className="lg:hidden">
+                            Name:
+                            {row.getValue("name")}
+                          </span>
+                          <span className="lg:hidden">
+                            Created Date:
+                            {row.getValue("created_at")}
+                          </span>
+                        </div>
+                      )}
+
+                      
                     </TableCell>
                   ))}
                 </TableRow>

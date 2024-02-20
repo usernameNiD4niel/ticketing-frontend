@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { UserProps } from "@/constants/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
@@ -9,14 +10,15 @@ const column: ColumnDef<UserProps>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="ms-4"
+        />
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -32,16 +34,22 @@ const column: ColumnDef<UserProps>[] = [
     accessorKey: "id",
     header: ({ column }) => {
       return (
+        <>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="hidden lg:flex"
         >
           #
           <ArrowUpDown className=" h-4 w-4 ml-2" />
         </Button>
+        <Label className="lg:hidden ms-4">
+          User Details
+        </Label>
+        </>
       );
     },
-    cell: ({ row }) => <div className="ml-5">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="lg:ml-5">{row.getValue("id")}</div>,
   },
   {
     accessorKey: "department",
@@ -56,7 +64,7 @@ const column: ColumnDef<UserProps>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-5">{row.getValue("department")}</div>,
+    cell: ({ row }) => <div className="lg:ml-5">{row.getValue("department")}</div>,
   },
   {
     accessorKey: "name",
@@ -71,7 +79,7 @@ const column: ColumnDef<UserProps>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-5">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="lg:ml-5">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "created_at",
@@ -86,23 +94,27 @@ const column: ColumnDef<UserProps>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-5">{row.getValue("created_at")}</div>,
+    cell: ({ row }) => <div className="lg:ml-5">{row.getValue("created_at")}</div>,
   },
   {
     accessorKey: "created_time",
     header: ({ column }) => {
       return (
+        <>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="hidden lg:flex"
         >
           Created Time
           <ArrowUpDown className="h-4 w-4 ml-2" />
         </Button>
+        <Label className="lg:hidden">Created Time</Label>
+        </>
       );
     },
     cell: ({ row }) => (
-      <div className="ml-5">{row.getValue("created_time")}</div>
+      <div className="lg:ml-5">{row.getValue("created_time")}</div>
     ),
   },
 ];
