@@ -76,6 +76,8 @@ const LeftSheet: FC<LeftSheetProps> = ({
         return "Ticket Types";
       case AvailableTabs["Manage User"]:
         return "Manage User";
+      case AvailableTabs["Assigned Tickets"]:
+        return "Assigned Tickets";
     }
   };
 
@@ -105,7 +107,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2">
+      <div>
         <Sheet key={"left"}>
           <SheetTrigger asChild>
             <Button variant="outline" className="text-xl">
@@ -371,7 +373,7 @@ const LeftSheet: FC<LeftSheetProps> = ({
           </SheetContent>
         </Sheet>
       </div>
-      <h1 className="font-bold capitalize">{getCurrentTab()}</h1>
+      <h1 className="font-bold capitalize text-center">{getCurrentTab()}</h1>
     </>
   );
 };

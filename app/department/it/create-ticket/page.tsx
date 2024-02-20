@@ -26,7 +26,7 @@ const CreateTicket = async () => {
   const champions = await getChampions(token);
 
   return (
-    <div className="w-full flex justify-center my-12 md:my-16 items-center h-[70vh]">
+    <div className="w-full flex justify-center my-12 md:my-16 items-center h-auto md:h-[70vh]">
       <TabMutator availableTab={AvailableTabs["Create Ticket"]} />
       {ticket_count.ticket_count >= 3 && accessLevel !== "champion" && accessLevel !== "supreme" && accessLevel !== "catalyst" ? (
         <div className="w-full md:max-w-2xl px-4">
