@@ -3,12 +3,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ChampionCarousel } from "@/constants/types";
 import { cn } from "@/lib/utils";
-import ProgressFilteredData from "./progress-filtered-data";
 import Link from "next/link";
 
 interface ChampionCarouselProps {
@@ -21,13 +18,13 @@ export default function ChampionCarousel({ champions }: ChampionCarouselProps) {
 
     if (resolutionRate >= 50) {
       //Greeen
-      return isBg ? "bg-[#DAFAE6]" : "text-[#4ADE80]";
+      return isBg ? "bg-[#DAFAE6] dark:bg-[#91A699]" : "text-[#4ADE80]";
     } else if (resolutionRate >= 30 && resolutionRate <= 49) {
       //Orange
-      return isBg ? "bg-[#FEEAD5]" : "text-[#FB923C]";
+      return isBg ? "bg-[#FEEAD5] dark:bg-[#543F28]" : "text-[#FB923C]";
     } else {
       //Red
-      return isBg ? "bg-[#FEE4E4]" : "text-[#F87171]";
+      return isBg ? "bg-[#FEE4E4] dark:bg-[#543938]" : "text-[#F87171]";
     }
   }
 

@@ -6,7 +6,10 @@ import { ColumnDef } from "@tanstack/react-table";
 export const columns: ColumnDef<AssignedTickets>[] = [
   {
     accessorKey: "id",
-    header: () => <div className="ml-4 text-left">Ticket Number</div>,
+    header: () => <div className="ml-4 text-left">
+      <span className="hidden md:flex">Ticket Number</span>
+      <span className="md:hidden">Ticket Details</span>
+    </div>,
     cell: ({ row }) => (
       <div className="ml-4 font-medium">{row.getValue("id")}</div>
     ),

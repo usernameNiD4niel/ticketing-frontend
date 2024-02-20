@@ -251,7 +251,7 @@ export function DataTable<TValue>({
                             {row.getValue("name")}
                           </span>
                           <span className="md:hidden">
-                            Creator:
+                            Created:
                             {row.getValue("created_at")}
                           </span>
                           <span className="md:hidden">
