@@ -14,6 +14,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { createUserAction } from "@/app/actions";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function RegisterForm() {
   const [department, setDepartment] = useState("");
@@ -53,7 +54,6 @@ export default function RegisterForm() {
         `/department/pending-user?user=${data.name}&email=${data.email}`
       );
 
-      // router.push(`/register/otp`);
     } else {
       toast({
         title: "OTP Generation Failed",
@@ -128,6 +128,23 @@ export default function RegisterForm() {
             </span>
           )}
         </Label>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox id="terms" required />
+          <label
+            htmlFor="terms"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            I agree to the 
+            <Link 
+            href={'https://1drv.ms/b/s!AoSibb-uTavWgU9Si8lUvITdZCZG?e=1hD04F'} 
+            target="_blank"
+            className="underline underline-offset-1 text-blue-500 ms-1">
+              terms and conditions
+              </Link>
+          </label>
+        </div>
+
       </div>
       {isLoadingButton ? (
         <LoadingButton isFullWidth={true} />
