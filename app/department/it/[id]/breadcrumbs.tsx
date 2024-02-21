@@ -26,11 +26,7 @@ const BreadCrumbs: FC<BreadCrumbsProps> = ({ tabRole, id }) => {
 
   async function updateNotificationSeen() {
     if (isSeen === "false" && id_) {
-      console.log(`isSeen ${isSeen}`);
-      console.log(`id ${id_}`);
       await updateNotificationAction(id_);
-      // const token = Cookies.get("token");
-      // await updateNotification(token!, id_!);
     }
   }
 
@@ -48,9 +44,6 @@ const BreadCrumbs: FC<BreadCrumbsProps> = ({ tabRole, id }) => {
         <Button variant={"link"} onClick={handleNavigation}>
           {currentTab}
         </Button>
-        {/* <Link href={currentTab === "Feed" ? "/department/it" : tabRole}>
-          {currentTab}
-        </Link> */}
       </li>
       <li>
         <BsChevronRight />

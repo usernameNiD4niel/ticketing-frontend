@@ -39,9 +39,6 @@ export default function Edit({ locations }: EditProps) {
   });
 
   async function onSubmit(values: z.infer<typeof editSchema>) {
-    console.log(`selected location ::: ${selectedLocation}`);
-    console.log(`updated location ::: ${values.updatedLocation}`);
-
     if (
       !selectedLocation ||
       selectedLocation.trim().length === 0 ||

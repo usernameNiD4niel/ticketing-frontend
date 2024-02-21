@@ -23,8 +23,6 @@ export default async function DynamicOverviewPage({
     championName
   );
 
-  console.log(`champion name ${championName}`);
-
   if (!champions) {
     return (
       <div className="w-full flex h-[90vh] items-center justify-center">

@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ManageUser } from "@/constants/types";
 import { ColumnDef } from "@tanstack/react-table";

@@ -5,10 +5,9 @@ import { ModeToggle } from "@/components/utils/ModeToggle";
 import { Departments } from "@/constants/objects";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Loading from "./loading";
 import { DepartmentProps } from "@/constants/types";
-import { toast } from "@/components/ui/use-toast";
 
 export default function Home() {
   const navigate = useRouter();
@@ -21,7 +20,6 @@ export default function Home() {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    // const laravel_session = Cookies.get("laravel_session");
 
     if (!token) {
       navigate.push("/login");

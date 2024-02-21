@@ -5,7 +5,6 @@ export default async function updateSpecificUser(
   data_: UpdateUserType,
   id: string
 ) {
-  console.log(`DATA ::: ${JSON.stringify(data_, null, 2)}`);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/accounts/manage-user/${id}`,

@@ -21,7 +21,6 @@ export default async function ManageUserSlugPage({
   const { name, department, email, role, account_status } =
     await getSpecificUser(token, slug);
 
-  console.log(`accunt status ${account_status}`);
   function formatName(): string {
     const splittedName = name.split(" ");
     const length = splittedName.length;

@@ -15,8 +15,6 @@ export default async function updateSpecificUserStatusAction(
     redirect("/login");
   }
 
-  console.log(`id ::: ${id} ==== status ::: ${status}`);
-
   const response = await updateSpecificUserStatus(id, status, token);
 
   if (response.success) {

@@ -1,4 +1,4 @@
-import { AssignedPaginatedType, AssignedTickets } from "@/constants/types";
+import { AssignedPaginatedType } from "@/constants/types";
 
 export default async function getAssignedTickets(
   token: string,

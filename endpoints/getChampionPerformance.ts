@@ -16,7 +16,6 @@ export default async function getChampionPerformance(token: string) {
     return data.champions as ChampionCarousel[];
   }
 
-  console.error("endpoint > getChampionPerformance.ts, " + response.status);
   return [];
 }
 //0.0666666666666667

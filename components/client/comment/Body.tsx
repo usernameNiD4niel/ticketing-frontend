@@ -25,12 +25,9 @@ const getComments = async (id: number, token: string) => {
   );
   if (response.ok) {
     const data = await response.json();
-    console.log(JSON.stringify(data, null, 2));
 
     return data.comments as CommentInfoProps[];
   }
-
-  console.log("log", response);
 
   throw new Error(
     "Cannot fetch the comment for this ticket, pleas try again😥"

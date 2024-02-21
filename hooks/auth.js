@@ -40,11 +40,9 @@ export const useAuth = () => {
     setBackendError("");
 
     try {
-      console.log(props);
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       // axios.defaults.headers.common["Content-Type"] = "application/json";
 
-      console.log(axios.defaults.headers);
       const response = await axios.post("/api/tickets", props);
 
       if (response.data) {
@@ -56,7 +54,6 @@ export const useAuth = () => {
         handleResetBehavior();
       }
     } catch (error) {
-      console.log(error.response.status, error.response.status === 404);
       setBackendError(error.response.data.message);
     }
 
@@ -75,17 +72,15 @@ export const useAuth = () => {
 
       const response = await axios.post("/api/accounts", { email });
 
-      console.log("the response: ", response);
-
       if (response.data) {
         setError("");
-        console.log("test", response.data.account);
+        
         setIsFetching(false);
         return response.data.account;
       }
     } catch (error) {
       setIsFetching(false);
-      console.log("what is the error", error);
+      
       setError(error.response.data.message);
       toast({
         title: "Error Account Not Found",
@@ -98,7 +93,7 @@ export const useAuth = () => {
   const getTickets = async ({ setIsFetching, token }) => {
     await csrf();
     try {
-      console.log("props");
+      
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
       const response = await axios.get("/api/all-tickets");
@@ -108,7 +103,7 @@ export const useAuth = () => {
         return response.data.tickets;
       }
     } catch (error) {
-      console.log("what is the error", error);
+      
     }
   };
 
@@ -129,7 +124,7 @@ export const useAuth = () => {
 
       router.push("/");
     } catch (error) {
-      console.log(error.response.status, error.response.status === 401);
+      
       if (error.response.status === 401) {
         setError(error.response.data.message);
       } else {
@@ -206,7 +201,7 @@ export const useAuth = () => {
       if (response.data) {
         setBackendError("");
         setIsFetching(false);
-        console.log("users: ", response.data.users);
+        
         return response.data.users;
       }
     } catch (error) {}
@@ -318,10 +313,10 @@ export const useAuth = () => {
       if (error.response.status === 404) {
         setError(error.response.data.message);
       } else if (error.response.status === 400) {
-        console.log("400", error.response.data.message);
+        
         setError(error.response.data.message);
       } else {
-        console.log("throw", error);
+        
         throw error;
       }
     }
@@ -434,7 +429,7 @@ export const useAuth = () => {
   const isUserOwnerOfTicket = async ({ setSuccess, token, ...props }) => {
     await csrf();
 
-    console.log("props object: ", props);
+    
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const status = await axios.post(`/api/email-check`, props);
@@ -449,7 +444,7 @@ export const useAuth = () => {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const name = await axios.get("api/name");
-      console.log(name.data.name, "current user name");
+      
 
       return name.data.name;
     } catch (error) {
@@ -467,9 +462,9 @@ export const useAuth = () => {
     await csrf();
     setError("");
     if (props.hasOwnProperty("request")) {
-      console.log("props catalyst or champ: ", props.request);
+      
     } else {
-      console.log("props: ", props);
+      
     }
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -484,7 +479,7 @@ export const useAuth = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      
       if (error.response.status === 500) {
         toast({
           title: "Error Update",
@@ -493,7 +488,7 @@ export const useAuth = () => {
         return;
       }
       setError("Please press F5 or ctrl + r to refresh your browser data");
-      console.log("erro lods: " + error);
+      
     }
     setIsLoading(false);
   };
@@ -511,13 +506,13 @@ export const useAuth = () => {
         }
       ).then((res) => res.json());
 
-      console.log("response: ", response);
+      
       if (response.ticket) {
         setIsFetching(false);
         return response.ticket;
       }
     } catch (error) {
-      console.log("fetch error: ", error);
+      
     }
   };
 
@@ -535,7 +530,7 @@ export const useAuth = () => {
       ).then((res) => res.json());
       return response;
     } catch (error) {
-      console.log("getUnsetCounts: ", error);
+      
     }
   };
 
@@ -562,7 +557,7 @@ export const useAuth = () => {
         .then((data) => setActivities(data));
     } catch (error) {
       setError("Please press F5 or ctrl + r to refresh your browser data");
-      console.log("error getSpecificNotification");
+      
     }
     setIsFetching(false);
   };
@@ -583,11 +578,11 @@ export const useAuth = () => {
         .then((res) => res.json())
         .then((data) => {
           setCount(data["activity-count"]);
-          console.log("count of the day: ", data["activity-count"]);
+          
         });
     } catch (error) {
       setError("Please press F5 or ctrl + r to refresh your browser data");
-      console.log("error getActivitiesCount");
+      
     }
   };
 
@@ -611,7 +606,7 @@ export const useAuth = () => {
         return;
       }
       setError("Please press F5 or ctrl + r to refresh your browser data");
-      console.log("erro lods: " + error);
+      
     }
   };
 
@@ -637,9 +632,9 @@ export const useAuth = () => {
           duration: 4000,
         });
       } else {
-        console.log("else part");
+        
       }
-      console.log(data.message);
+      
     } catch (error) {
       if (error.response.status === 404) {
         setError("Your session is expired, please try to re-login, thank you!");
@@ -649,7 +644,7 @@ export const useAuth = () => {
       } else {
         setError("Please press F5 or ctrl + r to refresh your browser data");
       }
-      console.log("erro lods: " + error);
+      
     }
 
     setIsLoading(false);
@@ -691,7 +686,7 @@ export const useAuth = () => {
         setCount(data["comments-count"]);
       }
     } catch (error) {
-      console.log("getCommentsCount: " + error);
+      
     }
   };
 

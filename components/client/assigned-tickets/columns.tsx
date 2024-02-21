@@ -7,8 +7,8 @@ export const columns: ColumnDef<AssignedTickets>[] = [
   {
     accessorKey: "id",
     header: () => <div className="ml-4 text-left">
-      <span className="hidden md:flex">Ticket Number</span>
-      <span className="md:hidden">Ticket Details</span>
+      <span className="hidden lg:flex">Ticket Number</span>
+      <span className="lg:hidden">Ticket Details</span>
     </div>,
     cell: ({ row }) => (
       <div className="ml-4 font-medium">{row.getValue("id")}</div>

@@ -56,11 +56,7 @@ export default function ChampionCarousel({ champions }: ChampionCarouselProps) {
               </Link>
             </CarouselItem>
           ))}
-          {/* <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
-        <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem> */}
         </CarouselContent>
-        {/* <CarouselPrevious />
-      <CarouselNext /> */}
       </Carousel>
     </>
   );

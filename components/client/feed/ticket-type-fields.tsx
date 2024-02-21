@@ -2,7 +2,6 @@ import { getSpecificTicketTypeAction } from "@/app/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
-import CustomSelect from "@/components/utils/CustomSelect";
 import SelectTT from "./select-tt";
 
 interface TicketTypeFieldsProps {
@@ -26,7 +25,6 @@ export default function TicketTypeFields({
 
   useEffect(() => {
     if (default_tt) {
-      console.log(`tt ::: ${default_tt}`);
       setSelectedTT(default_tt);
     }
   }, []);

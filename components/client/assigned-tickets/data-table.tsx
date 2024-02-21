@@ -173,8 +173,8 @@ export function DataTable<TValue>({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
-                          <span className="md:hidden">
+                        <p className="ms-4 lg:ms-3 flex space-x-0 lg:hidden">
+                          <span className="lg:hidden">
                             {cell.column.id === "id" && "ID: "}
                           </span>
                           {flexRender(
@@ -182,7 +182,7 @@ export function DataTable<TValue>({
                             cell.getContext()
                           )}
                         </p>
-                        <p className="hidden md:flex">
+                        <p className="hidden lg:flex">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -190,15 +190,15 @@ export function DataTable<TValue>({
                         </p>
                         {cell.column.id !== "ticket_type" && (
                           <div className="flex flex-col ml-4">
-                            <span className="md:hidden">
+                            <span className="lg:hidden">
                               Requestor:
                               {row.getValue("requestor")}
                             </span>
-                            <span className="md:hidden">
+                            <span className="lg:hidden">
                               Created:
                               {row.getValue("created_at")}
                             </span>
-                            <span className="md:hidden">
+                            <span className="lg:hidden">
                               Subject:
                               {row.getValue("subject")}
                             </span>

@@ -53,7 +53,6 @@ export function DataTable<TData, TValue>({
 
   useEffect(() => {
     if (!data || data.length === 0) {
-      console.log(`the data has an item ${data}`);
 
       table.getColumn("actions")?.toggleVisibility(false);
     }

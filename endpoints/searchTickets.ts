@@ -20,12 +20,9 @@ export default async function searchTickets<T>(
 
   if (response.ok) {
     const data = await response.json();
-    console.log(`data ::: ${JSON.stringify(data, null, 2)}`);
 
     return data.tickets as T[];
   }
-
-  console.log(response);
 
   return [];
 }
