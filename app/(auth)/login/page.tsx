@@ -39,17 +39,6 @@ const Login = () => {
           <h1 className="font-bold text-5xl text-end flex flex-col gap-y-4 text-white group-hover:text-7xl transition-all duration-300 ease-in">
             <span>WE MAKE</span> <span>EXCELLENCE A</span> <span>HABIT</span>
           </h1>
-          <div className="w-full flex justify-end items-center">
-            <p className="opacity-0 group-hover:opacity-100 text-white transition-opacity duration-700 ease-in-out text-end max-w-xs">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Recusandae, temporibus. Quidem quisquam, minima, ex ipsam totam
-              unde sapiente, architecto fugiat in exercitationem ipsum dolore!
-              Id, fugiat! Expedita inventore unde voluptatum tenetur amet
-              laborum eligendi repudiandae exercitationem similique earum?
-              Placeat molestias est voluptas. Tenetur eveniet eum, officiis quae
-              sed inventore adipisci?
-            </p>
-          </div>
         </div>
       </section>
     </main>

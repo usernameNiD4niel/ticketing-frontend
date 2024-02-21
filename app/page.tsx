@@ -59,10 +59,7 @@ export default function Home() {
               <span className="text-[#99CC68]">PA</span>
             </h1>
             <p className="text-justify">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum
-              nobis voluptatibus ut quos sint ex. Quibusdam, ut alias, explicabo
-              laudantium quos ipsa recusandae vel ad facilis maiores voluptatem
-              ipsum numquam!
+            OPPA: Elevating construction efficiency. Streamlining tasks, optimizing workflows for a focused, productive workforce. Your key to unparalleled project success.
             </p>
           </div>
           <div className="relative">
