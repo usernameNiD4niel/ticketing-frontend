@@ -12,6 +12,7 @@ export type DepartmentProps = {
   value: string;
   icon: IconType;
   catalyst: string;
+  manualUrl?: string;
 };
 
 export type LoginResponseProps = {

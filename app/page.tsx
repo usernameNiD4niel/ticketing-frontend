@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Loading from "./loading";
 import { DepartmentProps } from "@/constants/types";
 
+
 export default function Home() {
   const navigate = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +58,7 @@ export default function Home() {
               <span className="text-[#99CC68]">PA</span>
             </h1>
             <p className="text-justify">
-            OPPA: Elevating construction efficiency. Streamlining tasks, optimizing workflows for a focused, productive workforce. Your key to unparalleled project success.
+              OPPA: Elevating construction efficiency. Streamlining tasks, optimizing workflows for a focused, productive workforce. Your key to unparalleled project success.
             </p>
           </div>
           <div className="relative">
@@ -75,12 +76,13 @@ export default function Home() {
         </div>
         <div className="flex flex-wrap gap-2 w-full">
           {departments.map((department, index) => (
-            <CardLaunch
-              cardTitle={department.value}
-              catalyst={department.catalyst}
-              url={department.url}
-              key={index}
-            />
+              <CardLaunch
+                cardTitle={department.value}
+                catalyst={department.catalyst}
+                url={department.url}
+                manualUrl={department.manualUrl}
+                key={index}
+              />
           ))}
         </div>
       </div>

@@ -24,6 +24,7 @@ export const Departments: DepartmentProps[] = [
     value: "IT",
     icon: LiaFileContractSolid,
     catalyst: "Don Denver Juaneza",
+    manualUrl: "https://1drv.ms/b/s!AoSibb-uTavWgT6tThRqTDO1WG1P?e=zj45JL"
   },
   // {
   //   url: "hr/dashboard",

@@ -6,21 +6,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import AbsoluteRedirect from "./AbsoluteRedirect";
 import { useSearchParams } from "next/navigation";
 import { toast } from "../ui/use-toast";
+import { SiGoogledocs } from "react-icons/si";
 
 type CardProps = {
   cardTitle: string;
   catalyst: string;
   url: string;
+  manualUrl?: string;
 };
 
 export const CardLaunch: React.FC<CardProps> = ({
   cardTitle,
   catalyst,
   url,
+  manualUrl
 }) => {
   const searchParams = useSearchParams();
   const is_disabled = searchParams.get("disable")
@@ -39,17 +41,15 @@ export const CardLaunch: React.FC<CardProps> = ({
   }
 
   return (
-    <Card className="w-full md:max-w-[350px] group cursor-pointer">
+    <Card className="w-full md:max-w-[350px] group cursor-pointer flex justify-between items-center">
+
       {url === "hr/dashboard" ? (
         <AbsoluteRedirect cardTitle={cardTitle} catalyst={catalyst} />
       ) : (
-        <Link href={`/department/${url}`} onClick={handleClickEvents}>
+        <Link href={`/department/${url}`} onClick={handleClickEvents} className="w-full">
           <CardHeader>
             <CardTitle className="flex justify-between items-center text-base group-hover:text-[#0B64B9] transition-colors ease-in-out duration-150">
-              {cardTitle}{" "}
-              <span className="text-lg group-hover:scale-125">
-                <AiOutlineArrowRight />
-              </span>
+              {cardTitle}
             </CardTitle>
             <CardDescription className="group-hover:text-[#0B64B9] transition-colors ease-in-out duration-150">
               {catalyst}
@@ -57,6 +57,13 @@ export const CardLaunch: React.FC<CardProps> = ({
           </CardHeader>
         </Link>
       )}
+
+      <Link
+        href={manualUrl ?? "#"}
+        target="_blank"
+        className="bg-stone-100 text-stone-900 p-3 rounded-md hover:bg-stone-100/80 dark:bg-stone-800 dark:text-stone-50 dark:hover:bg-stone-800/80 me-4">
+        <SiGoogledocs />
+      </Link>
     </Card>
   );
 };
