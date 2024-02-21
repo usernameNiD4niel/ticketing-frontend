@@ -12,7 +12,7 @@ const Loading = () => {
 
         <Skeleton className="h-[90px] w-[140px]" />
 
-        <div className="mt-10 w-full">
+        <div className="mt-10 w-full space-y-2">
           <Skeleton className="h-[30px] w-[47%]" />
           <Skeleton className="h-[16px] w-[80%]" />
         </div>
