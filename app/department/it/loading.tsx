@@ -2,14 +2,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {
     return (
-        <div className="w-full overflow-x-hidden flex items-center">
+        <div className="w-full flex items-center h-screen justify-center">
 
-            {/* Side nav */}
-            <Skeleton className="w-[25%] h-screen" />
+            <div className="space-y-3 w-[90%] h-full flex items-center justify-center flex-col mx-6">
 
-            <div className="space-y-3 w-[75%] h-screen flex items-center justify-center flex-col mx-6">
-
-                <div className="w-full flex justify-between items-center w-[69%]">
+                <div className="flex justify-between items-center w-full">
 
                     {/* Search and Filter */}
                     <div className="flex gap-2 items-center">
@@ -23,7 +20,7 @@ const Loading = () => {
                 </div>
 
                 {/* Table */}
-                <Skeleton className="h-[60vh] w-[70%]" />
+                <Skeleton className="h-[60vh] w-full" />
             </div>
 
         </div>

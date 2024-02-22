@@ -4,6 +4,8 @@ import ActiveTabFeed from "@/components/client/feed/ActiveTab";
 import { cookies } from "next/headers";
 import { getPaginatedData } from "@/endpoints";
 import { getPaginatedFeedAction } from "@/app/actions";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default async function DemoPage() {
   const token = cookies().get("token")?.value;
@@ -13,6 +15,7 @@ export default async function DemoPage() {
   if (isRequestor) {
     const newData = await getPaginatedFeedAction(true, 1);
     return (
+      <Suspense fallback={<Loading />}>
       <div className="w-full md:container py-10">
         <DataTable
           columns={columns}
@@ -23,6 +26,8 @@ export default async function DemoPage() {
         />
         <ActiveTabFeed />
       </div>
+
+      </Suspense>
     );
   }
 
