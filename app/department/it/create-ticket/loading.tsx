@@ -7,48 +7,48 @@ const Loading = () => {
       {/* Header */}
       <Skeleton className="w-[40%] h-[36px]" />
 
-      <div className="my-2 space-y-2 w-full">
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
-          <Skeleton className="w-full h-[36px]" />
+      <div className="my-4 space-y-3 w-full">
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
+          <Skeleton className="w-full h-[46px]" />
         </div>
 
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
-          <Skeleton className="w-full h-[36px]" />
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
+          <Skeleton className="w-full h-[46px]" />
         </div>
 
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
-          <Skeleton className="w-full h-[36px]" />
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
+          <Skeleton className="w-full h-[46px]" />
         </div>
 
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
-          <Skeleton className="w-full h-[36px]" />
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
+          <Skeleton className="w-full h-[46px]" />
         </div>
 
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
           <Skeleton className="w-full h-[190px]" />
         </div>
 
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
-          <Skeleton className="w-full h-[36px]" />
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
+          <Skeleton className="w-full h-[46px]" />
         </div>
 
-        <div className="space-y-4">
-          <Skeleton className="w-[40px] h-[16px]" />
-          <Skeleton className="w-full h-[36px]" />
+        <div className="space-y-1">
+          <Skeleton className="w-[120px] h-[16px]" />
+          <Skeleton className="w-full h-[46px]" />
         </div>
 
       </div>
 
       {/* Buttons */}
-      <div className="w-full flex items-center gap-2 justify-end">
-        <Skeleton className="w-[120px] h-[36px]" />
-        <Skeleton className="w-[120px] h-[36px]" />
+      <div className="w-full flex items-center gap-2 justify-end mt-2">
+        <Skeleton className="w-[120px] h-[46px]" />
+        <Skeleton className="w-[120px] h-[46px]" />
       </div>
     </div>
   </div>;
