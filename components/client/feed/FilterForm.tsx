@@ -111,7 +111,13 @@ const FilterForm: FC<FilterFormProps> = ({
       params += `sort_by=${sort}&`;
     }
 
-    params = params.substring(0, params.length);
+    
+
+    if(params.endsWith("&")) {
+      params = params.substring(0, params.length - 1);
+    } else {
+      params = params.substring(0, params.length);
+    }
 
     if (role?.toLowerCase() === "requestor") {
       // Means the active tab is "My Department"

@@ -14,8 +14,6 @@ export default async function getFilteredData(token: string, params: string) {
   if (response.ok) {
     const data = await response.json();
 
-    console.log(`filter ::: ${JSON.stringify(data, null, 2)}`);
-
     return data.tickets as Payment[];
   }
 

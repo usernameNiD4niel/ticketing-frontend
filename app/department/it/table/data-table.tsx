@@ -143,9 +143,7 @@ export function DataTable<TValue>({
   }, [isFiltering]);
 
   function ContentBody({row}:{row: Row<Payment>}) {
-    console.log("ContentBody is re-rendered");
     const memoizedCells = React.useMemo(() => {
-      console.log("useMemo is re-executed");
       return row.getVisibleCells().map((cell) => (
             <TableCell key={cell.id}>
               <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
