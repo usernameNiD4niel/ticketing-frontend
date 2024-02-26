@@ -3,7 +3,6 @@ import { postComment } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { LoadingButton } from "@/components/utils/LoadingButton";
-import Link from "next/link";
 import React, { FC, useState } from "react";
 import LearnMore from "./learn-more";
 

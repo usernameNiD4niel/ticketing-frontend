@@ -3,6 +3,7 @@ export default async function updateTicketStatus(
   status: string,
   id: number
 ) {
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tickets?status=${status}&id=${id}`,
     {

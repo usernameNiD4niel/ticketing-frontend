@@ -12,6 +12,7 @@ import {
   getPaginationRowModel,
   useReactTable,
   VisibilityState,
+  Row,
 } from "@tanstack/react-table";
 
 import {
@@ -34,7 +35,6 @@ import Cookies from "js-cookie";
 import SearchTable from "./search";
 import { cn } from "@/lib/utils";
 import { getPaginatedFeedAction } from "@/app/actions";
-import TableOptions from "./table-options";
 import { LiaTicketAltSolid } from "react-icons/lia";
 
 interface DataTableProps<TValue> {
@@ -142,6 +142,81 @@ export function DataTable<TValue>({
     }
   }, [isFiltering]);
 
+  function ContentBody({row}:{row: Row<Payment>}) {
+    console.log("ContentBody is re-rendered");
+    const memoizedCells = React.useMemo(() => {
+      console.log("useMemo is re-executed");
+      return row.getVisibleCells().map((cell) => (
+            <TableCell key={cell.id}>
+              <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
+                <span className="md:hidden">
+                  {cell.column.id === "id" && "ID: "}
+                </span>
+                {flexRender(
+                  cell.column.columnDef.cell,
+                  cell.getContext()
+                )}
+              </p>
+              <p className="hidden md:flex">
+                {flexRender(
+                  cell.column.columnDef.cell,
+                  cell.getContext()
+                )}
+              </p>
+              {cell.column.id !== "status" && (
+                <div className="flex flex-col ml-4 md:hidden">
+                  <span className="md:hidden">
+                    Requestor:
+                    {row.getValue("name")}
+                  </span>
+                  <span className="md:hidden">
+                    Created:
+                    {row.getValue("created_at")}
+                  </span>
+                  <span className="md:hidden">
+                    Updated:
+                    {row.getValue("updated_at")}
+                  </span>
+                  <span className="md:hidden">
+                    Subject:
+                    {row.getValue("subject")}
+                  </span>
+                  <span className="md:hidden">
+                    Champion:
+                    {row.getValue("assigned_to")}
+                  </span>
+                </div>
+              )}
+            </TableCell>
+          ))
+    }, []); // Memoize when the 'row' object changes
+    return memoizedCells;
+  }
+
+  function MemoizedTableHeader() {
+    const memoizedHeader = React.useMemo(() => (
+      table.getHeaderGroups().map((headerGroup) => (
+        <TableRow key={headerGroup.id}>
+          {headerGroup.headers.map((header) => {
+            return (
+              <TableHead key={header.id}>
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+              </TableHead>
+            );
+          })}
+        </TableRow>
+      ))
+
+    ), []);
+    return memoizedHeader;
+  }
+
+  
   return (
     <div>
       <div className="w-full flex justify-between py-3 items-center">
@@ -159,7 +234,6 @@ export function DataTable<TValue>({
             activeTab={activeTab}
           />
         </div>
-        {/* This will show only when web view and the options is not visible */}
         <div className="space-x-2">
           {role?.toLowerCase() === "requestor" && (
             <>
@@ -170,7 +244,6 @@ export function DataTable<TValue>({
                 )}
                 onClick={myDept}
               >
-                {/* <span className="md:hidden"></span> */}
                 <VscOrganization className="md:hidden text-base" />
                 <span className="hidden md:block">My Department Tickets</span>
               </Button>
@@ -194,22 +267,7 @@ export function DataTable<TValue>({
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
+            <MemoizedTableHeader />
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
@@ -223,55 +281,23 @@ export function DataTable<TValue>({
                     )
                   }
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      <p className="ms-4 md:ms-3 flex space-x-0 md:hidden">
-                        <span className="md:hidden">
-                          {cell.column.id === "id" && "ID: "}
-                        </span>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </p>
-                      <p className="hidden md:flex">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </p>
-                      {/* {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )} */}
-                      {cell.column.id !== "status" && (
-                        <div className="flex flex-col ml-4">
-                          <span className="md:hidden">
-                            Requestor:
-                            {row.getValue("name")}
-                          </span>
-                          <span className="md:hidden">
-                            Created:
-                            {row.getValue("created_at")}
-                          </span>
-                          <span className="md:hidden">
-                            Updated:
-                            {row.getValue("updated_at")}
-                          </span>
-                          <span className="md:hidden">
-                            Subject:
-                            {row.getValue("subject")}
-                          </span>
-                          <span className="md:hidden">
-                            Champion:
-                            {row.getValue("assigned_to")}
-                          </span>
-                        </div>
-                      )}
-                    </TableCell>
-                  ))}
+                  <ContentBody row={row} />
                 </TableRow>
               ))
+              // <ContentBody />
+              // table.getRowModel().rows.map((row) => (
+              //   <TableRow
+              //     key={row.id}
+              //     className="hover:cursor-pointer"
+              //     onClick={() =>
+              //       handleNavigation(
+              //         `/department/it/${row.getValue("id")}?tabName=Feed`
+              //       )
+              //     }
+              //   >
+              //     <ContentBody row={row} isInMobile={width.width < 1024} />
+              //   </TableRow>
+              // ))
             ) : (
               <TableRow>
                 <TableCell
