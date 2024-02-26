@@ -2,12 +2,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
 const Loading = () => {
-  return <div className="w-full h-screen flex items-center justify-center">
+  return <div className="w-full flex items-center justify-center px-20 py-12">
     <div className="w-[55%]">
       {/* Header */}
       <Skeleton className="w-[40%] h-[36px]" />
 
-      <div className="my-2 space-y-2">
+      <div className="my-2 space-y-2 w-full">
         <div className="space-y-4">
           <Skeleton className="w-[40px] h-[16px]" />
           <Skeleton className="w-full h-[36px]" />
