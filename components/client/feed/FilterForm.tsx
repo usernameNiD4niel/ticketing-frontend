@@ -12,31 +12,12 @@ import Cookies from "js-cookie";
 import { FC, useEffect, useState } from "react";
 import DropdownStatus from "./dropdown-status";
 import { getCreateTicket, getLocationsAction } from "@/app/actions";
+import getAllTIcketsAction from "@/app/actions/get-all-tickets-action";
 
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
   setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
   activeTab: number;
-};
-
-type FilterRequestHelper = {
-  tickets: Payment[];
-};
-
-const getAllTickets = async (token: string) => {
-  const response: FilterRequestHelper = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets?isViewing=true`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-    .then((data) => data.json())
-    .catch((error) => error);
-
-  return response.tickets;
 };
 
 const FilterForm: FC<FilterFormProps> = ({
@@ -132,11 +113,10 @@ const FilterForm: FC<FilterFormProps> = ({
     setData(data);
     setIsFiltering(true);
   };
-
+  
   const handleViewAll = async () => {
-    const data_ = await getAllTickets(token!);
-
-    setData(data_);
+    const data = await getAllTIcketsAction();
+    setData(data);
     setIsFiltering(true);
   };
 

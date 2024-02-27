@@ -7,74 +7,74 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "id",
     header: () => (
-      <div className="ml-4 text-left">
+      <p className="ml-4 text-left">
         <span className="hidden md:flex">Ticket Number</span>
         <span className="md:hidden">Ticket Details</span>
-      </div>
+      </p>
     ),
     cell: ({ row }) => (
-      <div className="ml-4 font-medium">{row.getValue("id")}</div>
+      <span className="ml-4 font-medium">{row.getValue("id")}</span>
     ),
   },
   {
     accessorKey: "name",
-    header: () => <div className="ml-4">Requestor</div>,
+    header: () => <p className="ml-4">Requestor</p>,
     cell: ({ row }) => (
-      <div className="text-left ml-4 font-medium">{row.getValue("name")}</div>
+      <span className="text-left ml-4 font-medium">{row.getValue("name")}</span>
     ),
   },
   {
     accessorKey: "created_at",
-    header: () => <div className="ml-4">Date Created</div>,
+    header: () => <p className="ml-4">Date Created</p>,
     cell: ({ row }) => {
       return (
-        <div className="text-left ml-4 font-medium">
+        <span className="text-left ml-4 font-medium">
           {row.getValue("created_at")}
-        </div>
+        </span>
       );
     },
   },
   {
     accessorKey: "updated_at",
-    header: () => <div className="ml-4">Last Update</div>,
+    header: () => <p className="ml-4">Last Update</p>,
     cell: ({ row }) => {
       return (
-        <div className="text-left ml-4 font-medium">
+        <span className="text-left ml-4 font-medium">
           {row.getValue("updated_at")}
-        </div>
+        </span>
       );
     },
   },
   {
     accessorKey: "subject",
-    header: () => <div className="ml-4 text-left">Subject</div>,
+    header: () => <p className="ml-4 text-left">Subject</p>,
     cell: ({ row }) => {
       return (
-        <div className="ml-4 text-left font-medium">
+        <span className="ml-4 text-left font-medium">
           {row.getValue("subject")}
-        </div>
+        </span>
       );
     },
   },
   {
     accessorKey: "assigned_to",
-    header: () => <div className="ml-4">Champion</div>,
+    header: () => <p className="ml-4">Champion</p>,
     cell: ({ row }) => {
       return (
-        <div className="text-left ml-4 font-medium">
+        <span className="text-left ml-4 font-medium">
           {row.getValue("assigned_to")}
-        </div>
+        </span>
       );
     },
   },
   {
     accessorKey: "status",
-    header: () => <div className="text-left">Status</div>,
+    header: () => <p className="text-left">Status</p>,
     cell: ({ row }) => {
       return (
-        <div className="text-left font-medium">
+        <span className="text-left font-medium">
           {(row.getValue("status") as string).toUpperCase()}
-        </div>
+        </span>
       );
     },
   },

@@ -11,16 +11,16 @@ export const columns: ColumnDef<AssignedTickets>[] = [
       <span className="lg:hidden">Ticket Details</span>
     </div>,
     cell: ({ row }) => (
-      <div className="ml-4 font-medium">{row.getValue("id")}</div>
+      <span className="ml-4 font-medium">{row.getValue("id")}</span>
     ),
   },
   {
     accessorKey: "requestor",
     header: () => <div className="ml-4">Requestor</div>,
     cell: ({ row }) => (
-      <div className="text-left ml-4 font-medium">
+      <span className="text-left ml-4 font-medium">
         {row.getValue("requestor")}
-      </div>
+      </span>
     ),
   },
   {
@@ -28,9 +28,9 @@ export const columns: ColumnDef<AssignedTickets>[] = [
     header: () => <div className="ml-4">Date Created</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-left ml-4 font-medium">
+        <span className="text-left ml-4 font-medium">
           {row.getValue("created_at")}
-        </div>
+        </span>
       );
     },
   },
@@ -39,9 +39,9 @@ export const columns: ColumnDef<AssignedTickets>[] = [
     header: () => <div className="ml-4 text-left">Subject</div>,
     cell: ({ row }) => {
       return (
-        <div className="ml-4 text-left font-medium">
+        <span className="ml-4 text-left font-medium">
           {row.getValue("subject")}
-        </div>
+        </span>
       );
     },
   },
@@ -50,9 +50,9 @@ export const columns: ColumnDef<AssignedTickets>[] = [
     header: () => <div className="ml-4">Ticket Type</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-left ml-4 font-medium">
+        <span className="text-left ml-4 font-medium">
           {row.getValue("ticket_type")}
-        </div>
+        </span>
       );
     },
   },
