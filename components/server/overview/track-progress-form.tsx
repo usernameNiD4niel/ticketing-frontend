@@ -1,6 +1,8 @@
 "use client";
 import * as React from "react";
 
+import DateRange from "./date-range";
+
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,8 +41,6 @@ export default function TrackProgressForm() {
     resolver: zodResolver(reportsFilterSchema),
     defaultValues: {
       championName: "",
-      start: "",
-      end: "",
     },
   });
 
@@ -56,15 +56,22 @@ export default function TrackProgressForm() {
   });
 
   async function onSubmit(values: z.infer<typeof reportsFilterSchema>) {
-    const { championName, end, start } = values;
+    const from = window.localStorage.getItem("from");
+    const to = window.localStorage.getItem("to");
 
-    console.log(values.championName);
-    console.log(values.start);
-    console.log(values.end);
+    if(!from || !to) {
+      setIsSuccess("failed");
+      return;
+    }
+    
+    setIsSuccess("idle");
+
+    const { championName } = values;
+
     const { data, success } = await filterProgressAction(
       championName,
-      start,
-      end
+      from,
+      to
     );
 
     if (success) {
@@ -116,36 +123,7 @@ export default function TrackProgressForm() {
               />
               <div className="space-y-2">
                 <Label>Date Covered</Label>
-                <FormField
-                  control={form.control}
-                  name="start"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex gap-2 items-center">
-                        <FormLabel className="mt-2">Start</FormLabel>
-                        <FormControl>
-                          <Input type="date" {...field} required />
-                        </FormControl>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="end"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex gap-2 items-center">
-                        <FormLabel className="mt-2">End</FormLabel>
-                        <FormControl>
-                          <Input type="date" {...field} required />
-                        </FormControl>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <DateRange />
               </div>
               <div className="flex gap-2 items-center w-full justify-end pt-4">
                 <AlertDialogCancel type="button">Cancel</AlertDialogCancel>
@@ -159,8 +137,6 @@ export default function TrackProgressForm() {
         <ProgressFilteredData
           championName={form.getValues().championName}
           data={data}
-          end={form.getValues().end}
-          start={form.getValues().start}
           setIsSuccess={setIsSuccess}
           isSuccess={isSuccess}
         />

@@ -10,12 +10,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { FilterProgress } from "@/constants/types";
 import { cn } from "@/lib/utils";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CSVLink } from "react-csv";
 
 interface ProgressFilteredDataProps {
   championName: string;
-  start: string;
-  end: string;
   data: FilterProgress;
   setIsSuccess: React.Dispatch<
     React.SetStateAction<"idle" | "success" | "failed">
@@ -25,12 +24,23 @@ interface ProgressFilteredDataProps {
 
 export default function ProgressFilteredData({
   championName,
-  start,
-  end,
   data,
   setIsSuccess,
   isSuccess,
 }: ProgressFilteredDataProps) {
+
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+
+  useEffect(() => {
+    const from = window.localStorage.getItem("from");
+    const to = window.localStorage.getItem("to");
+    if(from && to) {
+      setStart(from);
+      setEnd(to);
+    }
+  }, []);
+  
   function getColor() {
     if (data.resolution_rate >= 50) {
       return "text-green-500";

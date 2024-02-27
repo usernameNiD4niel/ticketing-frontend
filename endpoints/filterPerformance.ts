@@ -17,9 +17,10 @@ export default async function filterPerformance(
   } else {
     if (start) {
       params = params.substring(0, params.length - 1);
-      console.log(`params with substring ::: ${params}`);
     }
   }
+
+  console.log(`params ${params}`);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/all-tickets/performance/${championName}?${params}`,
