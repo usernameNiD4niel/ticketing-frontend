@@ -20,7 +20,6 @@ export default async function searchTickets<T>(
 
   if (response.ok) {
     const data = await response.json();
-
     return data.tickets as T[];
   }
 
