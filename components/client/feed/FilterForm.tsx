@@ -1,6 +1,5 @@
 "use client";
 import filterTable from "@/app/actions/filter-table";
-import DatePicker from "@/components/helper/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +12,7 @@ import { FC, useEffect, useState } from "react";
 import DropdownStatus from "./dropdown-status";
 import { getCreateTicket, getLocationsAction } from "@/app/actions";
 import getAllTIcketsAction from "@/app/actions/get-all-tickets-action";
+import DatePicker from "@/components/server/overview/date-picker";
 
 type FilterFormProps = {
   setData: React.Dispatch<React.SetStateAction<Payment[]>>;
@@ -27,7 +27,6 @@ const FilterForm: FC<FilterFormProps> = ({
 }) => {
   const [date, setDate] = useState<Date | undefined>();
 
-  const token = Cookies.get("token");
   const role = Cookies.get("it_access_level")?.toString();
 
   const [locations, setLocations] = useState<string[]>([]);
@@ -92,9 +91,9 @@ const FilterForm: FC<FilterFormProps> = ({
       params += `sort_by=${sort}&`;
     }
 
-    
 
-    if(params.endsWith("&")) {
+
+    if (params.endsWith("&")) {
       params = params.substring(0, params.length - 1);
     } else {
       params = params.substring(0, params.length);
@@ -113,7 +112,7 @@ const FilterForm: FC<FilterFormProps> = ({
     setData(data);
     setIsFiltering(true);
   };
-  
+
   const handleViewAll = async () => {
     const data = await getAllTIcketsAction();
     setData(data);
@@ -167,11 +166,11 @@ const FilterForm: FC<FilterFormProps> = ({
               key={"dropdownstatusfilterform"}
             />
           </div>
-          <div className="w-full">
-            <Label htmlFor="status">
-              Date <span className="text-gray-500">eg. 11-01-2023</span>
+          <div className="grid grid-cols-3 items-center gap-4">
+            <Label htmlFor="status" className="w-fit">
+              Date
             </Label>
-            <DatePicker setDate={setDate} date={date} />
+            <DatePicker setDate={setDate} date={date} placeholder="Filter Date" />
           </div>
           <div className="grid grid-cols-3 items-center gap-4">
             <Label htmlFor="sort_by">Sort By</Label>

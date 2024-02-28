@@ -1,4 +1,3 @@
-"use client";
 
 import * as React from "react";
 import { format } from "date-fns";
@@ -13,24 +12,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DatePickerDemo() {
-  const [date, setDate] = React.useState<Date>();
+interface DatePickerProps {
+  date: Date | undefined;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  placeholder: string;
+}
+
+export default function DatePicker({ date, placeholder, setDate }: DatePickerProps) {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="w-full">
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "text-left font-normal w-[180px]",
             !date && "text-muted-foreground"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? /*format(date, "PPP")*/ <span className="w-full text-start">{date.toLocaleDateString('en-CA')}</span> : <span className="w-full">{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="w-full p-0">
         <Calendar
           mode="single"
           selected={date}

@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { addDays, format, startOfMonth } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 
@@ -13,7 +12,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { format as formatWithTimeZone, zonedTimeToUtc } from "date-fns-tz";
+import { format as formatWithTimeZone } from "date-fns-tz";
 
 export default function DateRange({
     className,
