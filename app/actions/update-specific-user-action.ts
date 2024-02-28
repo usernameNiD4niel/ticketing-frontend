@@ -21,6 +21,12 @@ export default async function updateSpecificUserAction(formData: FormData) {
     email: formData.get("email")?.toString(),
   };
 
+  const password = formData.get("password")?.toString();
+
+  if(password) {
+    data.password = password;
+  }
+
   const response = await updateSpecificUser(token, data, id);
 
   if (response.success) {

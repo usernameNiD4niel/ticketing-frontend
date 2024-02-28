@@ -92,6 +92,10 @@ export default function FormManageUserItem({
           />
         </Label>
       </div>
+      <div>
+        <Label htmlFor="password">Password</Label>
+        <Input type="password" name="password" id="password" />
+      </div>
       {isLoading ? (
         <LoadingButton isFullWidth={false} />
       ) : (

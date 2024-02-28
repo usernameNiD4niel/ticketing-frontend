@@ -91,14 +91,6 @@ const FilterForm: FC<FilterFormProps> = ({
       params += `sort_by=${sort}&`;
     }
 
-
-
-    if (params.endsWith("&")) {
-      params = params.substring(0, params.length - 1);
-    } else {
-      params = params.substring(0, params.length);
-    }
-
     if (role?.toLowerCase() === "requestor") {
       // Means the active tab is "My Department"
       if (activeTab === 1) {
@@ -106,6 +98,13 @@ const FilterForm: FC<FilterFormProps> = ({
       } else {
         params = params + "active_tab=My Ticket";
       }
+    }
+
+
+    if (params.endsWith("&")) {
+      params = params.substring(0, params.length - 1);
+    } else {
+      params = params.substring(0, params.length);
     }
 
     const data = await filterTable(params);

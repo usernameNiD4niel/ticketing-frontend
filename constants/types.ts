@@ -374,4 +374,5 @@ export type UpdateUserType = {
   department: string | undefined;
   role: string | undefined;
   email: string | undefined;
+  password?: string;
 };
