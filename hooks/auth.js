@@ -294,6 +294,8 @@ export const useAuth = () => {
     await csrf();
     setError("");
 
+    console.log(`props ${props}`);
+
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const response = await axios.post(

@@ -1,9 +1,11 @@
 "use client";
+import { updatePasswordAction } from "@/app/actions";
 import { updatePasswordSchema } from "@/app/department/it/accounts/validation";
 import DisplayError from "@/components/server/accounts/DisplayError";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { FormUpdatePasswordSchema } from "@/constants/types";
 import { useAuth } from "@/hooks/auth";
@@ -24,39 +26,36 @@ const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormUpdatePasswordSchema>({
     resolver: zodResolver(updatePasswordSchema),
   });
 
-  const router = useRouter();
-
   const [error, setError] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const { changePassword } = useAuth();
-  if (!token || !email) {
-    router.push("/login");
-  }
 
   const handleUpdatePassword: SubmitHandler<FormUpdatePasswordSchema> = async (
-    data,
-    event
+    { currentPassword, newPassword },
   ) => {
-    if (event) {
-      setIsUpdating(true);
-      changePassword({
-        email,
-        newPassword: data.newPassword,
-        setError,
-        setIsUpdating,
-        currentPassword: data.currentPassword,
-        token,
-        event,
+
+    setIsUpdating(true);
+
+    const { message, success } = await updatePasswordAction(newPassword, currentPassword);
+
+    if (success) {
+      reset();
+      setError('');
+      toast({
+        title: message
       });
     } else {
-      setError("Please refresh the page to refetch the resources");
+      setError(message);
     }
+
+    setIsUpdating(false);
+
   };
 
   return (

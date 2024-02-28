@@ -46,6 +46,7 @@ import getSpecificUser from "./getSpecificUser";
 import updateSpecificUser from "./updateSpecificUser";
 import updateSpecificUserStatus from "./updateSpecificUserStatus";
 import getPaginatedFeed from "./getPaginatedFeed";
+import updatePassword from "./update-password";
 export {
   getChampions,
   getNavigationCount,
@@ -95,4 +96,6 @@ export {
   updateSpecificUser,
   updateSpecificUserStatus,
   getPaginatedFeed,
+  updatePassword
+  
 };
