@@ -1,33 +1,43 @@
 "use client";
-import PendingRoleAssign from "@/components/utils/PendingRoleAssign";
-import { UserProps } from "@/constants/types";
-import RoleCard from "./role-card";
-import { useState } from "react";
+import React, { FC, useState } from "react";
+import AssignRoleDialog from "./assign-role-dialog";
+import Card from "./card";
+import { FetchingUsersRole } from "@/constants/hr/types";
 
 interface ContentProps {
-  users: UserProps[];
+  users: FetchingUsersRole[];
 }
 
-export default function Content({ users }: ContentProps) {
-  const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
-
-  console.log(`the content`);
+const Content: FC<ContentProps> = ({ users }) => {
+  const [ids, setIds] = useState<string[]>([]);
+  const [user, setUser] = useState(users);
 
   return (
-    <>
-      {users.map((user) => (
-        <RoleCard
-          selectedUserIds={selectedUserIds}
-          setSelectedUserIds={setSelectedUserIds}
-          user={user}
-          key={user.id}
-        />
-      ))}
-
-      {selectedUserIds.length > 0 && (
-        // <Button className="fixed bottom-5 right-3 md:right-10">Create</Button>
-        <PendingRoleAssign selectedUserIds={selectedUserIds} />
+    <div className="flex flex-wrap gap-2">
+      {users && users.length > 0 ? (
+        user.map((user) => (
+          <Card
+            creation_date={user.created_at}
+            department={user.department}
+            name={user.name}
+            ids={ids}
+            id={user.id.toString()}
+            setIds={setIds}
+            key={user.id}
+          />
+        ))
+      ) : (
+        <div className="w-full h-[70vh] flex items-center justify-center text-center">
+          No new accounts created yet!
+        </div>
       )}
-    </>
+      {ids.length > 0 && (
+        <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6">
+          <AssignRoleDialog ids={ids} setUser={setUser} />
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+export default Content;
