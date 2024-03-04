@@ -54,6 +54,10 @@ import { getRecentApplication } from "./application";
 import { getSearchParam } from "./get-search";
 import { getSpecifiedRole } from "./roles";
 import { fetchFilteredData } from "./fetch-filter-data";
+import { getComments } from "./comments";
+import { createComment } from "./comments";
+import { getSpecifiedActivity } from "./activities";
+import { getHRChampions } from "./accounts";
 export {
   getChampions,
   getNavigationCount,
@@ -111,4 +115,8 @@ export {
   getSearchParam,
   getSpecifiedRole,
   fetchFilteredData,
+  getComments,
+  createComment,
+  getSpecifiedActivity,
+  getHRChampions,
 };
