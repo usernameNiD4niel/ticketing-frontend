@@ -59,11 +59,11 @@ export default function TrackProgressForm() {
     const from = window.localStorage.getItem("from");
     const to = window.localStorage.getItem("to");
 
-    if(!from || !to) {
+    if (!from || !to) {
       setIsSuccess("failed");
       return;
     }
-    
+
     setIsSuccess("idle");
 
     const { championName } = values;

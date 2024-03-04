@@ -4,7 +4,7 @@ import MainContent from "@/components/server/hr/dashboard/main-content";
 import { AvailableTabs } from "@/constants/hr/enums";
 import React from "react";
 
-const Dashboard = () => {
+const Dashboard = async () => {
   return (
     <div className="flex items-center">
       <Selector activeTab={AvailableTabs.Dashboard} />

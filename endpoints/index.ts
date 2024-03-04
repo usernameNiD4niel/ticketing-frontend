@@ -47,6 +47,10 @@ import updateSpecificUser from "./updateSpecificUser";
 import updateSpecificUserStatus from "./updateSpecificUserStatus";
 import getPaginatedFeed from "./getPaginatedFeed";
 import updatePassword from "./update-password";
+import { getApplicationStatusCount } from "./dashboard";
+import { getRecentManpower } from "./dashboard";
+import { updateSpecificApplication } from "./application";
+import { getRecentApplication } from "./application";
 export {
   getChampions,
   getNavigationCount,
@@ -96,6 +100,9 @@ export {
   updateSpecificUser,
   updateSpecificUserStatus,
   getPaginatedFeed,
-  updatePassword
-  
+  updatePassword,
+  getApplicationStatusCount,
+  getRecentManpower,
+  updateSpecificApplication,
+  getRecentApplication,
 };
