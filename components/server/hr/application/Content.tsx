@@ -58,7 +58,9 @@ const Content: FC<ContentProps> = ({ id }) => {
         <div className="space-y-2">
           <Link
             className="text-primary font-bold text-2xl md:text-5xl hover:underline hover:underline-offset-1"
-            href={`/hr/application/${application?.id.toString() || ""}`}
+            href={`/department/hr/application/${
+              application?.id.toString() || ""
+            }`}
           >
             {application?.position}
           </Link>
