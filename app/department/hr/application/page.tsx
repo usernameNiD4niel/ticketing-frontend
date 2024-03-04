@@ -1,16 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cookies } from "next/headers";
-import { IoMdAdd } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
-import { ApplicationTypes } from "@/constants/types";
-import { AvailableTabs } from "@/constants/hr/enums";
 import Selector from "@/components/client/hr/tab-mutator/selector";
-import ApplicationList from "@/components/server/hr/application/application-list";
-import Content from "@/components/server/hr/application/Content";
+import { AvailableTabs } from "@/constants/hr/enums";
+import { ApplicationTypes } from "@/constants/hr/types";
+import UI from "@/components/ui/search";
+import AddApplication from "@/components/server/hr/application/add-application";
+import Body from "@/components/server/hr/application/body";
 
-const getApplications = async (token: string) => {
-  console.log(`the token ${token}`);
+const getApplications = async () => {
+  const token = cookies().get("token")?.value;
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/applications`,
@@ -20,58 +17,35 @@ const getApplications = async (token: string) => {
         Authorization: `Bearer ${token}`,
       },
     }
-  )
-    .then((data) => data.json())
-    .then((data) => {
-      const applications: ApplicationTypes[] = data.applications;
-      return applications;
-    })
-    .catch((err) => {
-      throw new Error("error: " + err);
-    });
+  );
 
-  return response;
+  if (response.ok) {
+    const data = await response.json();
+    const applications: ApplicationTypes[] = data.applications;
+    return applications;
+  }
+
+  throw new Error("Error fetching the applications");
 };
 
 const Application = async () => {
-  const token = cookies().get("token")?.value;
-  const applications = await getApplications(token!);
-
-  console.log(`APPLICATIONS ${applications}`);
+  const application = await getApplications();
 
   return (
-    <div className="w-full py-8 px-14">
+    <div className="w-full lg:py-8 xl:px-14 px-4 py-20">
       <Selector activeTab={AvailableTabs.Application} />
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl">Application</h1>
-        <div className="relative text-lg">
-          <span className="absolute left-5 top-[1.09rem]">
-            <CiSearch />
-          </span>
-          <Input
-            placeholder="Search..."
-            className="w-[380px] rounded-full bg-[#EDEDED] ps-11 py-6"
-          />
-        </div>
+        <UI />
       </div>
-      <div className="w-full grid grid-cols-[350px_1fr] gap-4 py-4">
-        <ApplicationList />
-        <Content />
+      <div className="w-full grid lg:grid-cols-[200px_1fr] xl:grid-cols-[350px_1fr] gap-4 py-4">
+        <Body application={application} />
       </div>
-      <div className="fixed bottom-6 right-6">
-        <Button className="text-white bg-[#879FFF] flex gap-1 rounded-md px-8 py-6 text-base hover:bg-[#7a90e7]">
-          <span className="text-2xl">
-            <IoMdAdd />
-          </span>
-          <span>Add</span>
-        </Button>
+      <div className="fixed bottom-6 right-2 lg:right-6">
+        <AddApplication application={null} />
       </div>
     </div>
   );
 };
 
 export default Application;
-
-/**
- * https://firebasestorage.googleapis.com/v0/b/devex-inc.appspot.com/o/October%2025%2C%202023%2Fjerry-resume.pdf?alt=media&token=de668352-34d5-4dc0-8335-965a14ad7247
- */

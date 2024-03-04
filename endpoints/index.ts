@@ -51,6 +51,7 @@ import { getApplicationStatusCount } from "./dashboard";
 import { getRecentManpower } from "./dashboard";
 import { updateSpecificApplication } from "./application";
 import { getRecentApplication } from "./application";
+import { getSearchParam } from "./get-search";
 export {
   getChampions,
   getNavigationCount,
@@ -105,4 +106,5 @@ export {
   getRecentManpower,
   updateSpecificApplication,
   getRecentApplication,
+  getSearchParam,
 };
