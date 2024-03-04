@@ -24,6 +24,7 @@ import getPaginatedFeedAction from "./get-paginated-feed-action";
 import getPaginatedTicketsAction from "./get-paginated-tickets-action";
 import getExportedTicketsAction from "./get-exported-tickets-action";
 import updatePasswordAction from "./update-password-action";
+import { filterAction } from "./filter-action";
 export {
   postComment,
   updateActivities,
@@ -50,5 +51,6 @@ export {
   getPaginatedFeedAction,
   getPaginatedTicketsAction,
   getExportedTicketsAction,
-  updatePasswordAction
+  updatePasswordAction,
+  filterAction,
 };

@@ -53,6 +53,7 @@ import { updateSpecificApplication } from "./application";
 import { getRecentApplication } from "./application";
 import { getSearchParam } from "./get-search";
 import { getSpecifiedRole } from "./roles";
+import { fetchFilteredData } from "./fetch-filter-data";
 export {
   getChampions,
   getNavigationCount,
@@ -109,4 +110,5 @@ export {
   getRecentApplication,
   getSearchParam,
   getSpecifiedRole,
+  fetchFilteredData,
 };
